@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const path = require("path")
-const { getMovieRouter } = require("./routes")
+const { getMovieRouter, postMovieRouter } = require("./routes")
 
 const PORT = process.env.PORT || 8080
 
@@ -21,5 +21,6 @@ app.get("/", (req, res) => {
     res.send("express is here")
 })
 app.use("/", getMovieRouter)
+app.use("/", postMovieRouter)
 
 app.listen(PORT, () => console.log(`Now listening on port: ${PORT}`))

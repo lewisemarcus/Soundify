@@ -1,3 +1,5 @@
 const getMovieRouter = require("./movies/getMovies")
 
-module.exports = { getMovieRouter }
+const postMovieRouter = require("./movies/addMovie")
+
+module.exports = { getMovieRouter, postMovieRouter }
