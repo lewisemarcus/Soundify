@@ -17,9 +17,9 @@ mongoose.connect(
 )
 
 //api routes
-app.get("/", (req, res) => {
-    res.send("express is here")
-})
+// app.get("/", (req, res) => {
+//     res.send("express is here")
+// })
 app.use("/", getMovieRouter)
 app.use("/", postMovieRouter)
 app.use("/", deleteMovie)
