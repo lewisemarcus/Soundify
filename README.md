@@ -1,1 +1,1 @@
-basic mern app deployed to heroku
+basic mern app deployed to heroku.
