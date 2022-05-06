@@ -58,7 +58,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Add Movie</h1>
+            <h1>Add a Movie</h1>
             <form>
                 <input
                     onChange={handleChange}
