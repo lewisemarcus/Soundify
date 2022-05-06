@@ -16,10 +16,6 @@ mongoose.connect(
     "mongodb+srv://lewisemarcus:root@cluster0.ejsvy.mongodb.net/moviesDB",
 )
 
-//api routes
-// app.get("/", (req, res) => {
-//     res.send("express is here")
-// })
 app.use("/", getMovieRouter)
 app.use("/", postMovieRouter)
 app.use("/", deleteMovie)
