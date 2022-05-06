@@ -51,6 +51,11 @@ function App() {
         console.log("movie added")
     }
 
+    function deleteMovie(id) {
+        axios.delete(`/delete/${id}`)
+        alert("movie deleted")
+    }
+
     return (
         <div className="App">
             <h1>Add Movie</h1>
@@ -79,7 +84,9 @@ function App() {
                         <h1>Title: {movie.title}</h1>
                         <p>Year: {movie.year}</p>
                         <p>Genre: {movie.genre}</p>
-                        <button>DELETE</button>
+                        <button onClick={() => deleteMovie(movie._id)}>
+                            DELETE
+                        </button>
                     </div>
                 )
             })}
