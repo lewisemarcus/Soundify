@@ -2,14 +2,11 @@
     "name": "my-mern-app",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
-        "start": "cd server && npm start",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lewisemarcus/my-mern-app.git"
+        "start": "cd server && node server.js",
+        "test": "concurrently \"cd client && npm run start\" \"cd server && nodemon server.js\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
     },
     "dependencies": {
         "cors": "^2.8.5",
@@ -18,10 +15,10 @@
         "express": "^4.18.1",
         "mongoose": "^6.3.2"
     },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/lewisemarcus/my-mern-app/issues"
+    "devDependencies": {
+        "concurrently": "^5.2.0",
+        "nodemon": "^2.0.4"
     },
-    "homepage": "https://github.com/lewisemarcus/my-mern-app#readme"
+    "author": "",
+    "license": "ISC"
 }
