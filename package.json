@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "express": "^4.17.1",
+        "cors": "^2.8.5",
         "react-router-dom": "^6.3.0"
     },
     "devDependencies": {
