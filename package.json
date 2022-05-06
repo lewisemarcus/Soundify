@@ -4,9 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "cd server && npm start",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "heroku-prebuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix server"
+        "start": "cd server && npm i && npm start",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
