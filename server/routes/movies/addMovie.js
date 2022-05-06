@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const Movie = require("../../../models/movieSchema")
+const Movie = require("../../models/movieSchema")
 
 router.post("/newmovie", (req, res) => {
     console.log(req.body)

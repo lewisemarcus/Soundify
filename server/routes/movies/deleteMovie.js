@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const Movie = require("../../../models/movieSchema")
+const Movie = require("../../models/movieSchema")
 
 router.route("/delete/:id").delete(async (req, res) => {
     const id = req.params.id
