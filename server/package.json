@@ -1,0 +1,24 @@
+{
+    "name": "my-mern-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "cd server && node server.js",
+        "test": "concurrently \"cd client && npm run start\" \"cd server && nodemon server.js\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "react-router-dom": "^6.3.0",
+        "body-parser": "^1.20.0",
+        "express": "^4.18.1",
+        "mongoose": "^6.3.2"
+    },
+    "devDependencies": {
+        "concurrently": "^5.2.0",
+        "nodemon": "^2.0.4"
+    },
+    "author": "",
+    "license": "ISC"
+}
