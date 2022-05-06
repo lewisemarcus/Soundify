@@ -2,7 +2,7 @@
     "name": "client",
     "version": "0.1.0",
     "private": true,
-    "proxy": "https://mysterious-dawn-69959.herokuapp.com/",
+    "proxy": "https://mighty-mountain-99308.herokuapp.com",
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.2.0",
