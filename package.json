@@ -1,15 +1,16 @@
 {
-    "name": "my-mern-app",
+    "name": "SoundClone",
     "version": "1.0.0",
     "description": "basic mern app deployed to heroku.",
     "main": "server/server.js",
     "scripts": {
+        "dev": "concurrently \"cd client && npm run start\" \"cd server && nodemon server.js\" ",
         "test": "echo \"Error: no test specified\" && exit 1",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/lewisemarcus/my-mern-app.git"
+        "url": "git+https://github.com/lewisemarcus/SoundClone.git"
     },
     "author": "",
     "license": "ISC",
@@ -21,7 +22,11 @@
         "react-router-dom": "^6.3.0"
     },
     "bugs": {
-        "url": "https://github.com/lewisemarcus/my-mern-app/issues"
+        "url": "https://github.com/lewisemarcus/SoundClone/issues"
     },
-    "homepage": "https://github.com/lewisemarcus/my-mern-app#readme"
+    "homepage": "https://github.com/lewisemarcus/SoundClone#readme",
+    "devDependencies": {
+        "concurrently": "^7.1.0",
+        "nodemon": "^2.0.16"
+    }
 }
