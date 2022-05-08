@@ -2,34 +2,49 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 function App() {
-    const [movies, setMovies] = useState([
+    const [songs, setSongs] = useState([
         {
             title: "",
             genre: "",
             year: "",
+            filename: "",
+            link: "",
         },
     ])
 
-    const [movie, setMovie] = useState({
+    const [song, setSong] = useState({
         title: "",
         genre: "",
         year: "",
+        filename: "",
+        link: "",
     })
 
     useEffect(() => {
-        async function fetchMovies() {
-            const movieData = await fetch("/movies")
+        console.log("hi")
+        fetchSongs()
+        async function fetchSongs() {
+            try {
+                const songData = await fetch("/songs", {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                })
 
-            const movieList = await movieData.json()
-            setMovies(movieList)
+                const songList = await songData.json()
+
+                setSongs(songList)
+            } catch (err) {
+                console.log(err)
+            }
         }
-        fetchMovies()
     })
 
     function handleChange(event) {
         const { name, value } = event.target
 
-        setMovie((prevInput) => {
+        setSong((prevInput) => {
             return {
                 ...prevInput,
                 [name]: value,
@@ -37,52 +52,64 @@ function App() {
         })
     }
 
-    function addMovie(event) {
-        event.preventDefault()
-        const newMovie = {
-            title: movie.title,
-            genre: movie.genre,
-            year: movie.year,
-        }
-        axios.post("/newmovie", newMovie)
-
-        console.log("movie added")
+    function addSong() {
+        // event.preventDefault()
+        // const newSong = {
+        //     title: song.title,
+        //     genre: song.genre,
+        //     year: song.year,
+        //     filename: song.filename.replace(/^.*[\\\/]/, ""),
+        //     file: songFile,
+        // }
+        // console.log(newSong)
+        // const post = await axios.post("/newsong", newSong, {
+        //     headers: { "content-type": "multipart/form-data" },
+        // })
+        // console.log(post.json())
+        console.log("song added")
     }
 
-    function deleteMovie(id) {
+    function deletesong(id) {
         axios.delete(`/delete/${id}`)
-        alert("movie deleted")
+        alert("song deleted")
     }
 
     return (
         <div className="App">
-            <h1>Add a Movie</h1>
-            <form>
+            <h1>Add a Song</h1>
+            <form action="/newsong" method="POST" encType="multipart/form-data">
                 <input
                     onChange={handleChange}
                     name="title"
-                    value={movie.title}
+                    value={song.title}
                 ></input>
                 <input
                     onChange={handleChange}
                     name="genre"
-                    value={movie.genre}
+                    value={song.genre}
                 ></input>
                 <input
                     onChange={handleChange}
                     name="year"
-                    value={movie.year}
+                    value={song.year}
                 ></input>
-                <button onClick={addMovie}>ADD MOVIE</button>
+                <input
+                    onChange={handleChange}
+                    type="file"
+                    id="filename"
+                    name="filename"
+                    value={song.filename}
+                />
+                <input type="submit" value="Upload" onClick={addSong} />
             </form>
-            {movies.map((movie) => {
-                console.log(movie)
+            {songs.map((song) => {
                 return (
                     <div>
-                        <h1>Title: {movie.title}</h1>
-                        <p>Year: {movie.year}</p>
-                        <p>Genre: {movie.genre}</p>
-                        <button onClick={() => deleteMovie(movie._id)}>
+                        <h1>Title: {song.title}</h1>
+                        <p>Year: {song.year}</p>
+                        <p>Genre: {song.genre}</p>
+                        <p>Link: {song.link}</p>
+                        <button onClick={() => deletesong(song._id)}>
                             DELETE
                         </button>
                     </div>

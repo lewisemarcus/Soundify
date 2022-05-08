@@ -1,7 +1,7 @@
-const getMovieRouter = require("./movies/getMovies")
+const getSongs = require("./songs/getSongs")
 
-const postMovieRouter = require("./movies/addMovie")
+const postSong = require("./songs/addSong")
 
-const deleteMovie = require("./movies/deleteMovie")
+const deleteSong = require("./songs/deleteSong")
 
-module.exports = { getMovieRouter, postMovieRouter, deleteMovie }
+module.exports = { getSongs, postSong, deleteSong }

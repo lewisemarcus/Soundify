@@ -1,10 +1,12 @@
 const express = require("express")
 const app = express()
+require("dotenv").config()
+
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const path = require("path")
-const { getMovieRouter, postMovieRouter, deleteMovie } = require("./routes")
+const { getSongs, postSong, deleteSong } = require("./routes")
 
 const PORT = process.env.PORT || 8080
 
@@ -13,12 +15,12 @@ app.use(cors())
 
 //mongoose connection
 mongoose.connect(
-    "mongodb+srv://lewisemarcus:root@cluster0.ejsvy.mongodb.net/moviesDB",
+    "mongodb+srv://lewisemarcus:root@cluster0.ejsvy.mongodb.net/musicDB",
 )
 
-app.use("/", getMovieRouter)
-app.use("/", postMovieRouter)
-app.use("/", deleteMovie)
+app.use("/", getSongs)
+app.use("/", postSong)
+app.use("/", deleteSong)
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "..", "client", "build")))

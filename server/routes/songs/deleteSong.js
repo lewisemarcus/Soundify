@@ -1,12 +1,12 @@
 const express = require("express")
 const router = express.Router()
-const Movie = require("../../models/movieSchema")
+const Song = require("../../models/songSchema")
 
 router.route("/delete/:id").delete(async (req, res) => {
     const id = req.params.id
 
-    Movie.findByIdAndDelete({ _id: id }, function (err) {
-        if (!err) console.log("movie deleted")
+    Song.findByIdAndDelete({ _id: id }, function (err) {
+        if (!err) console.log("Song deleted")
         else console.log("error: ", err)
     })
 })
