@@ -39,7 +39,7 @@ const AddSong = () => {
                 console.log(err)
             }
         }
-    })
+    }, [])
 
     function handleChange(event) {
         const { name, value } = event.target

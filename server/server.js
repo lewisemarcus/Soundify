@@ -12,7 +12,7 @@ import errorHandlerMiddleware from "./middleware/error-handler.js"
 
 const app = express()
 dotenv.config()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 4000
 
 if (process.env.NODE_ENV !== "production") {
     app.use(morgan("dev"))
