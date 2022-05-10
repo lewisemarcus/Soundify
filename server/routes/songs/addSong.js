@@ -9,7 +9,7 @@ import uploadSong from "../../S3Service/index.js"
 const storage = memoryStorage()
 const upload = multer({ storage: storage })
 
-router.post("/newsong", upload.single("filename"), async (req, res) => {
+router.post("/upload", upload.single("filename"), async (req, res) => {
     const { originalname } = req.file
     const { title, genre, year } = req.body
     const content = {
