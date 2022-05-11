@@ -85,7 +85,7 @@ const AddSong = () => {
                 "https://soundclone-music.s3.amazonaws.com/qwe",
             )
         }
-
+        preload()
         p.setup = () => {
             canvas = p.createCanvas(710, 400)
             p.noFill()
