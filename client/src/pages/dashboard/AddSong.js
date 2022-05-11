@@ -2,7 +2,8 @@ import React, { useState, useEffect, createRef } from "react"
 import axios from "axios"
 import p5 from "p5"
 import "../../utils/p5/addons/p5.sound.js"
-console.log(p5)
+import WaveSurfer from "wavesurfer.js"
+
 const canvasStyle = {
     position: "relative",
     top: 0,
@@ -17,12 +18,16 @@ const audioStyle = {
 }
 
 const containerStyle = {
-    marginBottom: 100,
+    marginBottom: 20,
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "center",
+}
+
+const waveForm = {
+    marginBottom: 100,
 }
 const AddSong = () => {
     const canvasRef = createRef()
@@ -51,7 +56,51 @@ const AddSong = () => {
         link: "",
     })
 
+    const [wave, setWave] = useState(null)
+
+    let count = 0
+
+    const playAudio = () => {
+        console.log("hi")
+        wave.play()
+
+        // if (count === 0) {
+        //     wave.load("https://soundclone-music.s3.amazonaws.com/qwe")
+        //     wave.playPause()
+        // wave.on("ready", function () {
+        //     wave.playPause()
+        //     wave.setMute(true)
+        // })
+        //     count = 1
+        // } else {
+        //     wave.playPause()
+        // }
+    }
+
+    const pauseAudio = () => {
+        wave.pause()
+    }
+
     useEffect(() => {
+        // setWave(
+        //     WaveSurfer.create({
+        //         container: "#waveform",
+        //         waveColor: "violet",
+        //         progressColor: "purple",
+        //     }),
+        // )
+
+        const wavesurfer = WaveSurfer.create({
+            container: "#waveform",
+            waveColor: "violet",
+            progressColor: "purple",
+        })
+
+        wavesurfer.load("https://soundclone-music.s3.amazonaws.com/qwe")
+        wavesurfer.setMute(true)
+
+        setWave(wavesurfer)
+
         const fetchSongs = async () => {
             try {
                 const songData = await fetch("/songs", {
@@ -86,6 +135,7 @@ const AddSong = () => {
             )
         }
         preload()
+
         p.setup = () => {
             canvas = p.createCanvas(710, 400)
             p.noFill()
@@ -103,18 +153,23 @@ const AddSong = () => {
             fft = new p5.FFT()
 
             fft.setInput(source)
+
+            // p.noLoop()
         }
         p.draw = () => {
+            //mySound loads in draw
+
             p.background(200)
 
+            //SPECTRUM STYLE ONE
             let spectrum = fft.analyze()
 
             p.beginShape()
             p.stroke("#1d43ad")
             const level = fft.getEnergy("mid")
             p.strokeWeight(level / 125)
-            const invertedSpectrum = spectrum.slice().reverse()
 
+            const invertedSpectrum = spectrum.slice().reverse()
             const values = invertedSpectrum.concat(spectrum)
 
             for (var i = 0; i < values.length; i++) {
@@ -124,9 +179,32 @@ const AddSong = () => {
                 p.curveVertex(x, y + p.height / 2)
             }
 
+            // for (let i = 0; i < spectrum.length / 20; i++) {
+            //     p.fill(spectrum[i], spectrum[i] / 10, 0)
+            //     let x = p.map(i, 0, spectrum.length / 20, 0, p.width)
+            //     let h = p.map(spectrum[i], 0, 255, 0, p.height)
+            //     p.rect(x, p.height, spectrum.length / 20, -h)
+            // }
+
             // spectrum.forEach((spec, i) => {
             //     p.vertex(i, p.map(spec, 0, 255, p.height, 0))
             // })
+
+            //WAVEFORM STYLE
+
+            // let waveform = fft.waveform()
+
+            // let bufferLength = waveform.length
+
+            // p.beginShape()
+            // p.strokeWeight(10)
+            // p.stroke("#1d43ad")
+
+            // for (let i = 0; i < bufferLength; i++) {
+            //     let x = p.map(i, 0, bufferLength, 0, p.width)
+            //     let y = p.map(waveform[i], -1, 1, -p.height / 2, p.height / 2)
+            //     p.vertex(x, y + p.height / 2)
+            // }
 
             p.endShape()
         }
@@ -210,6 +288,8 @@ const AddSong = () => {
                             style={containerStyle}
                         >
                             <audio
+                                onPlay={playAudio}
+                                onPause={pauseAudio}
                                 crossOrigin="anonymous"
                                 ref={audioElement}
                                 style={audioStyle}
@@ -221,6 +301,8 @@ const AddSong = () => {
                     </div>
                 )
             })}
+            <button onClick={playAudio}>PLAY</button>
+            <div id="waveform" style={waveForm}></div>
         </div>
     )
 }
