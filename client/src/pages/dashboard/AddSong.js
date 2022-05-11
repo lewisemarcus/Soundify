@@ -27,7 +27,10 @@ const containerStyle = {
 }
 
 const waveForm = {
+    marginLeft: 100,
+    marginRight: 100,
     marginBottom: 100,
+    height: "100%",
 }
 const AddSong = () => {
     const canvasRef = createRef()
@@ -63,18 +66,6 @@ const AddSong = () => {
     const playAudio = () => {
         console.log("hi")
         wave.play()
-
-        // if (count === 0) {
-        //     wave.load("https://soundclone-music.s3.amazonaws.com/qwe")
-        //     wave.playPause()
-        // wave.on("ready", function () {
-        //     wave.playPause()
-        //     wave.setMute(true)
-        // })
-        //     count = 1
-        // } else {
-        //     wave.playPause()
-        // }
     }
 
     const pauseAudio = () => {
@@ -82,18 +73,14 @@ const AddSong = () => {
     }
 
     useEffect(() => {
-        // setWave(
-        //     WaveSurfer.create({
-        //         container: "#waveform",
-        //         waveColor: "violet",
-        //         progressColor: "purple",
-        //     }),
-        // )
-
+        console.log(document.getElementById("waveform"))
         const wavesurfer = WaveSurfer.create({
             container: "#waveform",
-            waveColor: "violet",
-            progressColor: "purple",
+            waveColor: "#1d43ad",
+            progressColor: "#0d2344",
+            mediaControls: true,
+            responsive: true,
+            backend: "MediaElement",
         })
 
         wavesurfer.load("https://soundclone-music.s3.amazonaws.com/qwe")
@@ -126,9 +113,15 @@ const AddSong = () => {
         }
     }, [])
 
+    //WHY IS CURRENT NULL BUT NOT WHEN JUST CALLING audioElement?
+    console.log(audioElement)
+    console.log(audioElement.current)
     const sketch = (p) => {
         let fft, canvas, mySound
 
+        //WHY IS IT THAT .currentSrc disappears when being called directly, but not indirectly?
+        console.log(audioElement.current)
+        console.log(audioElement.current.currentSrc)
         function preload() {
             mySound = p5.prototype.loadSound(
                 "https://soundclone-music.s3.amazonaws.com/qwe",
@@ -147,7 +140,7 @@ const AddSong = () => {
             const source = audioCtx.createMediaElementSource(
                 document.querySelector("audio"),
             )
-
+            console.log(source)
             source.connect(p5.soundOut)
 
             fft = new p5.FFT()
@@ -175,7 +168,7 @@ const AddSong = () => {
             for (var i = 0; i < values.length; i++) {
                 var x = p.map(i, 0, values.length, 0, p.width)
                 var y = p.map(values[i], 0, 255, 0, p.height / 4)
-                if (i % 2 == 0) y *= -1
+                if (i % 2 === 0) y *= -1
                 p.curveVertex(x, y + p.height / 2)
             }
 
@@ -302,6 +295,7 @@ const AddSong = () => {
                 )
             })}
             <button onClick={playAudio}>PLAY</button>
+
             <div id="waveform" style={waveForm}></div>
         </div>
     )
