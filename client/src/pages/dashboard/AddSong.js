@@ -2,7 +2,6 @@ import React, { useState, useEffect, createRef } from "react"
 import axios from "axios"
 import p5 from "p5"
 import "../../utils/p5/addons/p5.sound.js"
-import WaveSurfer from "wavesurfer.js"
 
 const containerStyle = {
     marginBottom: 20,
@@ -13,12 +12,6 @@ const containerStyle = {
     alignItems: "center",
 }
 
-const waveForm = {
-    marginLeft: 100,
-    marginRight: 100,
-    marginBottom: 100,
-    height: "100%",
-}
 const AddSong = () => {
     const app = createRef()
 
@@ -42,24 +35,7 @@ const AddSong = () => {
         link: "",
     })
 
-    const [wave, setWave] = useState(null)
-
     useEffect(() => {
-        console.log(document.getElementById("waveform"))
-        const wavesurfer = WaveSurfer.create({
-            container: "#waveform",
-            waveColor: "#1d43ad",
-            progressColor: "#0d2344",
-            mediaControls: true,
-            responsive: true,
-            backend: "MediaElement",
-        })
-
-        wavesurfer.load("https://soundclone-music.s3.amazonaws.com/qwe")
-        wavesurfer.setMute(true)
-
-        setWave(wavesurfer)
-
         const fetchSongs = async () => {
             try {
                 const songData = await fetch("/songs", {
@@ -257,8 +233,6 @@ const AddSong = () => {
                     </div>
                 )
             })}
-
-            <div id="waveform" style={waveForm}></div>
         </div>
     )
 }
