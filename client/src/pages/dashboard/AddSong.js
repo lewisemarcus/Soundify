@@ -66,7 +66,7 @@ const AddSong = () => {
             p.setup = () => {
                 p.rectMode(p.CENTER)
                 p.angleMode(p.DEGREES)
-                canvas = p.createCanvas(710, 400)
+                canvas = p.createCanvas(710, 600)
                 p.noFill()
                 canvas.style.marginBottom = 100
                 p.getAudioContext()
@@ -85,21 +85,17 @@ const AddSong = () => {
                 p.stroke("#1d43ad")
 
                 //SPECTRUM STYLE ONE
-                // let spectrum = fft.analyze()
+                let spectrum = fft.analyze()
 
-                // const level = fft.getEnergy("mid")
+                const invertedSpectrum = spectrum.slice().reverse()
+                const values = invertedSpectrum.concat(spectrum)
 
-                // p.strokeWeight(level / 125)
-
-                // const invertedSpectrum = spectrum.slice().reverse()
-                // const values = invertedSpectrum.concat(spectrum)
-
-                // for (var i = 0; i < values.length; i++) {
-                //     var x = p.map(i, 0, values.length, 0, p.width)
-                //     var y = p.map(values[i], 0, 255, 0, p.height / 4)
-                //     if (i % 2 === 0) y *= -1
-                //     p.curveVertex(x, y + p.height / 2)
-                // }
+                for (var i = 0; i < values.length; i++) {
+                    var x = p.map(i, 0, values.length, 0, p.width)
+                    var y = p.map(values[i], 0, 255, 0, p.height / 8)
+                    if (i % 2 === 0) y *= -1
+                    p.curveVertex(x, 100 + y + p.height / 2)
+                }
 
                 // for (let i = 0; i < spectrum.length / 20; i++) {
                 //     p.fill(spectrum[i], spectrum[i] / 10, 0)
@@ -131,8 +127,8 @@ const AddSong = () => {
 
                 for (let i = 0; i < wave.length; i++) {
                     let peak = wave[i]
-                    let l = p.map(peak, -1, 1, -100, 100)
-                    p.line(i, p.height / 2 + l, i, p.height / 2 - l)
+                    let l = p.map(peak, -1, 1, -50, 50)
+                    p.line(i, p.height / 4 + l, i, p.height / 4 - l)
                 }
                 const hpos = p.map(
                     mySound.currentTime(),
@@ -143,7 +139,7 @@ const AddSong = () => {
                 )
 
                 p.stroke(200, 0, 0)
-                p.line(hpos, 0, hpos, p.height)
+                p.line(hpos, 100, hpos, p.height / 2.5)
 
                 p.endShape()
             }
