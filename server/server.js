@@ -1,32 +1,47 @@
-const express = require("express")
+import express from "express"
+import dotenv from "dotenv"
+import connectDB from "./db/connect.js"
+import { getSongs, postSong, deleteSong, userAuth } from "./routes/index.js"
+import jobsRoutes from "./routes/jobsRoutes.js"
+import "express-async-errors"
+import morgan from "morgan"
+
+//middleware imports
+import notFoundMiddleware from "./middleware/not-found.js"
+import errorHandlerMiddleware from "./middleware/error-handler.js"
+
 const app = express()
-const bodyParser = require("body-parser")
-const cors = require("cors")
-const mongoose = require("mongoose")
-const path = require("path")
-const { getMovieRouter, postMovieRouter, deleteMovie } = require("./routes")
+dotenv.config()
+const port = process.env.PORT || 4000
 
-const PORT = process.env.PORT || 8080
+if (process.env.NODE_ENV !== "production") {
+    app.use(morgan("dev"))
+}
+app.use(express.json())
 
-app.use(bodyParser.json())
-app.use(cors())
+app.get("/", (req, res) => {
+    res.send("welcome")
+})
 
-//mongoose connection
-mongoose.connect(
-    "mongodb+srv://lewisemarcus:root@cluster0.ejsvy.mongodb.net/moviesDB",
-)
+app.use("/", getSongs)
+app.use("/", postSong)
+app.use("/", deleteSong)
 
-app.use("/", getMovieRouter)
-app.use("/", postMovieRouter)
-app.use("/", deleteMovie)
+app.use("/api/v1/auth", userAuth)
+app.use("/api/v1/jobs", jobsRoutes)
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "..", "client", "build")))
-    app.get("*", (req, res) => {
-        res.sendFile(
-            path.join(__dirname, "..", "client", "build", "index.html"),
-        )
-    })
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
+
+const start = async () => {
+    try {
+        await connectDB(process.env.MONGO_URL)
+        app.listen(port, () => {
+            console.log(`Running on port ${port}`)
+        })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-app.listen(PORT, () => console.log(`Now listening on port: ${PORT}`))
+start()

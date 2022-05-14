@@ -1,7 +1,9 @@
-const getMovieRouter = require("./movies/getMovies")
+import { router as getSongs } from "./songs/getSongs.js"
 
-const postMovieRouter = require("./movies/addMovie")
+import { router as postSong } from "./songs/addSong.js"
 
-const deleteMovie = require("./movies/deleteMovie")
+import { router as deleteSong } from "./songs/deleteSong.js"
 
-module.exports = { getMovieRouter, postMovieRouter, deleteMovie }
+import { router as userAuth } from "./user/authRoutes.js"
+
+export { getSongs, postSong, deleteSong, userAuth }
