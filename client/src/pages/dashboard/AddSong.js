@@ -144,11 +144,14 @@ const AddSong = () => {
                 p.endShape()
             }
 
-            p.mousePressed = () => {
+            p.mousePressed = (e) => {
+                console.log(e.target.id)
                 console.log(mySound.isPaused())
-                if (mySound.isPaused() || mySound.currentTime() == 0)
-                    mySound.play()
-                else mySound.pause()
+                if (e.target.id === "defaultCanvas0") {
+                    if (mySound.isPaused() || mySound.currentTime() == 0)
+                        mySound.play()
+                    else mySound.pause()
+                } else return
                 // let hpos = p.map(p.mouseX, 0, mySound.duration(), 0, p.width)
                 // console.log(hpos)
                 // p.line(hpos, 0, hpos, p.height)
