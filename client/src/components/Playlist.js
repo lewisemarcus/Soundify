@@ -190,7 +190,7 @@ const Playlist = () => {
         </div>
         <div className="siDetails">
           <div className="siRating">
-            <span id="rating">Top Classical</span>
+            <span id="rating">Top Classic</span>
             <button id="ratingNum">9.7</button>
           </div>
           <div className="siDetailTexts">
