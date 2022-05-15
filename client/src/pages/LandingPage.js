@@ -20,23 +20,15 @@ const LandingPage = () => {
                 height="315"
                 src="https://www.youtube.com/embed/1y6smkh6c-0"
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
 
             <button>Play</button>
           </div>
           <div className="listResult">
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
             <Playlist />
           </div>
         </div>

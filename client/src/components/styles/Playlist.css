@@ -72,11 +72,15 @@
 }
 
 .siRating>span{
+    padding-top: 7.5px;
+    padding-right: 3px;
+    font-size: 10px;
     font-weight: 500;
 }
 
 .siRating>button {
     background-color: #0071c2;
+    border-radius: 5px;
     color: #fff;
     padding: 5px;
     font-weight: bold;
@@ -95,7 +99,9 @@
 }
 
 .siTaxOp{
-    font-size: 12px;
+    font-size: 10px;
+    padding-right: 14px;
+ 
     color: gray;
 }
 
