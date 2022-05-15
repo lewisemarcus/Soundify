@@ -98,8 +98,9 @@ function Login(props) {
             placeholder="Password"
             id="outlined-adornment-password"
             type={passwordShow.showPassword ? "text" : "password"}
-            value={passwordShow.password}
-            onChange={handleChange("password")}
+            name="password"
+            // value={passwordShow.password}
+            onChange={onChange}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
