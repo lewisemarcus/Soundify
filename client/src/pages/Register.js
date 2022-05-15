@@ -42,15 +42,15 @@ function Register(props) {
         registerUser()
     }
 
-  const { onChange, onSubmit, values } = useForm(registerUserCallback, {
-    username: "",
-    email: "",
-    password: "",
-    // confirmPassword: "",
-  });
+    const { onChange, onSubmit, values } = useForm(registerUserCallback, {
+        username: "",
+        email: "",
+        password: "",
+        // confirmPassword: "",
+    })
 
     const [registerUser, { loading }] = useMutation(REGISTER_USER, {
-        update({ data: { registerUser: userData } }) {
+        update(proxy, { data: { registerUser: userData } }) {
             context.login(userData)
             navigate("/")
         },
@@ -109,12 +109,11 @@ function Register(props) {
                         id="outlined-adornment-password"
                         type={passwordShow.showPassword ? "text" : "password"}
                         name="password"
-                        value={passwordShow.password}
+                        // value={passwordShow.password}
                         onChange={onChange}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                    onChange={handleChange("password")}
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
                                     edge="end"
@@ -151,62 +150,7 @@ function Register(props) {
                 </Button>
             </Paper>
         </div>
-        <Stack spacing={5} paddingBottom={4}>
-          <TextField
-            className="input"
-            type="name"
-            placeholder="Username"
-            name="username"
-            onChange={onChange}
-          />
-          <TextField
-            className="input"
-            type="email"
-            placeholder="Email"
-            name="email"
-            onChange={onChange}
-          />
-          <OutlinedInput
-            placeholder="Password"
-            id="outlined-adornment-password"
-            type={passwordShow.showPassword ? "text" : "password"}
-            name="password"
-            // value={passwordShow.password}
-            onChange={onChange}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {passwordShow.showPassword ? (
-                    <VisibilityOff />
-                  ) : (
-                    <Visibility />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Stack>
-        {errors.map(function (error) {
-          return (
-            <Backdrop
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={open}
-              onClick={handleClose}
-            >
-              <Alert severity="error">Incorrect email/password</Alert>;
-            </Backdrop>
-          );
-        })}
-        <Button className="solid-btn login-btn" onClick={onSubmit}>
-          Register
-        </Button>
-      </Paper>
-    </div>
-  );
+    )
 }
 
 export default Register
