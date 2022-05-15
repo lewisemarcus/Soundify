@@ -1,7 +1,6 @@
-import Error from "./Error";
 import Register from "./Register";
-import Landing from "./Landing";
-import SharedLayout from "./SharedLayout";
-import ProtectedRoute from "./ProtectedRoute";
+import LandingPage from "./LandingPage";
+import Login from "./Login";
+import AddSong from "./AddSong";
 
-export { Error, Register, Landing, SharedLayout, ProtectedRoute };
+export { Register, LandingPage, Login, AddSong };

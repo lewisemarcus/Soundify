@@ -1,0 +1,40 @@
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  border: 1px solid red;
+  width: 30rem;
+  height: 35rem;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-header h3 {
+  font-size: 3rem;
+  font-family: var(--main-font);
+  font-weight: var(--poppins-bold);
+}
+
+.login-header p {
+  font-family: var(--main-font);
+  font-weight: var(--poppins-extra-light);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.input {
+  width: 19rem;
+}

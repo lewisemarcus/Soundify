@@ -1,41 +1,45 @@
-import Wrapper from "../assets/wrappers/Navbar";
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
-import { useAppContext } from "../context/appContext";
-import Logo from "./Logo";
-import { useState } from "react";
-
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+// import { Button } from "@mui/material";
+import "./styles/Navbar.css";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import FilterDramaIcon from "@mui/icons-material/FilterDrama";
+import Button from "./Button";
 
 const Navbar = () => {
-  const [showLogout, setShowLogout] = useState(false);
-  const { toggleSidebar, logoutUser, user } = useAppContext();
+  let navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
+
+  const onLogout = () => {
+    logout();
+    window.location.reload();
+    navigate("/");
+  };
+
   return (
-    <Wrapper>
-      <div className="nav-center">
-        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
-          <FaAlignLeft />
-        </button>
-        <div>
-          <Logo />
-          <h3 className="logo-text">dashboard</h3>
-        </div>
-        <div className="btn-container">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setShowLogout(!showLogout)}
-          >
-            <FaUserCircle />
-            {user?.name}
-            <FaCaretDown />
-          </button>
-          <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-            <button type="button" className="dropdown-btn" onClick={logoutUser}>
-              logout
-            </button>
-          </div>
-        </div>
+    <nav>
+      <div>
+        <Link to="/" className="logo">
+          <FilterDramaIcon fontSize="large" /> <h3>SoundClone</h3>
+        </Link>
       </div>
-    </Wrapper>
+      <div className="button-wrapper">
+        {user ? (
+          <Button onClick={onLogout}>Logout</Button>
+        ) : (
+          <>
+            {" "}
+            <Link to="/login" className="link">
+              <Button className="outline-btn">Login</Button>
+            </Link>
+            <Link to="/register" className="link">
+              <Button className="solid-btn">Register</Button>
+            </Link>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 
