@@ -35,7 +35,8 @@ app.use(errorHandlerMiddleware)
 
 const start = async () => {
     try {
-        await connectDB(process.env.MONGO_URL)
+        // await connectDB(process.env.MONGO_URL)
+        await connectDB("mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone")
         app.listen(port, () => {
             console.log(`Running on port ${port}`)
         })
