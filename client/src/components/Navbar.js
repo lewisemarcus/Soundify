@@ -4,6 +4,7 @@ import { useAppContext } from "../context/appContext";
 import Logo from "./Logo";
 import { useState } from "react";
 
+
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { toggleSidebar, logoutUser, user } = useAppContext();
