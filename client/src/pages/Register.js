@@ -46,7 +46,7 @@ function Register(props) {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
 
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
@@ -108,8 +108,9 @@ function Register(props) {
             placeholder="Password"
             id="outlined-adornment-password"
             type={passwordShow.showPassword ? "text" : "password"}
-            value={passwordShow.password}
-            onChange={handleChange("password")}
+            name="password"
+            // value={passwordShow.password}
+            onChange={onChange}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
