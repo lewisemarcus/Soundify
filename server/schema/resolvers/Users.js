@@ -1,57 +1,130 @@
-const User = require("../../models/User");
-const { ApolloError } = require("apollo-server-errors");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import User from "../../models/User.js"
+import { ApolloError } from "apollo-server-errors"
+import pkg from "bcryptjs"
+const { hash, compare } = pkg
+// import { sign } from "jsonwebtoken"
+import { default as jsonPkg } from "jsonwebtoken"
+const { sign } = jsonPkg
 
-module.exports = {
-  Mutation: {
-    async registerUser(_, { registerInput: { username, email, password } }) {
-      const oldUser = await User.findOne({ email });
-
-      if (oldUser) {
-        throw new ApolloError(
-          "A user is already registered with the email" + email,
-          "USER_ALREADY_EXISTS"
-        );
-      }
-
-      let hashedPassword = await bcrypt.hash(password, 10);
-
-      const newUser = new User({
-        username: username,
-        email: email.toLowerCase(),
-        password: hashedPassword,
-      });
-
-      const token = jwt.sign({ user_id: newUser._id, email }, "UNSAFE_STRING", {
-        expiresIn: "2h",
-      });
-
-      newUser.token = token;
-      const res = await newUser.save();
-      return {
-        id: res.id,
-        ...res._doc,
-      };
+const userResolvers = {
+    Query: {
+        user: (_, { ID }) => findById(ID),
     },
-    async loginUser(_, { loginInput: { email, password } }) {
-      const user = await User.findOne({ email });
+    Mutation: {
+        registerUser: async (
+            _,
+            { registerInput: { username, email, password } },
+        ) => {
+            const oldUser = await findOne({ email })
 
-      if (user && (await bcrypt.compare(password, user.password))) {
-        const token = jwt.sign({ user_id: user._id, email }, "UNSAFE_STRING", {
-          expiresIn: "2h",
-        });
-        user.token = token;
-        return {
-          id: user.id,
-          ...user._doc,
-        };
-      } else {
-        throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD");
-      }
+            if (oldUser) {
+                throw new ApolloError(
+                    "A user is already registered with the email" + email,
+                    "USER_ALREADY_EXISTS",
+                )
+            }
+
+            let hashedPassword = await hash(password, 10)
+
+            const newUser = new User({
+                username: username,
+                email: email.toLowerCase(),
+                password: hashedPassword,
+            })
+
+            const token = sign(
+                { user_id: newUser._id, email },
+                "UNSAFE_STRING",
+                {
+                    expiresIn: "2h",
+                },
+            )
+
+            newUser.token = token
+            const res = await newUser.save()
+            return {
+                id: res.id,
+                ...res._doc,
+            }
+        },
+        loginUser: async (_, { loginInput: { email, password } }) => {
+            const user = await findOne({ email })
+
+            if (user && (await compare(password, user.password))) {
+                const token = sign(
+                    { user_id: user._id, email },
+                    "UNSAFE_STRING",
+                    {
+                        expiresIn: "2h",
+                    },
+                )
+                user.token = token
+                return {
+                    id: user.id,
+                    ...user._doc,
+                }
+            } else {
+                throw new ApolloError(
+                    "Incorrect password",
+                    "INCORRECT_PASSWORD",
+                )
+            }
+        },
     },
-  },
-  Query: {
-    user: (_, { ID }) => User.findById(ID),
-  },
-};
+}
+
+export default userResolvers
+
+// export const Mutation = {
+//     registerUser: async (
+//         _,
+//         { registerInput: { username, email, password } },
+//     ) => {
+//         const oldUser = await findOne({ email })
+
+//         if (oldUser) {
+//             throw new ApolloError(
+//                 "A user is already registered with the email" + email,
+//                 "USER_ALREADY_EXISTS",
+//             )
+//         }
+
+//         let hashedPassword = await hash(password, 10)
+
+//         const newUser = new User({
+//             username: username,
+//             email: email.toLowerCase(),
+//             password: hashedPassword,
+//         })
+
+//         const token = sign({ user_id: newUser._id, email }, "UNSAFE_STRING", {
+//             expiresIn: "2h",
+//         })
+
+//         newUser.token = token
+//         const res = await newUser.save()
+//         return {
+//             id: res.id,
+//             ...res._doc,
+//         }
+//     },
+//     loginUser: async (_, { loginInput: { email, password } }) => {
+//         const user = await findOne({ email })
+
+//         if (user && (await compare(password, user.password))) {
+//             const token = sign({ user_id: user._id, email }, "UNSAFE_STRING", {
+//                 expiresIn: "2h",
+//             })
+//             user.token = token
+//             return {
+//                 id: user.id,
+//                 ...user._doc,
+//             }
+//         } else {
+//             throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD")
+//         }
+//     },
+// }
+// export const Query = {
+//     user: (_, { ID }) => findById(ID),
+// }

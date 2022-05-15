@@ -1,10 +1,10 @@
-const usersResolvers = require("./Users");
+// import { Query as _Query, Mutation as _Mutation } from "./Users.js"
 
-module.exports = {
-  Query: {
-    ...usersResolvers.Query,
-  },
-  Mutation: {
-    ...usersResolvers.Mutation,
-  },
-};
+// const Query = {
+//     ..._Query,
+// }
+// const Mutation = {
+//     ..._Mutation,
+// }
+
+// export default (Query, Mutation)
