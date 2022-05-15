@@ -1,34 +1,33 @@
-import { gql } from "apollo-server"
+import { gql } from "apollo-server";
 
 export default gql`
-    type User {
-        username: String
-        email: String
-        password: String
-        token: String
-    }
+  type User {
+    username: String
+    email: String
+    password: String
+    token: String
+  }
 
-    input RegisterInput {
-        username: String
-        email: String
-        password: String
-        confirmPassword: String
-    }
+  input RegisterInput {
+    username: String
+    email: String
+    password: String
+  }
 
-    input LoginInput {
-        email: String
-        password: String
-    }
+  input LoginInput {
+    email: String
+    password: String
+  }
 
-    type Query {
-        user(id: ID!): User
-    }
+  type Query {
+    user(id: ID!): User
+  }
 
-    type Mutation {
-        registerUser(registerInput: RegisterInput): User
-        loginUser(loginInput: LoginInput): User
-    }
-`
+  type Mutation {
+    registerUser(registerInput: RegisterInput): User
+    loginUser(loginInput: LoginInput): User
+  }
+`;
 
 // module.exports = gql`
 //     type User {
