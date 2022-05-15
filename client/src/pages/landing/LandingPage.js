@@ -1,12 +1,14 @@
 import "./landingPage.css"
 import Navbar from "../../components/Navbar";
 import Playlist from "../../components/playlist/Playlist";
+import Header from "../../components/header/Header";
 
 const LandingPage = () => {
 
     return (
         <div>
       <Navbar />
+      <Header />
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
