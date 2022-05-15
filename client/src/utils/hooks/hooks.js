@@ -5,14 +5,8 @@ export const useForm = (callback, initialState = {}) => {
 
     const onChange = (event) => {
         console.log(event.target)
-        // setValues({ ...values, [event.target.name]: event.target.value });
+        setValues({ ...values, [event.target.name]: event.target.value })
 
-        setValues((prevInput) => {
-            return {
-                ...prevInput,
-                [event.target.name]: event.target.value,
-            }
-        })
         console.log(values)
     }
 
