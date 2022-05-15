@@ -10,8 +10,8 @@ import { default as typeDefs } from "./schema/typeDefs.js"
 import { default as resolvers } from "./schema/resolvers/Users.js"
 // const resolvers = require("./graphql/resolvers")
 
-// const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone";
-const MONGODB = process.env.MONGO_URL
+const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone";
+// const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
     typeDefs,

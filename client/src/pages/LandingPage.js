@@ -30,14 +30,6 @@ const LandingPage = () => {
           </div>
           <div className="listResult">
             <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
-            <Playlist />
           </div>
         </div>
       </div>
