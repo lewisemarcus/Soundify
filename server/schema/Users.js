@@ -48,7 +48,7 @@ const resolvers = {
             }
         },
         loginUser: async (_, { loginInput: { email, password } }) => {
-            const user = await findOne({ email })
+            const user = await User.findOne({ email })
 
             if (user && (await compare(password, user.password))) {
                 const token = sign(
