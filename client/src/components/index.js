@@ -1,8 +1,6 @@
-import Logo from "./Logo";
-import FormRow from "./FormRow";
-import Alert from "./Alert";
+import Button from "./Button";
 import Navbar from "./Navbar";
-import BigSidebar from "./BigSidebar";
-import SmallSidebar from "./SmallSidebar";
+import Hero from "./Hero";
+import Playlist from "./Playlist";
 
-export { Logo, FormRow, Alert, Navbar, BigSidebar, SmallSidebar };
+export { Button, Navbar, Hero, Playlist };

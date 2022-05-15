@@ -14,16 +14,16 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import "../components/styles/Button.css";
 import Button from "../components/Button";
-import "./styles/Register.css";
+import "./styles/Login.css";
+import "../components/styles/Button.css";
 
 import { gql } from "graphql-tag";
 import { useNavigate } from "react-router-dom";
 
-const REGISTER_USER = gql`
-  mutation Mutation($registerInput: RegisterInput) {
-    registerUser(registerInput: $registerInput) {
+const LOGIN_USER = gql`
+  mutation login($loginInput: LoginInput) {
+    loginUser(loginInput: $loginInput) {
       email
       username
       token
@@ -31,33 +31,30 @@ const REGISTER_USER = gql`
   }
 `;
 
-function Register(props) {
-  const context = useContext(AuthContext);
+function Login(props) {
   let navigate = useNavigate();
 
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
 
-  function registerUserCallback() {
-    console.log("callback hit");
-    registerUser();
+  function loginUserCallback() {
+    loginUser();
   }
 
-  const { onChange, onSubmit, values } = useForm(registerUserCallback, {
-    username: "",
+  const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
-  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, { data: { registerUser: userData } }) {
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+    update(proxy, { data: { loginUser: userData } }) {
       context.login(userData);
       navigate("/");
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors);
     },
-    variables: { registerInput: values },
+    variables: { loginInput: values },
   });
 
   const [open, setOpen] = useState(false);
@@ -82,21 +79,14 @@ function Register(props) {
   };
 
   return (
-    <div className="register-wrapper">
-      <Paper elevation={12} className="register-form">
+    <div className="login-wrapper">
+      <Paper elevation={12} className="login-form">
         {loading ? "Loading..." : ""}
-        <div className="register-header">
-          <h3>Register</h3>
-          <p>Sign up below to upload and listen to music!</p>
+        <div className="login-header">
+          <h3>Login</h3>
+          <p>Log in below to start listening to music!</p>
         </div>
         <Stack spacing={5} paddingBottom={4}>
-          <TextField
-            className="input"
-            type="name"
-            placeholder="Username"
-            name="username"
-            onChange={onChange}
-          />
           <TextField
             className="input"
             type="email"
@@ -139,11 +129,11 @@ function Register(props) {
           );
         })}
         <Button className="solid-btn login-btn" onClick={onSubmit}>
-          Register
+          Login
         </Button>
       </Paper>
     </div>
   );
 }
 
-export default Register;
+export default Login;
