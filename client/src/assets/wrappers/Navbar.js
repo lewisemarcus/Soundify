@@ -81,8 +81,8 @@ const Wrapper = styled.nav`
     margin: 0;
   }
   @media (min-width: 992px) {
-    position: sticky;
-    top: 0;
+    /* position: sticky;
+    top: 0; */
 
     .nav-center {
       width: 90%;
