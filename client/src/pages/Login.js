@@ -7,7 +7,6 @@ import {
   Paper,
   Stack,
   Alert,
-  Backdrop,
   OutlinedInput,
   InputAdornment,
   IconButton,
@@ -57,19 +56,10 @@ function Login(props) {
     variables: { loginInput: values },
   });
 
-  const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const [passwordShow, setPasswordShow] = useState({
     password: "",
     showPassword: false,
   });
-
-  const handleChange = (prop) => (event) => {
-    setPasswordShow({ ...values, [prop]: event.target.value });
-  };
 
   const handleClickShowPassword = () => {
     setPasswordShow({
@@ -81,7 +71,6 @@ function Login(props) {
   return (
     <div className="login-wrapper">
       <Paper elevation={12} className="login-form">
-        {loading ? "Loading..." : ""}
         <div className="login-header">
           <h3>Login</h3>
           <p>Log in below to start listening to music!</p>
@@ -99,7 +88,6 @@ function Login(props) {
             id="outlined-adornment-password"
             type={passwordShow.showPassword ? "text" : "password"}
             name="password"
-            // value={passwordShow.password}
             onChange={onChange}
             endAdornment={
               <InputAdornment position="end">
@@ -120,13 +108,7 @@ function Login(props) {
         </Stack>
         {errors.map(function (error) {
           return (
-            <Backdrop
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={open}
-              onClick={handleClose}
-            >
-              <Alert severity="error">Incorrect email/password</Alert>;
-            </Backdrop>
+            <Alert severity="error">Invalid credentials. Try again.</Alert>
           );
         })}
         <Button className="solid-btn login-btn" onClick={onSubmit}>
