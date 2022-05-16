@@ -8,7 +8,7 @@ const { sign } = jsonPkg
 
 const resolvers = {
     Query: {
-        user: (_, { ID }) => findById(ID),
+        user: (_, { ID }) => User.findById(ID),
     },
     Mutation: {
         registerUser: async (
@@ -50,7 +50,7 @@ const resolvers = {
         loginUser: async (_, { loginInput: { email, password } }) => {
             const user = await User.findOne({ email })
 
-            if (user && (await compare(password, user.password))) {
+            if (user && compare(password, user.password)) {
                 const token = sign(
                     { user_id: user._id, email },
                     "UNSAFE_STRING",

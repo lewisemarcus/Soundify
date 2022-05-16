@@ -128,7 +128,7 @@ function Register(props) {
                         }
                     />
                 </Stack>
-                {errors.map(function (error) {
+                {errors.map(function (error, index) {
                     return (
                         <Backdrop
                             sx={{
@@ -138,7 +138,7 @@ function Register(props) {
                             open={open}
                             onClick={handleClose}
                         >
-                            <Alert severity="error">
+                            <Alert severity="error" key={index}>
                                 Incorrect email/password
                             </Alert>
                             ;
