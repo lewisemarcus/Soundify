@@ -2,7 +2,7 @@ import { Carousel } from "antd";
 import MusicCard from "./MusicCard";
 import "./styles/Carousel.css";
 
-export default Carousel = () => (
+export const CarouselMusic = () => (
   <div className="carousel-container">
     <div className="carousel-header">
       <h2>Here are some of the trending songs. Sign up or login to listen!</h2>
