@@ -14,8 +14,8 @@ import mongoose from "mongoose"
 import resolvers from "./schema/Users.js"
 import typeDefs from "./schema/typeDefs.js"
 
-// const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone";
-const MONGODB = process.env.MONGO_URL
+const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone";
+// const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
     typeDefs,

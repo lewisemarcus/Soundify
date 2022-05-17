@@ -61,10 +61,13 @@ const AddSong = () => {
         mySound = p.loadSound("https://soundclone-music.s3.amazonaws.com/qwe");
       };
 
+
+
       p.setup = () => {
         p.rectMode(p.CENTER);
         p.angleMode(p.DEGREES);
-        canvas = p.createCanvas(710, 600);
+        canvas = p.createCanvas(508, 399);
+        // canvas = p.createCanvas(710, 600);
         p.noFill();
         canvas.style.marginBottom = 100;
         p.getAudioContext();
@@ -72,7 +75,19 @@ const AddSong = () => {
         fft = new p5.FFT();
 
         // p.noLoop()
-      };
+        let playButton = p.createButton("▶️");
+        playButton.id("button")
+        // playButton.addEventListener("onClick", (button) => {
+        //   p.mousePressed()
+        // },
+        // onClick={() => playButton(p.mousePrwessed(e))}
+        // playButton.onClick(p.mousePrwessed())
+        playButton.style("border-radius: 5px; margin-top: 10px; font-size: 30px; border: 1px solid black; padding: 1px 6px 1px 6px; background-color: #fff; &:hover:{background: #efefef}")
+
+        // )
+  };
+
+      
 
       p.draw = () => {
         //mySound loads in draw
@@ -93,6 +108,8 @@ const AddSong = () => {
           if (i % 2 === 0) y *= -1;
           p.curveVertex(x, 100 + y + p.height / 2);
         }
+
+        
 
         // for (let i = 0; i < spectrum.length / 20; i++) {
         //     p.fill(spectrum[i], spectrum[i] / 10, 0)
@@ -119,7 +136,6 @@ const AddSong = () => {
         //     let y = p.map(waveform[i], -1, 1, -p.height / 2, p.height / 2)
         //     p.vertex(x, y + p.height / 2)
         // }
-
         //WAVEFORM STYLE TWO
 
         for (let i = 0; i < wave.length; i++) {
@@ -141,10 +157,10 @@ const AddSong = () => {
         p.endShape();
       };
 
-      p.mousePressed = (e) => {
-        console.log(e.target.id);
+      p.mousePressed = (button) => {
+        console.log(button.target.id);
         console.log(mySound.isPaused());
-        if (e.target.id === "defaultCanvas0") {
+        if (button.target.id === "button") {
           if (mySound.isPaused() || mySound.currentTime() === 0) mySound.play();
           else mySound.pause();
         } else return;
@@ -172,6 +188,7 @@ const AddSong = () => {
     });
   }
 
+
   async function addSong(event) {
     event.preventDefault();
     const newSong = {
@@ -195,6 +212,7 @@ const AddSong = () => {
     axios.delete(`/delete/${id}`);
     alert("song deleted");
   }
+  
 
   return (
     <div className="App">
@@ -229,6 +247,7 @@ const AddSong = () => {
             <button onClick={() => deleteSong(song._id)}>DELETE</button>
 
             <div ref={app} id="canvasContainer" style={containerStyle}></div>
+            
           </div>
         );
       })}

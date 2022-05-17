@@ -8,6 +8,7 @@
         "start": "node server",
         "server": "nodemon server --ignore client",
         "client": "npm start --prefix client",
+        "install": "cd server && npm i && cd ../client && npm i",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client",
         "dev": "concurrently \"cd client && npm run start\" \"cd server && nodemon server.js\" ",
         "seed": "cd server && node seeders/seed.js"
