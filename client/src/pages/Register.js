@@ -2,23 +2,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { useForm } from "../utils/hooks/hooks";
 import { useMutation } from "@apollo/react-hooks";
-import {
-  TextField,
-  Paper,
-  Stack,
-  Alert,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Form, Input, Alert, message } from "antd";
 import "../components/styles/Button.css";
 import Button from "../components/Button";
 import "./styles/Register.css";
+import * as IoIcons from "react-icons/io";
 
 import { gql } from "graphql-tag";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const REGISTER_USER = gql`
   mutation Mutation($registerInput: RegisterInput) {
@@ -38,7 +29,12 @@ function Register(props) {
 
   function registerUserCallback() {
     console.log("callback hit");
-    registerUser();
+    const hide = message.loading("Creating account...", 0);
+    setTimeout(hide, 1100);
+
+    setTimeout(() => {
+      registerUser();
+    }, 1000);
   }
 
   const { onChange, onSubmit, values } = useForm(registerUserCallback, {
@@ -58,75 +54,69 @@ function Register(props) {
     variables: { registerInput: values },
   });
 
-  const [passwordShow, setPasswordShow] = useState({
-    password: "",
-    showPassword: false,
-  });
-
-  const handleClickShowPassword = () => {
-    setPasswordShow({
-      ...passwordShow,
-      showPassword: !passwordShow.showPassword,
-    });
+  const handleBackClick = () => {
+    navigate("/");
   };
 
   return (
     <div className="register-wrapper">
-      <Paper elevation={12} className="register-form">
+      <Form name="basic" autoComplete="off" className="register-form">
+        <IoIcons.IoIosArrowDropleft
+          onClick={handleBackClick}
+          className="register-icon"
+        />
         <div className="register-header">
-          <h3>Register</h3>
-          <p>Sign up below to upload and listen to music!</p>
+          <p className="register">Register</p>
+          <p className="register-description">
+            Sign up below to upload and listen to music!
+          </p>
         </div>
-        <Stack spacing={5} paddingBottom={4}>
-          <TextField
+        <div className="form-input-wrapper">
+          <Input
             className="input"
-            type="name"
             placeholder="Username"
             name="username"
             onChange={onChange}
           />
-          <TextField
+          <Input
             className="input"
-            type="email"
             placeholder="Email"
             name="email"
             onChange={onChange}
           />
-          <OutlinedInput
+          <Input.Password
+            className="input"
             placeholder="Password"
-            id="outlined-adornment-password"
-            type={passwordShow.showPassword ? "text" : "password"}
             name="password"
-            // value={passwordShow.password}
             onChange={onChange}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {passwordShow.showPassword ? (
-                    <VisibilityOff />
-                  ) : (
-                    <Visibility />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
           />
-        </Stack>
-        {errors.map(function (error, index) {
-          return (
-            <Alert severity="error" key={index}>
-              Invalid credentials. Try again.
-            </Alert>
-          );
-        })}
-        <Button className="solid-btn login-btn" onClick={onSubmit}>
-          Register
-        </Button>
-      </Paper>
+          <Button
+            className="solid-btn login-btn"
+            type="primary"
+            htmlType="submit"
+            onClick={onSubmit}
+          >
+            Register
+          </Button>
+          <p>
+            Already have an account?{" "}
+            <Link className="link-to-login" to="/login">
+              Login here
+            </Link>
+          </p>
+          {errors.map(function (error, index) {
+            return (
+              <Alert
+                className="error"
+                description="Something went wrong. Please try again."
+                type="error"
+                showIcon
+                key={index}
+              />
+            );
+          })}
+        </div>
+      </Form>
     </div>
   );
 }

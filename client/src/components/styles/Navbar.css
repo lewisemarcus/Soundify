@@ -2,25 +2,21 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid red;
-  padding: 4rem;
   height: 10vh;
-  background-color: #e7e7e7;
+  background-color: var(--light);
 }
 
 .logo {
   font-size: 2rem;
-  color: #212121;
-  text-decoration: none;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  border: 1px solid red;
-  width: 16rem;
+  justify-content: center;
+  color: var(--navy);
+  text-decoration: none;
+  margin-left: 3rem;
 }
 
 .button-wrapper {
-  border: 1px solid red;
   width: 20rem;
   padding: 1rem;
   display: flex;
@@ -30,4 +26,22 @@ nav {
 
 .link {
   text-decoration: none;
+}
+
+.nav-btn {
+  width: 11rem;
+}
+
+.menu {
+  border: 1px solid blue;
+  width: 8rem;
+}
+
+.menu-item {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 2rem;
 }
