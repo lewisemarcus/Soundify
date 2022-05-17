@@ -4,7 +4,7 @@ import "./styles/Navbar.css";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { Avatar, Menu, Dropdown, Space, Popconfirm, message } from "antd";
+import { Avatar, Menu, Dropdown, Space, message, Modal } from "antd";
 import Button from "../components/Button";
 
 const Navbar = () => {
@@ -17,38 +17,39 @@ const Navbar = () => {
     navigate("/");
   };
 
-  function confirm(e) {
-    console.log(e);
-    message.success("Successfully logged out");
-    setTimeout(() => {
-      onLogout();
-    }, 500);
-  }
-
-  function cancel(e) {
-    console.log(e);
-    // message.error("Click on No");
+  function modal() {
+    Modal.confirm({
+      title: "Confirm",
+      icon: <QuestionCircleOutlined style={{ color: "red" }} />,
+      content: "Are you sure you want to logout?",
+      okText: "Yes",
+      cancelText: "No",
+      onOk() {
+        message.success("Successfully logged out");
+        setTimeout(() => {
+          onLogout();
+        }, 500);
+      },
+    });
   }
 
   const menu = (
     <Menu
+      className="menu"
       items={[
         {
-          label: <Link to="/playlists">View Playlists</Link>,
+          label: (
+            <Link to="/playlists">
+              <li className="menu-item">View Playlists</li>
+            </Link>
+          ),
         },
         {
           danger: true,
           label: (
-            <Popconfirm
-              title="Are you sure you want to logout？"
-              icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <a href="#">Logout</a>
-            </Popconfirm>
+            <li onClick={modal} className="menu-item">
+              Logout
+            </li>
           ),
         },
       ]}
@@ -63,7 +64,7 @@ const Navbar = () => {
       <div className="button-wrapper">
         {user ? (
           <Dropdown overlay={menu} trigger={["click"]}>
-            <a onClick={(e) => e.preventDefault()}>
+            <div onClick={(e) => e.preventDefault()}>
               <Space>
                 <Avatar
                   style={{
@@ -75,7 +76,7 @@ const Navbar = () => {
                 />
                 {/* <DownOutlined /> */}
               </Space>
-            </a>
+            </div>
           </Dropdown>
         ) : (
           <>

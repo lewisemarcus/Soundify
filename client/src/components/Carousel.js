@@ -2,19 +2,24 @@ import { Carousel } from "antd";
 import MusicCard from "./MusicCard";
 import "./styles/Carousel.css";
 
-export default () => (
-  <Carousel autoplay dotPosition="left">
-    <div className="carousel-items">
-      <MusicCard />
+export default Carousel = () => (
+  <div className="carousel-container">
+    <div className="carousel-header">
+      <h2>Here are some of the trending songs. Sign up or login to listen!</h2>
     </div>
-    <div className="carousel-items">
-      <MusicCard />
-    </div>
-    <div className="carousel-items">
-      <MusicCard />
-    </div>
-    <div className="carousel-items">
-      <MusicCard />
-    </div>
-  </Carousel>
+    <Carousel autoplay dotPosition="left">
+      <div className="carousel-items">
+        <MusicCard />
+      </div>
+      <div className="carousel-items">
+        <MusicCard />
+      </div>
+      <div className="carousel-items">
+        <MusicCard />
+      </div>
+      <div className="carousel-items">
+        <MusicCard />
+      </div>
+    </Carousel>
+  </div>
 );

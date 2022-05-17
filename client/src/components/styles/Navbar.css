@@ -31,3 +31,17 @@ nav {
 .nav-btn {
   width: 11rem;
 }
+
+.menu {
+  border: 1px solid blue;
+  width: 8rem;
+}
+
+.menu-item {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 2rem;
+}

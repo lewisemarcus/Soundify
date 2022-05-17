@@ -1,8 +1,8 @@
 .landing-page-wrapper {
   background: var(--navy);
+  height: fit-content;
   position: absolute;
   top: 10vh;
-  height: calc(100vh - 10vh);
 }
 
 .user-name {

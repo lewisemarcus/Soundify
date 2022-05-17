@@ -17,7 +17,6 @@ const Header = () => {
           <Button className="outline-btn hero-btn">Login</Button>
         </Link>
       </div>
-      <h2>Here are some of the trending songs. Sign up or login to listen!</h2>
     </div>
   );
 };
