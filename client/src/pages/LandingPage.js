@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./styles/LandingPage.css";
 import { Hero } from "../components";
-import Carousel from "../components/Carousel";
+import { CarouselMusic } from "../components/Carousel";
 import { AuthContext } from "../context/authContext";
 
 const LandingPage = () => {
@@ -12,12 +12,12 @@ const LandingPage = () => {
       {user ? (
         <>
           <h1 className="user-name">Welcome, {username}</h1>
-          <Carousel />
+          <CarouselMusic />
         </>
       ) : (
         <>
           <Hero />
-          <Carousel />
+          <CarouselMusic />
         </>
       )}
     </div>
