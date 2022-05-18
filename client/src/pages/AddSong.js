@@ -55,13 +55,11 @@ const AddSong = () => {
     fetchSongs();
 
     const sketch = (p) => {
-      let fft, canvas, mySound, wave;
+      let fft, canvas, mySound, wave, slider;
 
       p.preload = () => {
         mySound = p.loadSound("https://soundclone-music.s3.amazonaws.com/qwe");
       };
-
-
 
       p.setup = () => {
         p.rectMode(p.CENTER);
@@ -73,21 +71,40 @@ const AddSong = () => {
         p.getAudioContext();
         if (mySound) if (mySound.isLoaded()) wave = mySound.getPeaks(p.width);
         fft = new p5.FFT();
+  
+        slider = p.createSlider(0, 1, 0.5, 0.01);
+        // slider.position(10, 10);
+        
+        slider.style("width: 508px; position: relative; margin-top: 10px;");
+
 
         // p.noLoop()
         let playButton = p.createButton("▶️");
-        playButton.id("button")
+
+        
+        playButton.id("button");
+        playButton.mouseOver(() => {
+          playButton.style("background-color", "#EC994B");
+          console.log(document.getElementById("button"))
+        });
+
+        playButton.mouseOut(() => {
+          playButton.style("background-color", "#0071C2");
+        });
         // playButton.addEventListener("onClick", (button) => {
         //   p.mousePressed()
         // },
         // onClick={() => playButton(p.mousePrwessed(e))}
         // playButton.onClick(p.mousePrwessed())
-        playButton.style("border-radius: 5px; margin-top: 10px; font-size: 30px; border: 1px solid black; padding: 1px 6px 1px 6px; background-color: #fff; &:hover:{background: #efefef}")
+        playButton.style(
+          "border-radius: 5px; margin-top: 10px; font-size: 30px; border: 1px solid black; padding: 1px 6px 1px 6px; background-color: #0071C2; margin-bottom: 35px"
+        );
 
         // )
-  };
 
-      
+        
+
+      };
 
       p.draw = () => {
         //mySound loads in draw
@@ -108,8 +125,6 @@ const AddSong = () => {
           if (i % 2 === 0) y *= -1;
           p.curveVertex(x, 100 + y + p.height / 2);
         }
-
-        
 
         // for (let i = 0; i < spectrum.length / 20; i++) {
         //     p.fill(spectrum[i], spectrum[i] / 10, 0)
@@ -151,6 +166,10 @@ const AddSong = () => {
           p.width
         );
 
+          // *****volume control*****//
+          
+          mySound.setVolume(slider.value());
+
         p.stroke(200, 0, 0);
         p.line(hpos, 100, hpos, p.height / 2.5);
 
@@ -161,8 +180,11 @@ const AddSong = () => {
         console.log(button.target.id);
         console.log(mySound.isPaused());
         if (button.target.id === "button") {
-          if (mySound.isPaused() || mySound.currentTime() === 0) mySound.play();
-          else mySound.pause();
+          if (mySound.isPaused() || mySound.currentTime() === 0) 
+          {document.getElementById("button").innerHTML = "⏸️"
+          mySound.play()}
+          else {document.getElementById("button").innerHTML = "▶️" 
+          mySound.pause()};
         } else return;
         // let hpos = p.map(p.mouseX, 0, mySound.duration(), 0, p.width)
         // console.log(hpos)
@@ -188,7 +210,6 @@ const AddSong = () => {
     });
   }
 
-
   async function addSong(event) {
     event.preventDefault();
     const newSong = {
@@ -212,7 +233,6 @@ const AddSong = () => {
     axios.delete(`/delete/${id}`);
     alert("song deleted");
   }
-  
 
   return (
     <div className="App">
@@ -247,7 +267,6 @@ const AddSong = () => {
             <button onClick={() => deleteSong(song._id)}>DELETE</button>
 
             <div ref={app} id="canvasContainer" style={containerStyle}></div>
-            
           </div>
         );
       })}
