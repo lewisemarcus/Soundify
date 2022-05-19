@@ -3,17 +3,23 @@ import { Link } from "react-router-dom";
 import "./styles/Navbar.css";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  QuestionCircleOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { Avatar, Menu, Dropdown, Space, message, Modal } from "antd";
 import Button from "../components/Button";
 
 const Navbar = () => {
   let navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+  const username = localStorage.getItem("username");
 
   const onLogout = () => {
     logout();
     window.location.reload();
+    localStorage.removeItem("username");
     navigate("/");
   };
 
@@ -39,8 +45,22 @@ const Navbar = () => {
       items={[
         {
           label: (
+            <Link to="/">
+              <li className="menu-item">Home</li>
+            </Link>
+          ),
+        },
+        {
+          label: (
+            <Link to="/songs">
+              <li className="menu-item">Songs</li>
+            </Link>
+          ),
+        },
+        {
+          label: (
             <Link to="/playlists">
-              <li className="menu-item">View Playlists</li>
+              <li className="menu-item">My Playlists</li>
             </Link>
           ),
         },
@@ -59,35 +79,37 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/">
-        <h3 className="logo">SoundClone</h3>
+        <h3 className="logo">Soundify</h3>
       </Link>
-      <div className="button-wrapper">
-        {user ? (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <div onClick={(e) => e.preventDefault()}>
-              <Space>
-                <Avatar
-                  style={{
-                    backgroundColor: "var(--navy)",
-                    color: "var(--light)",
-                  }}
-                  size={50}
-                  icon={<UserOutlined />}
-                />
-                {/* <DownOutlined /> */}
-              </Space>
-            </div>
-          </Dropdown>
-        ) : (
-          <>
-            {" "}
-            <Link to="/register" className="link">
-              <Button className="solid-btn nav-btn">Create account</Button>
-            </Link>
-          </>
-          // ""
-        )}
-      </div>
+      {user ? (
+        <ul className="nav-items">
+          <li className="upload">
+            <Link to="/songs">Upload</Link>
+          </li>
+          <li className="profile">
+            <Dropdown overlay={menu} trigger={["hover"]} className="dropdown">
+              <div onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <Avatar
+                    style={{
+                      backgroundColor: "var(--navy)",
+                      color: "var(--light)",
+                    }}
+                    size={30}
+                    icon={<UserOutlined />}
+                  />
+                  {username}
+                  <DownOutlined />
+                </Space>
+              </div>
+            </Dropdown>
+          </li>
+        </ul>
+      ) : (
+        <Link to="/register" className="link">
+          <Button className="solid-btn nav-btn">Create account</Button>
+        </Link>
+      )}
     </nav>
   );
 };
