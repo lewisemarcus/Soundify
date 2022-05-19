@@ -7,4 +7,5 @@
 
 .user-name {
   color: var(--light);
+  margin-left: 10px;
 }

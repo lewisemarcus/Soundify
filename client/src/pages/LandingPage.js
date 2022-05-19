@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./styles/LandingPage.css";
 import { Hero } from "../components";
 import { CarouselMusic } from "../components/Carousel";
+import  DashCarousel  from "../components/DashCarousel";
 import { AuthContext } from "../context/authContext";
 
 const LandingPage = () => {
@@ -12,7 +13,7 @@ const LandingPage = () => {
       {user ? (
         <>
           <h1 className="user-name">Welcome, {username}</h1>
-          <CarouselMusic />
+          <DashCarousel />
         </>
       ) : (
         <>
