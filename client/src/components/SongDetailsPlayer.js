@@ -1,28 +1,19 @@
 import p5 from "p5"
 import "../utils/p5/addons/p5.sound.js"
-const SongDetailsPlayer = (songLink, app) => {
+const SongDetailsPlayer = (songLink, app, image) => {
     const sketch = (p) => {
-        let fft, canvas, mySound, wave, background, distance, w, amp
+        let fft, canvas, mySound, wave, w, amp, myImage
 
-        p.preload = () => {
-            mySound = p.loadSound(songLink)
+        p.preload = async () => {
+            myImage = await p.loadImage(image)
+            mySound = await p.loadSound(songLink)
         }
 
         p.setup = () => {
-            background = 255
-            let playButton = p.createButton("Play")
-            playButton.style("border-radius", "5px")
-            playButton.id("button")
-            playButton.mouseOver(() => {
-                playButton.style("border-radius", "10px")
-            })
-            console.log("waddup", document.getElementById("button"))
             p.rectMode(p.CENTER)
             p.angleMode(p.DEGREES)
-            canvas = p.createCanvas(800, 600)
+            canvas = p.createCanvas(800, 300)
             p.noFill()
-            console.log(p.drawingContext.scale)
-
             canvas.style.marginBottom = 100
             p.getAudioContext()
             if (mySound)
@@ -41,42 +32,37 @@ const SongDetailsPlayer = (songLink, app) => {
             if (e.target.id === "defaultCanvas0") {
                 let hpos = p.constrain(p.mouseX, 0, p.width)
                 hpos = p.map(hpos, 0, p.width, 0, mySound.duration())
+                setTimeout(function () {
+                    Object.assign(mySound, { _playing: true })
+                    mySound.playMode("restart")
+                }, 100)
+                mySound.stop()
+                mySound.playMode("sustain")
+                mySound.play()
                 mySound.jump(hpos)
             }
-
-            // let hpos = p.map(p.mouseX, 0, mySound.duration(), 0, p.width)
-
-            // p.line(hpos, 0, hpos, p.height)
         }
         p.draw = () => {
             //mySound loads in draw
             let amplitude = amp.getLevel()
             amplitude = p.map(amplitude, 0, 0.5, 127, 255)
-
+            p.background(myImage)
             p.scale(1)
-            p.background(background)
             p.beginShape()
-            p.stroke("#1d43ad")
+            p.stroke(255)
 
             //SPECTRUM STYLE ONE
             let spectrum = fft.analyze()
 
             const invertedSpectrum = spectrum.slice().reverse()
             const values = invertedSpectrum.concat(spectrum)
-            // distance = p.dist(p.mouseX, p.mouseY, 100, 100)
 
-            // if (distance < 50) {
-            //     background = 0
-            // } else {
-            //     background = 255
-            // }
-
-            for (var i = 0; i < values.length; i++) {
+            for (let i = 0; i < values.length; i++) {
                 p.fill(values[i], values[i] / 10, 0)
-                var x = p.map(i, 0, values.length, 0, p.width)
-                var y = p.map(values[i], 0, 255, 0, p.height / 8)
+                let x = p.map(i, 0, values.length, 0, p.width)
+                let y = p.map(values[i], 0, 255, 0, p.height / 8)
                 if (i % 2 === 0) y *= -1
-                p.curveVertex(x, 100 + y + p.height / 2)
+                p.curveVertex(x, -100 + y + p.height / 2)
             }
             p.strokeWeight(1)
             let hpos = p.map(
@@ -87,23 +73,23 @@ const SongDetailsPlayer = (songLink, app) => {
                 p.width,
             )
 
-            //WAVEFORM STYLE TWO
+            //WAVEFORM STYLE
             p.strokeWeight(2)
             for (let i = 0; i < wave.length; i++) {
                 if (i * w <= hpos) {
                     p.stroke(200, 0, 0 /*amplitude*/)
                 } else {
-                    p.stroke(29, 67, 173 /*amplitude*/)
+                    p.stroke(255, 255, 255 /*amplitude*/)
                 }
                 let peak = wave[i]
                 let l = p.map(peak, -1, 1, -50, 50)
 
-                p.line(i * w, p.height / 4 + l, i * w, p.height / 4 - l)
+                p.line(i * w, p.height / 1.5 + l, i * w, p.height / 1.5 - l)
             }
 
             p.strokeWeight(1)
             p.stroke(200, 0, 0)
-            p.line(hpos, 105, hpos, p.height / 3)
+            p.line(hpos, 150, hpos, p.height / 1.2)
 
             p.endShape()
         }

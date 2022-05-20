@@ -53,8 +53,7 @@ const AddSong = () => {
                 playButton.mouseOver(() => {
                     playButton.style("border-radius", "10px")
                 })
-                console.log("waddup", document.getElementById("button"))
-                // playButton.position(window.width, window.height)
+
                 p.rectMode(p.CENTER)
                 p.angleMode(p.DEGREES)
                 canvas = p.createCanvas(600, 600)
@@ -71,6 +70,26 @@ const AddSong = () => {
                 // p.noLoop()
             }
 
+            p.mousePressed = (e) => {
+                if (e.target.id === "button") {
+                    if (mySound.isPaused() || mySound.currentTime() === 0)
+                        mySound.play()
+                    else mySound.pause()
+                }
+                if (e.target.id === "defaultCanvas0") {
+                    let hpos = p.constrain(p.mouseX, 0, p.width)
+                    hpos = p.map(hpos, 0, p.width, 0, mySound.duration())
+                    setTimeout(function () {
+                        Object.assign(mySound, { _playing: true })
+                        mySound.playMode("restart")
+                    }, 100)
+                    mySound.stop()
+                    mySound.playMode("sustain")
+                    mySound.play()
+                    mySound.jump(hpos)
+                }
+            }
+
             p.draw = () => {
                 //mySound loads in draw
                 p.scale(1)
@@ -85,12 +104,6 @@ const AddSong = () => {
                 const values = invertedSpectrum.concat(spectrum)
                 distance = p.dist(p.mouseX, p.mouseY, 100, 100)
 
-                if (distance < 50) {
-                    background = 0
-                } else {
-                    background = 200
-                }
-
                 for (var i = 0; i < values.length; i++) {
                     p.fill(values[i], values[i] / 10, 0)
                     var x = p.map(i, 0, values.length, 0, p.width)
@@ -98,32 +111,6 @@ const AddSong = () => {
                     if (i % 2 === 0) y *= -1
                     p.curveVertex(x, 100 + y + p.height / 2)
                 }
-
-                // for (let i = 0; i < spectrum.length / 20; i++) {
-                //     p.fill(spectrum[i], spectrum[i] / 10, 0)
-                //     let x = p.map(i, 0, spectrum.length / 20, 0, p.width)
-                //     let h = p.map(spectrum[i], 0, 255, 0, p.height)
-                //     p.rect(x, p.height, spectrum.length / 20, -h)
-                // }
-
-                // spectrum.forEach((spec, i) => {
-                //     p.vertex(i, p.map(spec, 0, 255, p.height, 0))
-                // })
-
-                //WAVEFORM STYLE
-
-                // let waveform = fft.waveform()
-
-                // let bufferLength = waveform.length
-
-                // p.strokeWeight(10)
-                // p.stroke("#1d43ad")
-
-                // for (let i = 0; i < bufferLength; i++) {
-                //     let x = p.map(i, 0, bufferLength, 0, p.width)
-                //     let y = p.map(waveform[i], -1, 1, -p.height / 2, p.height / 2)
-                //     p.vertex(x, y + p.height / 2)
-                // }
 
                 //WAVEFORM STYLE TWO
                 p.strokeWeight(2)
@@ -147,17 +134,6 @@ const AddSong = () => {
                 p.line(hpos, 100, hpos, p.height / 2.5)
 
                 p.endShape()
-            }
-
-            p.mousePressed = (e) => {
-                if (e.target.id === "button") {
-                    if (mySound.isPaused() || mySound.currentTime() === 0)
-                        mySound.play()
-                    else mySound.pause()
-                } else return
-                // let hpos = p.map(p.mouseX, 0, mySound.duration(), 0, p.width)
-
-                // p.line(hpos, 0, hpos, p.height)
             }
         }
 
