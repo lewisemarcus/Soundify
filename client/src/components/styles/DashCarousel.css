@@ -1,104 +1,101 @@
 .carousel-container {
-    padding: 2rem 2rem 0;
-    height: 70vh;
-  }
-  
-  .carousel-items {
-    height: 20rem;
-  }
-  
-  .carousel-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .carousel-header h2 {
-    font-weight: var(--poppins-medium);
-    letter-spacing: 0.1rem;
-    font-size: 1.3rem;
-    color: var(--light);
-    opacity: 0.9;
-  }
+  padding: 2rem 2rem 0;
+  height: 70vh;
+}
 
-  .searchContainer {
-    display: flex;
-    margin-top: 20px;
-    justify-content: center;
-    align-items: center;
-    
-  }
+.carousel-items {
+  height: 20rem;
+}
 
-  #searchBar{
-    width: 255px;
-    
-  }
-  
-  #searchBtn{
-      margin-left: 5px;
-      /* width: 50px;
+.carousel-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-header h2 {
+  font-weight: var(--poppins-medium);
+  letter-spacing: 0.1rem;
+  font-size: 1.3rem;
+  color: var(--light);
+  opacity: 0.9;
+}
+
+.searchContainer {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+#searchBar {
+  width: 255px;
+}
+
+#searchBtn {
+  margin-left: 5px;
+  /* width: 50px;
       padding: 0px 2px 0px 2px; */
-      box-shadow:inset 0px 1px 0px 0px #bee2f9;
-      background:linear-gradient(to bottom, #63b8ee 5%, #468ccf 100%);
-      background-color:#63b8ee;
-      border-radius:6px;
-      border:1px solid #3866a3;
-      display:inline-block;
-      cursor:pointer;
-      color:#14396a;
-      font-family:Arial;
-      font-size:15px;
-      font-weight:bold;
-      padding:1px 15px;
-      text-decoration:none;
-      text-shadow:0px 1px 0px #7cacde;
-  }
+  /* box-shadow: inset 0px 1px 0px 0px #bee2f9; */
+  background-color: var(--orange);
+  border-radius: 5px;
+  /* border: 1px solid #3866a3; */
+  display: inline-block;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--main-font);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 1px 15px;
+  text-decoration: none;
+  /* text-shadow: 0px 1px 0px #7cacde; */
+  transition: 0.2s ease-in-out all;
+}
 
-  #searchBtn:hover{
-    background:linear-gradient(to bottom, #468ccf 5%, #63b8ee 100%);
-	background-color:#468ccf;
-  }
-  
-  #searchBtn:active{
-	position:relative;
-	top:1px;
-  }
+#searchBtn:hover {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+  transform: scale(1.1);
+}
 
+#searchBtn:active {
+  position: relative;
+  top: 1px;
+}
 
-  .genreContainer{
-    display: flex;
-    margin-top: 20px;
-    justify-content: center;
-    align-items: center;
-  }
+.genreContainer {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
 
-  .genre1 {
-      box-shadow: 0px 0px 0px 2px #9fb4f2;
-      background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-      background-color:#7892c2;
-      border-radius:10px;
-      border:1px solid #4e6096;
-      display:inline-block;
-      cursor:pointer;
-      color:#ffffff;
-      font-family:Arial;
-      font-size:16.5px;
-      margin-left: 35px;
-      padding:2px 12px;
-      text-decoration:none;
-      text-shadow:0px 1px 0px #283966;
-  }
+.genre1 {
+  /* box-shadow: 0px 0px 0px 2px #9fb4f2; */
+  /* background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%); */
+  background-color: var(--orange);
+  border-radius: 5px;
+  /* border: 1px solid #4e6096; */
+  display: inline-block;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--main-font);
+  font-size: 16.5px;
+  margin: 20px;
+  padding: 5px 12px;
+  text-decoration: none;
+  /* text-shadow: 0px 1px 0px #283966; */
+  border: none;
+  transition: 0.3s ease-in-out all;
+}
 
-  .genre1:hover {
-	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-	background-color:#476e9e;
-    transform: scale(1.22);
-  }
+.genre1:hover {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+  transform: scale(1.1);
+}
 
-  .genre1:active {
-    position:relative;
-	top:1px; 
-  }
-
-  
-  
+.genre1:active {
+  position: relative;
+  top: 1px;
+}
