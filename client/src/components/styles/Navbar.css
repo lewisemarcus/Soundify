@@ -1,33 +1,55 @@
 nav {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border: 2px solid red;
-  padding: 4rem;
+  align-items: flex-end;
   height: 10vh;
-  background-color: #e7e7e7;
+  background-color: var(--light);
 }
 
 .logo {
   font-size: 2rem;
-  color: #212121;
-  text-decoration: none;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  border: 1px solid red;
-  width: 16rem;
+  justify-content: center;
+  color: var(--navy);
+  text-decoration: none;
+  margin-left: 3rem;
+  letter-spacing: 8px;
+  text-shadow: red -6px 0, cyan 6px 0;
+  transition: text-shadow 200ms;
 }
 
-.button-wrapper {
-  border: 1px solid red;
-  width: 20rem;
-  padding: 1rem;
+.nav-items {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 3rem;
+}
+
+.nav-items li {
+  list-style: none;
+  padding: 1rem;
+}
+
+.upload a {
+  cursor: pointer;
+  transition: 0.3s ease-in-out all;
+  color: var(--navy);
+}
+
+.upload a:hover {
+  /* background-color: var(--navy); */
+  color: var(--orange);
+}
+
+.profile {
+  cursor: pointer;
 }
 
 .link {
-  text-decoration: none;
+  padding: 1.5rem;
+}
+
+.nav-btn {
+  width: 11rem;
 }

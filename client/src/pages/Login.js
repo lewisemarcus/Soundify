@@ -2,23 +2,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { useForm } from "../utils/hooks/hooks";
 import { useMutation } from "@apollo/react-hooks";
-import {
-  TextField,
-  Paper,
-  Stack,
-  Alert,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Form, Input, Alert, message } from "antd";
 import Button from "../components/Button";
 import "./styles/Login.css";
 import "../components/styles/Button.css";
+import * as IoIcons from "react-icons/io";
 
 import { gql } from "graphql-tag";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LOGIN_USER = gql`
   mutation login($loginInput: LoginInput) {
@@ -37,7 +28,12 @@ function Login(props) {
   const [errors, setErrors] = useState([]);
 
   function loginUserCallback() {
-    loginUser();
+    const hide = message.loading("Logging in...", 0);
+    setTimeout(hide, 1100);
+
+    setTimeout(() => {
+      loginUser();
+    }, 1000);
   }
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
@@ -56,65 +52,64 @@ function Login(props) {
     variables: { loginInput: values },
   });
 
-  const [passwordShow, setPasswordShow] = useState({
-    password: "",
-    showPassword: false,
-  });
-
-  const handleClickShowPassword = () => {
-    setPasswordShow({
-      ...passwordShow,
-      showPassword: !passwordShow.showPassword,
-    });
+  const handleBackClick = () => {
+    navigate("/");
   };
 
   return (
     <div className="login-wrapper">
-      <Paper elevation={12} className="login-form">
+      <Form name="basic" autoComplete="off" className="login-form">
+        <IoIcons.IoIosArrowDropleft
+          onClick={handleBackClick}
+          className="login-icon"
+        />
         <div className="login-header">
-          <h3>Login</h3>
-          <p>Log in below to start listening to music!</p>
+          <p className="login">Login</p>
+          <p className="login-description">
+            Log in below to start listening to music!
+          </p>
         </div>
-        <Stack spacing={5} paddingBottom={4}>
-          <TextField
+        <div className="form-input-wrapper">
+          <Input
             className="input"
-            type="email"
             placeholder="Email"
             name="email"
             onChange={onChange}
           />
-          <OutlinedInput
+
+          <Input.Password
+            className="input"
             placeholder="Password"
-            id="outlined-adornment-password"
-            type={passwordShow.showPassword ? "text" : "password"}
             name="password"
             onChange={onChange}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {passwordShow.showPassword ? (
-                    <VisibilityOff />
-                  ) : (
-                    <Visibility />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
           />
-        </Stack>
-        {errors.map(function (error) {
-          return (
-            <Alert severity="error">Invalid credentials. Try again.</Alert>
-          );
-        })}
-        <Button className="solid-btn login-btn" onClick={onSubmit}>
-          Login
-        </Button>
-      </Paper>
+          <Button
+            className="solid-btn login-btn"
+            type="primary"
+            htmlType="submit"
+            onClick={onSubmit}
+          >
+            Login
+          </Button>
+          <p>
+            Don't have an account?{" "}
+            <Link className="link-to-register" to="/register">
+              Register here
+            </Link>
+          </p>
+          {errors.map(function (error, index) {
+            return (
+              <Alert
+                className="error"
+                description="Something went wrong. Please try again."
+                type="error"
+                showIcon
+                key={index}
+              />
+            );
+          })}
+        </div>
+      </Form>
     </div>
   );
 }

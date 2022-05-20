@@ -43,6 +43,7 @@ function AuthProvider(props) {
 
   const login = (userData) => {
     localStorage.setItem("token", userData.token);
+    localStorage.setItem("username", userData.username);
     dispatch({
       type: "LOGIN",
       payload: userData,

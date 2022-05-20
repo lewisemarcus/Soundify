@@ -8,14 +8,33 @@
   height: 40px;
   transition: all 0.4s;
   margin-right: 0.8rem;
-  border: 1px solid dodgerblue;
-  color: dodgerblue;
+  border: 1px solid var(--light);
+  color: var(--light);
   font-family: var(--main-font);
 }
 .outline-btn:hover {
-  box-shadow: inset 7rem 0 0 0 dodgerblue;
-  color: #fff;
   cursor: pointer;
+}
+.outline-btn span {
+  cursor: pointer;
+  position: relative;
+  top: -11px;
+  transition: 0.4s;
+}
+.outline-btn span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.outline-btn:hover span {
+  padding-right: 25px;
+}
+.outline-btn:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 .outline-btn:active {
   transform: scale(1.05);
@@ -27,7 +46,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  background: dodgerblue;
+  background: var(--orange);
   color: #fff;
   width: 7rem;
   height: 40px;
@@ -36,13 +55,12 @@
   font-family: var(--main-font);
 }
 .solid-btn:hover {
-  box-shadow: inset 7rem 0 0 0 dodgerblue;
   cursor: pointer;
 }
 .solid-btn span {
   cursor: pointer;
   position: relative;
-  top: -10px;
+  top: -11px;
   transition: 0.4s;
 }
 .solid-btn span:after {
@@ -66,16 +84,16 @@
 }
 
 .login-btn {
-  width: 19rem;
-  margin: 0 auto;
-  margin-top: 1.2rem;
+  width: 80%;
+  margin: 0 auto 1.2rem;
+
   height: 45px;
   font-family: var(--main-font);
 }
 .login-btn span {
   cursor: pointer;
   position: relative;
-  top: -10px;
+  top: -11px;
   transition: 0.4s;
   cursor: pointer;
 }

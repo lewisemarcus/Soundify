@@ -12,6 +12,13 @@
   --poppins-medium: 500;
   --poppins-semi-bold: 600;
   --poppins-bold: 700;
+
+  /* COLORS  */
+  --white: #fff;
+  --light: #f1eee9;
+  --orange: #ec994b;
+  --grey: #73777b;
+  --navy: #141414;
 }
 
 * {
