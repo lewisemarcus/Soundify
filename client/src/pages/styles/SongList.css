@@ -1,4 +1,7 @@
 .song-list-wrapper {
+  background-color: var(--navy);
+  color: var(--white);
+  height: 90vh;
 }
 
 .song-list-header {
@@ -6,6 +9,9 @@
   justify-content: space-evenly;
   align-items: center;
   padding-top: 2rem;
+}
+.song-list-header h1 {
+  color: var(--white);
 }
 
 .song-list-content {
