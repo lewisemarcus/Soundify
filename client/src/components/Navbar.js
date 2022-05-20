@@ -79,7 +79,9 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/">
-        <h3 className="logo">Soundify</h3>
+        <h3 className="logo">
+          <span className="logo-s">S</span>oundify
+        </h3>
       </Link>
       {user ? (
         <ul className="nav-items">
