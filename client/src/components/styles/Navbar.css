@@ -14,9 +14,9 @@ nav {
   color: var(--navy);
   text-decoration: none;
   margin-left: 3rem;
-  letter-spacing: 8px;
-  text-shadow: red -6px 0, cyan 6px 0;
+  text-shadow: red -3px 0, cyan 3px 0;
   transition: text-shadow 200ms;
+  letter-spacing: 2px;
 }
 
 .nav-items {
