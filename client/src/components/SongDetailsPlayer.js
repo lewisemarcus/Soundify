@@ -5,9 +5,25 @@ let vol
 const getVolume = (volume) => {
     vol = volume
 }
-const SongDetailsPlayer = (songLink, app, image, volume) => {
+const SongDetailsPlayer = (songLink, app, image) => {
     const sketch = (p) => {
-        let fft, canvas, mySound, wave, w, amp, myImage, timeSlider
+        let fft,
+            canvas,
+            mySound,
+            wave,
+            w,
+            amp,
+            myImage,
+            timeSlider,
+            text,
+            duration,
+            currentTime,
+            hDisplay,
+            mDisplay,
+            sDisplay,
+            chDisplay,
+            cmDisplay,
+            csDisplay
 
         p.preload = () => {
             myImage = p.loadImage(image)
@@ -15,12 +31,19 @@ const SongDetailsPlayer = (songLink, app, image, volume) => {
         }
 
         p.setup = () => {
-            // volumeSlider = p.createSlider(0, 1, 0.5, 0.01)
-            // volumeSlider.style(
-            //     "transform: rotate(-90deg); width: 200px; background: #EC994B",
-            // )
+            duration = Number(mySound.duration())
+            let h = Math.floor(duration / 3600)
+            let m = Math.floor((duration % 3600) / 60)
+            let s = Math.floor((duration % 3600) % 60)
+
+            hDisplay = h > 0 ? h + (h == 1 ? "h, " : "h, ") : ""
+            mDisplay = m > 0 ? m + (m == 1 ? "m, " : "m, ") : ""
+            sDisplay = s > 0 ? s + (s == 1 ? "s" : "s") : ""
+            text = p.createP(` 0m 0s / ${hDisplay} ${mDisplay} ${sDisplay}`)
             p.rectMode(p.CENTER)
             p.angleMode(p.DEGREES)
+
+            console.log(text.elt)
 
             canvas = p.createCanvas(800, 300)
             p.noFill()
@@ -53,6 +76,17 @@ const SongDetailsPlayer = (songLink, app, image, volume) => {
             }
         }
         p.draw = () => {
+            currentTime = Number(mySound.currentTime())
+            let ch = Math.floor(currentTime / 3600)
+            let cm = Math.floor((currentTime % 3600) / 60)
+            let cs = Math.floor((currentTime % 3600) % 60)
+
+            chDisplay = ch > 0 ? ch + (ch == 1 ? " h, " : " h, ") : ""
+            cmDisplay = cm > 0 ? cm + (cm == 1 ? " m, " : " m, ") : ""
+            csDisplay = cs > 0 ? cs + (cs == 1 ? " s" : " s") : ""
+
+            text.elt.innerHTML = ` ${chDisplay} ${cmDisplay} ${csDisplay} / ${hDisplay} ${mDisplay} ${sDisplay}`
+
             if (mySound && myImage && wave) {
                 mySound.setVolume(vol)
                 p.scale(p.windowWidth / 1280, p.windowHeight / 559)

@@ -34,12 +34,7 @@ const SongDetails = () => {
             )
         getVolume(volume)
         console.log(volumeSlider.current)
-        volumeSlider.current.addEventListener("mousemove", function () {
-            let color = `linear-gradient(0deg, #ec994b ${(volume * 100).toFixed(
-                0,
-            )}%, rgb(214, 214, 214) ${(volume * 100).toFixed(0)}%)`
-            volumeSlider.current.style.background = color
-        })
+        console.log("media sess", window.MediaSession)
         isLoaded.current = true
     })
 
@@ -93,11 +88,26 @@ const SongDetails = () => {
                     >
                         <img src={shakeygraves} alt="Album Cover" />
                         <input
+                            style={{
+                                background: `linear-gradient(0deg, #ec994b ${(
+                                    volume * 100
+                                ).toFixed(0)}%, rgb(214, 214, 214) ${(
+                                    volume * 100
+                                ).toFixed(0)}%)`,
+                            }}
                             className="slider"
                             type="range"
                             ref={volumeSlider}
                             min={0}
                             max={1}
+                            onMouseMove={(event) => {
+                                let color = `linear-gradient(0deg, #ec994b ${(
+                                    volume * 100
+                                ).toFixed(0)}%, rgb(214, 214, 214) ${(
+                                    volume * 100
+                                ).toFixed(0)}%)`
+                                event.target.style.background = color
+                            }}
                             step={0.02}
                             value={volume}
                             orient="vertical"
@@ -109,12 +119,15 @@ const SongDetails = () => {
                             Vol: <span>{(volume * 100).toFixed(0)}%</span>
                         </p>
                     </div>
+                    <h1 style={{ marginRight: 50 }}>Song Title</h1>
                 </div>
-                <div
-                    ref={app}
-                    id="canvasContainer"
-                    style={containerStyle}
-                ></div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div
+                        ref={app}
+                        id="canvasContainer"
+                        style={containerStyle}
+                    ></div>
+                </div>
             </div>
             <div
                 style={{
