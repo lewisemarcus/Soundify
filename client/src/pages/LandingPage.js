@@ -4,6 +4,7 @@ import { Hero } from "../components";
 import { CarouselMusic } from "../components/Carousel";
 import DashCarousel from "../components/DashCarousel";
 import { AuthContext } from "../context/authContext";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const { user } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const LandingPage = () => {
           <CarouselMusic />
         </>
       )}
+      <Footer />
     </div>
   );
 };
