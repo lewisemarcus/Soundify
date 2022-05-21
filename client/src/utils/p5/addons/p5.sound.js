@@ -70,7 +70,6 @@ import p5 from "p5"
  *
  *   Web Audio API: http://w3.org/TR/webaudio/
  */
-
 ;(function (modules) {
     var installedModules = {}
     function __webpack_require__(moduleId) {
@@ -4875,7 +4874,7 @@ import p5 from "p5"
             var thisBufferSourceNode = e.target
             var soundFile = this
 
-            thisBufferSourceNode._playing = false
+            thisBufferSourceNode._playing = true
             thisBufferSourceNode.removeEventListener(
                 "ended",
                 soundFile._clearOnEnd,
