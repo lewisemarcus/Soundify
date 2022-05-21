@@ -99,3 +99,11 @@
 .form-input-wrapper .ant-input-affix-wrapper {
     width: 80%;
 }
+
+.form-input-wrapper .ant-input-affix-wrapper {
+    justify-content: flex-start;
+}
+
+.form-input-wrapper .ant-input-suffix {
+    margin-left: 42px;
+}
