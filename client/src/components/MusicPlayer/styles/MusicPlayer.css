@@ -13,8 +13,6 @@ html {
     transition: background 0.4s ease;
 }
 
-body {}
-
 button {
     background: none;
     border: none;
@@ -111,8 +109,4 @@ input[type="range"] {
     to {
         filter: hue-rotate(360deg);
     }
-}
-
-.player-container {
-    background-color: white;
 }

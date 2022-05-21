@@ -49,7 +49,7 @@ const SongList = () => {
     <div className="song-list-wrapper">
       <div className="song-list-header">
         <h1>{username}'s songs</h1>
-        <Button className="modal-btn" onClick={showModal}>
+        <Button className="modal-btn uploadSongbtn" onClick={showModal}>
           <Space>
             <UploadOutlined /> Upload song
           </Space>
