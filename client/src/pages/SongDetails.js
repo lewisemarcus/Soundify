@@ -1,8 +1,8 @@
-import React, { useState, useEffect, createRef, useRef } from "react"
-import { SongDetailsPlayer, getVolume } from "../components/SongDetailsPlayer"
+import React, { useState, useEffect, useRef } from "react"
+
 import "../components/styles/Slider.css"
 import { useParams } from "react-router-dom"
-import gradient from "../assets/gradient.png"
+import AudioSpectrum from "react-audio-spectrum"
 import shakeygraves from "../assets/shakeygraves.jpg"
 import LoadMoreList from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
@@ -11,22 +11,16 @@ const song = new Audio("https://soundclone-music.s3.amazonaws.com/qwe")
 
 const SongDetails = () => {
     const { songId } = useParams()
-    const [volume, setVolume] = useState(0.25)
-    const app = createRef()
-    const volumeSlider = createRef()
+    const audio = useRef(null)
+    const [width, setWidth] = useState(1075)
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
 
     useEffect(() => {
-        // if (isLoaded.current === false)
-        //     SongDetailsPlayer(
-        //         "https://soundclone-music.s3.amazonaws.com/qwe",
-        //         app,
-        //         gradient,
-        //         volume,
-        //     )
-        getVolume(volume)
-        console.log(volumeSlider.current)
+        console.log(window.innerWidth)
+        window.addEventListener("resize", function () {
+            setWidth(window.innerWidth * (1075 / 1280))
+        })
         isLoaded.current = true
     })
 
@@ -63,7 +57,9 @@ const SongDetails = () => {
                 >
                     <div
                         style={{
+                            zIndex: 1000,
                             margin: 10,
+                            marginBottom: 0,
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
@@ -72,9 +68,29 @@ const SongDetails = () => {
                         <img src={shakeygraves} alt="Album Cover" />
                         <h1 style={{ color: "white" }}>Song Title</h1>
                     </div>
-                    <Waveform
-                        url={"https://soundclone-music.s3.amazonaws.com/qwe"}
-                    />
+                    <Waveform song={song} audio={audio} />
+                    <div
+                        style={{
+                            marginTop: -50,
+                            position: "relative",
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <AudioSpectrum
+                            height={100}
+                            width={width}
+                            id="audio-canvas"
+                            audioId="audio-element"
+                        />
+                        <audio
+                            id="audio-element"
+                            crossOrigin="anonymous"
+                            ref={audio}
+                            src={song.src}
+                        ></audio>
+                    </div>
                 </div>
             </div>
 
@@ -85,13 +101,7 @@ const SongDetails = () => {
                     alignItems: "center",
                 }}
             >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    {/* <div
-                        ref={app}
-                        id="canvasContainer"
-                        style={containerStyle}
-                    ></div> */}
-                </div>
+                <div style={{ display: "flex", flexDirection: "column" }}></div>
             </div>
             <div
                 style={{
