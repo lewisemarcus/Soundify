@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-
+import { List, Typography, Divider } from "antd"
 import "../components/styles/Slider.css"
 import { useParams } from "react-router-dom"
 import AudioSpectrum from "react-audio-spectrum"
@@ -7,12 +7,14 @@ import shakeygraves from "../assets/shakeygraves.jpg"
 import LoadMoreList from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
 
+const data = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
+
 const song = new Audio("https://soundclone-music.s3.amazonaws.com/qwe")
 
 const SongDetails = () => {
     const { songId } = useParams()
     const audio = useRef(null)
-    const [width, setWidth] = useState(1075)
+    const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
 
@@ -105,24 +107,67 @@ const SongDetails = () => {
             </div>
             <div
                 style={{
-                    background: "#F1EEE9",
-                    width: "60%",
                     display: "flex",
-
+                    width: "100%",
                     flexWrap: "wrap",
-
-                    flexDirection: "column",
+                    justifyContent: "center",
                 }}
             >
                 <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                        background: "#F1EEE9",
+                        width: "62%",
+                        display: "flex",
+                        flexWrap: "wrap",
+                        flexDirection: "column",
+                    }}
                 >
-                    <div style={{ margin: 10, marginLeft: 20 }}>Comments: </div>
-                    <button style={{ margin: 10 }}>Share</button>
-                    <button style={{ margin: 10 }}>Add to Playlist</button>
-                    <div style={{ margin: 10, marginRight: 20 }}>Likes: </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div style={{ margin: 10, marginLeft: 20 }}>
+                            Comments:
+                        </div>
+                        <button style={{ margin: 10 }}>Share</button>
+                        <button style={{ margin: 10 }}>Add to Playlist</button>
+                        <div style={{ margin: 10, marginRight: 20 }}>
+                            Likes:
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            maxHeight: 700,
+                        }}
+                    >
+                        <LoadMoreList style={{ width: "75%" }} />
+                    </div>
                 </div>
-                <LoadMoreList style={{ width: "100%" }} />
+                <div
+                    style={{
+                        width: "20%",
+                        background: "#F1EEE9",
+                        borderLeft: "1px solid #434343",
+                    }}
+                >
+                    <Divider orientation="left">Recommended</Divider>
+                    <List
+                        header={<div>Header</div>}
+                        footer={<div>Footer</div>}
+                        bordered
+                        dataSource={data}
+                        renderItem={(item) => (
+                            <List.Item>
+                                <Typography.Text mark>[ITEM]</Typography.Text>
+                                {item}
+                            </List.Item>
+                        )}
+                    />
+                </div>
             </div>
         </div>
     )
