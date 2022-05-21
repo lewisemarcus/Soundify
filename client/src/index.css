@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-
 :root {
     /* FONTS */
     --main-font: "Poppins", sans-serif;
-
     /* FONT WEIGHT */
     --poppins-thin: 100;
     --poppins-extra-light: 200;
@@ -12,7 +10,6 @@
     --poppins-medium: 500;
     --poppins-semi-bold: 600;
     --poppins-bold: 700;
-
     /* COLORS  */
     --white: #fff;
     --light: #f1eee9;
@@ -30,66 +27,3 @@
 body {
     background-color: #141414;
 }
-
-.ant-modal-body {
-  background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-}
-
-
-.ant-modal-content {
-  border-radius: 10px;
-}
-
-.ant-modal-header {
-  border-radius: 10px;
-}
-
-.ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
-  background-color: var(--orange);
-
-}
-
-.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger):hover{
-  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-  background-color: #476e9e;
-  transform: scale(1.1);
-}
-
-.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger):active{
-  position: relative;
-  top: 1px;
-}
-
-.ant-btn-primary {
-  border: none;
-}
-
-.ant-btn {
-  background-color: #73777b;
-  border-radius: 5px;
-  color: #fff;
-}
-
-.ant-btn:hover {
-  background-color: rgb(171, 44, 44);
-  color: #fff;
-}
-
-.ant-btn:active{
-  position: relative;
-  top: 1px;
-}
-
-.ant-modal-header {
-  background-color: var(--light);
-}
-
-.ant-modal-footer {
-  background-color: var(--light);
-  border-radius: 5px;
-}
-
-.anticon svg {
-  color: var(--orange);
-}
-

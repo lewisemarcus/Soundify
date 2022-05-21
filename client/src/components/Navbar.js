@@ -30,6 +30,7 @@ const Navbar = () => {
       content: "Are you sure you want to logout?",
       okText: "Yes",
       cancelText: "No",
+      className:"logout",
       onOk() {
         message.success("Successfully logged out");
         setTimeout(() => {
