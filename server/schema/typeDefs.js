@@ -47,7 +47,6 @@ export default gql`
         link: String
         username: String
         uploaded: String
-        comments: [Comment]!
     }
 
     input CommentInput {
