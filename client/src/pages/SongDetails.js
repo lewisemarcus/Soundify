@@ -14,7 +14,7 @@ const song = new Audio("https://soundclone-music.s3.amazonaws.com/qwe")
 const SongDetails = () => {
     const { songId } = useParams()
     const audio = useRef(null)
-    const [width, setWidth] = useState(1075)
+    const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
 
@@ -129,12 +129,12 @@ const SongDetails = () => {
                         }}
                     >
                         <div style={{ margin: 10, marginLeft: 20 }}>
-                            Comments:{" "}
+                            Comments:
                         </div>
                         <button style={{ margin: 10 }}>Share</button>
                         <button style={{ margin: 10 }}>Add to Playlist</button>
                         <div style={{ margin: 10, marginRight: 20 }}>
-                            Likes:{" "}
+                            Likes:
                         </div>
                     </div>
                     <div
