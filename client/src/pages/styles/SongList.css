@@ -79,7 +79,7 @@
     color: #fff;
 }
 
-.ant-btn:hover {
+.ant-modal-footer .ant-btn-default:hover {
     background-color: rgb(171, 44, 44);
     color: #fff;
 }
