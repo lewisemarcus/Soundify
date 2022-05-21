@@ -5,16 +5,9 @@ import { useParams } from "react-router-dom"
 import gradient from "../assets/gradient.png"
 import shakeygraves from "../assets/shakeygraves.jpg"
 import LoadMoreList from "../components/CommentSection"
+import Waveform from "../components/Wavesurfer"
 
-const containerStyle = {
-    marginBottom: 20,
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    flexWrap: "wrap",
-    maxWidth: "100",
-    alignItems: "center",
-}
+const song = new Audio("https://soundclone-music.s3.amazonaws.com/qwe")
 
 const SongDetails = () => {
     const { songId } = useParams()
@@ -25,16 +18,15 @@ const SongDetails = () => {
     let isLoaded = useRef(loadedPlayer)
 
     useEffect(() => {
-        if (isLoaded.current === false)
-            SongDetailsPlayer(
-                "https://soundclone-music.s3.amazonaws.com/qwe",
-                app,
-                gradient,
-                volume,
-            )
+        // if (isLoaded.current === false)
+        //     SongDetailsPlayer(
+        //         "https://soundclone-music.s3.amazonaws.com/qwe",
+        //         app,
+        //         gradient,
+        //         volume,
+        //     )
         getVolume(volume)
         console.log(volumeSlider.current)
-        console.log("media sess", window.MediaSession)
         isLoaded.current = true
     })
 
@@ -45,13 +37,14 @@ const SongDetails = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                flexWrap: "wrap",
             }}
         >
             <div
                 style={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-evenly",
+                    justifyContent: "center",
                     flexWrap: "wrap",
                     backgroundColor: "#434343",
                     width: "100%",
@@ -60,73 +53,44 @@ const SongDetails = () => {
             >
                 <div
                     style={{
+                        background:
+                            "linear-gradient(315deg, hsla(29, 81%, 61%, 1) 0%, hsla(0, 0%, 0%, 1) 86%)",
                         display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
+                        flexWrap: "wrap",
+                        width: "85%",
+                        justifyContent: "center",
                     }}
                 >
-                    <button
-                        id="button"
-                        style={{
-                            borderRadius: "50%",
-                            color: "white",
-                            backgroundColor: "#EC994B",
-                            width: 50,
-                            height: 50,
-                            margin: 10,
-                        }}
-                    >
-                        ▶︎
-                    </button>
                     <div
                         style={{
+                            margin: 10,
                             display: "flex",
-                            justifyContent: "space-evenly",
-                            flexWrap: "wrap",
-                            width: 300,
+                            flexDirection: "column",
+                            alignItems: "center",
                         }}
                     >
                         <img src={shakeygraves} alt="Album Cover" />
-                        <input
-                            style={{
-                                background: `linear-gradient(0deg, #ec994b ${(
-                                    volume * 100
-                                ).toFixed(0)}%, rgb(214, 214, 214) ${(
-                                    volume * 100
-                                ).toFixed(0)}%)`,
-                            }}
-                            className="slider"
-                            type="range"
-                            ref={volumeSlider}
-                            min={0}
-                            max={1}
-                            onMouseMove={(event) => {
-                                let color = `linear-gradient(0deg, #ec994b ${(
-                                    volume * 100
-                                ).toFixed(0)}%, rgb(214, 214, 214) ${(
-                                    volume * 100
-                                ).toFixed(0)}%)`
-                                event.target.style.background = color
-                            }}
-                            step={0.02}
-                            value={volume}
-                            orient="vertical"
-                            onChange={(event) => {
-                                setVolume(event.target.valueAsNumber)
-                            }}
-                        />
-                        <p style={{ color: "white" }}>
-                            Vol: <span>{(volume * 100).toFixed(0)}%</span>
-                        </p>
+                        <h1 style={{ color: "white" }}>Song Title</h1>
                     </div>
-                    <h1 style={{ marginRight: 50 }}>Song Title</h1>
+                    <Waveform
+                        url={"https://soundclone-music.s3.amazonaws.com/qwe"}
+                    />
                 </div>
+            </div>
+
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div
+                    {/* <div
                         ref={app}
                         id="canvasContainer"
                         style={containerStyle}
-                    ></div>
+                    ></div> */}
                 </div>
             </div>
             <div
