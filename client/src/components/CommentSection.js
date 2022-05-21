@@ -75,6 +75,11 @@ class LoadMoreList extends React.Component {
 
         return (
             <List
+                style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    flexDirection: "column",
+                }}
                 className="demo-loadmore-list"
                 loading={initLoading}
                 itemLayout="horizontal"
@@ -82,12 +87,22 @@ class LoadMoreList extends React.Component {
                 dataSource={list}
                 renderItem={(item) => (
                     <List.Item
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            flexDirection: "row",
+                        }}
                         actions={[
                             <a key="list-loadmore-edit">edit</a>,
                             <a key="list-loadmore-more">more</a>,
                         ]}
                     >
                         <Skeleton
+                            style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                flexDirection: "row",
+                            }}
                             avatar
                             title={false}
                             loading={item.loading}

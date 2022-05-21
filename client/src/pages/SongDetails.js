@@ -126,6 +126,7 @@ const SongDetails = () => {
                         style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            flexWrap: "wrap",
                         }}
                     >
                         <div style={{ margin: 10, marginLeft: 20 }}>
@@ -149,7 +150,7 @@ const SongDetails = () => {
                 </div>
                 <div
                     style={{
-                        width: "20%",
+                        minWidth: "20%",
                         background: "#F1EEE9",
                         borderLeft: "1px solid #434343",
                     }}
