@@ -131,18 +131,19 @@ const AudioPlayer = ({ tracks }) => {
           step="1"
           min="0"
           max={duration ? duration : `${duration}`}
+          // time={currentTime}
           className="progress"
           onChange={(e) => onScrub(e.target.value)}
           onMouseUp={onScrubEnd}
           onKeyUp={onScrubEnd}
           style={{ background: trackStyling }}
         />
-      </div>
       <Backdrop
         trackIndex={trackIndex}
         activeColor={color}
         isPlaying={isPlaying}
       />
+      </div>
     </div>
   );
 };
