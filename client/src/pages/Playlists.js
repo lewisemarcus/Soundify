@@ -1,7 +1,7 @@
 import React from "react";
 import AudioPlayer from "../components/MusicPlayer/AudioPlayer";
 import tracks from "../components/MusicPlayer/tracks";
-import "../components/MusicPlayer/MusicPlayer.css"
+import "./styles/MusicPlayer.css";
 
 const Playlists = () => {
   return (
