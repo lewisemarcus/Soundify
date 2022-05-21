@@ -1,59 +1,50 @@
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 10vh;
-    background-color: var(--light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--light);
+  padding: 1rem;
 }
 
 .logo {
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--navy);
-    text-decoration: none;
-    margin-left: 3rem;
-    text-shadow: red -3px 0, cyan 3px 0;
-    transition: text-shadow 200ms;
-    letter-spacing: 2px;
+  font-size: 2rem;
+  color: var(--navy);
+  text-decoration: none;
+  margin-left: 1rem;
+  text-shadow: red -3px 0, cyan 3px 0;
+  transition: text-shadow 200ms;
+  letter-spacing: 2px;
 }
 
-.nav-items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 3rem;
+.ul-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav-items li {
-    list-style: none;
-    padding: 1rem;
+.ul-container li {
+  list-style: none;
+  padding: 0 1rem;
 }
 
 .upload a {
-    cursor: pointer;
-    transition: 0.3s ease-in-out all;
-    color: var(--navy);
+  cursor: pointer;
+  transition: 0.3s ease-in-out all;
+  color: var(--navy);
 }
 
 .upload a:hover {
-    /* background-color: var(--navy); */
-    color: var(--orange);
+  color: var(--orange);
 }
 
 .profile {
-    cursor: pointer;
-}
-
-.link {
-    padding: 1.5rem;
+  cursor: pointer;
 }
 
 .nav-btn {
-    width: 11rem;
+  width: 11rem;
 }
 
 .logout .ant-modal-body {
-    background: var(--light);
+  background: var(--light);
 }

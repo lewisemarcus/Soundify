@@ -30,7 +30,7 @@ const Navbar = () => {
       content: "Are you sure you want to logout?",
       okText: "Yes",
       cancelText: "No",
-      className:"logout",
+      className: "logout",
       onOk() {
         message.success("Successfully logged out");
         setTimeout(() => {
@@ -79,13 +79,11 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Link to="/">
-        <h3 className="logo">
-          <span className="logo-s">S</span>oundify
-        </h3>
-      </Link>
+      <div className="logo">
+        <Link to="/">Soundify</Link>
+      </div>
       {user ? (
-        <ul className="nav-items">
+        <div className="ul-container">
           <li className="upload">
             <Link to="/songs">Upload</Link>
           </li>
@@ -107,7 +105,7 @@ const Navbar = () => {
               </div>
             </Dropdown>
           </li>
-        </ul>
+        </div>
       ) : (
         <Link to="/register" className="link">
           <Button className="solid-btn nav-btn">Create account</Button>
