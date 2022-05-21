@@ -1,33 +1,77 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server"
 
 export default gql`
-  type User {
-    username: String
-    email: String
-    password: String
-    token: String
-  }
+    type User {
+        _id: ID
+        username: String
+        email: String
+        password: String
+        token: String
+        songs: [Song]!
+    }
 
-  input RegisterInput {
-    username: String
-    email: String
-    password: String
-  }
+    type Comment {
+        _id: ID
+        commentText: String
+        commentAuthor: String
+        createdAt: String
+    }
 
-  input LoginInput {
-    email: String
-    password: String
-  }
+    type Song {
+        _id: ID
+        title: String
+        genre: String
+        year: String
+        filename: String
+        link: String
+        username: String
+        uploaded: String
+        comments: [Comment]!
+    }
+    input RegisterInput {
+        username: String
+        email: String
+        password: String
+    }
 
-  type Query {
-    user(id: ID!): User
-  }
+    input LoginInput {
+        email: String
+        password: String
+    }
 
-  type Mutation {
-    registerUser(registerInput: RegisterInput): User
-    loginUser(loginInput: LoginInput): User
-  }
-`;
+    input SongInput {
+        title: String
+        genre: String
+        year: String
+        filename: String
+        link: String
+        username: String
+        uploaded: String
+    }
+
+    input CommentInput {
+        commentText: String
+        username: String
+        createdAt: String
+    }
+
+    type Query {
+        users: [User]
+        user(id: ID!): User
+        songs(username: String): [Song]
+        song(songId: ID!): Song
+        me: User
+    }
+
+    type Mutation {
+        registerUser(registerInput: RegisterInput): User
+        loginUser(loginInput: LoginInput): User
+        addSong(songInput: SongInput): Song
+        removeSong(songId: ID!): Song
+        removeComment(songId: ID!, commentId: ID!): Song
+        addComment(songId: ID!, commentInput: CommentInput): Song
+    }
+`
 
 // module.exports = gql`
 //     type User {
