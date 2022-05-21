@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import "./styles/LandingPage.css";
 import { Hero } from "../components";
 import { CarouselMusic } from "../components/Carousel";
-import DashCarousel from "../components/DashCarousel";
+import Dashboard from "../components/Dashboard/Dashboard";
 import { AuthContext } from "../context/authContext";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const { user } = useContext(AuthContext);
@@ -13,7 +13,7 @@ const LandingPage = () => {
     <div className="landing-page-wrapper">
       {user ? (
         <>
-          <DashCarousel />
+          <Dashboard />
         </>
       ) : (
         <>
@@ -21,7 +21,7 @@ const LandingPage = () => {
           <CarouselMusic />
         </>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
