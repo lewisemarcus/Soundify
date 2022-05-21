@@ -44,7 +44,7 @@
     font-weight: bold;
 }
 
-.siFeatures{
+.siFeatures {
     font-size: 12px;
 }
 
@@ -66,12 +66,12 @@
     justify-content: space-between;
 }
 
-.siRating{
+.siRating {
     display: flex;
     justify-content: space-between;
 }
 
-.siRating>span{
+.siRating>span {
     padding-top: 7.5px;
     padding-right: 3px;
     font-size: 10px;
@@ -87,7 +87,7 @@
     border: none;
 }
 
-.siDetailTexts{
+.siDetailTexts {
     text-align: right;
     display: flex;
     flex-direction: column;
@@ -98,10 +98,9 @@
     font-size: 24px;
 }
 
-.siTaxOp{
+.siTaxOp {
     font-size: 10px;
     padding-right: 14px;
- 
     color: gray;
 }
 
@@ -114,4 +113,3 @@
     cursor: pointer;
     border-radius: 5px;
 }
-
