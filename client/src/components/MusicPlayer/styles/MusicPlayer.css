@@ -13,9 +13,7 @@ html {
     transition: background 0.4s ease;
 }
 
-body {
-    background: var(--active-color);
-}
+body {}
 
 button {
     background: none;
@@ -41,6 +39,7 @@ input[type="range"] {
     box-shadow: 3px -1px 28px rgb(0 0 0 / 20%);
     margin: auto;
     color: var(--white);
+    background: var(--active-color);
 }
 
 .artwork {
@@ -93,11 +92,12 @@ input[type="range"] {
 .color-backdrop {
     background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -24px;
+    left: -24px;
+    right: -24px;
+    bottom: -24px;
     z-index: -1;
+    border-radius: 20px;
 }
 
 .color-backdrop.playing {
@@ -111,4 +111,8 @@ input[type="range"] {
     to {
         filter: hue-rotate(360deg);
     }
+}
+
+.player-container {
+    background-color: white;
 }
