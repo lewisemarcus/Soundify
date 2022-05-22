@@ -1,5 +1,5 @@
 .register-wrapper {
-  background: var(--navy);
+  background: var(--dark);
   height: 90vh;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@
 .register-form:hover {
   transform: scale(1.07);
   background: #fff;
-  color: var(--navy);
+  color: var(--dark);
   z-index: 100;
 }
 

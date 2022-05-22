@@ -1,4 +1,5 @@
 import User from "../models/User.js"
+import Song from "../models/Songs.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
 const { hash, compare } = pkg
@@ -9,8 +10,8 @@ const { sign } = jsonPkg
 
 const resolvers = {
     Query: {
-        user: async (_, { ID }) => {
-            return User.findById(ID)
+        user: async (parent, { _id }) => {
+            return User.findById(_id)
         },
     },
     Mutation: {

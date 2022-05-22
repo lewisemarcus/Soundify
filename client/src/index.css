@@ -1,29 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
 :root {
-    /* FONTS */
-    --main-font: "Poppins", sans-serif;
-    /* FONT WEIGHT */
-    --poppins-thin: 100;
-    --poppins-extra-light: 200;
-    --poppins-light: 300;
-    --poppins-regular: 400;
-    --poppins-medium: 500;
-    --poppins-semi-bold: 600;
-    --poppins-bold: 700;
-    /* COLORS  */
-    --white: #fff;
-    --light: #f1eee9;
-    --orange: #ec994b;
-    --grey: #73777b;
-    --navy: #141414;
+  /* FONTS */
+  --main-font: "Poppins", sans-serif;
+  /* FONT WEIGHT */
+  --poppins-thin: 100;
+  --poppins-extra-light: 200;
+  --poppins-light: 300;
+  --poppins-regular: 400;
+  --poppins-medium: 500;
+  --poppins-semi-bold: 600;
+  --poppins-bold: 700;
+  /* COLORS  */
+  --white: #fff;
+  --light: #f1eee9;
+  --orange: #ec994b;
+  --grey: #73777b;
+  --dark: #141414;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #141414;
+  background-color: #141414;
 }

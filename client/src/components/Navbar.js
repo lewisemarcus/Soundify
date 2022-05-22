@@ -93,7 +93,7 @@ const Navbar = () => {
                 <Space>
                   <Avatar
                     style={{
-                      backgroundColor: "var(--navy)",
+                      backgroundColor: "var(--dark)",
                       color: "var(--light)",
                     }}
                     size={30}
