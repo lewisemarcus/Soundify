@@ -57,9 +57,11 @@ export default gql`
 
     type Query {
         users: [User]
-        user(id: ID!): User
-        songs(username: String): [Song]
-        song(songId: ID!): Song
+        userByUsername(username: String!): User
+        user(_id: ID!): User
+        songs: [Song]
+        userSongs(username: String!): [Song]
+        song(_id: ID!): Song
         me: User
     }
 
