@@ -9,6 +9,11 @@ const playlistSchema = new Schema(
             unique: true,
             trim: true,
         },
+        owner: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         songs: [
             {
                 type: Schema.Types.ObjectId,
@@ -25,4 +30,4 @@ const playlistSchema = new Schema(
 
 const Playlist = model("Playlist", songSchema, "playlists")
 
-export default Song
+export default Playlist
