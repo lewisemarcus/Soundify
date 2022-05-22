@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import dojacat from "../assets/dojacat.jpg";
 // import audien from "../assets/audien.jpg";
 // import aliciakeys from "../assets/aliciakeys.jpg"
@@ -32,12 +32,43 @@ import DashTracks from "./DashTracks";
 // ];
 
 const DashboardPlayer = () => {
-    return (
+  const [songs, setSongs] = useState([
+    {
+      _id: "",
+      title: "",
+      genre: "",
+      id: "",
+      year: "",
+      filename: "",
+      link: "",
+    },
+  ]);
+
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const songData = await fetch("/songs", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+
+        const songList = await songData.json();
+
+        setSongs(songList);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSongs();
+  }, []);
+
+  return (
     //   <CardWrapper className="card-wrapper">
     <div>
-        
       <h1>Playlist created by user</h1>
-      <DashAudio tracks={DashTracks} />
+      <DashAudio tracks={songs} />
       {/* <div className="Playlist-container">
         <div className="">
               <img className="" src={ablum} alt='album cover' />
@@ -50,9 +81,8 @@ const DashboardPlayer = () => {
       </div> */}
     </div>
     //   </CardWrapper>
-    );
-  };
-  
+  );
+};
 
 // const DashMusicCard = () => {
 //   return (
