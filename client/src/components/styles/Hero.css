@@ -81,6 +81,7 @@
     width: 40rem;
     padding: 1rem;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     margin-top: 0.5rem;

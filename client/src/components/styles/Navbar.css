@@ -8,7 +8,7 @@ nav {
 
 .logo {
   font-size: 2rem;
-  color: var(--navy);
+  color: var(--dark);
   text-decoration: none;
   margin-left: 1rem;
   text-shadow: red -3px 0, cyan 3px 0;
@@ -30,7 +30,7 @@ nav {
 .upload a {
   cursor: pointer;
   transition: 0.3s ease-in-out all;
-  color: var(--navy);
+  color: var(--dark);
 }
 
 .upload a:hover {

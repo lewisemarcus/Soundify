@@ -1,6 +1,7 @@
 .landing-page-wrapper {
-  background: var(--navy);
-  height: fit-content;
+  background: var(--dark);
+  height: 100vh;
+  padding: 2rem 0;
 }
 
 .user-name {

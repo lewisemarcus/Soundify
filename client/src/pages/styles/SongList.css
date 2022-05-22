@@ -1,103 +1,103 @@
 .song-list-wrapper {
-    background-color: var(--navy);
-    color: var(--white);
-    height: 90vh;
+  background-color: var(--dark);
+  color: var(--white);
+  height: 90vh;
 }
 
 .song-list-header {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-top: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 2rem;
 }
 
 .song-list-header h1 {
-    color: var(--white);
+  color: var(--white);
 }
 
 .song-list-content {
-    padding-top: 5rem;
+  padding-top: 5rem;
 }
 
 .modal-btn {
-    width: 12rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    background: var(--orange);
-    color: #fff;
-    height: 50px;
-    transition: all 0.4s;
-    border-style: none;
-    font-family: var(--main-font);
-    font-size: 1.1rem;
+  width: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--orange);
+  color: #fff;
+  height: 50px;
+  transition: all 0.4s;
+  border-style: none;
+  font-family: var(--main-font);
+  font-size: 1.1rem;
 }
 
 .modal-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .uploadSongbtn .anticon svg {
-    color: white;
+  color: white;
 }
 
 .ant-modal-body {
-    background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+  background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
 }
 
 .ant-modal-content {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .ant-modal-header {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
-.ant-btn+.ant-btn:not(.ant-dropdown-trigger) {
-    background-color: var(--orange);
+.ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+  background-color: var(--orange);
 }
 
-.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger):hover {
-    background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-    background-color: #476e9e;
-    transform: scale(1.1);
+.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):hover {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+  transform: scale(1.1);
 }
 
-.ant-modal-footer .ant-btn+.ant-btn:not(.ant-dropdown-trigger):active {
-    position: relative;
-    top: 1px;
+.ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):active {
+  position: relative;
+  top: 1px;
 }
 
 .ant-btn-primary {
-    border: none;
+  border: none;
 }
 
 .ant-btn {
-    background-color: #73777b;
-    border-radius: 5px;
-    color: #fff;
+  background-color: #73777b;
+  border-radius: 5px;
+  color: #fff;
 }
 
 .ant-modal-footer .ant-btn-default:hover {
-    background-color: rgb(171, 44, 44);
-    color: #fff;
+  background-color: rgb(171, 44, 44);
+  color: #fff;
 }
 
 .ant-btn:active {
-    position: relative;
-    top: 1px;
+  position: relative;
+  top: 1px;
 }
 
 .ant-modal-header {
-    background-color: var(--light);
+  background-color: var(--light);
 }
 
 .ant-modal-footer {
-    background-color: var(--light);
-    border-radius: 5px;
+  background-color: var(--light);
+  border-radius: 5px;
 }
 
 .anticon svg {
-    color: var(--orange);
+  color: var(--orange);
 }
