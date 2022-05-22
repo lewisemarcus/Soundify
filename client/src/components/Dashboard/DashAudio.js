@@ -14,10 +14,11 @@ const DashAudio = ({ tracks }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Destructure for conciseness
-  const { title, artist, color, image, audioSrc } = tracks[trackIndex];
+  const { title, filename, year, genre, _id, link } = tracks[trackIndex]
+  // const { title, artist, color, image, audioSrc } = tracks[trackIndex];
 
   // Refs
-  const audioRef = useRef(new Audio(audioSrc));
+  const audioRef = useRef(new Audio(link));
   const intervalRef = useRef();
   const isReady = useRef(false);
 
@@ -88,7 +89,7 @@ const DashAudio = ({ tracks }) => {
   useEffect(() => {
     audioRef.current.pause();
 
-    audioRef.current = new Audio(audioSrc);
+    audioRef.current = new Audio(link);
     setTrackProgress(audioRef.current.currentTime);
 
     if (isReady.current) {
@@ -114,11 +115,12 @@ const DashAudio = ({ tracks }) => {
       <div className="track-info">
         <img
           className="aw"
-          src={image}
-          alt={`track artwork for ${title} by ${artist}`}
+          // for future album covers
+          // src={image}
+          alt={`track artwork for ${title} by ${filename}`}
         />
         <h2 className="title">{title}</h2>
-        <h3 className="artist">{artist}</h3>
+        <h3 className="artist">{filename}</h3>
         <DashAudioControls
           isPlaying={isPlaying}
           onPrevClick={toPrevTrack}
@@ -140,7 +142,7 @@ const DashAudio = ({ tracks }) => {
         />
       <DashBackDrop
         trackIndex={trackIndex}
-        activeColor={color}
+        // activeColor={color}
         isPlaying={isPlaying}
       />
       </div>

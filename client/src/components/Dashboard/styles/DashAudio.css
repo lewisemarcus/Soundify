@@ -47,8 +47,8 @@ input[type="range"] {
     border-radius: 120px;
     display: block;
     margin: auto;
-    height: 70px;
-    width: 70px;
+    height: 75px;
+    width: 75px;
 }
 
 .track-info {
@@ -96,9 +96,11 @@ input[type="range"] {
     top: -3px;
     left: -3px;
     right: -3px;
-    bottom: -20px;
+    bottom: -15px;
     z-index: -1;
     border-radius: 20px;
+    -moz-webkit-bottom:-23px; 
+    -webkit-bottom:-23px;
 }
 
 .color-bd.playing {
