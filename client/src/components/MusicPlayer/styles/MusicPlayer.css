@@ -35,7 +35,7 @@ input[type="range"] {
     padding: 24px;
     border-radius: 20px;
     box-shadow: 3px -1px 28px rgb(0 0 0 / 20%);
-    margin: auto;
+    margin: auto 50px auto 50px;
     color: var(--white);
     background: var(--active-color);
 }

@@ -1,0 +1,22 @@
+.Playlist-container {
+    display: flex;
+}
+
+.playlist-title {
+    text-align: center;
+}
+
+.playlist-header {}
+
+.item {
+    width: 50%;
+}
+
+.item .content,
+.item .headers {
+    text-align: center;
+}
+
+.trashcan {
+    font-size: 20px;
+}
