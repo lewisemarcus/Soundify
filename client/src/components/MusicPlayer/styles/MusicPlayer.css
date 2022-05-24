@@ -93,7 +93,7 @@ input[type="range"] {
     top: -24px;
     left: -24px;
     right: -24px;
-    bottom: -24px;
+    bottom: -31px;
     z-index: -1;
     border-radius: 20px;
 }

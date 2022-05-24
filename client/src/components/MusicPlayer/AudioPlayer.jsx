@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import AudioControls from "./AudioControls";
 import Backdrop from "./Backdrop";
 import "./styles/MusicPlayer.css";
+import Slider from '@mui/material/Slider';
+import Stack from '@mui/material/Stack';
+import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
+import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 
 /*
  * Read the blog post here:
@@ -124,6 +128,7 @@ const AudioPlayer = ({ tracks }) => {
           onPrevClick={toPrevTrack}
           onNextClick={toNextTrack}
           onPlayPauseClick={setIsPlaying}
+          volume
         />
         <input
           type="range"
@@ -138,11 +143,37 @@ const AudioPlayer = ({ tracks }) => {
           onKeyUp={onScrubEnd}
           style={{ background: trackStyling }}
         />
-      <Backdrop
-        trackIndex={trackIndex}
-        activeColor={color}
-        isPlaying={isPlaying}
-      />
+        {/* Volume slider */}
+        <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1 }} alignItems="center">
+          <VolumeDownRounded />
+          <Slider
+            aria-label="Volume"
+            defaultValue={10}
+            sx={{
+              // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+              '& .MuiSlider-track': {
+                border: 'none',
+              },
+              '& .MuiSlider-thumb': {
+                width: 24,
+                height: 24,
+                backgroundColor: '#fff',
+                '&:before': {
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
+                },
+                '&:hover, &.Mui-focusVisible, &.Mui-active': {
+                  boxShadow: 'none',
+                },
+              },
+            }}
+            />
+          <VolumeUpRounded />
+        </Stack>
+        <Backdrop
+          trackIndex={trackIndex}
+          activeColor={color}
+          isPlaying={isPlaying}
+        />
       </div>
     </div>
   );
