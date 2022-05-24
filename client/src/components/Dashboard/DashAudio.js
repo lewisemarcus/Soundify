@@ -123,15 +123,17 @@ console.log(isReady, "ready load")
 
   return (
     <div className="audio-play">
-      <div className="track-info">
+      <div className="track-information">
         <img
           className="aw"
           // for future album covers
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
         />
-        <h2 className="title">{title}</h2>
-        <h3 className="artist">{filename}</h3>
+        {/* <h2 className="title">{title}</h2>
+        <h3 className="artist">{filename}</h3> */}
+        <br></br>
+        <br></br>
         <DashAudioControls
           isPlaying={isPlaying}
           onPrevClick={toPrevTrack}

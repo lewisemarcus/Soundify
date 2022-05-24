@@ -76,7 +76,7 @@ const DashboardPlayer = () => {
 
     //   <CardWrapper className="card-wrapper">
 
-    <div>
+    <div className="DashPlayer">
       {/* <h1>Playlist created by user</h1> */}
       <DashAudio tracks={songs} />
       {/* <div className="Playlist-container">
