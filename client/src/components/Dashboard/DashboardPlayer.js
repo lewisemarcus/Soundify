@@ -8,7 +8,8 @@ import "./styles/DashboardPlayer.css";
 // import styled from "styled-components";
 
 import DashAudio from "./DashAudio";
-import DashTracks from "./DashTracks";
+// import DashTracks from "./DashTracks";
+
 // import Playlist from "../pages/Playlists";
 
 // const { title, artist, color, image, audioSrc } = tracks;
@@ -31,18 +32,21 @@ import DashTracks from "./DashTracks";
 //   },
 // ];
 
+
 const DashboardPlayer = () => {
   const [songs, setSongs] = useState([
-    {
-      _id: "",
-      title: "",
-      genre: "",
-      id: "",
-      year: "",
-      filename: "",
-      link: "",
-    },
+    // {
+    //   _id: "",
+    //   title: "",
+    //   genre: "",
+    //   id: "",
+    //   year: "",
+    //   filename: "",
+    //   link: "",
+    // },
   ]);
+
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -57,6 +61,7 @@ const DashboardPlayer = () => {
         const songList = await songData.json();
 
         setSongs(songList);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -64,10 +69,15 @@ const DashboardPlayer = () => {
     fetchSongs();
   }, []);
 
-  return (
+
+
+
+  return isLoading ? "loading" : (
+
     //   <CardWrapper className="card-wrapper">
+
     <div>
-      <h1>Playlist created by user</h1>
+      {/* <h1>Playlist created by user</h1> */}
       <DashAudio tracks={songs} />
       {/* <div className="Playlist-container">
         <div className="">
