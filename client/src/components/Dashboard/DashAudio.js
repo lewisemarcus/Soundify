@@ -127,14 +127,14 @@ const DashAudio = ({ tracks }) => {
   return (
     <div className="audio-play">
       <div className="track-information">
-        <img
+        {/* <img
           className="aw"
           // for future album covers
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
-        />
-        {/* <h2 className="title">{title}</h2>
-        <h3 className="artist">{filename}</h3> */}
+        /> */}
+        <h2 className="songTitle">{title}</h2>
+        <h3 className="songArtist">{filename}</h3>
         <br></br>
         <br></br>
         <DashAudioControls
@@ -160,17 +160,18 @@ const DashAudio = ({ tracks }) => {
         <Stack
           spacing={2}
           direction="row"
-          sx={{ mb: 1, px: 1 }}
+          sx={{ mb: 0, mt: 2 }}
           alignItems="center"
         >
           <VolumeDownRounded />
           <Slider
             onChange={onVolumeChange}
             aria-label="Volume"
-            defaultValue={0.25}
+            defaultValue={0.20}
             max={1}
-            min={0.1}
+            min={0.01}
             step={0.01}
+            
             // value={volume}
             sx={{
               // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
@@ -178,17 +179,18 @@ const DashAudio = ({ tracks }) => {
                 border: "none",
               },
               "& .MuiSlider-thumb": {
-                width: 24,
-                height: 24,
+                width: 16,
+                height: 16,
                 backgroundColor: "#fff",
                 "&:before": {
-                  boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+                  boxShadow: "0 8px 16px rgba(0,0,0,0.4)",
                 },
                 "&:hover, &.Mui-focusVisible, &.Mui-active": {
                   boxShadow: "none",
                 },
               },
             }}
+        
           />
           <VolumeUpRounded />
         </Stack>

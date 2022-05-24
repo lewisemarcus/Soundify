@@ -57,12 +57,12 @@ input[type="range"] {
   padding: 20px;
 }
 
-.title {
+.songTitle {
   font-weight: 700;
   margin-bottom: 4px;
 }
 
-.artist {
+.songArtist {
   font-weight: 300;
   margin-top: 0;
 }
