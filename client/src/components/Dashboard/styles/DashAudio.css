@@ -130,7 +130,7 @@
 }
 
 
-@media only screen and (max-width: 880px) {
+/* @media only screen and (max-width: 880px) {
   .audio-play {
     max-width: 200px;
     max-height: 180px;
@@ -145,4 +145,4 @@
   .audio-ctrls {
     width: 90%;
   }
-}
+} */

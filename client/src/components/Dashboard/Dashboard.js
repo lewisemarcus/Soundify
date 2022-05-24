@@ -16,11 +16,16 @@ const DashCarousel = () => {
         <button id="searchBtn">Search</button>
       </div>
       <div className="musicPlayer">
-      <Row>
+        <div className="main-items"> <DashboardPlayer /> </div>
+        <div className="main-items"> <DashboardPlayer /> </div>
+        <div className="main-items"> <DashboardPlayer /> </div>
+
+      {/* <Row>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
-    </Row>
+    </Row> */}
+    
         {/* <div className="carousel-items">
           <DashMusicCard />
         </div>
