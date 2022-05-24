@@ -31,6 +31,10 @@ BsIcons.BsPlayCircleFill.music-play-btn:hover {
   color: blue;
 }
 
+.DashPlayer {
+  margin-top: 50px;
+}
+
 /* .music-play-btn {
     position: relative;
     top: 120px;
