@@ -13,4 +13,8 @@ class AddSongToPlaylist extends React.Component {
         this.props.addSongHandler(this.state);
         this.setState({ id: '', title: '', artist: '', audioSrc: '' })
     }
+
+
 }
+
+export default AddSongToPlaylist;
