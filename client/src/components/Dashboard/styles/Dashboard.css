@@ -27,6 +27,7 @@
   margin-top: 20px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 #searchBar {
@@ -70,6 +71,8 @@
   margin-top: 20px;
   justify-content: center;
   align-items: center;
+  margin-top: 60px;
+  /* margin-bottom: 10px; */
 }
 
 .genre1 {
