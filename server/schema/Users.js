@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import Song from "../models/Songs.js"
+import Playlist from "../models/Playlists.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
 const { hash, compare } = pkg
@@ -12,6 +13,22 @@ const resolvers = {
     Query: {
         user: async (parent, { _id }) => {
             return User.findById(_id)
+        },
+        users: async () => {
+            return User.find()
+        },
+        songs: async () => {
+            return Song.find()
+        },
+        song: async (parent, { _id }) => {
+            return Song.findOne({ _id: _id })
+        },
+        playlist: async (parent, { plTitle }) => {
+            return Playlist.findOne({ plTitle: plTitle })
+        },
+        userPlaylists: async (parent, { owner }) => {
+            const params = owner ? { owner } : {}
+            return Playlist.find(params).sort({ createdAt: -1 })
         },
     },
     Mutation: {
