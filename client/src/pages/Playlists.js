@@ -1,23 +1,36 @@
 import React from "react";
 import AudioPlayer from "../components/MusicPlayer/AudioPlayer";
 import tracks from "../components/MusicPlayer/tracks";
-
-const { title, artist, color, image, audioSrc } = tracks;
+import { AiFillCloseCircle } from "react-icons/ai";
+import "./styles/Playlists.css"
+import { Row, Col } from "antd"
 
 const Playlists = () => {
+
+  // const {id, title, artist, audioSrc} = props.playlist;
+  
   return (
     <div>
       <h1>Playlist created by user</h1>
-      <AudioPlayer tracks={tracks} />
       <div className="Playlist-container">
-        <div className="">
-              {/* <img className="" src={ablum} alt='album cover' /> */}
-          <div className="content">
-            <h2 className="title">{title}</h2>
-            <h3 className="artist">{artist}</h3>
+          <AudioPlayer tracks={tracks} />
+          <div className="item">
+              <h2 className="playlist-title">Playlist Name:</h2>
+              <div className="headers">
+                <Row>
+                  <Col span={8}><h2 className="playlist-header">Title</h2></Col>
+                  <Col span={8}><h2 className="playlist-header">Artist</h2></Col>
+                  <Col span={8}><h2 className="playlist-header">Remove</h2></Col>
+                </Row>
+            </div>
+            <div className="content">
+              <Row>
+                <Col span={8}><h2 className="playlist-header">Welcome Home</h2></Col>
+                <Col span={8}><h2 className="playlist-header">Coheed And Cambria</h2></Col>
+                <Col span={8}><i className="trashcan" style={{color:'red', marginTop: '7px'}}><AiFillCloseCircle /></i></Col>
+              </Row>
+            </div>
           </div>
-          <i className="trash icon" style={{color:'red', marginTop: '7px'}}></i>
-      </div>
       </div>
     </div>
   );
