@@ -8,15 +8,17 @@ import "./styles/DashAudio.css";
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
 const DashAudio = ({ tracks }) => {
+  console.log(tracks)
   // State
   const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  
 
   // Destructure for conciseness
   const { title, filename, year, genre, _id, link } = tracks[trackIndex]
   // const { title, artist, color, image, audioSrc } = tracks[trackIndex];
-
+  // const [audioRef.current, setMusicLink] = useState(new Audio(link))
   // Refs
   const audioRef = useRef(new Audio(link));
   const intervalRef = useRef();
@@ -24,6 +26,7 @@ const DashAudio = ({ tracks }) => {
 
   // Destructure for conciseness
   const { duration } = audioRef.current;
+  console.log(link, "initial load")
 
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
@@ -77,6 +80,9 @@ const DashAudio = ({ tracks }) => {
   };
 
   useEffect(() => {
+
+    console.log(isPlaying, "Playing")
+    console.log(audioRef.current, "audioRef")
     if (isPlaying) {
       audioRef.current.play();
       startTimer();
@@ -87,11 +93,15 @@ const DashAudio = ({ tracks }) => {
 
   // Handles cleanup and setup when changing tracks
   useEffect(() => {
+
     audioRef.current.pause();
 
-    audioRef.current = new Audio(link);
-    setTrackProgress(audioRef.current.currentTime);
+    
+   audioRef.current = new Audio(link);
+    console.log(audioRef.current)
 
+    setTrackProgress(audioRef.current.currentTime);
+console.log(isReady, "ready load")
     if (isReady.current) {
       audioRef.current.play();
       setIsPlaying(true);
@@ -100,6 +110,7 @@ const DashAudio = ({ tracks }) => {
       // Set the isReady ref as true for the next pass
       isReady.current = true;
     }
+    
   }, [trackIndex]);
 
   useEffect(() => {
