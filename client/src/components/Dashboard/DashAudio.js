@@ -2,21 +2,24 @@ import React, { useState, useEffect, useRef } from "react";
 import DashAudioControls from "./DashAudioControls";
 import DashBackDrop from "./DashBackDrop";
 import "./styles/DashAudio.css";
-
+import Slider from "@mui/material/Slider";
+import Stack from "@mui/material/Stack";
+import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded";
+import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded";
 /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
 const DashAudio = ({ tracks }) => {
-  console.log(tracks)
+  console.log(tracks);
   // State
   const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  
+  const [volume, setVolume] = useState(10);
 
   // Destructure for conciseness
-  const { title, filename, year, genre, _id, link } = tracks[trackIndex]
+  const { title, filename, year, genre, _id, link } = tracks[trackIndex];
   // const { title, artist, color, image, audioSrc } = tracks[trackIndex];
   // const [audioRef.current, setMusicLink] = useState(new Audio(link))
   // Refs
@@ -26,7 +29,6 @@ const DashAudio = ({ tracks }) => {
 
   // Destructure for conciseness
   const { duration } = audioRef.current;
-  console.log(link, "initial load")
 
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
@@ -79,10 +81,17 @@ const DashAudio = ({ tracks }) => {
     }
   };
 
-  useEffect(() => {
+  const onVolumeChange = (e) => {
+    const { target } = e
+    const newVolume = +target.value
+    console.log(newVolume)
+    if (newVolume) {
+        setVolume(newVolume)
+        audioRef.current.volume = newVolume || 0.01
+    }
+}
 
-    console.log(isPlaying, "Playing")
-    console.log(audioRef.current, "audioRef")
+  useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
       startTimer();
@@ -93,15 +102,10 @@ const DashAudio = ({ tracks }) => {
 
   // Handles cleanup and setup when changing tracks
   useEffect(() => {
-
     audioRef.current.pause();
-
-    
-   audioRef.current = new Audio(link);
-    console.log(audioRef.current)
+    audioRef.current = new Audio(link);
 
     setTrackProgress(audioRef.current.currentTime);
-console.log(isReady, "ready load")
     if (isReady.current) {
       audioRef.current.play();
       setIsPlaying(true);
@@ -110,7 +114,6 @@ console.log(isReady, "ready load")
       // Set the isReady ref as true for the next pass
       isReady.current = true;
     }
-    
   }, [trackIndex]);
 
   useEffect(() => {
@@ -153,11 +156,47 @@ console.log(isReady, "ready load")
           onKeyUp={onScrubEnd}
           style={{ background: trackStyling }}
         />
-      <DashBackDrop
-        trackIndex={trackIndex}
-        // activeColor={color}
-        isPlaying={isPlaying}
-      />
+        {/* Volume slider */}
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{ mb: 1, px: 1 }}
+          alignItems="center"
+        >
+          <VolumeDownRounded />
+          <Slider
+            onChange={onVolumeChange}
+            aria-label="Volume"
+            defaultValue={0.25}
+            max={1}
+            min={0.1}
+            step={0.01}
+            // value={volume}
+            sx={{
+              // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+              "& .MuiSlider-track": {
+                border: "none",
+              },
+              "& .MuiSlider-thumb": {
+                width: 24,
+                height: 24,
+                backgroundColor: "#fff",
+                "&:before": {
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+                },
+                "&:hover, &.Mui-focusVisible, &.Mui-active": {
+                  boxShadow: "none",
+                },
+              },
+            }}
+          />
+          <VolumeUpRounded />
+        </Stack>
+        <DashBackDrop
+          trackIndex={trackIndex}
+          // activeColor={color}
+          isPlaying={isPlaying}
+        />
       </div>
     </div>
   );
