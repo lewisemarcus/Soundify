@@ -28,6 +28,13 @@ export default gql`
         uploaded: String
         comments: [Comment]!
     }
+
+    type Playlist {
+        _id: ID
+        title: String
+        owner: String
+        songs: [Song]!
+    }
     input RegisterInput {
         username: String
         email: String
@@ -63,6 +70,8 @@ export default gql`
         userSongs(username: String!): [Song]
         song(_id: ID!): Song
         me: User
+        userPlaylists(owner: String!): [Playlist]
+        playlist(plTitle: String!): Playlist
     }
 
     type Mutation {

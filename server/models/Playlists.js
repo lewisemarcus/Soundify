@@ -1,9 +1,10 @@
+import dateFormat from "../utils/dateFormat.js"
 import pkg from "mongoose"
 const { model, Schema } = pkg
 
 const playlistSchema = new Schema(
     {
-        title: {
+        plTitle: {
             type: String,
             required: true,
             unique: true,
@@ -13,6 +14,11 @@ const playlistSchema = new Schema(
             type: String,
             required: true,
             trim: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (timestamp) => dateFormat(timestamp),
         },
         songs: [
             {
@@ -28,6 +34,6 @@ const playlistSchema = new Schema(
     },
 )
 
-const Playlist = model("Playlist", songSchema, "playlists")
+const Playlist = model("Playlist", playlistSchema, "playlists")
 
 export default Playlist
