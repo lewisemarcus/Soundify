@@ -4,7 +4,14 @@
   background: var(--dark);
 }
 
+.musicPlayer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
 .main-items {
+
   height: 20rem;
 }
 
@@ -105,5 +112,3 @@
   top: 1px;
 }
 
-.musicPlayer {
-}
