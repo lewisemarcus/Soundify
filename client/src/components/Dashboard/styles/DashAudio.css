@@ -1,25 +1,25 @@
-:root {
+/* :root {
   --white: #fff;
   --active-color: #00aeb0;
-}
+} */
 
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
-html {
+/* html {
   font-family: Arial, Helvetica, sans-serif;
   height: 100%;
   transition: background 0.4s ease;
-}
+} */
 
-button {
+/* button {
   background: none;
   border: none;
   cursor: pointer;
-}
+} */
 
-input[type="range"] {
+/* input[type="range"] {
   height: 5px;
   -webkit-appearance: none;
   width: 100%;
@@ -28,11 +28,12 @@ input[type="range"] {
   background: #3b7677;
   transition: background 0.2s ease;
   cursor: pointer;
-}
+} */
 
 .audio-play {
-  max-width: 220px;
-  height: 250px;
+  max-width: 250px;
+
+  height: 220px;
   /* object-fit: contain; */
   padding: 3px;
   border-radius: 20px;
@@ -67,26 +68,26 @@ input[type="range"] {
   margin-top: 0;
 }
 
-.audio-controls {
+.audio-ctrls {
   display: flex;
   justify-content: space-between;
   width: 75%;
   margin: 0 auto 15px;
-}
+} */
 
-.audio-controls .prev svg,
-.audio-controls .next svg {
+.audio-ctrls .previous svg,
+.audio-ctrls .next-btn svg {
   width: 35px;
   height: 35px;
-}
+} 
 
-.audio-controls .play svg,
-.audio-controls .pause svg {
+.audio-ctrls .play-btn svg,
+.audio-ctrls .pause-btn svg {
   height: 40px;
   width: 40px;
 }
 
-.audio-controls path {
+.audio-ctrls path {
   fill: var(--white);
 }
 
@@ -116,7 +117,7 @@ input[type="range"] {
 }
 
 .css-14pt78w-MuiSlider-rail {
-    color:yellow;
+    color:white;
 }
 
 @keyframes colorChange {
@@ -125,5 +126,23 @@ input[type="range"] {
   }
   to {
     filter: hue-rotate(360deg);
+  }
+}
+
+
+@media only screen and (max-width: 880px) {
+  .audio-play {
+    max-width: 200px;
+    max-height: 180px;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  .audio-play {
+    max-width: 180px;
+    max-height: 160px;
+  }
+  .audio-ctrls {
+    width: 90%;
   }
 }
