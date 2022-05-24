@@ -10,10 +10,10 @@ const DashAudioControls = ({
   onPrevClick,
   onNextClick
 }) => (
-  <div className="audio-controls">
+  <div className="audio-ctrls">
     <button
       type="button"
-      className="prev"
+      className="previous"
       aria-label="Previous"
       onClick={onPrevClick}
     >
@@ -22,7 +22,7 @@ const DashAudioControls = ({
     {isPlaying ? (
       <button
         type="button"
-        className="pause"
+        className="pause-btn"
         onClick={() => onPlayPauseClick(false)}
         aria-label="Pause"
       >
@@ -31,7 +31,7 @@ const DashAudioControls = ({
     ) : (
       <button
         type="button"
-        className="play"
+        className="play-btn"
         onClick={() => onPlayPauseClick(true)}
         aria-label="Play"
       >
@@ -40,7 +40,7 @@ const DashAudioControls = ({
     )}
     <button
       type="button"
-      className="next"
+      className="next-btn"
       aria-label="Next"
       onClick={onNextClick}
     >

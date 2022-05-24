@@ -7,8 +7,8 @@ const DashCarousel = () => {
   const username = localStorage.getItem("username");
 
   return (
-    <div className="carousel-container">
-      <div className="carousel-header">
+    <div className="main-container">
+      <div className="main-header">
         <h2>Welcome, {username.charAt(0).toUpperCase() + username.slice(1)}</h2>
       </div>
       <div className="searchContainer">
@@ -17,9 +17,9 @@ const DashCarousel = () => {
       </div>
       <div className="musicPlayer">
       <Row>
-      <Col span={8} className="carousel-items"> <DashboardPlayer /> </Col>
-      <Col span={8} className="carousel-items"> <DashboardPlayer /> </Col>
-      <Col span={8} className="carousel-items"> <DashboardPlayer /> </Col>
+      <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
+      <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
+      <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
     </Row>
         {/* <div className="carousel-items">
           <DashMusicCard />

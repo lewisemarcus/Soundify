@@ -1,20 +1,20 @@
-.carousel-container {
+.main-container {
   padding: 2rem 2rem 0;
   height: 100vh;
   background: var(--dark);
 }
 
-.carousel-items {
+.main-items {
   height: 20rem;
 }
 
-.carousel-header {
+.main-header {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.carousel-header h2 {
+.main-header h2 {
   font-weight: var(--poppins-medium);
   letter-spacing: 0.1rem;
   font-size: 1.3rem;
