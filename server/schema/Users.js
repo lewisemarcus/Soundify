@@ -14,6 +14,11 @@ const resolvers = {
         user: async (parent, { _id }) => {
             return User.findById(_id)
         },
+        songByGenre: async (parent, { genre }) => {
+            const params = genre ? { genre } : {}
+            return Song.find(params).sort({ uploaded: -1 })
+        },
+
         users: async () => {
             return User.find().populate("songs")
         },
