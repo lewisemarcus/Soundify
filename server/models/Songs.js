@@ -22,11 +22,6 @@ const songSchema = new Schema(
             required: true,
             trim: true,
         },
-        year: {
-            type: String,
-            required: true,
-            trim: true,
-        },
         filename: {
             type: String,
             required: true,

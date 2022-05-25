@@ -15,13 +15,13 @@ const resolvers = {
             return User.findById(_id)
         },
         users: async () => {
-            return User.find()
+            return User.find().populate("songs")
         },
         songs: async () => {
             return Song.find()
         },
-        song: async (parent, { _id }) => {
-            return Song.findOne({ _id: _id })
+        song: async (parent, { title }) => {
+            return Song.findOne({ title: title })
         },
         playlist: async (parent, { plTitle }) => {
             return Playlist.findOne({ plTitle: plTitle })
@@ -34,6 +34,13 @@ const resolvers = {
             const params = owner ? { owner } : {}
             return Playlist.find(params).sort({ createdAt: -1 })
         },
+        // userPlaylists: async (parent, args, context) => {
+        //     if (context.user)
+        //         return User.findOne({ _id: context.user._id })
+        //             .populate("playlists")
+        //             .sort({ createdAt: -1 })
+        //     throw new AuthenticationError("You need to be logged in!")
+        // },
     },
     Mutation: {
         registerUser: async (
@@ -95,6 +102,27 @@ const resolvers = {
                 )
             }
         },
+        // addSong: async (
+        //     parent,
+        //     { songInput: { title, genre, filename, link, username, uploaded } },
+        //     context,
+        // ) => {
+        //     if (context.user) {
+        //         const song = await Song.create({
+        //             title: title,
+        //             genre: genre,
+        //             filename: filename,
+        //             username: context.user.username,
+        //             link: link,
+        //             uploaded: uploaded,
+        //         })
+
+        //         await User.findOneAndUpdate(
+        //             { _id: context.user._id },
+        //             { $addToSet: { songs: song._id } },
+        //         )
+        //     }
+        // },
     },
 }
 
