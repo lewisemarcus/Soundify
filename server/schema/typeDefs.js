@@ -21,7 +21,6 @@ export default gql`
         _id: ID
         title: String
         genre: String
-        year: String
         filename: String
         link: String
         username: String
@@ -49,7 +48,6 @@ export default gql`
     input SongInput {
         title: String
         genre: String
-        year: String
         filename: String
         link: String
         username: String
@@ -68,7 +66,7 @@ export default gql`
         user(_id: ID!): User
         songs: [Song]
         userSongs(username: String!): [Song]
-        song(_id: ID!): Song
+        song(title: String!): Song
         me: User
         userPlaylists(owner: String!): [Playlist]
         playlist(plTitle: String!): Playlist
