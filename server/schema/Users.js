@@ -26,6 +26,10 @@ const resolvers = {
         playlist: async (parent, { plTitle }) => {
             return Playlist.findOne({ plTitle: plTitle })
         },
+        userSongs: async (parent, { username }) => {
+            const params = username ? { username } : {}
+            return Song.find(params).sort({ uploaded: -1 })
+        },
         userPlaylists: async (parent, { owner }) => {
             const params = owner ? { owner } : {}
             return Playlist.find(params).sort({ createdAt: -1 })
