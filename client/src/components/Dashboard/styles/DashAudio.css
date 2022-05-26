@@ -33,7 +33,7 @@
 .audio-play {
   max-width: 250px;
 
-  height: 220px;
+  /* height: 220px; */
   /* object-fit: contain; */
   padding: 3px;
   border-radius: 20px;
