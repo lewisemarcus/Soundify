@@ -65,7 +65,7 @@ export default gql`
         userByUsername(username: String!): User
         user(_id: ID!): User
         songs: [Song]
-        songByGenre(genre: String!): [Songs]
+        songByGenre(genre: String!): [Song]
         userSongs(username: String!): [Song]
         song(title: String!): Song
         me: User
