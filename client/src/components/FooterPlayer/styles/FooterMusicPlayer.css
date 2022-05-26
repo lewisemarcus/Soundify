@@ -1,0 +1,24 @@
+.footer-audio-player {
+    background-color: rgb(179, 179, 179);
+}
+
+.footer-track-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer-audio-controls {
+    display: flex;
+    padding: 10px
+}
+
+.footer-audio-controls button {
+    color: black;
+    padding: 5px;
+}
+
+
+/* .footer-audio-player svg {
+    color: black
+} */

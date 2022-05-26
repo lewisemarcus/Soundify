@@ -1,14 +1,12 @@
 import React from "react";
-import ReactPlayer from "react-player/lazy";
+import FooterAudioPlayer from "./FooterPlayer/FooterAudioPlayer";
+import Footertracks from "./FooterPlayer/Footertracks"
 
 const Footer = () => {
   return (
     // this link needs to be changed upon new click
     <div className="footer-container">
-      <ReactPlayer
-        url="https://soundclone-music.s3.amazonaws.com/qwe"
-        controls="true"
-      />
+      <FooterAudioPlayer tracks={Footertracks} />
     </div>
   );
 };
