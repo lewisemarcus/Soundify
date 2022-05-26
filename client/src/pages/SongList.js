@@ -63,7 +63,7 @@ const SongList = () => {
         method: "POST",
         accept: "audio/*",
         multiple: false,
-        action: "http://localhost:4000/upload",
+        action: "http://127.0.0.1:4000/upload",
         onChange(info) {
             const { status } = info.file
             if (status !== "uploading") {
