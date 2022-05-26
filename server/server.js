@@ -1,3 +1,4 @@
+import cors from "cors"
 import express from "express"
 import dotenv from "dotenv"
 import { getSongs, postSong, deleteSong } from "./routes/index.js"
@@ -5,6 +6,7 @@ import morgan from "morgan"
 import { authMiddleware } from "./utils/auth.js"
 import { ApolloServer } from "apollo-server-express"
 import mongoose from "mongoose"
+import bodyParser from "body-parser"
 
 // import { default as typeDefs } from "./schema/typeDefs.js";
 // import typeDefs from "./schema/typeDefs.js";
@@ -34,6 +36,9 @@ const port = process.env.PORT || 4000
 if (process.env.NODE_ENV !== "production") {
     app.use(morgan("dev"))
 }
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser({ limit: "50mb" }))
+app.use(cors())
 app.use(express.json())
 
 app.use("/", getSongs)
