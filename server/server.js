@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import { getSongs, postSong, deleteSong } from "./routes/index.js"
 import morgan from "morgan"
+import { authMiddleware } from "./utils/auth.js"
 import { ApolloServer } from "apollo-server-express"
 import mongoose from "mongoose"
 
@@ -14,12 +15,13 @@ import mongoose from "mongoose"
 import resolvers from "./schema/Users.js"
 import typeDefs from "./schema/typeDefs.js"
 
-const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone";
+const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone"
 // const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: authMiddleware,
 })
 
 const app = express()
