@@ -107,27 +107,27 @@ const resolvers = {
                 )
             }
         },
-        // addSong: async (
-        //     parent,
-        //     { songInput: { title, genre, filename, link, username, uploaded } },
-        //     context,
-        // ) => {
-        //     if (context.user) {
-        //         const song = await Song.create({
-        //             title: title,
-        //             genre: genre,
-        //             filename: filename,
-        //             username: context.user.username,
-        //             link: link,
-        //             uploaded: uploaded,
-        //         })
+        addSong: async (
+            parent,
+            { songInput: { title, genre, filename, link, username, uploaded } },
+            context,
+        ) => {
+            if (context.user) {
+                const song = await Song.create({
+                    title: title,
+                    genre: genre,
+                    filename: filename,
+                    username: context.user.username,
+                    link: link,
+                    uploaded: uploaded,
+                })
 
-        //         await User.findOneAndUpdate(
-        //             { _id: context.user._id },
-        //             { $addToSet: { songs: song._id } },
-        //         )
-        //     }
-        // },
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { songs: song._id } },
+                )
+            }
+        },
     },
 }
 
