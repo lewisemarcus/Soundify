@@ -101,3 +101,7 @@
 .anticon svg {
   color: var(--orange);
 }
+
+.navMain .antcon svg {
+  color: #fff;
+}

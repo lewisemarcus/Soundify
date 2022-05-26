@@ -28,3 +28,7 @@
 body {
   background-color: #141414;
 }
+
+.ul-container .anticon svg {
+  color: #fff;
+}
