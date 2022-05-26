@@ -24,7 +24,7 @@
 }
 
 .main-items {
-  height: 20rem;
+  /* height: 20rem; */
 }
 
 .main-header {
@@ -90,7 +90,7 @@
   margin-top: 20px;
   justify-content: center;
   align-items: center;
-  margin-top: 122px;
+  margin-top: 55px;
   /* margin-bottom: 10px; */
 }
 
