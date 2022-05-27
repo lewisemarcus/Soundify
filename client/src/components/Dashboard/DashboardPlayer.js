@@ -77,7 +77,7 @@ const DashboardPlayer = ({ sdata }) => {
             <DashAudio tracks={songs} sdata={sdata} />
             {/* <div className="Playlist-container">
         <div className="">
-              <img className="" src={ablum} alt='album cover' />
+              <img className="" src={album} alt='album cover' />
           <div className="content">
             <h2 className="title">{title}</h2>
             <h3 className="artist">{artist}</h3>
