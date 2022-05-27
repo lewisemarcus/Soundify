@@ -61,6 +61,7 @@ export default gql`
     }
 
     type Query {
+        songByArtist(username: String!): [Song]
         users: [User]
         userByUsername(username: String!): User
         user(_id: ID!): User
