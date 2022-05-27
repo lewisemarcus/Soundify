@@ -55,15 +55,28 @@ const SongList = () => {
     const { Dragger } = Upload
 
     const props = {
-        name: "file",
+        name: "filename",
+        uid: "file",
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "POST",
         },
-        method: "POST",
+        // method: "POST",
         accept: "audio/*",
         multiple: false,
-        action: "http://127.0.0.1:4000/upload",
+        // action: "http://localhost:4000/upload",
+        customRequest({ onSuccess, onError, file }) {
+            const formData = new FormData()
+            formData.append("username", song.username)
+            formData.append("genre", song.genre)
+            formData.append("title", song.title)
+            formData.append("filename", file)
+            fetch("/upload", {
+                method: "POST",
+                body: formData,
+                mode: "cors",
+            })
+        },
         onChange(info) {
             const { status } = info.file
             if (status !== "uploading") {
