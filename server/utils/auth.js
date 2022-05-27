@@ -16,6 +16,7 @@ export function authMiddleware({ req }) {
 
     try {
         const { data } = verify(token, { maxAge: expiration })
+
         req.user = data
     } catch {
         console.log("Invalid token")
