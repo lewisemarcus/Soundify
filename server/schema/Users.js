@@ -14,6 +14,10 @@ const resolvers = {
         user: async (parent, { _id }) => {
             return User.findById(_id)
         },
+        songByArtist: async (parent, { username }) => {
+            const params = username ? { username } : {}
+            return Song.find(params).sort({ uploaded: -1 })
+        },
         songByGenre: async (parent, { genre }) => {
             const params = genre ? { genre } : {}
             return Song.find(params).sort({ uploaded: -1 })

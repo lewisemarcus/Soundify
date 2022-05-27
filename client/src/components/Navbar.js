@@ -79,9 +79,8 @@ const Navbar = () => {
   );
 
   return (
-    <nav>
+    <nav className="navMain">
       <div className="logo">
-        {/* <Link to="/">Soundify</Link> */}
         <img src={logo} width={100} height={100}></img>
       </div>
       {user ? (
