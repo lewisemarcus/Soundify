@@ -33,7 +33,7 @@ import DashAudio from "./DashAudio";
 // ];
 
 
-const DashboardPlayer = () => {
+const DashboardPlayer = ({data}) => {
   const [songs, setSongs] = useState([
     // {
     //   _id: "",
@@ -78,10 +78,10 @@ const DashboardPlayer = () => {
 
     <div className="DashPlayer">
       {/* <h1>Playlist created by user</h1> */}
-      <DashAudio tracks={songs} />
+      <DashAudio tracks={songs} data={data}/>
       {/* <div className="Playlist-container">
         <div className="">
-              <img className="" src={ablum} alt='album cover' />
+              <img className="" src={album} alt='album cover' />
           <div className="content">
             <h2 className="title">{title}</h2>
             <h3 className="artist">{artist}</h3>
