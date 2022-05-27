@@ -10,7 +10,7 @@ const storage = memoryStorage()
 const upload = multer({ storage: storage })
 
 router.post("/upload", upload.single("filename"), async (req, res) => {
-    console.log("hello")
+    console.log(">>>>REQ.BODY", req)
     const { originalname } = req.file
     const { title, genre, username } = req.body
     const content = {
