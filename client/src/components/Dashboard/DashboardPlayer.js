@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 // import dojacat from "../assets/dojacat.jpg";
 // import audien from "../assets/audien.jpg";
 // import aliciakeys from "../assets/aliciakeys.jpg"
-import "./styles/DashboardPlayer.css";
+import "./styles/DashboardPlayer.css"
 
 // import * as BsIcons from "react-icons/bs";
 // import styled from "styled-components";
 
-import DashAudio from "./DashAudio";
+import DashAudio from "./DashAudio"
 // import DashTracks from "./DashTracks";
 
 // import Playlist from "../pages/Playlists";
@@ -32,54 +32,50 @@ import DashAudio from "./DashAudio";
 //   },
 // ];
 
+const DashboardPlayer = ({ sdata }) => {
+    const [songs, setSongs] = useState([
+        // {
+        //   _id: "",
+        //   title: "",
+        //   genre: "",
+        //   id: "",
+        //   year: "",
+        //   filename: "",
+        //   link: "",
+        // },
+    ])
+    const [isLoading, setIsLoading] = useState(true)
 
-const DashboardPlayer = () => {
-  const [songs, setSongs] = useState([
-    // {
-    //   _id: "",
-    //   title: "",
-    //   genre: "",
-    //   id: "",
-    //   year: "",
-    //   filename: "",
-    //   link: "",
-    // },
-  ]);
+    useEffect(() => {
+        const fetchSongs = async () => {
+            try {
+                const songData = await fetch("/songs", {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                })
 
-  const [isLoading, setIsLoading] = useState(true)
+                const songList = await songData.json()
 
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const songData = await fetch("/songs", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
+                setSongs(songList)
+                setIsLoading(false)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchSongs()
+    }, [])
 
-        const songList = await songData.json();
+    return isLoading ? (
+        "loading"
+    ) : (
+        //   <CardWrapper className="card-wrapper">
 
-        setSongs(songList);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchSongs();
-  }, []);
-
-
-
-
-  return isLoading ? "loading" : (
-
-    //   <CardWrapper className="card-wrapper">
-
-    <div className="DashPlayer">
-      {/* <h1>Playlist created by user</h1> */}
-      <DashAudio tracks={songs} />
-      {/* <div className="Playlist-container">
+        <div className="DashPlayer">
+            {/* <h1>Playlist created by user</h1> */}
+            <DashAudio tracks={songs} sdata={sdata} />
+            {/* <div className="Playlist-container">
         <div className="">
               <img className="" src={ablum} alt='album cover' />
           <div className="content">
@@ -89,10 +85,10 @@ const DashboardPlayer = () => {
           <i className="trash icon" style={{color:'red', marginTop: '7px'}}></i>
       </div>
       </div> */}
-    </div>
-    //   </CardWrapper>
-  );
-};
+        </div>
+        //   </CardWrapper>
+    )
+}
 
 // const DashMusicCard = () => {
 //   return (
@@ -126,4 +122,4 @@ const DashboardPlayer = () => {
 //   }
 // `;
 
-export default DashboardPlayer;
+export default DashboardPlayer
