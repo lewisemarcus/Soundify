@@ -6,12 +6,13 @@ class AddSongToPlaylist extends React.Component {
         title: "",
         artist: "",
         audioSrc: "",
+        playlist: "",
     }
 
     add = (e) => {
         e.preventDefault();
         this.props.addSongHandler(this.state);
-        this.setState({ id: '', title: '', artist: '', audioSrc: '' })
+        this.setState({ id: '', title: '', artist: '', audioSrc: '', playlist: "" })
     }
 
 

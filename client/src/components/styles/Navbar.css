@@ -2,18 +2,20 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--light);
+  background-color: #ec994b;
   padding: 1rem;
 }
 
 .logo {
-  font-size: 2rem;
+  /* font-size: 2rem;
   color: var(--dark);
   text-decoration: none;
   margin-left: 1rem;
   text-shadow: red -3px 0, cyan 3px 0;
   transition: text-shadow 200ms;
-  letter-spacing: 2px;
+  letter-spacing: 2px; */
+ display: flex;
+ align-items: center;
 }
 
 .ul-container {

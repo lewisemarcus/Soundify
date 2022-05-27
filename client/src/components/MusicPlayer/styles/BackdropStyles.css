@@ -1,0 +1,22 @@
+.color-backdrop {
+    background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.color-backdrop.playing {
+    animation: colorChange 20s alternate infinite;
+}
+
+@keyframes colorChange {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(360deg);
+    }
+}

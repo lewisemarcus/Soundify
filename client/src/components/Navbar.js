@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Menu, Dropdown, Space, message, Modal } from "antd";
 import Button from "../components/Button";
+import logo from '../assets/soundify9-logo.png';
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -78,9 +79,9 @@ const Navbar = () => {
   );
 
   return (
-    <nav>
+    <nav className="navMain">
       <div className="logo">
-        <Link to="/">Soundify</Link>
+        <img src={logo} width={100} height={100}></img>
       </div>
       {user ? (
         <div className="ul-container">
