@@ -67,6 +67,7 @@ const SongList = () => {
         // action: "http://localhost:4000/upload",
         customRequest({ onSuccess, onError, file }) {
             const tags = song.title.split(" ")
+            tags.push(song.genre, song.artist)
             const formData = new FormData()
             formData.append("username", song.username)
             formData.append("genre", song.genre)

@@ -75,6 +75,8 @@ const songSchema = new Schema(
 )
 songSchema.plugin(textSearch)
 songSchema.index({ title: "text" })
+songSchema.index({ username: "text" })
+songSchema.index({ genre: "text" })
 songSchema.index({ tags: "text" })
 
 const Song = model("Song", songSchema, "songs")
