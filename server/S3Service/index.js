@@ -25,6 +25,7 @@ const uploadSong = (content, song) => {
                 const newSong = new Song({
                     title: song.title,
                     genre: song.genre,
+                    tags: song.tags,
                     username: song.username,
                     filename: song.filename,
                     link: data.Location,

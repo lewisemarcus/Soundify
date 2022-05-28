@@ -66,10 +66,12 @@ const SongList = () => {
         multiple: false,
         // action: "http://localhost:4000/upload",
         customRequest({ onSuccess, onError, file }) {
+            const tags = song.title.split(" ")
             const formData = new FormData()
             formData.append("username", song.username)
             formData.append("genre", song.genre)
             formData.append("title", song.title)
+            formData.append("tags", tags)
             formData.append("filename", file)
             fetch("/upload", {
                 method: "POST",
@@ -145,10 +147,19 @@ const SongList = () => {
                                 Rock
                             </Option>
                             <Option value="Rap" name="genre" key="2">
-                                Rap
-                            </Option>
-                            <Option value="R&B" name="genre" key="3">
                                 R&B
+                            </Option>
+                            <Option value="Hiphop" name="genre" key="3">
+                                Hiphop
+                            </Option>
+                            <Option value="EDM" name="genre" key="4">
+                                EDM
+                            </Option>
+                            <Option value="Pop" name="genre" key="5">
+                                Pop
+                            </Option>
+                            <Option value="Classical" name="genre" key="6">
+                                Classical
                             </Option>
                         </Select>
                         <Dragger {...props}>
