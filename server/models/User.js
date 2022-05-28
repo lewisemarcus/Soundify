@@ -1,4 +1,5 @@
 import pkg from "mongoose"
+import textSearch from "mongoose-partial-full-search"
 const { model, Schema } = pkg
 
 const userSchema = new Schema({
@@ -24,5 +25,7 @@ const userSchema = new Schema({
         },
     ],
 })
+userSchema.plugin(textSearch)
+const User = model("User", userSchema, "users")
 
-export default model("User", userSchema)
+export default User

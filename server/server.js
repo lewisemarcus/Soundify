@@ -6,6 +6,7 @@ import morgan from "morgan"
 import { authMiddleware } from "./utils/auth.js"
 import { ApolloServer } from "apollo-server-express"
 import mongoose from "mongoose"
+
 import bodyParser from "body-parser"
 
 // import { default as typeDefs } from "./schema/typeDefs.js";
