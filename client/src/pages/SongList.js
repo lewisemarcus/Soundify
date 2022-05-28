@@ -10,7 +10,8 @@ const SongList = () => {
     const [song, setSong] = useState({
         title: "",
         genre: "",
-        username: "",
+        username: username,
+        artist: "",
         filename: "",
         link: "",
     })
@@ -71,6 +72,7 @@ const SongList = () => {
             const formData = new FormData()
             formData.append("username", song.username)
             formData.append("genre", song.genre)
+            formData.append("artist", song.artist)
             formData.append("title", song.title)
             formData.append("tags", tags)
             formData.append("filename", file)
@@ -132,8 +134,8 @@ const SongList = () => {
                         />
                         <Input
                             onChange={handleChange}
-                            value={song.username}
-                            name="username"
+                            value={song.artist}
+                            name="artist"
                             placeholder="Artist"
                             size="large"
                         />

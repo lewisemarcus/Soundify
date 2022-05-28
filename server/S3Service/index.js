@@ -3,6 +3,7 @@ const { S3 } = pkg
 import dotenv from "dotenv"
 dotenv.config()
 import Song from "../models/Songs.js"
+import User from "../models/User.js"
 const s3 = new S3({
     // Jason - add changed here ***
     accessKeyId: process.env.AWS_ACCESS_ID,
@@ -26,11 +27,16 @@ const uploadSong = (content, song) => {
                     title: song.title,
                     genre: song.genre,
                     tags: song.tags,
+                    artist: song.artist,
                     username: song.username,
                     filename: song.filename,
                     link: data.Location,
                 })
                 newSong.save()
+                User.findOneAndUpdate(
+                    { username: song.username },
+                    { $addToSet: { songs: newSong._id } },
+                )
                 resolve(data)
             }
         })

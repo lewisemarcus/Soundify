@@ -23,6 +23,8 @@ export default gql`
         genre: String
         filename: String
         link: String
+        tags: [String]
+        artist: String
         username: String
         uploaded: String
         comments: [Comment]!
@@ -50,8 +52,8 @@ export default gql`
         genre: String
         filename: String
         link: String
+        tags: [String]
         username: String
-        uploaded: String
     }
 
     input CommentInput {

@@ -42,6 +42,11 @@ const songSchema = new Schema(
             required: true,
             trim: true,
         },
+        artist: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         uploaded: {
             type: Date,
             default: Date.now,
@@ -76,6 +81,7 @@ const songSchema = new Schema(
 songSchema.plugin(textSearch)
 songSchema.index({ title: "text" })
 songSchema.index({ username: "text" })
+songSchema.index({ artist: "text" })
 songSchema.index({ genre: "text" })
 songSchema.index({ tags: "text" })
 
