@@ -68,7 +68,7 @@ export default gql`
         songs: [Song]
         songByGenre(genre: String!): [Song]
         userSongs(username: String!): [Song]
-        song(title: String!): Song
+        song(title: String!): [Song]
         me: User
         userPlaylists(owner: String!): [Playlist]
         playlist(plTitle: String!): Playlist
