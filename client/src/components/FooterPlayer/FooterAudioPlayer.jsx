@@ -4,6 +4,7 @@ import "./styles/FooterMusicPlayer.css"
 import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
+import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
 const AudioPlayer = ({ tracks }) => {
     // State
@@ -11,7 +12,7 @@ const AudioPlayer = ({ tracks }) => {
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(10)
-    const [style, setStyle] = useState({ display: 'none' });
+    // const [style, setStyle] = useState({ display: 'none' });
 
     // Destructure for conciseness
     const { title, artist, audioSrc } = tracks[trackIndex]
@@ -119,12 +120,6 @@ const AudioPlayer = ({ tracks }) => {
         }
     }, [])
 
-    function preventHorizontalKeyboardNavigation(event) {
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            event.preventDefault();
-        }
-    }
-
     return (
         <div className="footer-audio-player">
             <div className="footer-track-info">
@@ -135,8 +130,10 @@ const AudioPlayer = ({ tracks }) => {
                     onPlayPauseClick={setIsPlaying}
                     volume
                 />
-                <h2 className="footer-title">{title}</h2>
-                <h3 className="footer-artist">{artist}</h3>
+                <div className="musicianTrack">
+                    <h2 className="footer-title">{title}</h2>
+                    <h3 className="footer-artist">{artist}</h3>
+                </div>
                 <input
                     type="range"
                     value={trackProgress}
@@ -151,40 +148,39 @@ const AudioPlayer = ({ tracks }) => {
                 {/* Volume slider */}
                 <div className="volContainer">
                     <Stack
-                        style={style}
                         spacing={2}
                         direction="row"
-                        sx={{ height: 300 }}
-                        alignItems="center"
+                        sx={{ mb: 1, px: 1 }}
+                    // alignItems="center"
                     >
-                        {/* <VolumeDownRounded /> */}
+                        <VolumeDownRounded />
                         <Slider
-                            className="volSlider"
                             onChange={onVolumeChange}
                             aria-label="Volume"
                             defaultValue={0.25}
                             max={1}
                             min={0.1}
                             step={0.01}
-                            // value={volume}
                             sx={{
-                                '& input[type="range"]': {
-                                    WebkitAppearance: 'slider-vertical',
+                                // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+                                "& .MuiSlider-track": {
+                                    border: "none",
+                                },
+                                "& .MuiSlider-thumb": {
+                                    width: 24,
+                                    height: 24,
+                                    backgroundColor: "#fff",
+                                    "&:before": {
+                                        boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+                                    },
+                                    "&:hover, &.Mui-focusVisible, &.Mui-active": {
+                                        boxShadow: "none",
+                                    },
                                 },
                             }}
-                            orientation="vertical"
-                            onKeyDown={preventHorizontalKeyboardNavigation}
                         />
+                        <VolumeUpRounded />
                     </Stack>
-                    <VolumeUpRounded
-                        className="volIcon"
-                        onMouseEnter={e => {
-                            setStyle({ display: 'flex', flexDirection: 'column' });
-                        }}
-                        onMouseLeave={e => {
-                            setStyle({ display: 'none' })
-                        }}
-                    />
                 </div>
             </div>
         </div>

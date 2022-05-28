@@ -1,7 +1,14 @@
-.footer-audio-player {
-    background-color: rgb(179, 179, 179);
+body {
+    height: 100vh;
 }
 
+.footer-audio-player {
+    bottom: 0;
+    background-color: rgb(179, 179, 179);
+    height: 70px;
+}
+
+.footer-audio-player,
 .footer-track-info {
     display: flex;
     flex-direction: row;
@@ -16,4 +23,20 @@
 .footer-audio-controls button {
     color: black;
     padding: 5px;
+}
+
+.musicianTrack {
+    margin: 0 10px;
+}
+
+.musicianTrack h2 {
+    margin-block-end: 0;
+}
+
+.musicianTrack h3 {
+    margin-block-start: 0;
+}
+
+.volContainer .volIcon {
+    margin-left: 0;
 }
