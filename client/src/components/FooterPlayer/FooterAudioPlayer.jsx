@@ -29,8 +29,7 @@ const AudioPlayer = ({ tracks }) => {
         ? `${(trackProgress / duration) * 100}%`
         : "0%"
     const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
-  `
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))`
 
     const startTimer = () => {
         // Clear any timers already running
@@ -145,43 +144,43 @@ const AudioPlayer = ({ tracks }) => {
                     onKeyUp={onScrubEnd}
                     style={{ background: trackStyling }}
                 />
-                {/* Volume slider */}
-                <div className="volContainer">
-                    <Stack
-                        spacing={2}
-                        direction="row"
-                        sx={{ mb: 1, px: 1 }}
-                    // alignItems="center"
-                    >
-                        <VolumeDownRounded />
-                        <Slider
-                            onChange={onVolumeChange}
-                            aria-label="Volume"
-                            defaultValue={0.25}
-                            max={1}
-                            min={0.1}
-                            step={0.01}
-                            sx={{
-                                // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
-                                "& .MuiSlider-track": {
-                                    border: "none",
+            </div>
+            {/* Volume slider */}
+            <div className="volContainer">
+                <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{ mb: 1, px: 1 }}
+                    alignItems="center"
+                >
+                    <VolumeDownRounded />
+                    <Slider
+                        onChange={onVolumeChange}
+                        aria-label="Volume"
+                        defaultValue={0.25}
+                        max={1}
+                        min={0.1}
+                        step={0.01}
+                        sx={{
+                            // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+                            "& .MuiSlider-track": {
+                                border: "none",
+                            },
+                            "& .MuiSlider-thumb": {
+                                width: 24,
+                                height: 24,
+                                backgroundColor: "#fff",
+                                "&:before": {
+                                    boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
                                 },
-                                "& .MuiSlider-thumb": {
-                                    width: 24,
-                                    height: 24,
-                                    backgroundColor: "#fff",
-                                    "&:before": {
-                                        boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
-                                    },
-                                    "&:hover, &.Mui-focusVisible, &.Mui-active": {
-                                        boxShadow: "none",
-                                    },
+                                "&:hover, &.Mui-focusVisible, &.Mui-active": {
+                                    boxShadow: "none",
                                 },
-                            }}
-                        />
-                        <VolumeUpRounded />
-                    </Stack>
-                </div>
+                            },
+                        }}
+                    />
+                    <VolumeUpRounded />
+                </Stack>
             </div>
         </div>
     )
