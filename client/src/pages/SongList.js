@@ -159,8 +159,14 @@ const SongList = () => {
                             <Option value="Pop" name="genre" key="5">
                                 Pop
                             </Option>
-                            <Option value="Classical" name="genre" key="6">
+                            <Option value="Country" name="genre" key="6">
+                                Country
+                            </Option>
+                            <Option value="Classical" name="genre" key="7">
                                 Classical
+                            </Option>
+                            <Option value="International" name="genre" key="8">
+                                International
                             </Option>
                         </Select>
                         <Dragger {...props}>
