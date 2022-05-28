@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Modal, message, Upload, Input, Select, Space, Empty } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import Button from "../components/Button"
 import "./styles/SongList.css"
+import { AuthContext } from "../context/authContext"
 
 const SongList = () => {
+    const { user } = useContext(AuthContext)
     const username = localStorage.getItem("username")
 
     const [song, setSong] = useState({
@@ -161,8 +163,14 @@ const SongList = () => {
                             <Option value="Pop" name="genre" key="5">
                                 Pop
                             </Option>
-                            <Option value="Classical" name="genre" key="6">
+                            <Option value="Country" name="genre" key="6">
+                                Country
+                            </Option>
+                            <Option value="Classical" name="genre" key="7">
                                 Classical
+                            </Option>
+                            <Option value="International" name="genre" key="8">
+                                International
                             </Option>
                         </Select>
                         <Dragger {...props}>
