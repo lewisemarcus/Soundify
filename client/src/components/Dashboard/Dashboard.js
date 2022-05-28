@@ -81,7 +81,9 @@ const DashCarousel = () => {
                 <button className="genre1">Hiphop</button>
                 <button className="genre1">EDM</button>
                 <button className="genre1">Pop</button>
+                <button className="genre1">Country</button>
                 <button className="genre1">Classical</button>
+                <button className="genre1">International</button>
             </div>
         </div>
     )

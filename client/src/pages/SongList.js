@@ -107,82 +107,95 @@ const SongList = () => {
     },
   };
 
-  return (
-    <div className="song-list-wrapper">
-      <div className="song-list-header">
-        <h1>{username}'s songs</h1>
-        <Button className="modal-btn uploadSongbtn" onClick={showModal}>
-          <Space>
-            <UploadOutlined /> Upload song
-          </Space>
-        </Button>
-        <Modal
-          title="Upload Song"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Input
-              onChange={handleChange}
-              name="title"
-              value={song.title}
-              placeholder="Song title"
-              size="large"
-            />
-            <Input
-              onChange={handleChange}
-              value={song.username}
-              name="username"
-              placeholder="Artist"
-              size="large"
-            />
-            <Select
-              labelInValue
-              placeholder="Genre"
-              size="large"
-              style={{ width: "100%" }}
-              onChange={handleChange}
-            >
-              <Option value="Rock" name="genre" key="1">
-                Rock
-              </Option>
-              <Option value="Rap" name="genre" key="2">
-                R&B
-              </Option>
-              <Option value="Hiphop" name="genre" key="3">
-                Hiphop
-              </Option>
-              <Option value="EDM" name="genre" key="4">
-                EDM
-              </Option>
-              <Option value="Pop" name="genre" key="5">
-                Pop
-              </Option>
-              <Option value="Classical" name="genre" key="6">
-                Classical
-              </Option>
-            </Select>
-            <Dragger {...props}>
-              <p className="ant-upload-drag-icon">
-                <UploadOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from
-                uploading company data or other band files
-              </p>
-            </Dragger>
-          </Space>
-        </Modal>
-      </div>
-      <div className="song-list-content">
-        <Empty />
-      </div>
-    </div>
-  );
-};
+
+    return (
+        <div className="song-list-wrapper">
+            <div className="song-list-header">
+                <h1>{username}'s songs</h1>
+                <Button className="modal-btn uploadSongbtn" onClick={showModal}>
+                    <Space>
+                        <UploadOutlined /> Upload song
+                    </Space>
+                </Button>
+                <Modal
+                    title="Upload Song"
+                    visible={isModalVisible}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                >
+                    <Space
+                        direction="vertical"
+                        size="middle"
+                        style={{ display: "flex" }}
+                    >
+                        <Input
+                            onChange={handleChange}
+                            name="title"
+                            value={song.title}
+                            placeholder="Song title"
+                            size="large"
+                        />
+                        <Input
+                            onChange={handleChange}
+                            value={song.username}
+                            name="username"
+                            placeholder="Artist"
+                            size="large"
+                        />
+                        <Select
+                            labelInValue
+                            placeholder="Genre"
+                            size="large"
+                            style={{ width: "100%" }}
+                            onChange={handleChange}
+                        >
+                            <Option value="Rock" name="genre" key="1">
+                                Rock
+                            </Option>
+                            <Option value="Rap" name="genre" key="2">
+                                R&B
+                            </Option>
+                            <Option value="Hiphop" name="genre" key="3">
+                                Hiphop
+                            </Option>
+                            <Option value="EDM" name="genre" key="4">
+                                EDM
+                            </Option>
+                            <Option value="Pop" name="genre" key="5">
+                                Pop
+                            </Option>
+                            <Option value="Country" name="genre" key="6">
+                                Country
+                            </Option>
+                            <Option value="Classical" name="genre" key="7">
+                                Classical
+                            </Option>
+                            <Option value="International" name="genre" key="8">
+                                International
+                            </Option>
+                        </Select>
+                        <Dragger {...props}>
+                            <p className="ant-upload-drag-icon">
+                                <UploadOutlined />
+                            </p>
+                            <p className="ant-upload-text">
+                                Click or drag file to this area to upload
+                            </p>
+                            <p className="ant-upload-hint">
+                                Support for a single or bulk upload. Strictly
+                                prohibit from uploading company data or other
+                                band files
+                            </p>
+                        </Dragger>
+                    </Space>
+                </Modal>
+            </div>
+            <div className="song-list-content">
+                <Empty />
+            </div>
+        </div>
+    )
+}
+
 
 export default SongList;
