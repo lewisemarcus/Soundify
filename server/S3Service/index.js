@@ -20,7 +20,7 @@ const uploadSong = (content, song) => {
             ACL: "public-read",
         }
 
-        s3.upload(params, (err, data) => {
+        s3.upload(params, async (err, data) => {
             if (err) reject(err)
             else {
                 const newSong = new Song({
@@ -33,7 +33,7 @@ const uploadSong = (content, song) => {
                     link: data.Location,
                 })
                 newSong.save()
-                User.findOneAndUpdate(
+                await User.findOneAndUpdate(
                     { username: song.username },
                     { $addToSet: { songs: newSong._id } },
                 )
