@@ -45,6 +45,7 @@ nav {
 
 .nav-btn {
   width: 11rem;
+  border: 1px solid white;
 }
 
 .logout .ant-modal-body {
