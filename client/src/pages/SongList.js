@@ -1,107 +1,112 @@
-import React, { useState } from "react"
-import { Modal, message, Upload, Input, Select, Space, Empty } from "antd"
-import { UploadOutlined } from "@ant-design/icons"
-import Button from "../components/Button"
-import "./styles/SongList.css"
+import React, { useState, useContext } from "react";
+import { Modal, message, Upload, Input, Select, Space, Empty } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import Button from "../components/Button";
+import "./styles/SongList.css";
+import { AuthContext } from "../context/authContext";
 
 const SongList = () => {
-    const username = localStorage.getItem("username")
+  const { user } = useContext(AuthContext);
+  const username = localStorage.getItem("username");
 
-    const [song, setSong] = useState({
-        title: "",
-        genre: "",
-        username: "",
-        filename: "",
-        link: "",
-    })
+  console.log(user);
 
-    const handleChange = (event) => {
-        if (event.label) {
-            const value = event.value
-            const name = "genre"
-            setSong((prevInput) => {
-                return {
-                    ...prevInput,
-                    [name]: value,
-                }
-            })
-        } else {
-            const { name, value } = event.target
-            setSong((prevInput) => {
-                return {
-                    ...prevInput,
-                    [name]: value,
-                }
-            })
-        }
+  const [song, setSong] = useState({
+    title: "",
+    genre: "",
+    username: "",
+    filename: "",
+    link: "",
+  });
+
+  const handleChange = (event) => {
+    if (event.label) {
+      const value = event.value;
+      const name = "genre";
+      setSong((prevInput) => {
+        return {
+          ...prevInput,
+          [name]: value,
+        };
+      });
+    } else {
+      const { name, value } = event.target;
+      setSong((prevInput) => {
+        return {
+          ...prevInput,
+          [name]: value,
+        };
+      });
     }
+  };
 
-    const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = () => {
-        setIsModalVisible(true)
-    }
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
-    const handleOk = () => {
-        setIsModalVisible(false)
-    }
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
-    const handleCancel = () => {
-        setIsModalVisible(false)
-    }
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
-    const { Option } = Select
+  const { Option } = Select;
 
-    const { Dragger } = Upload
+  const { Dragger } = Upload;
 
-    const props = {
-        name: "filename",
-        uid: "file",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST",
-        },
-        // method: "POST",
-        accept: "audio/*",
-        multiple: false,
-        // action: "http://localhost:4000/upload",
-        customRequest({ onSuccess, onError, file }) {
-            const tags = song.title.split(" ")
-            tags.push(song.genre, song.artist)
-            const formData = new FormData()
-            formData.append("username", song.username)
-            formData.append("genre", song.genre)
-            formData.append("title", song.title)
-            formData.append("tags", tags)
-            formData.append("filename", file)
-            fetch("/upload", {
-                method: "POST",
-                body: formData,
-                mode: "cors",
-            })
-        },
-        onChange(info) {
-            const { status } = info.file
-            if (status !== "uploading") {
-                console.log(info.file, info.fileList)
-            }
-            if (status === "done") {
-                message.success(`${info.file.name} file uploaded successfully.`)
-            } else if (status === "error") {
-                message.error(`${info.file.name} file upload failed.`)
-            }
-        },
-        onDrop(e) {
-            console.log("Dropped files", e.dataTransfer.files)
-        },
-        beforeUpload(file) {
-            console.log(file.size / 1024 / 1024)
-            const isLt2M = file.size / 1024 / 1024 < 100
-            if (!isLt2M) {
-                message.error("Image must smaller than 2MB!")
-            }
-        },
-    }
+  const props = {
+    name: "filename",
+    uid: "file",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST",
+    },
+    // method: "POST",
+    accept: "audio/*",
+    multiple: false,
+    // action: "http://localhost:4000/upload",
+    customRequest({ onSuccess, onError, file }) {
+      const tags = song.title.split(" ");
+      tags.push(song.genre, song.artist);
+      const formData = new FormData();
+      formData.append("username", song.username);
+      formData.append("genre", song.genre);
+      formData.append("title", song.title);
+      formData.append("tags", tags);
+      formData.append("filename", file);
+      fetch("/upload", {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+      });
+    },
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+    beforeUpload(file) {
+      console.log(file.size / 1024 / 1024);
+      const isLt2M = file.size / 1024 / 1024 < 100;
+      if (!isLt2M) {
+        message.error("Image must smaller than 2MB!");
+      }
+    },
+  };
+
 
     return (
         <div className="song-list-wrapper">
@@ -192,4 +197,5 @@ const SongList = () => {
     )
 }
 
-export default SongList
+
+export default SongList;
