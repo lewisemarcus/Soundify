@@ -1,6 +1,6 @@
 .register-wrapper {
   background: var(--dark);
-  height: 90vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,8 +12,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30rem;
-  height: 35rem;
+  width: 25rem;
+  height: 32rem;
   border-radius: 15px;
   margin: 7px;
   padding: 20px 30px;
@@ -25,10 +25,20 @@
 }
 
 .register-form:hover {
-  transform: scale(1.07);
+  transform: scale(1.01);
   background: #fff;
   color: var(--dark);
   z-index: 100;
+}
+
+@media screen and (min-width: 768px) {
+  .register-form {
+    width: 28rem;
+    height: 35rem;
+  }
+  .register-form:hover {
+    transform: scale(1.07);
+  }
 }
 
 .register-icon {
