@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import textSearch from "mongoose-partial-full-search"
 import dateFormat from "../utils/dateFormat.js"
 const { Schema, model } = mongoose
 
@@ -16,12 +17,15 @@ const songSchema = new Schema(
             type: String,
             required: true,
             trim: true,
+            index: true,
         },
         genre: {
             type: String,
             required: true,
             trim: true,
+            index: true,
         },
+        tags: [String],
         filename: {
             type: String,
             required: true,
@@ -69,6 +73,9 @@ const songSchema = new Schema(
         },
     },
 )
+songSchema.plugin(textSearch)
+songSchema.index({ title: "text" })
+songSchema.index({ tags: "text" })
 
 const Song = model("Song", songSchema, "songs")
 
