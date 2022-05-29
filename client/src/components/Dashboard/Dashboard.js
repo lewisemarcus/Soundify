@@ -8,7 +8,7 @@ import "./styles/Dashboard.css"
 
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
-    const [genreInfo, setGenreInfo] = useState([])
+    const [genreSongList, setGenreSongList] = useState([])
     const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
     const [
         songByGenre,
@@ -39,7 +39,7 @@ const DashCarousel = () => {
         let { data } = await songByGenre({ variables: { genre: genre } })
         size = Object.values(data)[0].length
         songListFromGenre = Object.values(Object.values(data)[0])
-        setGenreInfo(songListFromGenre)
+        setGenreSongList(songListFromGenre)
         console.log(songListFromGenre[Math.floor(Math.random() * size)])
     }
 
@@ -81,17 +81,18 @@ const DashCarousel = () => {
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayer
-                        songData={genreInfo[Math.floor(Math.random() * size)]}
+                        songData={genreSongList}
                     />
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
-                        songData={genreInfo[Math.floor(Math.random() * size)]}
+                        // songData={genreSongList[Math.floor(Math.random() * size)]}
+                        songData={genreSongList}
                     />
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
-                        songData={genreInfo[Math.floor(Math.random() * size)]}
+                        songData={genreSongList}
                     />
                 </div>
 
