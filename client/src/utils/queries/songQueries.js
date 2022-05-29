@@ -8,7 +8,12 @@ export const GET_SONGS = gql`
             link
             artist
             uploaded
-            comments
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
             filename
             _id
             username
@@ -24,7 +29,12 @@ export const GET_GENRES = gql`
             link
             artist
             uploaded
-            comments
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
             filename
             _id
             username

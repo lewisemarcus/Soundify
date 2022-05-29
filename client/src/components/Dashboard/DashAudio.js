@@ -10,10 +10,7 @@ import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
-const DashAudio = ({ tracks, sdata }) => {
-    // console.log(tracks)
-    // console.log(sdata)
-
+const DashAudio = ({ tracks, songData }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)

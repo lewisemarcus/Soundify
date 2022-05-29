@@ -20,7 +20,7 @@
 //   },
 // };
 
-import typeDefs from "./typeDefs.js";
-import resolvers from "./Users.js";
+import typeDefs from "./typeDefs.js"
+import resolvers from "./Users.js"
 
-export default { typeDefs, resolvers };
+export default { typeDefs, resolvers }
