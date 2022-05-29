@@ -1,83 +1,111 @@
 // import { Carousel } from "antd";
-import { Row, Col } from "antd"
-import { useLazyQuery } from "@apollo/client"
-import { GET_SONGS, GET_GENRES } from "../../utils/queries/songQueries"
-import React, { useState } from "react"
-import DashboardPlayer from "./DashboardPlayer"
-import "./styles/Dashboard.css"
+import { Row, Col } from "antd";
+import { useLazyQuery } from "@apollo/client";
+import { GET_SONGS, GET_GENRES } from "../../utils/queries/songQueries";
+import React, { useState } from "react";
+import DashboardPlayer from "./DashboardPlayer";
+import "./styles/Dashboard.css";
 
 const DashCarousel = () => {
-    const [searchBar, setSearchBar] = useState("")
-    const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
-    const [songByGenre, { loading: loadingGenre, error: errorGenre, data: genreData }] = useLazyQuery(GET_GENRES, {
-      onCompleted: (genreData) => {
-        console.log(genreData)
-      }
-    })
+  const [searchBar, setSearchBar] = useState("");
+  const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS);
+  const [
+    songByGenre,
+    { loading: loadingGenre, error: errorGenre, data: genreData },
+  ] = useLazyQuery(GET_GENRES, {
+    onCompleted: (genreData) => {
+      return genreData;
+    },
+  });
 
-    if (loading) return <p>Loading ...</p>
+  let size = 0;
 
-    if (error) return `Error! ${error}`
+  let songListFromGenre = [];
 
-    const onChange = (event) => {
-        const { value } = event.target
-        setSearchBar(value)
-        console.log(searchBar)
-    }
+  let clickedGenreData = {}
 
-    const handleGenreClick = (genre) => {
-      songByGenre({variables: { genre: genre } })
-  }
-    
+  if (loading) return <p>Loading ...</p>;
 
-    let genreList = ["Rock", "RnB", "HipHop", "EDM", "Pop", "Country", "Classical", "International"]
+  if (error) return `Error! ${error}`;
 
-    const username = localStorage.getItem("username")
-    // console.log(">>>>>>>>>", myData)
-    return (
-        <div className="main-container">
-            <div className="main-header">
-                <h2>
-                    Welcome,{" "}
-                    {username.charAt(0).toUpperCase() + username.slice(1)}
-                </h2>
-            </div>
-            <div className="searchContainer">
-                <input
-                    typeof="text"
-                    placeholder="Search Songs"
-                    name="searchBar"
-                    id="searchBar"
-                    onChange={onChange}
-                ></input>
-                <button
-                    onClick={() => song({ variables: { title: searchBar } })}
-                    id="searchBtn"
-                >
-                    Search
-                </button>
-            </div>
-            <div className="musicPlayer">
-                <div className="main-items">
-                    {" "}
-                    <DashboardPlayer sdata={myData} />{" "}
-                </div>
-                <div className="main-items">
-                    {" "}
-                    <DashboardPlayer sdata={myData} />{" "}
-                </div>
-                <div className="main-items">
-                    {" "}
-                    <DashboardPlayer sdata={myData} />{" "}
-                </div>
+  const onChange = (event) => {
+    const { value } = event.target;
+    setSearchBar(value);
+    console.log(searchBar);
+  };
 
-                {/* <Row>
+  const handleGenreClick = async (genre) => {
+    let { data } = await songByGenre({variables: { genre: genre } })
+    console.log(data)
+    size = Object.values(data.songByGenre).length
+    console.log(Object.values(data))
+    console.log(Object.values(data)[0])
+    console.log(Object.keys(data))
+
+    songListFromGenre = Object.values(clickedGenreData.songByGenre)
+}
+
+
+  let genreList = [
+    "Rock",
+    "RnB",
+    "HipHop",
+    "EDM",
+    "Pop",
+    "Country",
+    "Classical",
+    "International",
+  ];
+
+  const username = localStorage.getItem("username");
+  // console.log(">>>>>>>>>", myData)
+  return (
+    <div className="main-container">
+      <div className="main-header">
+        <h2>Welcome, {username.charAt(0).toUpperCase() + username.slice(1)}</h2>
+      </div>
+      <div className="searchContainer">
+        <input
+          typeof="text"
+          placeholder="Search Songs"
+          name="searchBar"
+          id="searchBar"
+          onChange={onChange}
+        ></input>
+        <button
+          onClick={() => song({ variables: { title: searchBar } })}
+          id="searchBtn"
+        >
+          Search
+        </button>
+      </div>
+      <div className="musicPlayer">
+        <div className="main-items">
+          {" "}
+          <DashboardPlayer
+            data={songListFromGenre[Math.floor(Math.random() * size)]}
+          />{" "}
+        </div>
+        <div className="main-items">
+          {" "}
+          <DashboardPlayer
+            data={songListFromGenre[Math.floor(Math.random() * size)]}
+          />{" "}
+        </div>
+        <div className="main-items">
+          {" "}
+          <DashboardPlayer
+            data={songListFromGenre[Math.floor(Math.random() * size)]}
+          />{" "}
+        </div>
+
+        {/* <Row>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
       <Col span={8} className="main-items"> <DashboardPlayer /> </Col>
     </Row> */}
 
-                {/* <div className="carousel-items">
+        {/* <div className="carousel-items">
           <DashMusicCard />
         </div>
         <div className="carousel-items">
@@ -86,11 +114,9 @@ const DashCarousel = () => {
         <div className="carousel-items">
           <DashMusicCard />
         </div> */}
-
-            </div>
-            <div>
       </div>
-            {/* <div className="genreContainer">
+      <div></div>
+      {/* <div className="genreContainer">
                 <button className="genre1" id="rockSong">Rock</button>
                 <button className="genre1" id="rbSong">R&B</button>
                 <button className="genre1" id="hhSong">Hiphop</button>
@@ -101,18 +127,20 @@ const DashCarousel = () => {
                 <button className="genre1" id="interSong">International</button>
             </div> */}
 
-            <div className="genreContainer">
+      <div className="genreContainer">
+        {genreList.map((genre) => (
+          <button
+            className="genre1"
+            onClick={(event) => {
+              let { innerHTML } = event.target;
+              handleGenreClick(innerHTML);
+            }}
+          >
+            {genre}
+          </button>
+        ))}
 
-            {genreList.map((genre) => (
-                    <button className="genre1" onClick={(event)=> {
-                      let { innerHTML } = event.target
-                      handleGenreClick(innerHTML)
-                  }}>{genre}</button>
-                 
-                ))}
-
-
-                {/* <button className="genre1" id="rockSong">Rock</button>
+        {/* <button className="genre1" id="rockSong">Rock</button>
                 <button className="genre1" id="rbSong">R&B</button>
                 <button className="genre1" id="hhSong">Hiphop</button>
                 <button className="genre1" id="edmSong">EDM</button>
@@ -120,10 +148,9 @@ const DashCarousel = () => {
                 <button className="genre1" id="countrySong">Country</button>
                 <button className="genre1" id="classicalSong">Classical</button>
                 <button className="genre1" id="interSong">International</button> */}
-            </div>
+      </div>
+    </div>
+  );
+};
 
-        </div>
-    )
-}
-
-export default DashCarousel
+export default DashCarousel;
