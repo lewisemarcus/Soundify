@@ -32,7 +32,7 @@ import DashAudio from "./DashAudio"
 //   },
 // ];
 
-const DashboardPlayer = ({ songData }) => {
+const DashboardPlayer = ({ songData, clickedGenre }) => {
     const [songs, setSongs] = useState([
         // {
         //   _id: "",
@@ -66,7 +66,7 @@ const DashboardPlayer = ({ songData }) => {
         }
         fetchSongs()
     }, [])
-    console.log("song data", songData)
+
     return isLoading ? (
         "loading"
     ) : (
@@ -74,7 +74,11 @@ const DashboardPlayer = ({ songData }) => {
 
         <div className="DashPlayer">
             {/* <h1>Playlist created by user</h1> */}
-            <DashAudio tracks={songs} songData={songData} />
+            <DashAudio
+                clickedGenre={clickedGenre}
+                tracks={songs}
+                songData={songData}
+            />
             {/* <div className="Playlist-container">
         <div className="">
               <img className="" src={album} alt='album cover' />
