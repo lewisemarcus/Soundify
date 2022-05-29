@@ -8,6 +8,7 @@ import "./styles/Dashboard.css"
 
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
+    // const [clickedGenre, setClickedGenre] = useState("")
     const [genreSongList, setGenreSongList] = useState([])
     const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
     const [

@@ -13,6 +13,9 @@ import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded";
 const DashAudio = ({ tracks, songData }) => {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
+  
+  // const [clickedGenre, setClickedGenre] = useState(0)
+
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(10);
@@ -99,6 +102,12 @@ const DashAudio = ({ tracks, songData }) => {
       audioRef.current.volume = newVolume || 0.01;
     }
   };
+
+  // useEffect(() => {
+  //   if(clickedGenre) {
+
+  //   }
+  // })
 
   useEffect(() => {
     if (isPlaying) {
