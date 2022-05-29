@@ -7,3 +7,11 @@ export const GET_SONGS = gql`
         }
     }
 `
+
+export const GET_GENRES = gql`
+    query songs($genre: String!) {
+        songByGenre(genre: $genre) {
+            genre
+        }
+    }
+`
