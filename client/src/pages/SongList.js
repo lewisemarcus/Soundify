@@ -151,11 +151,11 @@ const SongList = () => {
                             <Option value="Rock" name="genre" key="1">
                                 Rock
                             </Option>
-                            <Option value="Rap" name="genre" key="2">
-                                R&B
+                            <Option value="RnB" name="genre" key="2">
+                                RnB
                             </Option>
-                            <Option value="Hiphop" name="genre" key="3">
-                                Hiphop
+                            <Option value="HipHop" name="genre" key="3">
+                                HipHop
                             </Option>
                             <Option value="EDM" name="genre" key="4">
                                 EDM
