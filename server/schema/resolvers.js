@@ -3,7 +3,6 @@ import Song from "../models/Songs.js"
 import Playlist from "../models/Playlists.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
-import { inspect } from "util"
 const { hash, compare } = pkg
 // import { sign } from "jsonwebtoken"
 import { default as jsonPkg } from "jsonwebtoken"
