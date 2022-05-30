@@ -32,17 +32,6 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     const originalData = [...songData]
 
     shuffleArray(songData)
-    let genreList = [
-        "Rock",
-        "RnB",
-        "HipHop",
-        "EDM",
-        "Pop",
-        "Country",
-        "Classical",
-        "International",
-        "",
-    ]
 
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
