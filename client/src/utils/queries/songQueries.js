@@ -61,3 +61,23 @@ export const GET_SONG = gql`
         }
     }
 `
+export const GET_USER_SONGS = gql`
+    query userSongs($username: String!) {
+        userSongs(username: $username) {
+            title
+            genre
+            link
+            artist
+            uploaded
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
+            filename
+            _id
+            username
+        }
+    }
+`

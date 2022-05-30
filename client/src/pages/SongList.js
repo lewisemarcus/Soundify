@@ -3,16 +3,22 @@ import { Modal, message, Upload, Input, Select, Space, Empty } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import Button from "../components/Button"
 import "./styles/SongList.css"
+import { GET_USER_SONGS } from "../utils/queries/songQueries"
+import { Link } from "react-router-dom"
+import { useQuery } from "@apollo/client"
 import { AuthContext } from "../context/authContext"
 
 const SongList = () => {
     const { user } = useContext(AuthContext)
     const username = localStorage.getItem("username")
-
+    const { loading, data } = useQuery(GET_USER_SONGS, {
+        variables: { username: username },
+    })
+    const usersSongs = data?.userSongs || []
     const [song, setSong] = useState({
         title: "",
         genre: "",
-        username: username,
+        username: user.username,
         artist: "",
         filename: "",
         link: "",
@@ -106,7 +112,9 @@ const SongList = () => {
             }
         },
     }
-
+    if (loading) {
+        return <div>Loading...</div>
+    }
     return (
         <div className="song-list-wrapper">
             <div className="song-list-header">
@@ -189,9 +197,11 @@ const SongList = () => {
                     </Space>
                 </Modal>
             </div>
-            <div className="song-list-content">
-                <Empty />
-            </div>
+            {usersSongs.map((song, index) => (
+                <div className="song-list-content">
+                    <div key={index}>{song.title}</div>
+                </div>
+            ))}
         </div>
     )
 }
