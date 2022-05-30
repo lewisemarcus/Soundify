@@ -80,10 +80,9 @@ export default gql`
     type Mutation {
         registerUser(registerInput: RegisterInput): User
         loginUser(loginInput: LoginInput): User
-        addSong(songInput: SongInput): Song
         removeSong(songId: ID!): Song
         removeComment(songId: ID!, commentId: ID!): Song
-        addComment(songId: ID!, commentInput: CommentInput): Song
+        addComment(songId: ID!, CommentInput: CommentInput): Song
     }
 `
 

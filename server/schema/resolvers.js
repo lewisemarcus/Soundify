@@ -117,26 +117,25 @@ const resolvers = {
                 )
             }
         },
-        addSong: async (
-            parent,
-            { songInput: { title, genre, filename, link, username, uploaded } },
-            context,
-        ) => {
+        addComment: async (parent, { songId, commentText }, context) => {
             if (context.user) {
-                const song = await Song.create({
-                    title: title,
-                    genre: genre,
-                    filename: filename,
-                    username: context.user.username,
-                    link: link,
-                    uploaded: uploaded,
-                })
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { songs: song._id } },
+                return Song.findOneAndUpdate(
+                    { _id: songId },
+                    {
+                        $addToSet: {
+                            comments: {
+                                commentText,
+                                commentAuthor: context.user.username,
+                            },
+                        },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    },
                 )
             }
+            throw new AuthenticationError("You need to be logged in!")
         },
     },
 }
