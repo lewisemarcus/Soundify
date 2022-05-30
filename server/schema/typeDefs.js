@@ -72,6 +72,7 @@ export default gql`
         userSongs(username: String!): [Song]
         song(title: String!): [Song]
         me: User
+        songById(_id: ID!): Song
         userPlaylists(owner: String!): [Playlist]
         playlist(plTitle: String!): Playlist
     }

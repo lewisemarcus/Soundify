@@ -6,6 +6,7 @@ import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
+import { Link } from "react-router-dom"
 /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
@@ -190,8 +191,10 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
           // for future album covers
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
-        /> */}
-                <h2 className="songTitle">{songInfo.title}</h2>
+        /> */}{" "}
+                <Link to={`/song/${songInfo._id}`}>
+                    <h2 className="songTitle">{songInfo.title}</h2>
+                </Link>
                 <h3 className="songArtist">{songInfo.filename}</h3>
                 <br></br>
                 <br></br>
