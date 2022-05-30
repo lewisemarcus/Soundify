@@ -165,9 +165,9 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current) {
-            audioRef.current.play()
-            setIsPlaying(true)
-            startTimer()
+            // audioRef.current.play()
+            // setIsPlaying(true)
+            // startTimer()
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
