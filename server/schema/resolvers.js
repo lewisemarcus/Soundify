@@ -15,6 +15,9 @@ const resolvers = {
         user: async (parent, { _id }) => {
             return User.findById(_id)
         },
+        songById: async (parent, { _id }) => {
+            return Song.findById(_id)
+        },
         songByArtist: async (parent, { username }) => {
             const params = username ? { username } : {}
             return Song.find(params).sort({ uploaded: -1 })

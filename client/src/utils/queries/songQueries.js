@@ -41,3 +41,23 @@ export const GET_GENRES = gql`
         }
     }
 `
+export const GET_SONG = gql`
+    query songById($songId: ID!) {
+        songById(_id: $songId) {
+            title
+            genre
+            link
+            artist
+            uploaded
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
+            filename
+            _id
+            username
+        }
+    }
+`
