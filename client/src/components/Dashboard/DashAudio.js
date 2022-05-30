@@ -32,8 +32,20 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     const originalData = [...songData]
 
     shuffleArray(songData)
+    let genreList = [
+        "Rock",
+        "RnB",
+        "HipHop",
+        "EDM",
+        "Pop",
+        "Country",
+        "Classical",
+        "International",
+        "",
+    ]
 
     let songTitle, songFilename, songYear, songGenre, songId, songLink
+
     // Destructure for conciseness
     if (clickedGenre === "") {
         const { title, filename, year, genre, _id, link } = tracks[trackIndex]
@@ -43,7 +55,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
         songGenre = genre
         songId = _id
         songLink = link
-    } else if (clickedGenre === "Country") {
+    } else {
         const { title, filename, year, genre, _id, link } = songData[trackIndex]
         songTitle = title
         songFilename = filename
