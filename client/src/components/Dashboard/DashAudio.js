@@ -31,8 +31,6 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     }
     const originalData = [...songData]
 
-    shuffleArray(songData)
-
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // Destructure for conciseness
@@ -83,18 +81,34 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     }
 
     const toPrevTrack = () => {
-        if (trackIndex - 1 < 0) {
-            setTrackIndex(tracks.length - 1)
+        if (clickedGenre === "") {
+            if (trackIndex - 1 < 0) {
+                setTrackIndex(tracks.length - 1)
+            } else {
+                setTrackIndex(trackIndex - 1)
+            }
         } else {
-            setTrackIndex(trackIndex - 1)
+            if (trackIndex - 1 < 0) {
+                setTrackIndex(songData.length - 1)
+            } else {
+                setTrackIndex(trackIndex - 1)
+            }
         }
     }
 
     const toNextTrack = () => {
-        if (trackIndex < tracks.length - 1) {
-            setTrackIndex(trackIndex + 1)
+        if (clickedGenre === "") {
+            if (trackIndex < tracks.length - 1) {
+                setTrackIndex(trackIndex + 1)
+            } else {
+                setTrackIndex(0)
+            }
         } else {
-            setTrackIndex(0)
+            if (trackIndex < songData.length - 1) {
+                setTrackIndex(trackIndex + 1)
+            } else {
+                setTrackIndex(0)
+            }
         }
     }
 
@@ -129,10 +143,10 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
             songGenre = genre
             songId = _id
             songLink = link
-            if (tracks[trackIndex] !== undefined)
-                setSongInfo(tracks[trackIndex])
+            setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
+                shuffleArray(songData)
                 const { title, filename, year, genre, _id, link } =
                     songData[trackIndex]
                 songTitle = title
@@ -146,7 +160,6 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
         }
 
         audioRef.current.pause()
-        console.log(songLink)
         audioRef.current = new Audio(songLink)
         audioRef.current.load()
 
