@@ -8,6 +8,7 @@ import "./styles/Dashboard.css"
 
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
+    const [genreClickCount, setGenreClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
     const [genreSongList, setGenreSongList] = useState([])
     const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
@@ -20,11 +21,7 @@ const DashCarousel = () => {
         },
     })
 
-    let size = 0
-
     let songListFromGenre = []
-
-    let clickedGenreData = {}
 
     if (loading) return <p>Loading ...</p>
 
@@ -38,13 +35,11 @@ const DashCarousel = () => {
 
     const handleGenreClick = async (genre) => {
         let { data } = await songByGenre({ variables: { genre: genre } })
-        size = Object.values(data)[0].length
         songListFromGenre = Object.values(Object.values(data)[0])
         setGenreSongList(songListFromGenre)
         setClickedGenre(genre)
-        console.log(songListFromGenre[Math.floor(Math.random() * size)])
+        setGenreClickCount((count) => count + 1)
     }
-
     let genreList = [
         "Rock",
         "RnB",
@@ -83,18 +78,21 @@ const DashCarousel = () => {
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayer
+                        genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
                     />
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
+                        genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
                     />
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
+                        genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
                     />
