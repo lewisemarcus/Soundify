@@ -198,6 +198,42 @@ const DashAudio = ({
         }
     }, [])
 
+    let h,
+    m,
+    s,
+    hDisplay,
+    mDisplay,
+    sDisplay,
+    ch,
+    cm,
+    cs,
+    chDisplay,
+    cmDisplay,
+    csDisplay
+
+if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+
+ch = Math.floor(audioRef.current.currentTime / 3600)
+cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+
+chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+csDisplay = cs < 10 ? "0" + cs : cs
+
+const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+
+
+h = Math.floor(audioRef.current.duration / 3600)
+m = Math.floor((audioRef.current.duration % 3600) / 60)
+s = Math.floor((audioRef.current.duration % 3600) % 60)
+
+hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
+
+const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+
     return (
         <div className="audio-play">
             <div className="track-information">
@@ -242,6 +278,10 @@ const DashAudio = ({
                     onKeyUp={onScrubEnd}
                     style={{ background: trackStyling }}
                 />
+                <div className="time">
+                    <div>{displayTime}</div>
+                    <div>{endTime}</div>
+                </div>
                 {/* Volume slider */}
                 <Stack
                     spacing={2}

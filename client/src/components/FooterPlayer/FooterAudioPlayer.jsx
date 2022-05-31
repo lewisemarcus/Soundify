@@ -140,8 +140,8 @@ const AudioPlayer = ({ tracks }) => {
     cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
     chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
-    csDisplay = cs > 0 ? cs + (cs === 1 ? "" : "") : "00"
+    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+    csDisplay = cs < 10 ? "0" + cs : cs
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
@@ -151,7 +151,7 @@ const AudioPlayer = ({ tracks }) => {
     s = Math.floor((audioRef.current.duration % 3600) % 60)
 
     hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : ""
+    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
     sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
