@@ -142,7 +142,7 @@ const AudioPlayer = ({ tracks }) => {
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ background: trackStyling }}
+                    style={{ width: '50%' , background: trackStyling }}
                 />
             </div>
             {/* Volume slider */}

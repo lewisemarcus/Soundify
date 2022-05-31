@@ -19,7 +19,7 @@ body {
 .footer-audio-controls {
     display: flex;
     padding: 10px;
-    width: 10%;
+    width: 20%;
     justify-content: space-evenly;
 }
 
@@ -30,7 +30,7 @@ body {
 
 .musicianTrack {
     margin: 0 10px;
-    width: 10%;
+    width: 20%;
     text-align: center;
 }
 
@@ -43,5 +43,5 @@ body {
 }
 
 .volContainer {
-    width: 10%;
+    width: 30%;
 }
