@@ -1,5 +1,5 @@
 {
-    "name": "SoundClone",
+    "name": "soundify",
     "version": "1.0.0",
     "description": "SoundClone: The SoundCloud clone",
     "main": "server/server.js",
