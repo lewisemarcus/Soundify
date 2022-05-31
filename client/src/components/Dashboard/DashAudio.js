@@ -7,11 +7,15 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import { Link } from "react-router-dom"
+import Marquee from "react-fast-marquee";
+let genreList = []
 /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
 const DashAudio = ({ tracks, songData, clickedGenre }) => {
+    
+    genreList.push(clickedGenre)
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     // const [clickedGenre, setClickedGenre] = useState(0)
@@ -179,7 +183,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre])
+    }, [trackIndex, clickedGenre, genreList.length])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -198,10 +202,19 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
         /> */}{" "}
-                <Link to={`/song/${songInfo._id}`}>
+                {songInfo.title.length > 25 ? (
+                    <Marquee
+                    gradient = {false}>
+                        <Link to={`/song/${songInfo._id}`}>
+                                <h2 className="songTitle">{songInfo.title}</h2>
+                        </Link>
+                    </Marquee>
+                ): (
+                    <Link to={`/song/${songInfo._id}`}>
                     <h2 className="songTitle">{songInfo.title}</h2>
-                </Link>
-                <h3 className="songArtist">{songInfo.filename}</h3>
+                    </Link>
+                )}
+                    <h3 className="songArtist">{songInfo.artist}</h3>
                 <br></br>
                 <br></br>
                 <DashAudioControls
