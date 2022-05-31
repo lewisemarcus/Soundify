@@ -13,9 +13,14 @@ import Marquee from "react-fast-marquee"
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
-const DashAudio = ({ tracks, songData, clickedGenre, genreClickCount }) => {
+const DashAudio = ({
+    tracks,
+    songData,
+    clickedGenre,
+    genreClickCount,
+    prevClickCount,
+}) => {
     // State
-    console.log(genreClickCount)
     const [trackIndex, setTrackIndex] = useState(0)
     const [genreBool, setGenreBool] = useState(false)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -133,13 +138,16 @@ const DashAudio = ({ tracks, songData, clickedGenre, genreClickCount }) => {
         if (isPlaying) {
             audioRef.current.play()
             startTimer()
+            setIsPlaying(true)
         } else {
             audioRef.current.pause()
+            setIsPlaying(false)
         }
     }, [isPlaying])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        if (genreClickCount > prevClickCount) setIsPlaying(false)
         if (clickedGenre === "") {
             const { title, filename, year, genre, _id, link } =
                 tracks[trackIndex]

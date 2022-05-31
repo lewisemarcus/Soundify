@@ -32,7 +32,12 @@ import DashAudio from "./DashAudio"
 //   },
 // ];
 
-const DashboardPlayer = ({ songData, clickedGenre, genreClickCount }) => {
+const DashboardPlayer = ({
+    songData,
+    clickedGenre,
+    genreClickCount,
+    prevClickCount,
+}) => {
     const [songs, setSongs] = useState([
         // {
         //   _id: "",
@@ -75,6 +80,7 @@ const DashboardPlayer = ({ songData, clickedGenre, genreClickCount }) => {
         <div className="DashPlayer">
             {/* <h1>Playlist created by user</h1> */}
             <DashAudio
+                prevClickCount={prevClickCount}
                 genreClickCount={genreClickCount}
                 clickedGenre={clickedGenre}
                 tracks={songs}
