@@ -7,18 +7,16 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import { Link } from "react-router-dom"
-import Marquee from "react-fast-marquee";
-let genreList = []
+import Marquee from "react-fast-marquee"
+
 /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
-const DashAudio = ({ tracks, songData, clickedGenre }) => {
-    
-    genreList.push(clickedGenre)
+const DashAudio = ({ tracks, songData, clickedGenre, genreClickCount }) => {
     // State
+    console.log(genreClickCount)
     const [trackIndex, setTrackIndex] = useState(0)
-    // const [clickedGenre, setClickedGenre] = useState(0)
     const [genreBool, setGenreBool] = useState(false)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -174,7 +172,6 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current && genreBool) {
-            console.log(genreBool)
             setGenreBool(false)
             audioRef.current.play()
             setIsPlaying(true)
@@ -183,7 +180,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre])
+    }, [trackIndex, clickedGenre, genreClickCount])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -203,18 +200,17 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
           alt={`track artwork for ${title} by ${filename}`}
         /> */}{" "}
                 {songInfo.title.length > 25 ? (
-                    <Marquee
-                    gradient = {false}>
+                    <Marquee gradient={false}>
                         <Link to={`/song/${songInfo._id}`}>
-                                <h2 className="songTitle">{songInfo.title}</h2>
+                            <h2 className="songTitle">{songInfo.title}</h2>
                         </Link>
                     </Marquee>
-                ): (
+                ) : (
                     <Link to={`/song/${songInfo._id}`}>
-                    <h2 className="songTitle">{songInfo.title}</h2>
+                        <h2 className="songTitle">{songInfo.title}</h2>
                     </Link>
                 )}
-                    <h3 className="songArtist">{songInfo.artist}</h3>
+                <h3 className="songArtist">{songInfo.artist}</h3>
                 <br></br>
                 <br></br>
                 <DashAudioControls
