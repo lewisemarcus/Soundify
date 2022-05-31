@@ -12,7 +12,7 @@ const AudioPlayer = ({ tracks }) => {
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [volume, setVolume] = useState(10)
+    const [volume, setVolume] = useState(0.2)
 
     // Destructure for conciseness
     const { title, artist, color, image, audioSrc } = tracks[trackIndex]
@@ -20,6 +20,7 @@ const AudioPlayer = ({ tracks }) => {
     // Refs
     const audioRef = useRef(new Audio(audioSrc))
     const intervalRef = useRef()
+    audioRef.current.volume = volume
     const isReady = useRef(false)
 
     // Destructure for conciseness
@@ -120,6 +121,42 @@ const AudioPlayer = ({ tracks }) => {
         }
     }, [])
 
+    let h,
+    m,
+    s,
+    hDisplay,
+    mDisplay,
+    sDisplay,
+    ch,
+    cm,
+    cs,
+    chDisplay,
+    cmDisplay,
+    csDisplay
+
+if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+
+ch = Math.floor(audioRef.current.currentTime / 3600)
+cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+
+chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+csDisplay = cs < 10 ? "0" + cs : cs
+
+const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+
+
+h = Math.floor(audioRef.current.duration / 3600)
+m = Math.floor((audioRef.current.duration % 3600) / 60)
+s = Math.floor((audioRef.current.duration % 3600) % 60)
+
+hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
+
+const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+
     return (
         <div className="audio-player">
             <div className="track-info">
@@ -135,7 +172,6 @@ const AudioPlayer = ({ tracks }) => {
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
-                    volume
                 />
                 <input
                     type="range"
@@ -148,20 +184,24 @@ const AudioPlayer = ({ tracks }) => {
                     onKeyUp={onScrubEnd}
                     style={{ background: trackStyling }}
                 />
+                <div className="time">
+                    <div>{displayTime}</div>
+                    <div>{endTime}</div>
+                </div>
                 {/* Volume slider */}
                 <Stack
                     spacing={2}
                     direction="row"
-                    sx={{ mb: 1, px: 1 }}
+                    sx={{ mb: 0, px: 2 }}
                     alignItems="center"
                 >
                     <VolumeDownRounded />
                     <Slider
                         onChange={onVolumeChange}
                         aria-label="Volume"
-                        defaultValue={0.25}
+                        defaultValue={0.2}
                         max={1}
-                        min={0.1}
+                        min={0.01}
                         step={0.01}
                         // value={volume}
                         sx={{
