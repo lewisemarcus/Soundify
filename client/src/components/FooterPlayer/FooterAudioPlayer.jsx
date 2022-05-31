@@ -12,6 +12,7 @@ const AudioPlayer = ({ tracks }) => {
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(10)
+    // const [style, setStyle] = useState({ display: 'none' });
 
     // Destructure for conciseness
     const { title, artist, audioSrc } = tracks[trackIndex]
@@ -28,8 +29,7 @@ const AudioPlayer = ({ tracks }) => {
         ? `${(trackProgress / duration) * 100}%`
         : "0%"
     const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
-  `
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))`
 
     const startTimer = () => {
         // Clear any timers already running
@@ -129,8 +129,10 @@ const AudioPlayer = ({ tracks }) => {
                     onPlayPauseClick={setIsPlaying}
                     volume
                 />
-                <h2 className="footer-title">{title}</h2>
-                <h3 className="footer-artist">{artist}</h3>
+                <div className="musicianTrack">
+                    <h2 className="footer-title">{title}</h2>
+                    <h3 className="footer-artist">{artist}</h3>
+                </div>
                 <input
                     type="range"
                     value={trackProgress}
@@ -140,9 +142,11 @@ const AudioPlayer = ({ tracks }) => {
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ background: trackStyling }}
+                    style={{ width: '50%' , background: trackStyling }}
                 />
-                {/* Volume slider */}
+            </div>
+            {/* Volume slider */}
+            <div className="volContainer">
                 <Stack
                     spacing={2}
                     direction="row"
@@ -157,7 +161,6 @@ const AudioPlayer = ({ tracks }) => {
                         max={1}
                         min={0.1}
                         step={0.01}
-                        // value={volume}
                         sx={{
                             // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
                             "& .MuiSlider-track": {
