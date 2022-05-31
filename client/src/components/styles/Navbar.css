@@ -18,6 +18,8 @@ nav {
  align-items: center;
  height: 90px;
  width: 100px;
+ margin-top: 5px;
+ margin-left: 5px;
 }
 
 .ul-container {
@@ -38,7 +40,7 @@ nav {
 }
 
 .upload a:hover {
-  color: var(--orange);
+  color: var(--white);
 }
 
 .profile {
