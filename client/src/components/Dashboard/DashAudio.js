@@ -14,12 +14,11 @@ import { Link } from "react-router-dom"
 const DashAudio = ({ tracks, songData, clickedGenre }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
-
     // const [clickedGenre, setClickedGenre] = useState(0)
-
+    const [genreBool, setGenreBool] = useState(false)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [volume, setVolume] = useState(10)
+    const [volume, setVolume] = useState(0.2)
 
     function shuffleArray(array) {
         for (var i = songData.length - 1; i > 0; i--) {
@@ -41,6 +40,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     // Refs
     const audioRef = useRef(new Audio(songLink))
     const intervalRef = useRef()
+    audioRef.current.volume = volume
     const isReady = useRef(false)
 
     // Destructure for conciseness
@@ -82,6 +82,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     }
 
     const toPrevTrack = () => {
+        setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(tracks.length - 1)
@@ -98,6 +99,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
     }
 
     const toNextTrack = () => {
+        setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
                 setTrackIndex(trackIndex + 1)
@@ -147,6 +149,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
+                setGenreBool(false)
                 shuffleArray(songData)
                 const { title, filename, year, genre, _id, link } =
                     songData[trackIndex]
@@ -165,10 +168,12 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
         audioRef.current.load()
 
         setTrackProgress(audioRef.current.currentTime)
-        if (isReady.current) {
-            // audioRef.current.play()
-            // setIsPlaying(true)
-            // startTimer()
+        if (isReady.current && genreBool) {
+            console.log(genreBool)
+            setGenreBool(false)
+            audioRef.current.play()
+            setIsPlaying(true)
+            startTimer()
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
@@ -200,6 +205,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
                 <br></br>
                 <DashAudioControls
                     isPlaying={isPlaying}
+                    genreBool={genreBool}
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
