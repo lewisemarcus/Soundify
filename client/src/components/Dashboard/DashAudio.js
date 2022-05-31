@@ -207,7 +207,7 @@ const DashAudio = ({
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
         /> */}{" "}
-                {songInfo.title.length > 25 ? (
+                {songInfo.title.length > 17 ? (
                     <Marquee gradient={false}>
                         <Link to={`/song/${songInfo._id}`}>
                             <h2 className="songTitle">{songInfo.title}</h2>
