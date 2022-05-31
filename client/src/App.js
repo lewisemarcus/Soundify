@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import SongDetails from "./pages/SongDetails";
 import { AuthContext } from "./context/authContext";
 import { useContext } from "react";
+import Footer from "./components/Footer";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -33,6 +34,8 @@ function App() {
           element={user ? <Playlists /> : <Navigate to="/" />}
         />
       </Routes>
+
+      {user && <Footer />}
     </div>
   );
 }

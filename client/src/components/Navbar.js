@@ -81,7 +81,7 @@ const Navbar = () => {
   return (
     <nav className="navMain">
       <div className="logo">
-        <img src={logo} width={100} height={100}></img>
+        <Link to="/"><img src={logo} width={100} height={100}></img></Link>
       </div>
       {user ? (
         <div className="ul-container">

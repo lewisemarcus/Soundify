@@ -23,6 +23,8 @@ export default gql`
         genre: String
         filename: String
         link: String
+        tags: [String]
+        artist: String
         username: String
         uploaded: String
         comments: [Comment]!
@@ -50,8 +52,8 @@ export default gql`
         genre: String
         filename: String
         link: String
+        tags: [String]
         username: String
-        uploaded: String
     }
 
     input CommentInput {
@@ -68,8 +70,9 @@ export default gql`
         songs: [Song]
         songByGenre(genre: String!): [Song]
         userSongs(username: String!): [Song]
-        song(title: String!): Song
+        song(title: String!): [Song]
         me: User
+        songById(_id: ID!): Song
         userPlaylists(owner: String!): [Playlist]
         playlist(plTitle: String!): Playlist
     }
@@ -77,10 +80,9 @@ export default gql`
     type Mutation {
         registerUser(registerInput: RegisterInput): User
         loginUser(loginInput: LoginInput): User
-        addSong(songInput: SongInput): Song
         removeSong(songId: ID!): Song
         removeComment(songId: ID!, commentId: ID!): Song
-        addComment(songId: ID!, commentInput: CommentInput): Song
+        addComment(songId: ID!, CommentInput: CommentInput): Song
     }
 `
 

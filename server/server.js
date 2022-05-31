@@ -15,7 +15,7 @@ import bodyParser from "body-parser"
 // import { default as resolvers } from "./schema/Users.js";
 // import { resolvers } from "./schema/resolvers/Users.js";
 // const resolvers = require("./graphql/resolvers")
-import resolvers from "./schema/Users.js"
+import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 
 const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone"

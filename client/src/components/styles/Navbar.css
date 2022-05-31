@@ -3,10 +3,10 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #ec994b;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
-.logo {
+.logo img {
   /* font-size: 2rem;
   color: var(--dark);
   text-decoration: none;
@@ -16,6 +16,8 @@ nav {
   letter-spacing: 2px; */
  display: flex;
  align-items: center;
+ height: 90px;
+ width: 100px;
 }
 
 .ul-container {
