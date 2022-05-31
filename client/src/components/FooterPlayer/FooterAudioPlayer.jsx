@@ -133,17 +133,17 @@ const AudioPlayer = ({ tracks }) => {
         cmDisplay,
         csDisplay
 
-        if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+    if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
 
-        ch = Math.floor(audioRef.current.currentTime / 3600)
-        cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-        cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+    ch = Math.floor(audioRef.current.currentTime / 3600)
+    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
-        chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-        cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
-        csDisplay = cs > 0 ? cs + (cs === 1 ? "" : "") : "00"
+    chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
+    csDisplay = cs > 0 ? cs + (cs === 1 ? "" : "") : "00"
 
-        const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+    const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
 
     h = Math.floor(audioRef.current.duration / 3600)
@@ -152,7 +152,7 @@ const AudioPlayer = ({ tracks }) => {
 
     hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
     mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : ""
-    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : ""
+    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
@@ -170,7 +170,7 @@ const AudioPlayer = ({ tracks }) => {
                     <h2 className="footer-title">{title}</h2>
                     <h3 className="footer-artist">{artist}</h3>
                 </div>
-                <div style={{width:'5%'}}>{displayTime}</div>
+                <div style={{ width: '5%' }}>{displayTime}</div>
                 <input
                     type="range"
                     value={trackProgress}
@@ -182,7 +182,7 @@ const AudioPlayer = ({ tracks }) => {
                     onKeyUp={onScrubEnd}
                     style={{ width: '50%', background: trackStyling }}
                 />
-                <div style={{width:'5%', display:'flex', justifyContent: 'center'}}>{endTime}</div>
+                <div style={{ width: '5%', display: 'flex', justifyContent: 'center' }}>{endTime}</div>
             </div>
             {/* Volume slider */}
             <div className="volContainer">
