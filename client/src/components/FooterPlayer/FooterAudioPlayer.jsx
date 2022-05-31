@@ -12,7 +12,7 @@ const AudioPlayer = ({ tracks }) => {
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [volume, setVolume] = useState(10)
+    const [volume, setVolume] = useState(0.2)
     // const [style, setStyle] = useState({ display: 'none' });
 
     // Destructure for conciseness
@@ -21,6 +21,7 @@ const AudioPlayer = ({ tracks }) => {
     // Refs
     const audioRef = useRef(new Audio(audioSrc))
     const intervalRef = useRef()
+    audioRef.current.volume = volume
     const isReady = useRef(false)
 
     // Destructure for conciseness
@@ -164,7 +165,6 @@ const AudioPlayer = ({ tracks }) => {
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
-                    volume
                 />
                 <div className="musicianTrack">
                     <h2 className="footer-title">{title}</h2>
