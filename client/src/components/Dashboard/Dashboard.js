@@ -5,6 +5,7 @@ import { GET_SONGS, GET_GENRES } from "../../utils/queries/songQueries"
 import React, { useState } from "react"
 import DashboardPlayer from "./DashboardPlayer"
 import "./styles/Dashboard.css"
+import DashAudioControls from "./DashAudioControls"
 
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
@@ -37,6 +38,7 @@ const DashCarousel = () => {
     }
 
     const handleGenreClick = async (genre) => {
+        
         let { data } = await songByGenre({ variables: { genre: genre } })
         size = Object.values(data)[0].length
         songListFromGenre = Object.values(Object.values(data)[0])
@@ -57,6 +59,7 @@ const DashCarousel = () => {
     ]
 
     const username = localStorage.getItem("username")
+
     return (
         <div className="main-container">
             <div className="main-header">
@@ -97,7 +100,7 @@ const DashCarousel = () => {
                     <DashboardPlayer
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
-                    />
+                    />                    
                 </div>
 
                 {/* <Row>
@@ -133,6 +136,7 @@ const DashCarousel = () => {
                     <button
                         className="genre1"
                         onClick={(event) => {
+                            DashAudioControls.onPlayPauseClick = false
                             let { innerHTML } = event.target
                             handleGenreClick(innerHTML)
                         }}

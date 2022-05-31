@@ -183,7 +183,7 @@ const DashAudio = ({ tracks, songData, clickedGenre }) => {
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre, genreList.length])
+    }, [trackIndex, clickedGenre])
 
     useEffect(() => {
         // Pause and clean up on unmount

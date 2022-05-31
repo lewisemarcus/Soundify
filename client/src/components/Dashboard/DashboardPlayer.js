@@ -32,7 +32,7 @@ import DashAudio from "./DashAudio"
 //   },
 // ];
 
-const DashboardPlayer = ({ songData, clickedGenre }) => {
+const DashboardPlayer = ({ songData, clickedGenre, audioRef }) => {
     const [songs, setSongs] = useState([
         // {
         //   _id: "",
