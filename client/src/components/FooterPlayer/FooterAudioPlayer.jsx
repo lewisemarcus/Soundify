@@ -5,6 +5,7 @@ import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
+import { width } from "@mui/system"
 
 const AudioPlayer = ({ tracks }) => {
     // State
@@ -119,6 +120,42 @@ const AudioPlayer = ({ tracks }) => {
         }
     }, [])
 
+    let h,
+        m,
+        s,
+        hDisplay,
+        mDisplay,
+        sDisplay,
+        ch,
+        cm,
+        cs,
+        chDisplay,
+        cmDisplay,
+        csDisplay
+
+        if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+
+        ch = Math.floor(audioRef.current.currentTime / 3600)
+        cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+        cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+
+        chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+        cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
+        csDisplay = cs > 0 ? cs + (cs === 1 ? "" : "") : "00"
+
+        const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+
+
+    h = Math.floor(audioRef.current.duration / 3600)
+    m = Math.floor((audioRef.current.duration % 3600) / 60)
+    s = Math.floor((audioRef.current.duration % 3600) % 60)
+
+    hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : ""
+    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : ""
+
+    const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+
     return (
         <div className="footer-audio-player">
             <div className="footer-track-info">
@@ -133,6 +170,7 @@ const AudioPlayer = ({ tracks }) => {
                     <h2 className="footer-title">{title}</h2>
                     <h3 className="footer-artist">{artist}</h3>
                 </div>
+                <div style={{width:'5%'}}>{displayTime}</div>
                 <input
                     type="range"
                     value={trackProgress}
@@ -142,8 +180,9 @@ const AudioPlayer = ({ tracks }) => {
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ width: '50%' , background: trackStyling }}
+                    style={{ width: '50%', background: trackStyling }}
                 />
+                <div style={{width:'5%', display:'flex', justifyContent: 'center'}}>{endTime}</div>
             </div>
             {/* Volume slider */}
             <div className="volContainer">
