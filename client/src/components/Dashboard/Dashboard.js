@@ -10,6 +10,7 @@ import DashAudioControls from "./DashAudioControls"
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
     const [genreClickCount, setGenreClickCount] = useState(0)
+    const [prevClickCount, setPrevClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
     const [genreSongList, setGenreSongList] = useState([])
     const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
@@ -40,6 +41,7 @@ const DashCarousel = () => {
         songListFromGenre = Object.values(Object.values(data)[0])
         setGenreSongList(songListFromGenre)
         setClickedGenre(genre)
+        setPrevClickCount(genreClickCount)
         setGenreClickCount((count) => count + 1)
     }
     let genreList = [
@@ -81,6 +83,7 @@ const DashCarousel = () => {
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayer
+                        prevClickCount={prevClickCount}
                         genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
@@ -88,6 +91,7 @@ const DashCarousel = () => {
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
+                        prevClickCount={prevClickCount}
                         genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
@@ -95,6 +99,7 @@ const DashCarousel = () => {
                 </div>
                 <div className="main-items">
                     <DashboardPlayer
+                        prevClickCount={prevClickCount}
                         genreClickCount={genreClickCount}
                         clickedGenre={clickedGenre}
                         songData={genreSongList}
