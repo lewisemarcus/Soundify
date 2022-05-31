@@ -245,9 +245,9 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
         /> */}{" "}
 
                 {songInfo.title.length > 16 ? (
-                    <Marquee gradient={false} delay={2}>
+                    <Marquee gradient={false} delay={1}>
                         <Link to={`/song/${songInfo._id}`}>
-                            <h2 className="songTitle">{songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+                            <h2 className="songTitle">{songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
                         </Link>
                     </Marquee>
                 ) : (
