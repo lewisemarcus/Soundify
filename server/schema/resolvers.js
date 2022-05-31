@@ -3,7 +3,6 @@ import Song from "../models/Songs.js"
 import Playlist from "../models/Playlists.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
-import { inspect } from "util"
 const { hash, compare } = pkg
 // import { sign } from "jsonwebtoken"
 import { default as jsonPkg } from "jsonwebtoken"
@@ -14,6 +13,9 @@ const resolvers = {
     Query: {
         user: async (parent, { _id }) => {
             return User.findById(_id)
+        },
+        songById: async (parent, { _id }) => {
+            return Song.findById(_id)
         },
         songByArtist: async (parent, { username }) => {
             const params = username ? { username } : {}
@@ -115,26 +117,25 @@ const resolvers = {
                 )
             }
         },
-        addSong: async (
-            parent,
-            { songInput: { title, genre, filename, link, username, uploaded } },
-            context,
-        ) => {
+        addComment: async (parent, { songId, commentText }, context) => {
             if (context.user) {
-                const song = await Song.create({
-                    title: title,
-                    genre: genre,
-                    filename: filename,
-                    username: context.user.username,
-                    link: link,
-                    uploaded: uploaded,
-                })
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { songs: song._id } },
+                return Song.findOneAndUpdate(
+                    { _id: songId },
+                    {
+                        $addToSet: {
+                            comments: {
+                                commentText,
+                                commentAuthor: context.user.username,
+                            },
+                        },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    },
                 )
             }
+            throw new AuthenticationError("You need to be logged in!")
         },
     },
 }

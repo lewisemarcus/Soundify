@@ -10,9 +10,9 @@ const storage = memoryStorage()
 const upload = multer({ storage: storage })
 
 router.post("/upload", upload.single("filename"), async (req, res) => {
-    console.log(">>>>REQ.BODY", req)
     const { originalname } = req.file
-    const { title, genre, username, tags } = req.body
+    const { title, genre, username, tags, artist } = req.body
+
     const content = {
         filename: title,
         bucketname: "soundclone-music",
@@ -23,6 +23,7 @@ router.post("/upload", upload.single("filename"), async (req, res) => {
         title: title,
         tags: tags,
         genre: genre,
+        artist: artist,
         username: username,
         filename: originalname,
     }

@@ -6,26 +6,40 @@ import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
+import { Link } from "react-router-dom"
 /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
-const DashAudio = ({ tracks, sdata }) => {
-    console.log(tracks)
-    console.log(sdata)
-
+const DashAudio = ({ tracks, songData, clickedGenre }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
+
+    // const [clickedGenre, setClickedGenre] = useState(0)
+
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(10)
 
+    function shuffleArray(array) {
+        for (var i = songData.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1))
+            var temp = array[i]
+            array[i] = array[j]
+            array[j] = temp
+        }
+        return array
+    }
+    const originalData = [...songData]
+
+    let songTitle, songFilename, songYear, songGenre, songId, songLink
+
     // Destructure for conciseness
-    const { title, filename, year, genre, _id, link } = tracks[trackIndex]
+
     // const { title, artist, color, image, audioSrc } = tracks[trackIndex];
     // const [audioRef.current, setMusicLink] = useState(new Audio(link))
     // Refs
-    const audioRef = useRef(new Audio(link))
+    const audioRef = useRef(new Audio(songLink))
     const intervalRef = useRef()
     const isReady = useRef(false)
 
@@ -68,31 +82,48 @@ const DashAudio = ({ tracks, sdata }) => {
     }
 
     const toPrevTrack = () => {
-        if (trackIndex - 1 < 0) {
-            setTrackIndex(tracks.length - 1)
+        if (clickedGenre === "") {
+            if (trackIndex - 1 < 0) {
+                setTrackIndex(tracks.length - 1)
+            } else {
+                setTrackIndex(trackIndex - 1)
+            }
         } else {
-            setTrackIndex(trackIndex - 1)
+            if (trackIndex - 1 < 0) {
+                setTrackIndex(songData.length - 1)
+            } else {
+                setTrackIndex(trackIndex - 1)
+            }
         }
     }
 
     const toNextTrack = () => {
-        if (trackIndex < tracks.length - 1) {
-            setTrackIndex(trackIndex + 1)
+        if (clickedGenre === "") {
+            if (trackIndex < tracks.length - 1) {
+                setTrackIndex(trackIndex + 1)
+            } else {
+                setTrackIndex(0)
+            }
         } else {
-            setTrackIndex(0)
+            if (trackIndex < songData.length - 1) {
+                setTrackIndex(trackIndex + 1)
+            } else {
+                setTrackIndex(0)
+            }
         }
     }
 
     const onVolumeChange = (e) => {
         const { target } = e
         const newVolume = +target.value
-        console.log(newVolume)
+
         if (newVolume) {
             setVolume(newVolume)
             audioRef.current.volume = newVolume || 0.01
         }
     }
 
+    const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlaying) {
             audioRef.current.play()
@@ -104,19 +135,45 @@ const DashAudio = ({ tracks, sdata }) => {
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        if (clickedGenre === "") {
+            const { title, filename, year, genre, _id, link } =
+                tracks[trackIndex]
+            songTitle = title
+            songFilename = filename
+            songYear = year
+            songGenre = genre
+            songId = _id
+            songLink = link
+            setSongInfo(tracks[trackIndex])
+        } else {
+            if (songData[trackIndex] !== undefined) {
+                shuffleArray(songData)
+                const { title, filename, year, genre, _id, link } =
+                    songData[trackIndex]
+                songTitle = title
+                songFilename = filename
+                songYear = year
+                songGenre = genre
+                songId = _id
+                songLink = link
+                setSongInfo(songData[trackIndex])
+            }
+        }
+
         audioRef.current.pause()
-        audioRef.current = new Audio(link)
+        audioRef.current = new Audio(songLink)
+        audioRef.current.load()
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current) {
-            audioRef.current.play()
-            setIsPlaying(true)
-            startTimer()
+            // audioRef.current.play()
+            // setIsPlaying(true)
+            // startTimer()
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex])
+    }, [trackIndex, clickedGenre])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -134,9 +191,11 @@ const DashAudio = ({ tracks, sdata }) => {
           // for future album covers
           // src={image}
           alt={`track artwork for ${title} by ${filename}`}
-        /> */}
-                <h2 className="songTitle">{title}</h2>
-                <h3 className="songArtist">{filename}</h3>
+        /> */}{" "}
+                <Link to={`/song/${songInfo._id}`}>
+                    <h2 className="songTitle">{songInfo.title}</h2>
+                </Link>
+                <h3 className="songArtist">{songInfo.filename}</h3>
                 <br></br>
                 <br></br>
                 <DashAudioControls

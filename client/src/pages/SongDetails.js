@@ -2,30 +2,34 @@ import React, { useState, useEffect, useRef } from "react"
 import { List, Typography, Divider } from "antd"
 import "../components/styles/Slider.css"
 import { useParams } from "react-router-dom"
+import { GET_SONG } from "../utils/queries/songQueries"
+import { useQuery } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
 import shakeygraves from "../assets/shakeygraves.jpg"
 import LoadMoreList from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
 
-const data = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
-
-const song = new Audio("https://soundclone-music.s3.amazonaws.com/qwe")
+const myData = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
 
 const SongDetails = () => {
     const { songId } = useParams()
+    const { loading, data } = useQuery(GET_SONG, {
+        variables: { songId: songId },
+    })
+    const querySong = data?.songById || {}
     const audio = useRef(null)
     const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
-
     useEffect(() => {
-        console.log(window.innerWidth)
         window.addEventListener("resize", function () {
             setWidth(window.innerWidth * (1075 / 1280))
         })
         isLoaded.current = true
     })
-
+    if (loading) {
+        return <div>Loading...</div>
+    }
     return (
         <div
             style={{
@@ -68,9 +72,12 @@ const SongDetails = () => {
                         }}
                     >
                         <img src={shakeygraves} alt="Album Cover" />
-                        <h1 style={{ color: "white" }}>Song Title</h1>
+                        <h1 style={{ color: "white" }}>{querySong.title}</h1>
+                        <h2 style={{ color: "white" }}>
+                            By {querySong.artist}
+                        </h2>
                     </div>
-                    <Waveform song={song} audio={audio} />
+                    <Waveform song={querySong} audio={audio} />
                     <div
                         style={{
                             marginTop: -50,
@@ -90,7 +97,7 @@ const SongDetails = () => {
                             id="audio-element"
                             crossOrigin="anonymous"
                             ref={audio}
-                            src={song.src}
+                            src={querySong.link}
                         ></audio>
                     </div>
                 </div>
@@ -160,7 +167,7 @@ const SongDetails = () => {
                         header={<div>Header</div>}
                         footer={<div>Footer</div>}
                         bordered
-                        dataSource={data}
+                        dataSource={myData}
                         renderItem={(item) => (
                             <List.Item>
                                 <Typography.Text mark>[ITEM]</Typography.Text>

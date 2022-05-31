@@ -1,16 +1,25 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Modal, message, Upload, Input, Select, Space, Empty } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import Button from "../components/Button"
 import "./styles/SongList.css"
+import { GET_USER_SONGS } from "../utils/queries/songQueries"
+import { Link } from "react-router-dom"
+import { useQuery } from "@apollo/client"
+import { AuthContext } from "../context/authContext"
 
 const SongList = () => {
+    const { user } = useContext(AuthContext)
     const username = localStorage.getItem("username")
-
+    const { loading, data } = useQuery(GET_USER_SONGS, {
+        variables: { username: username },
+    })
+    const usersSongs = data?.userSongs || []
     const [song, setSong] = useState({
         title: "",
         genre: "",
-        username: "",
+        username: user.username,
+        artist: "",
         filename: "",
         link: "",
     })
@@ -67,9 +76,11 @@ const SongList = () => {
         // action: "http://localhost:4000/upload",
         customRequest({ onSuccess, onError, file }) {
             const tags = song.title.split(" ")
+            tags.push(song.genre, song.artist.split(" "))
             const formData = new FormData()
             formData.append("username", song.username)
             formData.append("genre", song.genre)
+            formData.append("artist", song.artist)
             formData.append("title", song.title)
             formData.append("tags", tags)
             formData.append("filename", file)
@@ -101,7 +112,9 @@ const SongList = () => {
             }
         },
     }
-
+    if (loading) {
+        return <div>Loading...</div>
+    }
     return (
         <div className="song-list-wrapper">
             <div className="song-list-header">
@@ -131,8 +144,8 @@ const SongList = () => {
                         />
                         <Input
                             onChange={handleChange}
-                            value={song.username}
-                            name="username"
+                            value={song.artist}
+                            name="artist"
                             placeholder="Artist"
                             size="large"
                         />
@@ -146,11 +159,11 @@ const SongList = () => {
                             <Option value="Rock" name="genre" key="1">
                                 Rock
                             </Option>
-                            <Option value="Rap" name="genre" key="2">
-                                R&B
+                            <Option value="RnB" name="genre" key="2">
+                                RnB
                             </Option>
-                            <Option value="Hiphop" name="genre" key="3">
-                                Hiphop
+                            <Option value="HipHop" name="genre" key="3">
+                                HipHop
                             </Option>
                             <Option value="EDM" name="genre" key="4">
                                 EDM
@@ -158,8 +171,14 @@ const SongList = () => {
                             <Option value="Pop" name="genre" key="5">
                                 Pop
                             </Option>
-                            <Option value="Classical" name="genre" key="6">
+                            <Option value="Country" name="genre" key="6">
+                                Country
+                            </Option>
+                            <Option value="Classical" name="genre" key="7">
                                 Classical
+                            </Option>
+                            <Option value="International" name="genre" key="8">
+                                International
                             </Option>
                         </Select>
                         <Dragger {...props}>
@@ -178,9 +197,11 @@ const SongList = () => {
                     </Space>
                 </Modal>
             </div>
-            <div className="song-list-content">
-                <Empty />
-            </div>
+            {usersSongs.map((song, index) => (
+                <div className="song-list-content">
+                    <div key={index}>{song.title}</div>
+                </div>
+            ))}
         </div>
     )
 }
