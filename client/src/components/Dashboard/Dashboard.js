@@ -68,7 +68,7 @@ const DashCarousel = () => {
             <div className="searchContainer">
                 <input
                     typeof="text"
-                    placeholder="Search Songs"
+                    placeholder="Search By Song Title or Artist Name"
                     name="searchBar"
                     id="searchBar"
                     onChange={onChange}
