@@ -246,14 +246,14 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
                 {songInfo.title.length > 16 ? (
                     <Marquee gradient={false} delay={1}>
-                        <Link to={`/song/${songInfo._id}`}>
+                        {/* <Link to={`/song/${songInfo._id}`}> */}
                             <h2 className="songTitle">{songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-                        </Link>
+                        {/* </Link> */}
                     </Marquee>
                 ) : (
-                    <Link to={`/song/${songInfo._id}`}>
+                    // <Link to={`/song/${songInfo._id}`}>
                         <h2 className="songTitle">{songInfo.title}</h2>
-                    </Link>
+                    // </Link>
                 )}
                 <h3 className="songArtist">{songInfo.artist}</h3>
                 <br></br>
@@ -323,6 +323,9 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                     // activeColor={color}
                     isPlaying={isPlaying}
                 />
+                <Link to={`/song/${songInfo._id}`}>
+                <button className="genre2">Go To Song</button>
+                </Link>
             </div>
         </div>
     )
