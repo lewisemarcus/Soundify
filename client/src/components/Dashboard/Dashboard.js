@@ -71,20 +71,6 @@ const DashCarousel = () => {
 
     useEffect(() => {
         window.onload()
-        if (audioOne != undefined) {
-            // document.activeElement.parentNode.parentNode.parentNode.parentNode.addEventListener(
-            //     "click",
-            //     function (event) {
-            //         console.log(event.currentTarget)
-            //         for (var i = 0, len = audioList.length; i < len; i++) {
-            //             if (audioList[i] != event.currentTarget) {
-            //                 audioList[i].pause()
-            //             }
-            //         }
-            //     },
-            //     true,
-            // )
-        }
     }, [isPlaying])
 
     let songListFromGenre = []
