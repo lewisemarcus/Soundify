@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
-import DashAudioControls from "./DashAudioControls"
-import DashBackDrop from "./DashBackDrop"
+import DashAudioControlOne from "./DashAudioControlOne"
+import DashBackDropOne from "./DashBackDropOne"
 import "./styles/DashAudio.css"
 import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
@@ -13,30 +13,25 @@ import Marquee from "react-fast-marquee"
  * Read the blog post here:
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
-const DashAudio = ({
+const DashAudioOne = ({
+    setCurrent,
     tracks,
     songData,
     clickedGenre,
     genreClickCount,
     prevClickCount,
     getAudioOne,
-    getAudioTwo,
-    getAudioThree,
-    getIsPlaying,
+    getOne,
+    getIndexOne,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
     const audioRef = useRef(new Audio(songLink))
     // State
     const [trackIndex, setTrackIndex] = useState(0)
-    const [genreBool, setGenreBool] = useState(false)
-    const [audioOne, setAudioOne] = useState(audioRef.current)
-    const [audioTwo, setAudioTwo] = useState(audioRef.current)
-    const [audioThree, setAudioThree] = useState(audioRef.current)
     const [trackProgress, setTrackProgress] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [dashOne, setDashOne] = useState("")
-
+    const [isPlayingOne, setIsPlaying] = useState(false)
+    const [genreBool, setGenreBool] = useState(false)
     const [volume, setVolume] = useState(0.2)
 
     function shuffleArray(array) {
@@ -87,67 +82,51 @@ const DashAudio = ({
 
     const onScrubEnd = () => {
         // If not already playing, start
-        if (!isPlaying) {
+        if (!isPlayingOne) {
             setIsPlaying(false)
-            getIsPlaying(false)
+            if (getOne !== undefined) getOne(false)
         }
         startTimer()
     }
 
     const toPrevTrack = () => {
-        if (dashOne === "dashOne") {
-            setAudioOne(audioRef.current)
-            getAudioOne(audioOne)
-        }
-        if (dashOne === "dashTwo") {
-            setAudioTwo(audioRef.current)
-            getAudioTwo(audioTwo)
-        }
-        if (dashOne === "dashThree") {
-            setAudioThree(audioRef.current)
-            getAudioThree(audioThree)
-        }
         setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(tracks.length - 1)
+                if (getIndexOne !== undefined) getIndexOne(tracks.length - 1)
             } else {
                 setTrackIndex(trackIndex - 1)
+                if (getIndexOne !== undefined) getIndexOne(trackIndex - 1)
             }
         } else {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(songData.length - 1)
+                if (getIndexOne !== undefined) getIndexOne(songData.length - 1)
             } else {
                 setTrackIndex(trackIndex - 1)
+                if (getIndexOne !== undefined) getIndexOne(trackIndex - 1)
             }
         }
     }
 
     const toNextTrack = () => {
         setGenreBool(true)
-        if (dashOne === "dashOne") {
-            setAudioOne(audioRef.current)
-            getAudioOne(audioOne)
-        }
-        if (dashOne === "dashTwo") {
-            setAudioTwo(audioRef.current)
-            getAudioTwo(audioTwo)
-        }
-        if (dashOne === "dashThree") {
-            setAudioThree(audioRef.current)
-            getAudioThree(audioThree)
-        }
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
                 setTrackIndex(trackIndex + 1)
+                if (getIndexOne !== undefined) getIndexOne(trackIndex + 1)
             } else {
                 setTrackIndex(0)
+                if (getIndexOne !== undefined) getIndexOne(0)
             }
         } else {
             if (trackIndex < songData.length - 1) {
                 setTrackIndex(trackIndex + 1)
+                if (getIndexOne !== undefined) getIndexOne(trackIndex + 1)
             } else {
                 setTrackIndex(0)
+                if (getIndexOne !== undefined) getIndexOne(0)
             }
         }
     }
@@ -163,50 +142,32 @@ const DashAudio = ({
     }
 
     useEffect(() => {
-        if (audioRef.current.paused) setIsPlaying(false)
+        if (audioRef.current.paused) {
+            setIsPlaying(false)
+            if (getOne !== undefined) getOne(false)
+        }
     })
-    useEffect(() => {
-        setAudioOne(audioRef.current)
-        if (getAudioOne) getAudioOne(audioOne)
 
-        setAudioTwo(audioRef.current)
-        if (getAudioTwo) getAudioTwo(audioTwo)
-
-        setAudioThree(audioRef.current)
-        if (getAudioThree) getAudioThree(audioThree)
-    })
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
-        if (dashOne === "dashOne") {
-            setAudioOne(audioRef.current)
-            getAudioOne(audioOne)
-        }
-        if (dashOne === "dashTwo") {
-            setAudioTwo(audioRef.current)
-            getAudioTwo(audioTwo)
-        }
-        if (dashOne === "dashThree") {
-            setAudioThree(audioRef.current)
-            getAudioThree(audioThree)
-        }
-
-        if (isPlaying) {
+        if (isPlayingOne) {
             audioRef.current.play()
             startTimer()
             setIsPlaying(true)
-            getIsPlaying(true)
+            setCurrent(audioRef.current)
+            if (getOne !== undefined) getOne(true)
         } else {
             audioRef.current.pause()
             setIsPlaying(false)
-            getIsPlaying(false)
+            if (getOne !== undefined) getOne(false)
         }
-    }, [isPlaying])
+    }, [isPlayingOne])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
         if (genreClickCount > prevClickCount) {
-            getIsPlaying(false)
             setIsPlaying(false)
+            if (getOne !== undefined) getOne(false)
         }
         if (clickedGenre === "") {
             // Destructure for conciseness
@@ -239,20 +200,23 @@ const DashAudio = ({
         audioRef.current.pause()
         audioRef.current = new Audio(songLink)
         audioRef.current.load()
+        if (getAudioOne !== undefined) {
+            getAudioOne(audioRef.current)
+        }
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current && genreBool) {
             setGenreBool(false)
             audioRef.current.play()
-            getIsPlaying(true)
             setIsPlaying(true)
+            if (getOne !== undefined) getOne(true)
+
             startTimer()
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
     }, [trackIndex, clickedGenre, genreClickCount])
-
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
@@ -312,12 +276,11 @@ const DashAudio = ({
                 <h3 className="songArtist">{songInfo.artist}</h3>
                 <br></br>
                 <br></br>
-                <DashAudioControls
-                    isPlaying={isPlaying}
+                <DashAudioControlOne
+                    isPlaying={isPlayingOne}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
-                    setDashClickOne={setDashOne}
                     onPlayPauseClick={setIsPlaying}
                 />
                 <input
@@ -370,10 +333,10 @@ const DashAudio = ({
                     />
                     <VolumeUpRounded />
                 </Stack>
-                <DashBackDrop
+                <DashBackDropOne
                     trackIndex={trackIndex}
                     // activeColor={color}
-                    isPlaying={isPlaying}
+                    isPlaying={isPlayingOne}
                 />
                 <Link to={`/song/${songInfo._id}`}>
                     <button className="genre2">Go To Song</button>
@@ -383,4 +346,4 @@ const DashAudio = ({
     )
 }
 
-export default DashAudio
+export default DashAudioOne

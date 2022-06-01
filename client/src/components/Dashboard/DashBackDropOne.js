@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 
-const DashBackDrop = ({ activeColor, trackIndex, isPlaying }) => {
+const DashBackDropOne = ({ activeColor, trackIndex, isPlaying }) => {
     useEffect(() => {
         document.documentElement.style.setProperty(
             "--active-color",
@@ -11,4 +11,4 @@ const DashBackDrop = ({ activeColor, trackIndex, isPlaying }) => {
     return <div className={`color-bd ${isPlaying ? "playing" : "idle"}`} />
 }
 
-export default DashBackDrop
+export default DashBackDropOne

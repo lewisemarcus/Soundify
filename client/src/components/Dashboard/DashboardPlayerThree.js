@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react"
 
 import "./styles/DashboardPlayer.css"
 
-import DashAudio from "./DashAudio"
+import DashAudioThree from "./DashAudioThree"
 
-const DashboardPlayer = ({
-    songData,
+const DashboardPlayerThree = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    name,
-    getAudioOne,
-    getAudioTwo,
+    tracks,
+    songData,
+    getThree,
     getAudioThree,
-    getIsPlaying,
-    src,
+    getIndexThree,
+    setCurrent,
 }) => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -39,19 +38,18 @@ const DashboardPlayer = ({
         }
         fetchSongs()
     }, [])
-
     return isLoading ? (
         "loading"
     ) : (
-        <div name={name} id={name} src={src} className="DashPlayer">
-            <DashAudio
-                getIsPlaying={getIsPlaying}
-                getAudioOne={getAudioOne}
-                getAudioTwo={getAudioTwo}
+        <div className="DashPlayer">
+            <DashAudioThree
+                setCurrent={setCurrent}
+                getIndexThree={getIndexThree}
                 getAudioThree={getAudioThree}
-                prevClickCount={prevClickCount}
-                genreClickCount={genreClickCount}
+                getThree={getThree}
                 clickedGenre={clickedGenre}
+                genreClickCount={genreClickCount}
+                prevClickCount={prevClickCount}
                 tracks={songs}
                 songData={songData}
             />
@@ -59,4 +57,4 @@ const DashboardPlayer = ({
     )
 }
 
-export default DashboardPlayer
+export default DashboardPlayerThree
