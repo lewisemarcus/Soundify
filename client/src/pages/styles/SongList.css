@@ -62,7 +62,7 @@
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):hover {
   background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
   background-color: #476e9e;
-  transform: scale(1.1);
+  transform: scale(1.02);
 }
 
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):active {
@@ -83,6 +83,7 @@
 .ant-modal-footer .ant-btn-default:hover {
   background-color: rgb(171, 44, 44);
   color: #fff;
+  border-color: rgb(171, 44, 44);
 }
 
 .ant-btn:active {
