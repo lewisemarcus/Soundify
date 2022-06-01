@@ -7,18 +7,21 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
-const AudioPlayer = ({ tracks }) => {
+const AudioPlayer = ({ tracks, songData }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(0.2)
+    const originalData = [...songData]
+
+    let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // Destructure for conciseness
-    const { title, artist, color, image, audioSrc } = tracks[trackIndex]
+    // const { title, artist, color, image, audioSrc } = tracks[trackIndex]
 
     // Refs
-    const audioRef = useRef(new Audio(audioSrc))
+    const audioRef = useRef(new Audio(songLink))
     const intervalRef = useRef()
     audioRef.current.volume = volume
     const isReady = useRef(false)
@@ -87,6 +90,7 @@ const AudioPlayer = ({ tracks }) => {
         }
     }
 
+    const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlaying) {
             audioRef.current.play()
@@ -98,11 +102,21 @@ const AudioPlayer = ({ tracks }) => {
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        const { title, filename, year, genre, _id, link } =
+                tracks[trackIndex]
+            songTitle = title
+            songFilename = filename
+            songYear = year
+            songGenre = genre
+            songId = _id
+            songLink = link
+            setSongInfo(tracks[trackIndex])
+
         audioRef.current.pause()
+        audioRef.current = new Audio(songLink)
+        audioRef.current.load()
 
-        audioRef.current = new Audio(audioSrc)
         setTrackProgress(audioRef.current.currentTime)
-
         if (isReady.current) {
             audioRef.current.play()
             setIsPlaying(true)
@@ -160,13 +174,13 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
     return (
         <div className="audio-player">
             <div className="track-info">
-                <img
+                {/* <img
                     className="artwork"
                     src={image}
                     alt={`track artwork for ${title} by ${artist}`}
-                />
-                <h2 className="title">{title}</h2>
-                <h3 className="artist">{artist}</h3>
+                /> */}
+                <h2 className="title">{songInfo.title}</h2>
+                <h3 className="artist">{songInfo.artist}</h3>
                 <AudioControls
                     isPlaying={isPlaying}
                     onPrevClick={toPrevTrack}
@@ -226,7 +240,7 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                 </Stack>
                 <Backdrop
                     trackIndex={trackIndex}
-                    activeColor={color}
+                    // activeColor={color}
                     isPlaying={isPlaying}
                 />
             </div>
