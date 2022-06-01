@@ -60,17 +60,17 @@ const DashCarousel = () => {
         }
         addedListener = true
     }
-    window.onload()
 
     if (currentEvent !== undefined) {
         for (var i = 0, len = audioList.length; i < len; i++) {
-            if (audioList[i].src != currentEvent.src) {
+            if (audioList[i].src !== currentEvent.src) {
                 audioList[i].pause()
             }
         }
     }
 
     useEffect(() => {
+        window.onload()
         if (audioOne != undefined) {
             // document.activeElement.parentNode.parentNode.parentNode.parentNode.addEventListener(
             //     "click",
