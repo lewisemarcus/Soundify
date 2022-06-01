@@ -19,12 +19,24 @@ const DashAudio = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
+    getAudioOne,
+    getAudioTwo,
+    getAudioThree,
+    getIsPlaying,
 }) => {
+    shuffleArray(tracks)
+    let songTitle, songFilename, songYear, songGenre, songId, songLink
+    const audioRef = useRef(new Audio(songLink))
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [genreBool, setGenreBool] = useState(false)
+    const [audioOne, setAudioOne] = useState(audioRef.current)
+    const [audioTwo, setAudioTwo] = useState(audioRef.current)
+    const [audioThree, setAudioThree] = useState(audioRef.current)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [dashOne, setDashOne] = useState("")
+
     const [volume, setVolume] = useState(0.2)
 
     function shuffleArray(array) {
@@ -36,17 +48,9 @@ const DashAudio = ({
         }
         return array
     }
-    shuffleArray(tracks)
+
     const originalData = [...songData]
 
-    let songTitle, songFilename, songYear, songGenre, songId, songLink
-
-    // Destructure for conciseness
-
-    // const { title, artist, color, image, audioSrc } = tracks[trackIndex];
-    // const [audioRef.current, setMusicLink] = useState(new Audio(link))
-    // Refs
-    const audioRef = useRef(new Audio(songLink))
     const intervalRef = useRef()
     audioRef.current.volume = volume
     const isReady = useRef(false)
@@ -85,11 +89,24 @@ const DashAudio = ({
         // If not already playing, start
         if (!isPlaying) {
             setIsPlaying(false)
+            getIsPlaying(false)
         }
         startTimer()
     }
 
     const toPrevTrack = () => {
+        if (dashOne === "dashOne") {
+            setAudioOne(audioRef.current)
+            getAudioOne(audioOne)
+        }
+        if (dashOne === "dashTwo") {
+            setAudioTwo(audioRef.current)
+            getAudioTwo(audioTwo)
+        }
+        if (dashOne === "dashThree") {
+            setAudioThree(audioRef.current)
+            getAudioThree(audioThree)
+        }
         setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
@@ -108,6 +125,18 @@ const DashAudio = ({
 
     const toNextTrack = () => {
         setGenreBool(true)
+        if (dashOne === "dashOne") {
+            setAudioOne(audioRef.current)
+            getAudioOne(audioOne)
+        }
+        if (dashOne === "dashTwo") {
+            setAudioTwo(audioRef.current)
+            getAudioTwo(audioTwo)
+        }
+        if (dashOne === "dashThree") {
+            setAudioThree(audioRef.current)
+            getAudioThree(audioThree)
+        }
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
                 setTrackIndex(trackIndex + 1)
@@ -133,22 +162,54 @@ const DashAudio = ({
         }
     }
 
+    useEffect(() => {
+        if (audioRef.current.paused) setIsPlaying(false)
+    })
+    useEffect(() => {
+        setAudioOne(audioRef.current)
+        if (getAudioOne) getAudioOne(audioOne)
+
+        setAudioTwo(audioRef.current)
+        if (getAudioTwo) getAudioTwo(audioTwo)
+
+        setAudioThree(audioRef.current)
+        if (getAudioThree) getAudioThree(audioThree)
+    })
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
+        if (dashOne === "dashOne") {
+            setAudioOne(audioRef.current)
+            getAudioOne(audioOne)
+        }
+        if (dashOne === "dashTwo") {
+            setAudioTwo(audioRef.current)
+            getAudioTwo(audioTwo)
+        }
+        if (dashOne === "dashThree") {
+            setAudioThree(audioRef.current)
+            getAudioThree(audioThree)
+        }
+
         if (isPlaying) {
             audioRef.current.play()
             startTimer()
             setIsPlaying(true)
+            getIsPlaying(true)
         } else {
             audioRef.current.pause()
             setIsPlaying(false)
+            getIsPlaying(false)
         }
     }, [isPlaying])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
-        if (genreClickCount > prevClickCount) setIsPlaying(false)
+        if (genreClickCount > prevClickCount) {
+            getIsPlaying(false)
+            setIsPlaying(false)
+        }
         if (clickedGenre === "") {
+            // Destructure for conciseness
             const { title, filename, year, genre, _id, link } =
                 tracks[trackIndex]
             songTitle = title
@@ -162,6 +223,7 @@ const DashAudio = ({
             if (songData[trackIndex] !== undefined) {
                 setGenreBool(false)
                 shuffleArray(songData)
+                // Destructure for conciseness
                 const { title, filename, year, genre, _id, link } =
                     songData[trackIndex]
                 songTitle = title
@@ -182,6 +244,7 @@ const DashAudio = ({
         if (isReady.current && genreBool) {
             setGenreBool(false)
             audioRef.current.play()
+            getIsPlaying(true)
             setIsPlaying(true)
             startTimer()
         } else {
@@ -199,61 +262,52 @@ const DashAudio = ({
     }, [])
 
     let h,
-    m,
-    s,
-    hDisplay,
-    mDisplay,
-    sDisplay,
-    ch,
-    cm,
-    cs,
-    chDisplay,
-    cmDisplay,
-    csDisplay
+        m,
+        s,
+        hDisplay,
+        mDisplay,
+        sDisplay,
+        ch,
+        cm,
+        cs,
+        chDisplay,
+        cmDisplay,
+        csDisplay
 
-if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+    if (audioRef.current.currentTime === undefined)
+        audioRef.current.currentTime = 0
 
-ch = Math.floor(audioRef.current.currentTime / 3600)
-cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+    ch = Math.floor(audioRef.current.currentTime / 3600)
+    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
-chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
-csDisplay = cs < 10 ? "0" + cs : cs
+    chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+    csDisplay = cs < 10 ? "0" + cs : cs
 
-const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+    const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
+    h = Math.floor(audioRef.current.duration / 3600)
+    m = Math.floor((audioRef.current.duration % 3600) / 60)
+    s = Math.floor((audioRef.current.duration % 3600) % 60)
 
-h = Math.floor(audioRef.current.duration / 3600)
-m = Math.floor((audioRef.current.duration % 3600) / 60)
-s = Math.floor((audioRef.current.duration % 3600) % 60)
+    hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
 
-hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
-
-const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+    const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
     return (
         <div className="audio-play">
             <div className="track-information">
-                {/* <img
-          className="aw"
-          // for future album covers
-          // src={image}
-          alt={`track artwork for ${title} by ${filename}`}
-        /> */}{" "}
-
                 {songInfo.title.length > 16 ? (
                     <Marquee gradient={false} delay={1}>
-                        {/* <Link to={`/song/${songInfo._id}`}> */}
-                            <h2 className="songTitle">{songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-                        {/* </Link> */}
+                        <h2 className="songTitle">
+                            {songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </h2>
                     </Marquee>
                 ) : (
-                    // <Link to={`/song/${songInfo._id}`}>
-                        <h2 className="songTitle">{songInfo.title}</h2>
-                    // </Link>
+                    <h2 className="songTitle">{songInfo.title}</h2>
                 )}
                 <h3 className="songArtist">{songInfo.artist}</h3>
                 <br></br>
@@ -263,6 +317,7 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
                     onNextClick={toNextTrack}
+                    setDashClickOne={setDashOne}
                     onPlayPauseClick={setIsPlaying}
                 />
                 <input
@@ -271,7 +326,6 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                     step="1"
                     min="0"
                     max={duration ? duration : `${duration}`}
-                    // time={currentTime}
                     className="progress"
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
@@ -297,9 +351,7 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                         max={1}
                         min={0.01}
                         step={0.01}
-                        // value={volume}
                         sx={{
-                            // color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
                             "& .MuiSlider-track": {
                                 border: "none",
                             },
@@ -324,7 +376,7 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                     isPlaying={isPlaying}
                 />
                 <Link to={`/song/${songInfo._id}`}>
-                <button className="genre2">Go To Song</button>
+                    <button className="genre2">Go To Song</button>
                 </Link>
             </div>
         </div>
