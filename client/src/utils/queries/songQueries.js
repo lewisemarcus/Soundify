@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 
-export const GET_SONGS = gql`
+export const GET_SONGS = gql `
     query song($title: String!) {
         song(title: $title) {
             title
@@ -21,7 +21,7 @@ export const GET_SONGS = gql`
     }
 `
 
-export const GET_GENRES = gql`
+export const GET_GENRES = gql `
     query songs($genre: String!) {
         songByGenre(genre: $genre) {
             title
@@ -41,7 +41,7 @@ export const GET_GENRES = gql`
         }
     }
 `
-export const GET_SONG = gql`
+export const GET_SONG = gql `
     query songById($songId: ID!) {
         songById(_id: $songId) {
             title
@@ -61,7 +61,7 @@ export const GET_SONG = gql`
         }
     }
 `
-export const GET_USER_SONGS = gql`
+export const GET_USER_SONGS = gql `
     query userSongs($username: String!) {
         userSongs(username: $username) {
             title
@@ -78,6 +78,27 @@ export const GET_USER_SONGS = gql`
             filename
             _id
             username
+        }
+    }
+`
+export const GET_USER_PLAYLIST = gql `
+    query userSongs($username: String!) {
+        userSongs(username: $username) {
+            title
+            genre
+            link
+            artist
+            uploaded
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
+            filename
+            _id
+            username
+            playlist
         }
     }
 `
