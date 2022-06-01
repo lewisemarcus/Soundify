@@ -1,3 +1,4 @@
+
 import { Row, Col } from "antd"
 import { useLazyQuery } from "@apollo/client"
 import { GET_SONGS, GET_GENRES } from "../../utils/queries/songQueries"
@@ -73,17 +74,19 @@ const DashCarousel = () => {
         window.onload()
     }, [isPlaying])
 
-    let songListFromGenre = []
 
-    if (loading) return <p>Loading ...</p>
+  let songListFromGenre = [];
 
-    if (error) return `Error! ${error}`
+  if (loading) return <p>Loading ...</p>;
 
-    const onChange = (event) => {
-        const { value } = event.target
-        setSearchBar(value)
-        console.log(searchBar)
-    }
+  if (error) return `Error! ${error}`;
+
+  const onChange = (event) => {
+    const { value } = event.target;
+    setSearchBar(value);
+    console.log(searchBar);
+  };
+
 
     const handleGenreClick = async (genre) => {
         let { data } = await songByGenre({ variables: { genre: genre } })
@@ -104,7 +107,9 @@ const DashCarousel = () => {
         "International",
     ]
 
-    const username = localStorage.getItem("username")
+
+  const username = localStorage.getItem("username");
+
 
     return (
         <div className="main-container">
@@ -185,4 +190,4 @@ const DashCarousel = () => {
     )
 }
 
-export default DashCarousel
+export default DashCarousel;
