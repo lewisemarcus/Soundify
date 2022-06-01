@@ -10,6 +10,7 @@ const DashAudioControls = ({
     onPrevClick,
     onNextClick,
     genreBool,
+    setDashClickOne,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -24,7 +25,25 @@ const DashAudioControls = ({
             <button
                 type="button"
                 className="pause-btn"
-                onClick={() => onPlayPauseClick(false)}
+                onClick={(event) => {
+                    let dashClicked
+                    if (
+                        event.target.parentNode.parentNode.parentNode.parentNode
+                            .parentNode.attributes.name != undefined
+                    )
+                        dashClicked =
+                            event.target.parentNode.parentNode.parentNode
+                                .parentNode.parentNode.attributes.name.nodeValue
+                    if (dashClicked === "dashOne") {
+                        setDashClickOne(dashClicked)
+                    } else if (dashClicked === "dashTwo") {
+                        setDashClickOne(dashClicked)
+                    } else if (dashClicked === "dashThree") {
+                        setDashClickOne(dashClicked)
+                    }
+
+                    onPlayPauseClick(false)
+                }}
                 aria-label="Pause"
             >
                 <Pause />
@@ -33,7 +52,24 @@ const DashAudioControls = ({
             <button
                 type="button"
                 className="play-btn"
-                onClick={() => onPlayPauseClick(true)}
+                onClick={(event) => {
+                    let dashClicked
+                    if (
+                        event.target.parentNode.parentNode.parentNode.parentNode
+                            .parentNode.attributes.name != undefined
+                    )
+                        dashClicked =
+                            event.target.parentNode.parentNode.parentNode
+                                .parentNode.parentNode.attributes.name.nodeValue
+                    if (dashClicked === "dashOne") {
+                        setDashClickOne("dashOne")
+                    } else if (dashClicked === "dashTwo") {
+                        setDashClickOne("dashTwo")
+                    } else if (dashClicked === "dashThree") {
+                        setDashClickOne("dashThree")
+                    }
+                    onPlayPauseClick(true)
+                }}
                 aria-label="Play"
             >
                 <Play />
