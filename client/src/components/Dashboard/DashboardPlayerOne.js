@@ -41,7 +41,7 @@ const DashboardPlayerOne = ({
     return isLoading ? (
         "loading"
     ) : (
-        <div className="DashPlayer">
+        <div className="DashPlayer" id="one">
             <DashAudioOne
                 setCurrent={setCurrent}
                 getOne={getOne}
