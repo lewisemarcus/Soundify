@@ -76,6 +76,7 @@ class LoadMoreList extends React.Component {
         return (
             <List
                 style={{
+                    height: 100,
                     display: "flex",
                     flexWrap: "wrap",
                     flexDirection: "column",
@@ -84,7 +85,7 @@ class LoadMoreList extends React.Component {
                 loading={initLoading}
                 itemLayout="horizontal"
                 loadMore={loadMore}
-                dataSource={list}
+                dataSource={this.props.comments}
                 renderItem={(item) => (
                     <List.Item
                         style={{
@@ -115,7 +116,6 @@ class LoadMoreList extends React.Component {
                                         {item.name.last}
                                     </a>
                                 }
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                             />
                             <div>content</div>
                         </Skeleton>

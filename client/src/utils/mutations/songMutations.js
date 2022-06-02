@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export const ADD_COMMENT = gql`
-    mutation addComment($songId: ID!, $commentInput: CommentInput!) {
-        addComment(title: $title) {
+    mutation addComment($songId: ID!, $commentText: String!) {
+        addComment(songId: $songId, commentText: $commentText) {
             title
             genre
             link
