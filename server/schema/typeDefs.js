@@ -76,36 +76,6 @@ export default gql`
         loginUser(loginInput: LoginInput): User
         removeSong(songId: ID!): Song
         removeComment(songId: ID!, commentId: ID!): Song
-        addComment(songId: ID!, token: String!, commentText: String!): Song
+        addComment(songId: ID!, commentText: String!): Song
     }
 `
-
-// module.exports = gql`
-//     type User {
-//         username: String
-//         email: String
-//         password: String
-//         token: String
-//     }
-
-//     input RegisterInput {
-//         username: String
-//         email: String
-//         password: String
-//         confirmPassword: String
-//     }
-
-//     input LoginInput {
-//         email: String
-//         password: String
-//     }
-
-//     type Query {
-//         user(id: ID!): User
-//     }
-
-//     type Mutation {
-//         registerUser(registerInput: RegisterInput): User
-//         loginUser(loginInput: LoginInput): User
-//     }
-// `

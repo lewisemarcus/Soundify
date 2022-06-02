@@ -23,7 +23,6 @@ export function authMiddleware({ req }) {
             async function (err, decoded) {
                 if (err) console.log(err)
                 else req.user = decoded
-                console.log(decoded)
             },
         )
     } catch {

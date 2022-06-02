@@ -38,8 +38,7 @@ const SongDetails = () => {
         event.preventDefault()
 
         try {
-            console.log(commentText)
-            const { data } = await addComment({
+            await addComment({
                 variables: {
                     songId: songId,
                     token: localStorage.getItem("token"),
@@ -206,6 +205,7 @@ const SongDetails = () => {
 
                     <CommentSection
                         comments={querySong.comments}
+                        songId={songId}
                         style={{ width: "75%" }}
                     />
                     <div
