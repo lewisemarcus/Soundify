@@ -1,4 +1,4 @@
-// import "./styles/DashResults.css";
+import "./styles/DashResults.css";
 import { useEffect } from "react";
 
 const DashResults = ({ dashSearchResults }) => {
@@ -8,12 +8,11 @@ const DashResults = ({ dashSearchResults }) => {
 
   return (
     <div className="searchResults">
-      <div className="siDetails">
-        <div className="siRating">
+        <div className="subResults">
           {dashSearchResults.map((song, index) => {
             return (
-              <div key={index}>
-                <button>
+              <div className="resultsCard" key={index}>
+                <button id="resultsBtn">
                 <h1>Title: {song.title}</h1>
                 <p>Artist: {song.artist}</p>
                 <p>Genre: {song.genre}</p>
@@ -27,7 +26,7 @@ const DashResults = ({ dashSearchResults }) => {
             <span className="siTaxOp">Login to listen</span>
             <button className="siCheckButton">Listen Now</button>
           </div> */}
-      </div>
+      
     </div>
   );
 };
