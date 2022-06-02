@@ -117,7 +117,7 @@ const resolvers = {
                 )
             }
         },
-        addComment: async (parent, { songId, commentText }, context) => {
+        addComment: async (parent, { songId, commentText, token }, context) => {
             if (context.user) {
                 return Song.findOneAndUpdate(
                     { _id: songId },

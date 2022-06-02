@@ -33,8 +33,9 @@ const SongDetails = () => {
         try {
             const { data } = await addComment({
                 variables: {
-                    songId,
-                    commentText,
+                    songId: songId,
+                    token: localStorage.getItem("token"),
+                    commentText: commentText,
                     commentAuthor: username,
                 },
             })
@@ -189,12 +190,14 @@ const SongDetails = () => {
                         }}
                     >
                         <input
+                            name="commentText"
                             value={commentText}
                             onChange={getCommentText}
                             style={{ padding: 10, width: "80%" }}
                             placeholder="Add a comment..."
                         ></input>
                         <button
+                            onClick={addCommentHandler}
                             style={{
                                 borderTop: "1px solid #888888",
                                 borderBottom: "1px solid #888888",
