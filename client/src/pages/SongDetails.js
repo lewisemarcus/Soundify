@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react"
 import { List, Typography, Divider } from "antd"
 import "../components/styles/Slider.css"
-import { useParams } from "react-router-dom"
-import { GET_SONG } from "../utils/queries/songQueries"
+import { Link, useParams } from "react-router-dom"
+import { GET_SONG, GET_GENRES } from "../utils/queries/songQueries"
 import { useQuery, useMutation } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
 import { ADD_COMMENT } from "../utils/mutations/songMutations"
 import shakeygraves from "../assets/shakeygraves.jpg"
-import LoadMoreList from "../components/CommentSection"
+import CommentSection from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
-
-const myData = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
+import "../components/styles/CommentSection.css"
+import shuffleArray from "../utils/helpers/shuffleArray"
 
 const SongDetails = () => {
     const username = localStorage.getItem("username")
@@ -19,18 +19,26 @@ const SongDetails = () => {
     const { loading, data } = useQuery(GET_SONG, {
         variables: { songId: songId },
     })
+    const recSongs = []
+    const [list, setList] = useState([])
     const [commentText, setCommentText] = useState("")
     const [characterCount, setCharacterCount] = useState(0)
     const querySong = data?.songById || {}
+    const { loading: recLoading, data: recdata } = useQuery(GET_GENRES, {
+        variables: { genre: querySong.genre },
+    })
+    const recommended = recdata?.songByGenre || []
+    const recList = Object.values(recommended)
+
     const audio = useRef(null)
     const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
-
     const addCommentHandler = async (event) => {
         event.preventDefault()
 
         try {
+            console.log(commentText)
             const { data } = await addComment({
                 variables: {
                     songId: songId,
@@ -54,7 +62,24 @@ const SongDetails = () => {
             setCharacterCount(value.length)
         }
     }
-
+    useEffect(() => {
+        if (recList.length != 0) {
+            shuffleArray(recList)
+            let count = 0
+            let top = 5
+            while (count < top) {
+                if (querySong.title !== recList[count].title) {
+                    console.log(recSongs)
+                    recSongs.push(recList[count])
+                    count++
+                } else {
+                    count++
+                    top++
+                }
+            }
+            setList(recSongs)
+        }
+    }, [recList.length != 0])
     useEffect(() => {
         window.addEventListener("resize", function () {
             setWidth(window.innerWidth * (1075 / 1280))
@@ -179,7 +204,7 @@ const SongDetails = () => {
                         </div>
                     </div>
 
-                    <LoadMoreList
+                    <CommentSection
                         comments={querySong.comments}
                         style={{ width: "75%" }}
                     />
@@ -193,7 +218,7 @@ const SongDetails = () => {
                             name="commentText"
                             value={commentText}
                             onChange={getCommentText}
-                            style={{ padding: 10, width: "80%" }}
+                            style={{ padding: 10, width: "85%" }}
                             placeholder="Add a comment..."
                         ></input>
                         <button
@@ -202,7 +227,7 @@ const SongDetails = () => {
                                 borderTop: "1px solid #888888",
                                 borderBottom: "1px solid #888888",
                                 backgroundColor: "#FFFFFF",
-                                width: "20%",
+                                width: "15%",
                                 textAlign: "center",
                             }}
                         >
@@ -227,11 +252,13 @@ const SongDetails = () => {
                         }
                         footer={<div>Footer</div>}
                         bordered
-                        dataSource={myData}
+                        dataSource={list}
                         renderItem={(item) => (
                             <List.Item>
-                                <Typography.Text mark>[ITEM]</Typography.Text>
-                                {item}
+                                <Link to={`/song/${item._id}`}>
+                                    <Typography.Text mark>LINK</Typography.Text>
+                                </Link>{" "}
+                                {item.title} by {item.artist}
                             </List.Item>
                         )}
                     />

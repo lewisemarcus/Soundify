@@ -1,129 +1,70 @@
-import React from "react"
-import "antd/dist/antd.css"
-import "./styles/CommentSection.css"
-import { List, Avatar, Button, Skeleton } from "antd"
+import React, { useState, useEffect } from "react"
+import { List, Avatar, Skeleton, Divider } from "antd"
+import InfiniteScroll from "react-infinite-scroll-component"
 
-const count = 3
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`
+const CommentSection = ({ comments }) => {
+    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState([])
 
-class LoadMoreList extends React.Component {
-    state = {
-        initLoading: true,
-        loading: false,
-        data: [],
-        list: [],
+    const loadMoreData = () => {
+        if (loading) {
+            return
+        }
+
+        setLoading(true)
+        //TODO: create a function to load more data once you reach bottom of page
+        setData([...comments])
+        setLoading(false)
     }
 
-    componentDidMount() {
-        fetch(fakeDataUrl)
-            .then((res) => res.json())
-            .then((res) => {
-                this.setState({
-                    initLoading: false,
-                    data: res.results,
-                    list: res.results,
-                })
-            })
-    }
-
-    onLoadMore = () => {
-        this.setState({
-            loading: true,
-            list: this.state.data.concat(
-                [...new Array(count)].map(() => ({
-                    loading: true,
-                    name: {},
-                    picture: {},
-                })),
-            ),
-        })
-        fetch(fakeDataUrl)
-            .then((res) => res.json())
-            .then((res) => {
-                const data = this.state.data.concat(res.results)
-                this.setState(
-                    {
-                        data,
-                        list: data,
-                        loading: false,
-                    },
-                    () => {
-                        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-                        // In real scene, you can using public method of react-virtualized:
-                        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-                        window.dispatchEvent(new Event("resize"))
-                    },
-                )
-            })
-    }
-
-    render() {
-        const { initLoading, loading, list } = this.state
-        const loadMore =
-            !initLoading && !loading ? (
-                <div
-                    style={{
-                        textAlign: "center",
-                        marginTop: 12,
-                        height: 32,
-                        lineHeight: "32px",
-                    }}
-                >
-                    <Button onClick={this.onLoadMore}>loading more</Button>
-                </div>
-            ) : null
-
-        return (
-            <List
-                style={{
-                    height: 100,
-                    display: "flex",
-                    flexWrap: "wrap",
-                    flexDirection: "column",
-                }}
-                className="demo-loadmore-list"
-                loading={initLoading}
-                itemLayout="horizontal"
-                loadMore={loadMore}
-                dataSource={this.props.comments}
-                renderItem={(item) => (
-                    <List.Item
-                        style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            flexDirection: "row",
+    useEffect(() => {
+        loadMoreData()
+    }, [comments.length])
+    return (
+        <div
+            id="scrollableDiv"
+            style={{
+                height: 400,
+                overflow: "auto",
+                padding: "0 16px",
+                border: "1px solid rgba(140, 140, 140, 0.35)",
+            }}
+        >
+            <InfiniteScroll
+                dataLength={data.length}
+                next={loadMoreData}
+                hasMore={data.length < 50}
+                loader={
+                    <Skeleton
+                        avatar
+                        paragraph={{
+                            rows: 1,
                         }}
-                        actions={[
-                            <a key="list-loadmore-edit">edit</a>,
-                            <a key="list-loadmore-more">more</a>,
-                        ]}
-                    >
-                        <Skeleton
-                            style={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                flexDirection: "row",
-                            }}
-                            avatar
-                            title={false}
-                            loading={item.loading}
-                            active
-                        >
+                        active
+                    />
+                }
+                endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                scrollableTarget="scrollableDiv"
+            >
+                <List
+                    dataSource={data}
+                    renderItem={(item) => (
+                        <List.Item>
                             <List.Item.Meta
-                                avatar={<Avatar src={item.picture.large} />}
+                                avatar={<Avatar src="" />}
                                 title={
                                     <a href="https://ant.design">
-                                        {item.name.last}
+                                        {item.commentAuthor}
                                     </a>
                                 }
                             />
-                            <div>content</div>
-                        </Skeleton>
-                    </List.Item>
-                )}
-            />
-        )
-    }
+                            <div>{item.commentText}</div>
+                        </List.Item>
+                    )}
+                />
+            </InfiniteScroll>
+        </div>
+    )
 }
 
-export default () => <LoadMoreList />
+export default CommentSection
