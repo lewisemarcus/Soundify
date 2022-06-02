@@ -105,10 +105,9 @@ const resolvers = {
                     },
                     function (err, token) {
                         if (err) console.error(err)
-                        console.log(token)
+                        else console.log(token)
                     },
                 )
-                console.log("thiiiii")
                 user.token = token
                 return {
                     id: user.id,
@@ -121,7 +120,7 @@ const resolvers = {
                 )
             }
         },
-        addComment: async (parent, { songId, commentText, token }, context) => {
+        addComment: async (parent, { songId, token, commentText }, context) => {
             if (context.user) {
                 return Song.findOneAndUpdate(
                     { _id: songId },
@@ -129,7 +128,7 @@ const resolvers = {
                         $addToSet: {
                             comments: {
                                 commentText,
-                                commentAuthor: context.user.username,
+                                commentAuthor: context.user.payload.username,
                             },
                         },
                     },
@@ -137,6 +136,23 @@ const resolvers = {
                         new: true,
                         runValidators: true,
                     },
+                )
+            }
+            throw new AuthenticationError("You need to be logged in!")
+        },
+        removeComment: async (parent, { songId, commentId }, context) => {
+            if (context.user) {
+                return Song.findOneAndUpdate(
+                    { _id: songId },
+                    {
+                        $pull: {
+                            comments: {
+                                _id: commentId,
+                                commentAuthor: context.user.payload.username,
+                            },
+                        },
+                    },
+                    { new: true },
                 )
             }
             throw new AuthenticationError("You need to be logged in!")
