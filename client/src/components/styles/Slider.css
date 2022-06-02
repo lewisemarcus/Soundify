@@ -14,25 +14,9 @@
     opacity: 1;
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
 .slider::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none;
     cursor: pointer;
     border-radius: 50%;
-}
-
-.slider::after {
-    content: "100";
-    color: white;
-    font-size: 2rem;
-    position: absolute;
-    bottom: 80%;
-    left: 26%;
 }
