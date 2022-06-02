@@ -30,7 +30,7 @@ const AudioPlayerContainer = () => {
     return isLoading ? (
         "loading"
     ) : (
-        <div className="DashPlayer">
+        <div className="PlaylistPlayer">
             <AudioPlayer
                 tracks={songs}
             />

@@ -1,5 +1,12 @@
 .Playlist-container {
     display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.PlaylistPlayer {
+    margin-top: 10px;
+    width: 25%;
 }
 
 .playlist-title {
