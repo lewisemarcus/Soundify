@@ -7,7 +7,7 @@ import DashboardPlayerThree from "./DashboardPlayerThree"
 import "./styles/Dashboard.css"
 import DashAudioControls from "./DashAudioControlOne"
 import DashboardPlayerTwo from "./DashboardPlayerTwo"
-
+let dashes = ["", "", ""]
 const DashCarousel = () => {
     const [searchBar, setSearchBar] = useState("")
     const [genreClickCount, setGenreClickCount] = useState(0)
@@ -24,8 +24,18 @@ const DashCarousel = () => {
     const [prevClickCount, setPrevClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
     let audioList = [audioOne, audioTwo, audioThree]
+
     const [genreSongList, setGenreSongList] = useState([])
-    let dashOne, dashTwo, dashThree
+    if (currentEvent !== undefined) {
+        let dash =
+            currentEvent.ownerDocument.activeElement.parentNode.parentNode
+                .parentNode.parentNode
+
+        if (dash.id === "one") dashes[0] = dash
+        else if (dash.id === "two") dashes[1] = dash
+        else dashes[2] = dash
+    }
+
     const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS)
     const [
         songByGenre,
@@ -38,8 +48,13 @@ const DashCarousel = () => {
 
     useEffect(() => {
         if (audioList[0] !== undefined) {
-            for (var i = 0, len = audioList.length; i < len; i++) {
-                if (audioList[i].src !== currentEvent.src) {
+            let dash =
+                currentEvent.ownerDocument.activeElement.parentNode.parentNode
+                    .parentNode.parentNode
+
+            for (let i in dashes) {
+                console.log(dash === dashes[i])
+                if (dashes[i] !== dash) {
                     audioList[i].pause()
                 }
             }
@@ -147,38 +162,6 @@ const DashCarousel = () => {
                         clickedGenre={clickedGenre}
                     />
                 </div>
-
-                {/* <DashboardPlayer
-                        name="dashOne"
-                        getIsPlaying={getIsPlaying}
-                        getAudioOne={getAudioOne}
-                        prevClickCount={prevClickCount}
-                        genreClickCount={genreClickCount}
-                        clickedGenre={clickedGenre}
-                        songData={genreSongList}
-                    />
-                </div>
-                <div className="main-items">
-                    <DashboardPlayer
-                        name="dashTwo"
-                        getIsPlaying={getIsPlaying}
-                        getAudioTwo={getAudioTwo}
-                        prevClickCount={prevClickCount}
-                        genreClickCount={genreClickCount}
-                        clickedGenre={clickedGenre}
-                        songData={genreSongList}
-                    />
-                </div>
-                <div className="main-items">
-                    <DashboardPlayer
-                        name="dashThree"
-                        getIsPlaying={getIsPlaying}
-                        getAudioThree={getAudioThree}
-                        prevClickCount={prevClickCount}
-                        genreClickCount={genreClickCount}
-                        clickedGenre={clickedGenre}
-                        songData={genreSongList}
-                    /> */}
             </div>
             <div></div>
 
