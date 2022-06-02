@@ -31,11 +31,10 @@ input[type="range"] {
 }
 
 .audio-player {
-    max-width: 350px;
-    padding: 24px;
+    max-width: 250px;
+    padding: 3px;
     border-radius: 20px;
-    box-shadow: 3px -1px 28px rgb(0 0 0 / 20%);
-    margin: auto 50px auto 50px;
+    margin: auto;
     color: var(--white);
     background: var(--active-color);
 }
@@ -52,6 +51,7 @@ input[type="range"] {
     text-align: center;
     z-index: 1;
     position: relative;
+    padding: 20px;
 }
 
 .title {
@@ -73,14 +73,14 @@ input[type="range"] {
 
 .audio-controls .prev svg,
 .audio-controls .next svg {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
 }
 
 .audio-controls .play svg,
 .audio-controls .pause svg {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
 }
 
 .audio-controls path {
@@ -88,14 +88,17 @@ input[type="range"] {
 }
 
 .color-backdrop {
-    background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
+    background: linear-gradient(217deg, #1a87e0, #22d4b1);
+    box-shadow: 0px 2px 8px 5px rgb(43 42 42);
+    /* box-shadow: 0px 2px 8px 5px rgb(255 253 253); */
+    border: 1px solid white;
     position: absolute;
-    top: -24px;
-    left: -24px;
-    right: -24px;
-    bottom: -31px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -20px;
     z-index: -1;
-    border-radius: 20px;
+    border-radius: 35px;
 }
 
 .color-backdrop.playing {

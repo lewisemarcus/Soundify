@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react"
-import "./styles/DashboardPlayer.css"
+// import "./styles/DashboardPlayer.css"
 import AudioPlayer from "./AudioPlayer"
 
-const AudioPlayerContainer = ({
-    songData,
-}) => {
+const AudioPlayerContainer = () => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -35,7 +33,6 @@ const AudioPlayerContainer = ({
         <div className="DashPlayer">
             <AudioPlayer
                 tracks={songs}
-                songData={songData}
             />
         </div>
     )

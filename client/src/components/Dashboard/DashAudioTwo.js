@@ -263,7 +263,7 @@ const DashAudioTwo = ({
 
     hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
     mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
+    sDisplay = s < 10 ? "0" + s : s
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
