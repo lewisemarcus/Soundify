@@ -4,8 +4,9 @@ const { verify } = pkg
 const expiration = "2h"
 
 export function authMiddleware({ req }) {
-    let token = req.body.token || req.query.token || req.headers.authorization
-
+    let token =
+        req.body.variables.token || req.query.token || req.headers.authorization
+    console.log(req.body.variables.token)
     if (req.headers.authorization) {
         token = token.split(" ").pop().trim()
     }
@@ -16,7 +17,7 @@ export function authMiddleware({ req }) {
 
     try {
         const { data } = verify(token, { maxAge: expiration })
-
+        console.log(data)
         req.user = data
     } catch {
         console.log("Invalid token")

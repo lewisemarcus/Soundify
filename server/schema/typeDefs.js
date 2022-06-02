@@ -76,7 +76,7 @@ export default gql`
         loginUser(loginInput: LoginInput): User
         removeSong(songId: ID!): Song
         removeComment(songId: ID!, commentId: ID!): Song
-        addComment(songId: ID!, commentText: String!): Song
+        addComment(songId: ID!, token: String!, commentText: String!): Song
     }
 `
 
