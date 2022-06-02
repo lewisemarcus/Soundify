@@ -105,10 +105,9 @@ const resolvers = {
                     },
                     function (err, token) {
                         if (err) console.error(err)
-                        else console.log(token)
+                        else user.token = token
                     },
                 )
-                user.token = token
                 return {
                     id: user.id,
                     ...user._doc,
@@ -120,7 +119,7 @@ const resolvers = {
                 )
             }
         },
-        addComment: async (parent, { songId, token, commentText }, context) => {
+        addComment: async (parent, { songId, commentText }, context) => {
             if (context.user) {
                 return Song.findOneAndUpdate(
                     { _id: songId },
@@ -141,6 +140,7 @@ const resolvers = {
             throw new AuthenticationError("You need to be logged in!")
         },
         removeComment: async (parent, { songId, commentId }, context) => {
+            console.log("hi")
             if (context.user) {
                 return Song.findOneAndUpdate(
                     { _id: songId },
@@ -148,7 +148,6 @@ const resolvers = {
                         $pull: {
                             comments: {
                                 _id: commentId,
-                                commentAuthor: context.user.payload.username,
                             },
                         },
                     },

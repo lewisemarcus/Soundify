@@ -16,8 +16,8 @@ export const DELETE_COMMENT = gql`
     }
 `
 export const ADD_COMMENT = gql`
-    mutation addComment($songId: ID!, $commentText: String!, $token: String!) {
-        addComment(songId: $songId, token: $token, commentText: $commentText) {
+    mutation addComment($songId: ID!, $commentText: String!) {
+        addComment(songId: $songId, commentText: $commentText) {
             title
             genre
             link

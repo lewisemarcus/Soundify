@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { List, Avatar, Skeleton, Divider } from "antd"
 import InfiniteScroll from "react-infinite-scroll-component"
+import { DELETE_COMMENT } from "../utils/mutations/commentMutations"
+import { useMutation } from "@apollo/client"
+import { FaTrashAlt } from "react-icons/fa"
 
-const CommentSection = ({ comments }) => {
+const CommentSection = ({ comments, songId }) => {
+    const username = localStorage.getItem("username")
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
-
+    const [removeComment, { error }] = useMutation(DELETE_COMMENT)
     const loadMoreData = () => {
         if (loading) {
             return
@@ -15,6 +19,23 @@ const CommentSection = ({ comments }) => {
         //TODO: create a function to load more data once you reach bottom of page
         setData([...comments])
         setLoading(false)
+    }
+
+    const removeCommentHandler = async (event) => {
+        event.preventDefault()
+        try {
+            console.log(songId)
+            await removeComment({
+                variables: {
+                    songId: songId,
+                    commentId: event.currentTarget.id,
+                },
+            })
+        } catch (err) {
+            //TODO: Add error handling.
+            console.log("hi")
+            console.error(err)
+        }
     }
 
     useEffect(() => {
@@ -49,8 +70,9 @@ const CommentSection = ({ comments }) => {
                 <List
                     dataSource={data}
                     renderItem={(item) => (
-                        <List.Item id={item._id}>
+                        <List.Item>
                             <List.Item.Meta
+                                style={{ width: "10%" }}
                                 avatar={<Avatar src="" />}
                                 title={
                                     <a href="https://ant.design">
@@ -58,7 +80,15 @@ const CommentSection = ({ comments }) => {
                                     </a>
                                 }
                             />
-                            <div>{item.commentText}</div>
+                            <div style={{ marginRight: 10, width: "70%" }}>
+                                {item.commentText}
+                            </div>
+                            <button
+                                id={item._id}
+                                onClick={removeCommentHandler}
+                            >
+                                <FaTrashAlt />
+                            </button>
                         </List.Item>
                     )}
                 />
