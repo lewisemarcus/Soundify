@@ -33,6 +33,12 @@ const DashAudioThree = ({
     const [isPlayingThree, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
     const [volume, setVolume] = useState(0.2)
+    const firstSong = new Audio(tracks[0].link)
+    let firstDur
+    firstSong.addEventListener("loadedmetadata", (event) => {
+        firstDur = event.target.duration
+    })
+    const [songDur, getSongDur] = useState(firstDur)
 
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -207,7 +213,9 @@ const DashAudioThree = ({
 
         audioRef.current.pause()
         audioRef.current = new Audio(songLink)
-
+        audioRef.current.addEventListener("loadedmetadata", (event) => {
+            getSongDur(event.target.duration)
+        })
         audioRef.current.load()
         if (getAudioThree !== undefined) {
             getAudioThree(audioRef.current)

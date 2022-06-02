@@ -33,6 +33,12 @@ const DashAudioOne = ({
     const [isPlayingOne, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
     const [volume, setVolume] = useState(0.2)
+    const firstSong = new Audio(tracks[0].link)
+    let firstDur
+    firstSong.addEventListener("loadedmetadata", (event) => {
+        firstDur = event.target.duration
+    })
+    const [songDur, getSongDur] = useState(firstDur)
 
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -193,12 +199,16 @@ const DashAudioOne = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
+
                 setSongInfo(songData[trackIndex])
             }
         }
 
         audioRef.current.pause()
         audioRef.current = new Audio(songLink)
+        audioRef.current.addEventListener("loadedmetadata", (event) => {
+            getSongDur(event.target.duration)
+        })
         audioRef.current.load()
         if (getAudioOne !== undefined) {
             getAudioOne(audioRef.current)
@@ -224,7 +234,6 @@ const DashAudioOne = ({
             clearInterval(intervalRef.current)
         }
     }, [])
-
     let h,
         m,
         s,
@@ -251,9 +260,9 @@ const DashAudioOne = ({
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
-    h = Math.floor(audioRef.current.duration / 3600)
-    m = Math.floor((audioRef.current.duration % 3600) / 60)
-    s = Math.floor((audioRef.current.duration % 3600) % 60)
+    h = Math.floor(songDur / 3600)
+    m = Math.floor((songDur % 3600) / 60)
+    s = Math.floor((songDur % 3600) % 60)
 
     hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
     mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
