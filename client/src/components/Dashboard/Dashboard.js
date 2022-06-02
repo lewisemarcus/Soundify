@@ -138,11 +138,12 @@ const DashCarousel = ({setDashSearchResults}) => {
                 ></input>
                 <button
                     onClick={ async () => {
+                      if (searchBar !== "" ) {
                       let { data } = await song({ variables: { title: searchBar } }) 
                       console.log(data)
                       let songList = Object.values(Object.values(data)[0])
                       if (setDashSearchResults !== undefined) setDashSearchResults(songList) 
-                      handleSearchClick(songList)}}
+                      handleSearchClick(songList)}}}
                       id="searchBtn"
                 >
                     Search
