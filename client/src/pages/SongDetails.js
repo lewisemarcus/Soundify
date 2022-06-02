@@ -3,8 +3,9 @@ import { List, Typography, Divider } from "antd"
 import "../components/styles/Slider.css"
 import { useParams } from "react-router-dom"
 import { GET_SONG } from "../utils/queries/songQueries"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
+import { ADD_COMMENT } from "../utils/mutations/songMutations"
 import shakeygraves from "../assets/shakeygraves.jpg"
 import LoadMoreList from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
@@ -12,15 +13,47 @@ import Waveform from "../components/Wavesurfer"
 const myData = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5"]
 
 const SongDetails = () => {
+    const username = localStorage.getItem("username")
+    const [addComment, { error }] = useMutation(ADD_COMMENT)
     const { songId } = useParams()
     const { loading, data } = useQuery(GET_SONG, {
         variables: { songId: songId },
     })
+    const [commentText, setCommentText] = useState("")
+    const [characterCount, setCharacterCount] = useState(0)
     const querySong = data?.songById || {}
     const audio = useRef(null)
     const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
     let isLoaded = useRef(loadedPlayer)
+
+    const addCommentHandler = async (event) => {
+        event.preventDefault()
+
+        try {
+            const { data } = await addComment({
+                variables: {
+                    songId,
+                    commentText,
+                    commentAuthor: username,
+                },
+            })
+            setCommentText("")
+        } catch (err) {
+            //TODO: Add error handling.
+            console.error(err)
+        }
+    }
+
+    const getCommentText = (event) => {
+        const { name, value } = event.target
+
+        if (name === "commentText" && value.length <= 240) {
+            setCommentText(value)
+            setCharacterCount(value.length)
+        }
+    }
+
     useEffect(() => {
         window.addEventListener("resize", function () {
             setWidth(window.innerWidth * (1075 / 1280))
@@ -48,7 +81,6 @@ const SongDetails = () => {
                     flexWrap: "wrap",
                     backgroundColor: "#434343",
                     width: "100%",
-                    height: "100%",
                 }}
             >
                 <div
@@ -137,7 +169,7 @@ const SongDetails = () => {
                         }}
                     >
                         <div style={{ margin: 10, marginLeft: 20 }}>
-                            Comments:
+                            Comments
                         </div>
                         <button style={{ margin: 10 }}>Share</button>
                         <button style={{ margin: 10 }}>Add to Playlist</button>
@@ -145,14 +177,34 @@ const SongDetails = () => {
                             Likes:
                         </div>
                     </div>
+
+                    <LoadMoreList
+                        comments={querySong.comments}
+                        style={{ width: "75%" }}
+                    />
                     <div
                         style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            maxHeight: 700,
                         }}
                     >
-                        <LoadMoreList style={{ width: "75%" }} />
+                        <input
+                            value={commentText}
+                            onChange={getCommentText}
+                            style={{ padding: 10, width: "80%" }}
+                            placeholder="Add a comment..."
+                        ></input>
+                        <button
+                            style={{
+                                borderTop: "1px solid #888888",
+                                borderBottom: "1px solid #888888",
+                                backgroundColor: "#FFFFFF",
+                                width: "20%",
+                                textAlign: "center",
+                            }}
+                        >
+                            COMMENT
+                        </button>
                     </div>
                 </div>
                 <div
@@ -164,7 +216,12 @@ const SongDetails = () => {
                 >
                     <Divider orientation="left">Recommended</Divider>
                     <List
-                        header={<div>Header</div>}
+                        header={
+                            <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                Here are some songs related to "
+                                {querySong.title}"
+                            </div>
+                        }
                         footer={<div>Footer</div>}
                         bordered
                         dataSource={myData}

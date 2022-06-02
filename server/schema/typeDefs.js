@@ -56,12 +56,6 @@ export default gql`
         username: String
     }
 
-    input CommentInput {
-        commentText: String
-        username: String
-        createdAt: String
-    }
-
     type Query {
         songByArtist(username: String!): [Song]
         users: [User]
@@ -82,7 +76,7 @@ export default gql`
         loginUser(loginInput: LoginInput): User
         removeSong(songId: ID!): Song
         removeComment(songId: ID!, commentId: ID!): Song
-        addComment(songId: ID!, CommentInput: CommentInput): Song
+        addComment(songId: ID!, commentText: String!): Song
     }
 `
 
