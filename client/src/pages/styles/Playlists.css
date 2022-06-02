@@ -13,7 +13,9 @@
     text-align: center;
 }
 
-.playlist-header {}
+.playlistCard {
+    color: white;
+}
 
 .item {
     width: 50%;
