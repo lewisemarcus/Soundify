@@ -10,17 +10,23 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import SongDetails from "./pages/SongDetails";
 import { AuthContext } from "./context/authContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Footer from "./components/Footer";
+import DashResults from "./components/Dashboard/DashResults";
+
 
 function App() {
+
+  const [dashSearchResults, setDashSearchResults] = useState()
+
   const { user } = useContext(AuthContext);
 
   return (
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage setDashSearchResults={setDashSearchResults}/>} />
+        <Route path="/DashResults" element={<DashResults dashSearchResults={dashSearchResults}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/upload" element={<AddSong />} /> */}
