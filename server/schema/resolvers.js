@@ -4,8 +4,7 @@ import Playlist from "../models/Playlists.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
 const { hash, compare } = pkg
-const secret = "mysecretssshhhhhhh"
-// import { sign } from "jsonwebtoken"
+const secret = "UNSAFE_STRING"
 import { default as jsonPkg } from "jsonwebtoken"
 import { AuthenticationError } from "apollo-server-express"
 const { sign } = jsonPkg
@@ -80,7 +79,7 @@ const resolvers = {
             })
 
             const token = sign(
-                { data: { user_id: newUser._id, email, username } },
+                { payload: { user_id: newUser._id, email, username } },
                 secret,
                 {
                     expiresIn: "2h",
@@ -93,17 +92,23 @@ const resolvers = {
                 ...res._doc,
             }
         },
-        loginUser: async (_, { loginInput: { email, password } }) => {
+        loginUser: async (parent, { loginInput: { email, password } }) => {
             const user = await User.findOne({ email })
-
-            if (user && (await compare(password, user.password))) {
+            const bool = user && (await compare(password, user.password))
+            if (bool) {
+                const payload = { user_id: user._id, email }
                 const token = sign(
-                    { data: { user_id: user._id, email, username } },
+                    payload,
                     secret,
                     {
                         expiresIn: "2h",
                     },
+                    function (err, token) {
+                        if (err) console.error(err)
+                        console.log(token)
+                    },
                 )
+                console.log("thiiiii")
                 user.token = token
                 return {
                     id: user.id,

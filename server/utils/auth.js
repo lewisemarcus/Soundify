@@ -1,6 +1,6 @@
 import pkg from "jsonwebtoken"
 const { verify } = pkg
-const secret = "mysecretssshhhhhhh"
+const secret = "UNSAFE_STRING"
 const expiration = "2h"
 
 export function authMiddleware({ req }) {
