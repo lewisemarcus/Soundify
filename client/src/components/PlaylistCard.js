@@ -9,11 +9,11 @@ const PlaylistCard = (props) => {
         <div className="content">
             <h2 className="playlist-title"> Playlist Name: {playlist}</h2> 
             <div className="headers" >
-                    <Row >
-                        <Col span={8}><h2 className="playlist-header">Title</h2></Col>
-                        <Col span={8}><h2 className="playlist-header">Artist</h2></Col>
-                        <Col span={8}><h2 className="playlist-header">Remove</h2></Col>
-                        </Row> 
+                <Row >
+                    <Col span={8}><h2 className="playlist-header">Title</h2></Col>
+                    <Col span={8}><h2 className="playlist-header">Artist</h2></Col>
+                    <Col span={8}><h2 className="playlist-header">Remove</h2></Col>
+                </Row> 
             </div>
             <Row>
                 <Col span={8}><a src={audioSrc}> <h2 className="playlist-header">{title}</h2></a></Col>

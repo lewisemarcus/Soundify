@@ -1,5 +1,26 @@
 import { gql } from "@apollo/client"
 
+export const qrySongs = gql `
+    query songs{
+        songs{
+            title
+            genre
+            link
+            artist
+            uploaded
+            comments {
+                _id
+                commentText
+                commentAuthor
+                createdAt
+            }
+            filename
+            _id
+            username
+        }
+    }
+`
+
 export const GET_SONGS = gql `
     query song($title: String!) {
         song(title: $title) {

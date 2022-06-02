@@ -81,7 +81,7 @@ const AudioPlayer = ({ tracks }) => {
     const onVolumeChange = (e) => {
         const { target } = e
         const newVolume = +target.value
-        console.log(newVolume)
+        // console.log(newVolume)
         if (newVolume) {
             setVolume(newVolume)
             audioRef.current.volume = newVolume || 0.01
@@ -123,49 +123,44 @@ const AudioPlayer = ({ tracks }) => {
     }, [])
 
     let h,
-    m,
-    s,
-    hDisplay,
-    mDisplay,
-    sDisplay,
-    ch,
-    cm,
-    cs,
-    chDisplay,
-    cmDisplay,
-    csDisplay
+        m,
+        s,
+        hDisplay,
+        mDisplay,
+        sDisplay,
+        ch,
+        cm,
+        cs,
+        chDisplay,
+        cmDisplay,
+        csDisplay
 
-if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+    if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
 
-ch = Math.floor(audioRef.current.currentTime / 3600)
-cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+    ch = Math.floor(audioRef.current.currentTime / 3600)
+    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
-chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
-csDisplay = cs < 10 ? "0" + cs : cs
+    chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+    csDisplay = cs < 10 ? "0" + cs : cs
 
-const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
+    const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
 
-h = Math.floor(audioRef.current.duration / 3600)
-m = Math.floor((audioRef.current.duration % 3600) / 60)
-s = Math.floor((audioRef.current.duration % 3600) % 60)
+    h = Math.floor(audioRef.current.duration / 3600)
+    m = Math.floor((audioRef.current.duration % 3600) / 60)
+    s = Math.floor((audioRef.current.duration % 3600) % 60)
 
-hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
+    hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+    sDisplay = s < 10 ? "0" + s : s
 
-const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+    const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
     return (
         <div className="audio-player">
             <div className="track-info">
-                {/* <img
-                    className="artwork"
-                    src={image}
-                    alt={`track artwork for ${title} by ${artist}`}
-                /> */}
                 <h2 className="title">{title}</h2>
                 <h3 className="artist">{artist}</h3>
                 <AudioControls
@@ -174,18 +169,18 @@ const endTime = `${hDisplay}${mDisplay}${sDisplay}`
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
                 />
-                <input
-                    type="range"
-                    value={trackProgress}
-                    max={duration ? duration : `${duration}`}
-                    // time={currentTime}
-                    className="progress"
-                    onChange={(e) => onScrub(e.target.value)}
-                    onMouseUp={onScrubEnd}
-                    onKeyUp={onScrubEnd}
-                    style={{ background: trackStyling }}
-                />
                 <div className="time">
+                    <input
+                        type="range"
+                        value={trackProgress}
+                        max={duration ? duration : `${duration}`}
+                        // time={currentTime}
+                        className="progress"
+                        onChange={(e) => onScrub(e.target.value)}
+                        onMouseUp={onScrubEnd}
+                        onKeyUp={onScrubEnd}
+                        style={{ background: trackStyling }}
+                    />
                     <div>{displayTime}</div>
                     <div>{endTime}</div>
                 </div>

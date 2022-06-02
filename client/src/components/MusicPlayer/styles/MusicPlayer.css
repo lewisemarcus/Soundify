@@ -31,10 +31,10 @@ input[type="range"] {
 }
 
 .audio-player {
-    max-width: 250px;
+    max-width: 350px;
     padding: 3px;
     border-radius: 20px;
-    margin: auto;
+    margin: 30px;
     color: var(--white);
     background: var(--active-color);
 }
@@ -52,6 +52,10 @@ input[type="range"] {
     z-index: 1;
     position: relative;
     padding: 20px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .title {
@@ -117,4 +121,5 @@ input[type="range"] {
 .time {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
