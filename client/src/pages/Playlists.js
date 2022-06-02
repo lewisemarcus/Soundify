@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
-import AudioPlayer from "../components/MusicPlayer/AudioPlayer";
-import tracks from "../components/MusicPlayer/tracks";
+import AudioPlayerContainer from "../components/MusicPlayer/AudioPlayerContainer";
 import { AiFillCloseCircle } from "react-icons/ai";
 import "./styles/Playlists.css"
 import { Row, Col } from "antd"
-import PlaylistCard from "../components/PlaylistCard"
-import { useLazyQuery } from "@apollo/client";
-import { GET_SONGS } from "../utils/queries/songQueries";
 
-const Playlists = ({ tracks, songData }) => {
-  const [song, { loading, error, data: myData }] = useLazyQuery(GET_SONGS);
-  // const [songInfo, setSongInfo] = useState(tracks[trackIndex])
-  // const [trackIndex, setTrackIndex] = useState(0)
-  // const originalData = [...songData]
-
+const Playlists = (props) => {
+  const {title, artist, filename, year, genre, _id, link} = props.tracks
+  
   return (
     <div style={{ height: '100vh' }}>
       <h1>Playlist created by user</h1>
       <div className="Playlist-container">
-        <AudioPlayer tracks={tracks} />
+        <AudioPlayerContainer />
         <div className="item">
           <div className="content">
             <h2 className="playlist-title">Playlist Name:</h2>
@@ -30,8 +22,8 @@ const Playlists = ({ tracks, songData }) => {
               </Row>
             </div>
             <Row>
-              <Col span={8}><h2 className="playlist-header">{song.title}</h2></Col>
-              <Col span={8}><h2 className="playlist-header">{song.artist}</h2></Col>
+              <Col span={8}><h2 className="playlist-header">{title}</h2></Col>
+              <Col span={8}><h2 className="playlist-header">{artist}</h2></Col>
               <Col span={8}><i className="trashcan" style={{ color: 'red', marginTop: '7px' }}><AiFillCloseCircle /></i></Col>
             </Row>
           </div>
