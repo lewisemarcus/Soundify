@@ -49,7 +49,7 @@ const CommentSection = ({ comments }) => {
                 <List
                     dataSource={data}
                     renderItem={(item) => (
-                        <List.Item>
+                        <List.Item id={item._id}>
                             <List.Item.Meta
                                 avatar={<Avatar src="" />}
                                 title={
