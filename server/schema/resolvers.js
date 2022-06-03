@@ -146,10 +146,11 @@ const resolvers = {
         },
         removeComment: async (
             parent,
-            { songId, commentId, token },
+            { songId, commentId, token, commentAuthor },
             context,
         ) => {
-            if (context.user) {
+            console.log(context.user)
+            if (context.user && context.user.username === commentAuthor) {
                 return Song.findOneAndUpdate(
                     { _id: mongoose.Types.ObjectId(songId) },
                     {

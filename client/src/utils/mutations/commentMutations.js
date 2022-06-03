@@ -5,8 +5,14 @@ export const DELETE_COMMENT = gql`
         $songId: String!
         $commentId: String!
         $token: String!
+        $commentAuthor: String!
     ) {
-        removeComment(songId: $songId, commentId: $commentId, token: $token) {
+        removeComment(
+            songId: $songId
+            commentId: $commentId
+            token: $token
+            commentAuthor: $commentAuthor
+        ) {
             title
             genre
             link

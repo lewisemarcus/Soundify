@@ -25,11 +25,13 @@ const CommentSection = ({ comments, songId }) => {
     const removeCommentHandler = async (event) => {
         event.preventDefault()
         try {
+            console.log(event.currentTarget.name, event.currentTarget.id)
             await removeComment({
                 variables: {
                     songId: songId,
                     commentId: event.currentTarget.id,
                     token: token,
+                    commentAuthor: event.currentTarget.name,
                 },
             })
         } catch (err) {
@@ -85,6 +87,7 @@ const CommentSection = ({ comments, songId }) => {
                             </div>
                             <button
                                 id={item._id}
+                                name={item.commentAuthor}
                                 onClick={removeCommentHandler}
                             >
                                 <FaTrashAlt />
