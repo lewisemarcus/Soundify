@@ -10,8 +10,7 @@ import DashboardPlayerTwo from "./DashboardPlayerTwo"
 
 import { useNavigate } from "react-router-dom"
 
-const DashCarousel = ({setDashSearchResults}) => {
-
+const DashCarousel = ({ setDashSearchResults }) => {
     let navigate = useNavigate()
 
     let dashes = ["", "", ""]
@@ -36,9 +35,9 @@ const DashCarousel = ({setDashSearchResults}) => {
 
     let dashOne, dashTwo, dashThree
     const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
-      onCompleted: (songData) => {
-          return songData
-      },
+        onCompleted: (songData) => {
+            return songData
+        },
     })
 
     if (currentEvent !== undefined) {
@@ -67,7 +66,6 @@ const DashCarousel = ({setDashSearchResults}) => {
                     .parentNode.parentNode
 
             for (let i in dashes) {
-                console.log(dash === dashes[i])
                 if (dashes[i] !== dash) {
                     audioList[i].pause()
                 }
@@ -113,8 +111,7 @@ const DashCarousel = ({setDashSearchResults}) => {
     ]
 
     const handleSearchClick = (songList) => {
-      navigate("./DashResults", {songList})
-
+        navigate("./DashResults", { songList })
     }
 
     const username = localStorage.getItem("username")
@@ -136,14 +133,19 @@ const DashCarousel = ({setDashSearchResults}) => {
                     onChange={onChange}
                 ></input>
                 <button
-                    onClick={ async () => {
-                      if (searchBar !== "" ) {
-                      let { data } = await song({ variables: { title: searchBar } }) 
-                      console.log(data)
-                      let songList = Object.values(Object.values(data)[0])
-                      if (setDashSearchResults !== undefined) setDashSearchResults(songList) 
-                      handleSearchClick(songList)}}}
-                      id="searchBtn"
+                    onClick={async () => {
+                        if (searchBar !== "") {
+                            let { data } = await song({
+                                variables: { title: searchBar },
+                            })
+
+                            let songList = Object.values(Object.values(data)[0])
+                            if (setDashSearchResults !== undefined)
+                                setDashSearchResults(songList)
+                            handleSearchClick(songList)
+                        }
+                    }}
+                    id="searchBtn"
                 >
                     Search
                 </button>
