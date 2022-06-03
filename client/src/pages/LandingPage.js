@@ -6,7 +6,7 @@ import { AuthContext } from "../context/authContext"
 
 const LandingPage = ({ setDashSearchResults }) => {
     const { user } = useContext(AuthContext)
-    console.log(user)
+
     return (
         <>
             {user ? (

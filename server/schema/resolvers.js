@@ -79,10 +79,16 @@ const resolvers = {
             })
 
             const token = sign(
-                { payload: { user_id: newUser._id, email, username } },
+                {
+                    payload: {
+                        user_id: newUser._id,
+                        email: email,
+                        username: username,
+                    },
+                },
                 secret,
                 {
-                    expiresIn: "2h",
+                    expiresIn: Math.floor(Date.now() / 1000) + 60 * 60,
                 },
             )
             newUser.token = token
@@ -96,22 +102,16 @@ const resolvers = {
             const user = await User.findOne({ email })
             const bool = user && (await compare(password, user.password))
             if (bool) {
-                const payload = { user_id: user._id, email }
-                sign(
-                    payload,
-                    secret,
-                    {
-                        expiresIn: "2h",
-                    },
-                    function (err, token) {
-                        if (err) console.error(err)
-                        else user.token = token
-                    },
-                )
-                return {
-                    id: user.id,
-                    ...user._doc,
+                const payload = {
+                    user_id: user._id,
+                    email: email,
+                    username: user.username,
                 }
+                const token = sign(payload, secret, {
+                    expiresIn: Math.floor(Date.now() / 1000) + 60 * 60,
+                })
+                user.token = token
+                return { id: user._id, ...user._doc }
             } else {
                 throw new ApolloError(
                     "Incorrect password",
@@ -119,15 +119,19 @@ const resolvers = {
                 )
             }
         },
-        addComment: async (parent, { songId, commentText }, context) => {
+        addComment: async (
+            parent,
+            { songId, commentText, commentAuthor, token },
+            context,
+        ) => {
             if (context.user) {
                 return Song.findOneAndUpdate(
                     { _id: songId },
                     {
                         $addToSet: {
                             comments: {
-                                commentText,
-                                commentAuthor: context.user.payload.username,
+                                commentText: commentText,
+                                commentAuthor: commentAuthor,
                             },
                         },
                     },
@@ -139,9 +143,14 @@ const resolvers = {
             }
             throw new AuthenticationError("You need to be logged in!")
         },
-        removeComment: async (parent, { songId, commentId }, context) => {
-            console.log("hi")
+        removeComment: async (
+            parent,
+            { songId, commentId, token },
+            context,
+        ) => {
+            console.log("hellooo")
             if (context.user) {
+                console.log(songId, context.user, commentId)
                 return Song.findOneAndUpdate(
                     { _id: songId },
                     {

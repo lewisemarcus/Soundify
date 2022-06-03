@@ -24,17 +24,17 @@ const CommentSection = ({ comments, songId }) => {
     const removeCommentHandler = async (event) => {
         event.preventDefault()
         try {
-            console.log(songId)
             await removeComment({
                 variables: {
                     songId: songId,
                     commentId: event.currentTarget.id,
+                    token: localStorage.getItem("token"),
                 },
             })
         } catch (err) {
             //TODO: Add error handling.
             console.log("hi")
-            console.error(err)
+            console.log(err)
         }
     }
 
