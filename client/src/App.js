@@ -29,6 +29,7 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            setCurrentSong={setCurrentSong}
                             setDashSearchResults={setDashSearchResults}
                         />
                     }
