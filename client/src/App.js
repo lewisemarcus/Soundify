@@ -17,6 +17,8 @@ import DashResults from "./components/Dashboard/DashResults";
 
 function App() {
 
+  const [oneSongClick, setOneSongClick] = useState(false)
+  const [currentSong, setCurrentSong] = useState()
   const [dashSearchResults, setDashSearchResults] = useState()
 
   const { user } = useContext(AuthContext);
@@ -26,7 +28,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage setDashSearchResults={setDashSearchResults}/>} />
-        <Route path="/DashResults" element={<DashResults dashSearchResults={dashSearchResults}/>} />
+        <Route path="/DashResults" element={<DashResults dashSearchResults={dashSearchResults} setCurrentSong={setCurrentSong}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/upload" element={<AddSong />} /> */}
@@ -41,7 +43,7 @@ function App() {
         />
       </Routes>
 
-      {user && <Footer />}
+      {user && <Footer  currentSong={currentSong} oneSongClick={oneSongClick} setOneSongClick={setOneSongClick}/>}
     </div>
   );
 }
