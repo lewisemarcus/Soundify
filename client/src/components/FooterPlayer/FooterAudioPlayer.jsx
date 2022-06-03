@@ -108,6 +108,7 @@ const AudioPlayer = ({
     // Handles cleanup and setup when changing tracks
 
     useEffect(() => {
+        console.log("click")
         console.log(audioR)
         audioRef.current.pause()
         if (audioR) audioRef = audioR
@@ -118,8 +119,8 @@ const AudioPlayer = ({
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
         if (audioR) audioRef = audioR
+        else if (currentSong) audioRef.current = new Audio(currentSong)
         else {
-            console.log("hi")
             audioRef.current = new Audio(audioSrc)
         }
         setTrackProgress(audioRef.current.currentTime)
@@ -132,7 +133,7 @@ const AudioPlayer = ({
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex])
+    }, [trackIndex, oneSongClick])
 
     useEffect(() => {
         // Pause and clean up on unmount
