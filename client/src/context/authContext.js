@@ -7,16 +7,13 @@ const initialState = {
 
 if (localStorage.getItem("token")) {
     const decodedToken = jwtDecode(localStorage.getItem("token"))
-    console.log(localStorage.getItem("token"))
     if (decodedToken.exp * 1000 < Date.now()) {
-        console.log("hi")
         localStorage.removeItem("token")
     } else {
         initialState.user = decodedToken
     }
     initialState.user = decodedToken
 }
-console.log(localStorage.getItem("token"))
 
 const AuthContext = createContext({
     user: null,
@@ -51,7 +48,6 @@ function AuthProvider(props) {
     const [state, dispatch] = useReducer(authReducer, initialState)
 
     const login = (userData) => {
-        console.log(userData.token)
         localStorage.setItem("token", userData.token)
         localStorage.setItem("username", userData.username)
         dispatch({
