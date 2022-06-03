@@ -1,17 +1,32 @@
 import { gql } from "@apollo/client"
 
 export const DELETE_COMMENT = gql`
-    mutation removeComment($songId: ID!, $commentId: ID!, $token: String!) {
-        removeComment(songId: $songId, commentId: $commentId, token: $token) {
-            _id
-            thoughtText
-            thoughtAuthor
-            createdAt
+    mutation removeComment(
+        $songId: String!
+        $commentId: String!
+        $token: String!
+        $commentAuthor: String!
+    ) {
+        removeComment(
+            songId: $songId
+            commentId: $commentId
+            token: $token
+            commentAuthor: $commentAuthor
+        ) {
+            title
+            genre
+            link
+            artist
+            uploaded
             comments {
                 _id
                 commentText
+                commentAuthor
                 createdAt
             }
+            filename
+            _id
+            username
         }
     }
 `

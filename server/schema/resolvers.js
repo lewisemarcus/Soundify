@@ -3,6 +3,7 @@ import Song from "../models/Songs.js"
 import Playlist from "../models/Playlists.js"
 import { ApolloError } from "apollo-server-errors"
 import pkg from "bcryptjs"
+import mongoose from "mongoose"
 const { hash, compare } = pkg
 const secret = "UNSAFE_STRING"
 import { default as jsonPkg } from "jsonwebtoken"
@@ -126,7 +127,7 @@ const resolvers = {
         ) => {
             if (context.user) {
                 return Song.findOneAndUpdate(
-                    { _id: songId },
+                    { _id: mongoose.Types.ObjectId(songId) },
                     {
                         $addToSet: {
                             comments: {
@@ -145,18 +146,17 @@ const resolvers = {
         },
         removeComment: async (
             parent,
-            { songId, commentId, token },
+            { songId, commentId, token, commentAuthor },
             context,
         ) => {
-            console.log("hellooo")
-            if (context.user) {
-                console.log(songId, context.user, commentId)
+            console.log(context.user)
+            if (context.user && context.user.username === commentAuthor) {
                 return Song.findOneAndUpdate(
-                    { _id: songId },
+                    { _id: mongoose.Types.ObjectId(songId) },
                     {
                         $pull: {
                             comments: {
-                                _id: commentId,
+                                _id: mongoose.Types.ObjectId(commentId),
                             },
                         },
                     },
