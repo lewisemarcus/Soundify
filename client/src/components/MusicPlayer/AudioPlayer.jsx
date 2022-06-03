@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
-const AudioPlayer = ({ tracks }) => {
+const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -100,7 +100,16 @@ const AudioPlayer = ({ tracks }) => {
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        console.log(playlistSong)
         audioRef.current.pause()
+        audioRef.current = new Audio(playlistSong)
+        audioRef.current.load()
+        audioRef.current.play()
+        setSelectedSong(false)
+    }, [selectedSong])
+
+    useEffect(() => {
+        if (!audioRef.current.paused) audioRef.current.pause()
         audioRef.current = new Audio(link)
 
         setTrackProgress(audioRef.current.currentTime)

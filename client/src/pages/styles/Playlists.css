@@ -10,11 +10,25 @@
 }
 
 .playlist-title {
+    color: white;
     text-align: center;
 }
 
-.playlistCard {
+.headers .ant-col,
+.playlistCard .ant-col {
+    margin-bottom: 10px;
+}
+
+.playlist-header {
     color: white;
+}
+
+.playlistTable {
+    display: block;
+    flex: 0 0 33.33333333%;
+    max-width: 33.33333333%;
+    position: relative;
+    min-height: 1px;
 }
 
 .item {
