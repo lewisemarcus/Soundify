@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client"
 import { qrySongs } from "../utils/queries/songQueries"
 
 const Playlists = () => {
-  
+
   const { loading, data } = useQuery(qrySongs)
   const [playlistSong, setPlaylistSong] = useState()
   const [selectedSong, setSelectedSong] = useState(false)
@@ -45,22 +45,19 @@ const Playlists = () => {
                 <Col span={8}><h2 className="playlist-header">Remove</h2></Col>
               </Row>
             </div>
-            <table className="playlistTable">
             {songs.map((song, index) => {
-            return (
-                  <tr>
-                    <button name={song.link} onClick={handleClick}><td span={8}><h2 className="playlist-header">{song.title}</h2></td></button>
-                    <td span={8}><h2 className="playlist-header">{song.artist}</h2></td>
-                    <td span={8}>
-                      <button id="removeBtn">
-                        <i className="trashcan" style={{ color: 'red', marginTop: '7px' }}><AiFillCloseCircle /></i>
-                      </button>
-                    </td>
-                  </tr>
-            );
-          })}
-          </table>
-            
+              return (
+                <Row>
+                  <button name={song.link} onClick={handleClick}><Col span={8}><h2 className="playlist-header">{song.title}</h2></Col></button>
+                  <Col span={8}><h2 className="playlist-header">{song.artist}</h2></Col>
+                  <Col span={8}>
+                    <button id="removeBtn">
+                      <i className="trashcan" style={{ color: 'red', marginTop: '7px' }}><AiFillCloseCircle /></i>
+                    </button>
+                  </Col>
+                </Row>
+              );
+            })}
           </div>
         </div>
       </div>

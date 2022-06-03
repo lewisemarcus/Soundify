@@ -13,7 +13,7 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) =>
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(0.2)
-
+    
     // Destructure for conciseness
     const { title, artist, filename, year, genre, _id, link } = tracks[trackIndex]
     // const { title, artist, color, image, audioSrc } = tracks[trackIndex]
@@ -106,6 +106,7 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) =>
         audioRef.current.load()
         audioRef.current.play()
         setSelectedSong(false)
+        console.log(audioRef.current.title)
     }, [selectedSong])
 
     useEffect(() => {
