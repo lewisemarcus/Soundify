@@ -10,7 +10,7 @@ import DashboardPlayerTwo from "./DashboardPlayerTwo"
 
 import { useNavigate } from "react-router-dom"
 
-const DashCarousel = ({ setDashSearchResults }) => {
+const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
     let navigate = useNavigate()
 
     let dashes = ["", "", ""]
@@ -68,6 +68,8 @@ const DashCarousel = ({ setDashSearchResults }) => {
             for (let i in dashes) {
                 if (dashes[i] !== dash) {
                     audioList[i].pause()
+                } else {
+                    setCurrentSong(audioList[i].src)
                 }
             }
         }

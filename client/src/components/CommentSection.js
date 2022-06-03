@@ -7,6 +7,7 @@ import { FaTrashAlt } from "react-icons/fa"
 
 const CommentSection = ({ comments, songId }) => {
     const username = localStorage.getItem("username")
+    const token = localStorage.getItem("token")
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
     const [removeComment, { error }] = useMutation(DELETE_COMMENT)
@@ -24,17 +25,18 @@ const CommentSection = ({ comments, songId }) => {
     const removeCommentHandler = async (event) => {
         event.preventDefault()
         try {
-            console.log(songId)
+            console.log(event.currentTarget.name, event.currentTarget.id)
             await removeComment({
                 variables: {
                     songId: songId,
                     commentId: event.currentTarget.id,
+                    token: token,
+                    commentAuthor: event.currentTarget.name,
                 },
             })
         } catch (err) {
             //TODO: Add error handling.
-            console.log("hi")
-            console.error(err)
+            console.log(err)
         }
     }
 
@@ -85,6 +87,7 @@ const CommentSection = ({ comments, songId }) => {
                             </div>
                             <button
                                 id={item._id}
+                                name={item.commentAuthor}
                                 onClick={removeCommentHandler}
                             >
                                 <FaTrashAlt />

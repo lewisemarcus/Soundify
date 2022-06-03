@@ -67,8 +67,8 @@ const SongDetails = () => {
             let count = 0
             let top = 5
             while (count < top) {
-                if (querySong.title !== recList[count].title) {
-                    console.log(recSongs)
+                if (recList[count] === undefined) count++
+                else if (querySong.title !== recList[count].title) {
                     recSongs.push(recList[count])
                     count++
                 } else {
