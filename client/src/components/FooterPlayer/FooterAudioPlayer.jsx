@@ -12,6 +12,7 @@ const AudioPlayer = ({
     currentSong,
     oneSongClick,
     setOneSongClick,
+    audioR,
 }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
@@ -24,7 +25,10 @@ const AudioPlayer = ({
     const { title, artist, audioSrc } = tracks[trackIndex]
 
     // Refs
-    const audioRef = useRef(new Audio(audioSrc))
+    let audioRef = useRef(new Audio(audioSrc))
+    if (audioR) audioRef = audioR
+    console.log(audioRef)
+    // else audioRef = useRef(new Audio(audioSrc))
     const intervalRef = useRef()
     audioRef.current.volume = volume
     const isReady = useRef(false)
@@ -104,18 +108,20 @@ const AudioPlayer = ({
     // Handles cleanup and setup when changing tracks
 
     useEffect(() => {
+        console.log(audioR)
         audioRef.current.pause()
-        audioRef.current = new Audio(currentSong)
+        if (audioR) audioRef = audioR
         audioRef.current.load()
-        audioRef.current.play()
         setOneSongClick(false)
     }, [oneSongClick, currentSong])
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
-
-        audioRef.current = new Audio(audioSrc)
-
+        if (audioR) audioRef = audioR
+        else {
+            console.log("hi")
+            audioRef.current = new Audio(audioSrc)
+        }
         setTrackProgress(audioRef.current.currentTime)
 
         if (isReady.current) {
