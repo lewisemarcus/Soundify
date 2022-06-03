@@ -4,14 +4,17 @@ import { Hero } from "../components"
 import Dashboard from "../components/Dashboard/Dashboard"
 import { AuthContext } from "../context/authContext"
 
-const LandingPage = ({ setDashSearchResults }) => {
+const LandingPage = ({ setDashSearchResults, setCurrentSong }) => {
     const { user } = useContext(AuthContext)
 
     return (
         <>
             {user ? (
                 <>
-                    <Dashboard setDashSearchResults={setDashSearchResults} />
+                    <Dashboard
+                        setCurrentSong={setCurrentSong}
+                        setDashSearchResults={setDashSearchResults}
+                    />
                 </>
             ) : (
                 <div className="landing-page-wrapper">

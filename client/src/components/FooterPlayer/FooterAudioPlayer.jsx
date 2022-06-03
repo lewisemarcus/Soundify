@@ -109,7 +109,7 @@ const AudioPlayer = ({
         audioRef.current.load()
         audioRef.current.play()
         setOneSongClick(false)
-    }, [oneSongClick])
+    }, [oneSongClick, currentSong])
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
