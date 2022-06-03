@@ -15,6 +15,7 @@ import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
+    const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [currentSong, setCurrentSong] = useState()
     const [dashSearchResults, setDashSearchResults] = useState()
@@ -51,7 +52,15 @@ function App() {
                     path="/songs"
                     element={user ? <SongList /> : <Navigate to="/" />}
                 />
-                <Route path="/song/:songId" element={<SongDetails />} />
+                <Route
+                    path="/song/:songId"
+                    element={
+                        <SongDetails
+                            setAudioR={setAudioR}
+                            setCurrentSong={setCurrentSong}
+                        />
+                    }
+                />
                 <Route
                     path="/playlists"
                     element={user ? <Playlists /> : <Navigate to="/" />}
@@ -60,6 +69,7 @@ function App() {
 
             {user && (
                 <Footer
+                    audioR={audioR}
                     currentSong={currentSong}
                     oneSongClick={oneSongClick}
                     setOneSongClick={setOneSongClick}
