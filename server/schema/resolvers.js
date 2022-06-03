@@ -97,7 +97,7 @@ const resolvers = {
             const bool = user && (await compare(password, user.password))
             if (bool) {
                 const payload = { user_id: user._id, email }
-                const token = sign(
+                sign(
                     payload,
                     secret,
                     {

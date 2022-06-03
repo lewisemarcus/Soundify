@@ -1,66 +1,76 @@
-import React, { useReducer, createContext } from "react";
-import jwtDecode from "jwt-decode";
+import React, { useReducer, createContext } from "react"
+import jwtDecode from "jwt-decode"
 
 const initialState = {
-  user: null,
-};
-
-if (localStorage.getItem("token")) {
-  const decodedToken = jwtDecode(localStorage.getItem("token"));
-
-  if (decodedToken.exp * 1000 < Date.now()) {
-    localStorage.removeItem("token");
-  } else {
-    initialState.user = decodedToken;
-  }
+    user: null,
 }
 
+if (localStorage.getItem("token")) {
+    const decodedToken = jwtDecode(localStorage.getItem("token"))
+    console.log(localStorage.getItem("token"))
+    if (decodedToken.exp * 1000 < Date.now()) {
+        console.log("hi")
+        localStorage.removeItem("token")
+    } else {
+        initialState.user = decodedToken
+    }
+    initialState.user = decodedToken
+}
+console.log(localStorage.getItem("token"))
+
 const AuthContext = createContext({
-  user: null,
-  login: (userData) => {},
-  logout: () => {},
-});
+    user: null,
+    login: (userData) => {
+        localStorage.setItem("token", userData.token)
+        window.location.assign("/")
+    },
+    logout: () => {
+        localStorage.removeItem("token")
+        window.location.reload()
+    },
+})
 
 function authReducer(state, action) {
-  switch (action.type) {
-    case "LOGIN":
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case "LOGOUT":
-      return {
-        ...state,
-        user: null,
-      };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case "LOGIN":
+            return {
+                ...state,
+                user: action.payload,
+            }
+        case "LOGOUT":
+            return {
+                ...state,
+                user: null,
+            }
+        default:
+            return state
+    }
 }
 
 function AuthProvider(props) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+    const [state, dispatch] = useReducer(authReducer, initialState)
 
-  const login = (userData) => {
-    localStorage.setItem("token", userData.token);
-    localStorage.setItem("username", userData.username);
-    dispatch({
-      type: "LOGIN",
-      payload: userData,
-    });
-  };
+    const login = (userData) => {
+        console.log(userData.token)
+        localStorage.setItem("token", userData.token)
+        localStorage.setItem("username", userData.username)
+        dispatch({
+            type: "LOGIN",
+            payload: userData,
+        })
+    }
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    dispatch({ type: "LOGOUT" });
-  };
+    const logout = () => {
+        localStorage.removeItem("token")
+        dispatch({ type: "LOGOUT" })
+    }
 
-  return (
-    <AuthContext.Provider
-      value={{ user: state.user, login, logout }}
-      {...props}
-    />
-  );
+    return (
+        <AuthContext.Provider
+            value={{ user: state.user, login, logout }}
+            {...props}
+        />
+    )
 }
 
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider }
