@@ -3,17 +3,20 @@
     display: grid;
     padding: 2rem 2rem 3rem;
     
-    background-color: black;
+    /* background-color: black; */
     /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;
     height: 75vh;
+    margin-bottom: 32px;
     
 }
 
 @media screen and (max-width: 1280px) {
     .searchResults {
         height: fit-content;
+        /* background-color: black; */
+        margin-bottom: 32px;
     }
 
 }
@@ -77,6 +80,10 @@
 }
 
 #resultsBtn h1 {
+    font-size: 18px;
+}
+
+#resultBtn p {
     font-size: 20px;
 }
 
