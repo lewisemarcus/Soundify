@@ -104,7 +104,6 @@ const AudioPlayer = ({
     // Handles cleanup and setup when changing tracks
 
     useEffect(() => {
-        console.log(currentSong)
         audioRef.current.pause()
         audioRef.current = new Audio(currentSong)
         audioRef.current.load()
@@ -114,7 +113,7 @@ const AudioPlayer = ({
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
-        console.log(oneSongClick)
+
         audioRef.current = new Audio(audioSrc)
 
         setTrackProgress(audioRef.current.currentTime)
