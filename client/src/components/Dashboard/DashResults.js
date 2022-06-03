@@ -1,14 +1,21 @@
 import "./styles/DashResults.css";
 import { useEffect } from "react";
 
-const DashResults = ({ dashSearchResults }) => {
-  useEffect(() => {
-    console.log(dashSearchResults);
-  });
+const DashResults = ({ dashSearchResults, setCurrentSong, setOneSongClick }) => {
+//   useEffect(() => {
+//     console.log(dashSearchResults);
+//   });
 
   const handleSearchClick = (event) => {
+
+    event.preventDefault();
     // event.currentTarget.name;
-    console.log(event.currentTarget.name)
+    
+    if (setOneSongClick !== undefined) {
+        console.log("Ricky Bobby")
+        setOneSongClick(true)
+        setCurrentSong(event.currentTarget.name)
+    }
   }
 
 
@@ -20,7 +27,7 @@ const DashResults = ({ dashSearchResults }) => {
           {dashSearchResults.map((song, index) => {
             return (
                 <>
-                <button className="resultsCard" id="resultsBtn" name={song._id} key={index} onClick={handleSearchClick}>
+                <button className="resultsCard" id="resultsBtn" name={song.link} key={index} onClick={handleSearchClick}>
                 <h1>Title: {song.title}</h1>
                 <p>Artist: {song.artist}</p>
                 <p>Genre: {song.genre}</p>

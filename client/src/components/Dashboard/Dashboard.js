@@ -91,7 +91,6 @@ const DashCarousel = ({setDashSearchResults}) => {
     const onChange = (event) => {
         const { value } = event.target
         setSearchBar(value)
-        console.log(searchBar)
     }
 
     const handleGenreClick = async (genre) => {
