@@ -38,12 +38,6 @@ const SongDetails = () => {
         event.preventDefault()
 
         try {
-            console.log(
-                songId,
-                localStorage.getItem("token"),
-                commentText,
-                username,
-            )
             await addComment({
                 variables: {
                     songId: songId,
@@ -75,7 +69,6 @@ const SongDetails = () => {
             while (count < top) {
                 if (recList[count] === undefined) count++
                 else if (querySong.title !== recList[count].title) {
-                    console.log(recSongs)
                     recSongs.push(recList[count])
                     count++
                 } else {
