@@ -20,19 +20,32 @@
 }
 
 .playlist-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ant-row {
+    justify-content: space-between;
+}
+
+.ant-row .ant-col-8 {
+    max-width: 100%;
+    margin-bottom: 10px;
+    padding-right: 20px;
+}
+
+.ant-row button {
+    display: contents;
+}
+
+.playlist-header {
     color: white;
 }
 
-.playlistTable {
-    display: block;
-    flex: 0 0 33.33333333%;
-    max-width: 33.33333333%;
-    position: relative;
-    min-height: 1px;
-}
-
 .item {
-    width: 50%;
+    width: 65%;
 }
 
 .item .content,
