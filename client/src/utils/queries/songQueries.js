@@ -103,8 +103,8 @@ export const GET_USER_SONGS = gql `
     }
 `
 export const GET_USER_PLAYLIST = gql `
-    query userSongs($username: String!) {
-        userSongs(username: $username) {
+    query userPlaylists($username: String!) {
+        userPlaylists(username: $username) {
             title
             genre
             link
@@ -119,7 +119,7 @@ export const GET_USER_PLAYLIST = gql `
             filename
             _id
             username
-            playlist
+            playlistname
         }
     }
 `
