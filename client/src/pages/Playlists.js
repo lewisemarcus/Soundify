@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client"
 import { qrySongs } from "../utils/queries/songQueries"
 
 const Playlists = () => {
-
+  const [active, setActive] = useState(false)
   const { loading, data } = useQuery(qrySongs)
   const [playlistSong, setPlaylistSong] = useState()
   const [selectedSong, setSelectedSong] = useState(false)
@@ -23,11 +23,21 @@ const Playlists = () => {
     if (setPlaylistSong !== undefined && selectedSong !== undefined) {
       setSelectedSong(true)
       setPlaylistSong(e.currentTarget.name)
+      let title = e.currentTarget.parentNode
+      let find = document.querySelectorAll('.active')
+      find.forEach((find) => {
+        console.log(title)
+        find.classList.remove('active')
+      })
+      title.classList.add("active")
     }
   }
 
   return (
     <div>
+      <aside className="plaaylistNames">
+        <h2>Playlists</h2>
+      </aside>
       <h1>Playlist created by user</h1>
       <div className="Playlist-container">
         <AudioPlayerContainer
@@ -47,8 +57,8 @@ const Playlists = () => {
             </div>
             {songs.map((song, index) => {
               return (
-                <Row>
-                  <button name={song.link} onClick={handleClick}><Col span={8}><h2 className="playlist-header">{song.title}</h2></Col></button>
+                <Row className={`song`}>
+                  <button name={song.link}  title={song.title} onClick={handleClick}><Col span={8}><h2 className="playlist-header">{song.title}</h2></Col></button>
                   <Col span={8}><h2 className="playlist-header">{song.artist}</h2></Col>
                   <Col span={8}>
                     <button id="removeBtn">

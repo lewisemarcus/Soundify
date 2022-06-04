@@ -38,14 +38,13 @@ let duration,
     cm,
     cs
 
-export default function Waveform({ song, audio }) {
+export default function Waveform({ song, audio, getPlaying }) {
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
     const volumeSlider = useRef(null)
     const time = useRef(null)
     const [playing, setPlay] = useState(false)
     const [volume, setVolume] = useState(0.5)
-
     // create new WaveSurfer instance
     // On component mount and when url changes
     useEffect(() => {
@@ -70,11 +69,11 @@ export default function Waveform({ song, audio }) {
                 m = Math.floor((duration % 3600) / 60)
                 s = Math.floor((duration % 3600) % 60)
 
-                hDisplay = h > 0 ? h + (h === 1 ? "h, " : "h, ") : ""
-                mDisplay = m > 0 ? m + (m === 1 ? "m, " : "m, ") : ""
-                sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : ""
+                hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+                mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "00:"
+                sDisplay = s < 10 ? "0" + s : s
 
-                time.current.innerHTML = ` 0s / ${hDisplay} ${mDisplay} ${sDisplay}`
+                time.current.innerHTML = `${hDisplay}${mDisplay}${sDisplay}`
             }
         })
 
@@ -85,11 +84,11 @@ export default function Waveform({ song, audio }) {
             cm = Math.floor((currentTime % 3600) / 60)
             cs = Math.floor((wavesurfer.current.getCurrentTime() % 3600) % 60)
 
-            chDisplay = ch > 0 ? ch + (ch === 1 ? "h, " : "h, ") : ""
-            cmDisplay = cm > 0 ? cm + (cm === 1 ? "m, " : "m, ") : ""
-            csDisplay = cs > 0 ? cs + (cs === 1 ? "s" : "s") : ""
+            chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+            cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
+            csDisplay = cs < 10 ? "0" + cs : cs
 
-            time.current.innerHTML = `${chDisplay} ${cmDisplay} ${csDisplay} / ${hDisplay} ${mDisplay} ${sDisplay}`
+            time.current.innerHTML = `${chDisplay}${cmDisplay}${csDisplay} / ${hDisplay}${mDisplay}${sDisplay}`
         })
 
         // Removes events, elements and disconnects Web Audio nodes.
@@ -99,6 +98,7 @@ export default function Waveform({ song, audio }) {
 
     const handlePlayPause = () => {
         setPlay(!playing)
+        getPlaying(!playing)
         wavesurfer.current.playPause()
     }
 

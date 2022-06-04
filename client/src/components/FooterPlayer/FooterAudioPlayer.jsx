@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import { useLocation } from "react-router-dom"
 import FooterAudioControls from "./FooterAudioControls"
 import "./styles/FooterMusicPlayer.css"
 import Slider from "@mui/material/Slider"
@@ -13,8 +14,11 @@ const AudioPlayer = ({
     oneSongClick,
     setOneSongClick,
     audioR,
+    genreClickCount,
+    playing,
 }) => {
     // State
+    const location = useLocation()
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -25,20 +29,27 @@ const AudioPlayer = ({
     const { title, artist, audioSrc } = tracks[trackIndex]
 
     // Refs
-    let audioRef = useRef(new Audio(audioSrc))
-    if (audioR) audioRef = audioR
+
+    let audioRef = useRef(new Audio(currentSong))
     console.log(audioRef)
-    // else audioRef = useRef(new Audio(audioSrc))
-    const intervalRef = useRef()
-    audioRef.current.volume = volume
+    console.log(audioR)
+    console.log(currentSong)
+    if (audioR && audioR.current) audioRef.current = audioR.current
+    else if (currentSong && !audioR) audioRef.current.src = currentSong
+    console.log(audioRef)
     const isReady = useRef(false)
+    const intervalRef = useRef()
+    let duration, currentPercentage
+    if (audioRef.current) {
+        audioRef.current.volume = volume
+        // Destructure for conciseness
+        duration = audioRef.current.duration
 
-    // Destructure for conciseness
-    const { duration } = audioRef.current
+        currentPercentage = duration
+            ? `${(trackProgress / duration) * 100}%`
+            : "0%"
+    }
 
-    const currentPercentage = duration
-        ? `${(trackProgress / duration) * 100}%`
-        : "0%"
     const trackStyling = `
     -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))`
 
@@ -47,7 +58,7 @@ const AudioPlayer = ({
         clearInterval(intervalRef.current)
 
         intervalRef.current = setInterval(() => {
-            if (audioRef.current.ended) {
+            if (audioRef.current && audioRef.current.ended) {
                 toNextTrack()
             } else {
                 setTrackProgress(audioRef.current.currentTime)
@@ -89,7 +100,7 @@ const AudioPlayer = ({
     const onVolumeChange = (e) => {
         const { target } = e
         const newVolume = +target.value
-        console.log(newVolume)
+
         if (newVolume) {
             setVolume(newVolume)
             audioRef.current.volume = newVolume || 0.01
@@ -97,42 +108,76 @@ const AudioPlayer = ({
     }
 
     useEffect(() => {
-        if (isPlaying) {
-            audioRef.current.play()
-            startTimer()
+        if (location.pathname.split("/")[1] !== "song") {
+            console.log(audioRef.current)
+            if (audioRef.current) {
+                if (audioRef.current.src !== currentSong && currentSong) {
+                    audioRef.current.src = currentSong
+                }
+                console.log(audioRef.current)
+                if (isPlaying) {
+                    audioRef.current.play()
+                    startTimer()
+                } else {
+                    audioRef.current.pause()
+                }
+            }
         } else {
-            audioRef.current.pause()
+            if (audioRef.current) {
+                if (audioRef.current.src !== currentSong && currentSong) {
+                    audioRef.current.src = currentSong
+                }
+                console.log(playing, isPlaying)
+                if (playing && isPlaying) {
+                    audioRef.current.play()
+                    startTimer()
+                } else {
+                    console.log(audioRef.current)
+                    audioRef.current.pause()
+                }
+            }
         }
-    }, [isPlaying])
+    }, [isPlaying, location.pathname, playing])
+
+    useEffect(() => {
+        //isReady.current = false
+    }, [genreClickCount])
 
     // Handles cleanup and setup when changing tracks
+    useEffect(() => {
+        if (audioRef.current) {
+            if (audioR && audioR.current) audioRef = audioR
+            else if (!audioR && currentSong) {
+                audioRef.current = new Audio(currentSong)
+            }
+            audioRef.current.load()
+            setOneSongClick(false)
+        }
+    }, [oneSongClick, currentSong, audioR])
 
     useEffect(() => {
         console.log(audioR)
-        audioRef.current.pause()
-        if (audioR) audioRef = audioR
-        audioRef.current.load()
-        setOneSongClick(false)
-    }, [oneSongClick, currentSong])
-
+        if (audioR && audioR.current) audioR.current.src = currentSong
+        else if (audioR) audioR.src = currentSong
+    }, [currentSong])
     useEffect(() => {
-        if (!audioRef.current.paused) audioRef.current.pause()
-        if (audioR) audioRef = audioR
-        else {
-            console.log("hi")
-            audioRef.current = new Audio(audioSrc)
+        if (audioRef.current) {
+            if (!audioRef.current.paused) audioRef.current.pause()
+            if (audioR && audioR.current) audioRef.current = audioR.current
+            else if (audioR && !audioR.current) audioRef.current = audioR
+            else if (!audioR && currentSong)
+                audioRef.current = new Audio(currentSong)
+            setTrackProgress(audioRef.current.currentTime)
+            if (isReady.current) {
+                audioRef.current.play()
+                setIsPlaying(true)
+                // isReady.current = false
+            } else {
+                // Set the isReady ref as true for the next pass
+                isReady.current = true
+            }
         }
-        setTrackProgress(audioRef.current.currentTime)
-
-        if (isReady.current) {
-            audioRef.current.play()
-            setIsPlaying(true)
-            startTimer()
-        } else {
-            // Set the isReady ref as true for the next pass
-            isReady.current = true
-        }
-    }, [trackIndex])
+    }, [trackIndex, oneSongClick, currentSong, audioR])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -154,27 +199,28 @@ const AudioPlayer = ({
         chDisplay,
         cmDisplay,
         csDisplay
+    if (audioRef.current) {
+        if (audioRef.current.currentTime === undefined)
+            audioRef.current.currentTime = 0
 
-    if (audioRef.current.currentTime === undefined)
-        audioRef.current.currentTime = 0
+        ch = Math.floor(audioRef.current.currentTime / 3600)
+        cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+        cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
-    ch = Math.floor(audioRef.current.currentTime / 3600)
-    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+        chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+        cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+        csDisplay = cs < 10 ? "0" + cs : cs
 
-    chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
-    csDisplay = cs < 10 ? "0" + cs : cs
+        h = Math.floor(audioRef.current.duration / 3600)
+        m = Math.floor((audioRef.current.duration % 3600) / 60)
+        s = Math.floor((audioRef.current.duration % 3600) % 60)
+
+        hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+        mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+        sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
+    }
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
-
-    h = Math.floor(audioRef.current.duration / 3600)
-    m = Math.floor((audioRef.current.duration % 3600) / 60)
-    s = Math.floor((audioRef.current.duration % 3600) % 60)
-
-    hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-    sDisplay = s > 0 ? s + (s === 1 ? "" : "") : "00"
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 

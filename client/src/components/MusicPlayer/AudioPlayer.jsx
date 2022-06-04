@@ -100,13 +100,12 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) =>
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
-        console.log(playlistSong)
         audioRef.current.pause()
         audioRef.current = new Audio(playlistSong)
         audioRef.current.load()
         audioRef.current.play()
         setSelectedSong(false)
-        console.log(audioRef.current.title)
+        console.log(link)
     }, [selectedSong])
 
     useEffect(() => {

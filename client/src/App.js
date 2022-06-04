@@ -6,21 +6,31 @@ import {
     SongList,
     Playlists,
 } from "./pages"
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import SongDetails from "./pages/SongDetails"
 import { AuthContext } from "./context/authContext"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
+    const [genreClickCount, setGenreClickCount] = useState(0)
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
-    const [currentSong, setCurrentSong] = useState()
+    const [audioList, setAudioList] = useState([])
+    const [currentSong, setCurrentSong] = useState(null)
+    const [playing, getPlaying] = useState(false)
+    const location = useLocation()
     const [dashSearchResults, setDashSearchResults] = useState()
 
     const { user } = useContext(AuthContext)
+
+    useEffect(() => {
+        if (location.pathname.split("/") !== "")
+            if (audioList[0] !== undefined)
+                for (let each in audioList) audioList[each].pause()
+    }, [location.pathname])
 
     return (
         <div>
@@ -30,6 +40,10 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            setAudioList={setAudioList}
+                            genreClickCount={genreClickCount}
+                            setGenreClickCount={setGenreClickCount}
+                            setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
                             setDashSearchResults={setDashSearchResults}
                         />
@@ -56,6 +70,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            getPlaying={getPlaying}
                             setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
                         />
@@ -69,6 +84,8 @@ function App() {
 
             {user && (
                 <Footer
+                    playing={playing}
+                    genreClickCount={genreClickCount}
                     audioR={audioR}
                     currentSong={currentSong}
                     oneSongClick={oneSongClick}

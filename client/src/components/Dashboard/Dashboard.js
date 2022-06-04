@@ -7,16 +7,22 @@ import DashboardPlayerThree from "./DashboardPlayerThree";
 import "./styles/Dashboard.css";
 import DashAudioControls from "./DashAudioControlOne";
 import DashboardPlayerTwo from "./DashboardPlayerTwo";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-
-const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
+const DashCarousel = ({
+  setDashSearchResults,
+  setCurrentSong,
+  setAudioR,
+  genreClickCount,
+  setGenreClickCount,
+  setAudioList,
+}) => {
   let navigate = useNavigate();
 
   let dashes = ["", "", ""];
 
   const [searchBar, setSearchBar] = useState("");
-  const [genreClickCount, setGenreClickCount] = useState(0);
+
   const [audioOne, getAudioOne] = useState();
   const [audioTwo, getAudioTwo] = useState();
   const [indexOne, getIndexOne] = useState(0);
@@ -32,7 +38,7 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
   let audioList = [audioOne, audioTwo, audioThree];
 
   const [genreSongList, setGenreSongList] = useState([]);
-
+  const location = useLocation();
   let dashOne, dashTwo, dashThree;
   const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
     onCompleted: (songData) => {
@@ -60,7 +66,8 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
   });
 
   useEffect(() => {
-    if (audioList[0] !== undefined) {
+    if (audioList[0] !== undefined && currentEvent !== undefined) {
+      setAudioList(audioList);
       let dash =
         currentEvent.ownerDocument.activeElement.parentNode.parentNode
           .parentNode.parentNode;
@@ -70,6 +77,7 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
           audioList[i].pause();
         } else {
           setCurrentSong(audioList[i].src);
+          setAudioR(audioList[i]);
         }
       }
     }
@@ -81,6 +89,14 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
     indexTwo,
     indexThree,
   ]);
+
+  useEffect(() => {
+    if (audioList[0] !== undefined) {
+      for (let each in audioList) {
+        audioList[each].pause();
+      }
+    }
+  }, [location.pathname.split("/")[1] !== ""]);
 
   let songListFromGenre = [];
 
@@ -122,7 +138,7 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
     <div className="main-container">
       <div className="main-header">
         <h2>
-          Welcome, {""}
+          Welcome,
           {username.charAt(0).toUpperCase() + username.slice(1)}
         </h2>
       </div>
