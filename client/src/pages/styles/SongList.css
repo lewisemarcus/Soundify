@@ -15,9 +15,13 @@
   color: var(--white);
 }
 
+.song-list-container {
+  padding: 2rem;
+  border: 1px solid red;
+}
+
 .song-list-content {
-  padding-top: 5rem;
-  margin-left: 15px;
+  width: 100%;
 }
 
 .modal-btn {

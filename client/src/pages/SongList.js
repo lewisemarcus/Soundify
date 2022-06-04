@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Modal, message, Upload, Input, Select, Space } from "antd";
+import {
+  Modal,
+  message,
+  Upload,
+  Input,
+  Select,
+  Space,
+  Empty,
+  Table,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Button from "../components/Button";
 import "./styles/SongList.css";
@@ -14,6 +23,7 @@ const SongList = () => {
     variables: { username: username },
   });
   const usersSongs = data?.userSongs || [];
+  console.log(usersSongs);
   const [song, setSong] = useState({
     title: "",
     genre: "",
@@ -23,6 +33,24 @@ const SongList = () => {
     link: "",
   });
   const [file, setFile] = useState(null);
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Artist",
+      dataIndex: "artist",
+      key: "artist",
+    },
+    {
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
+    },
+  ];
 
   const success = async () => {
     await message.loading("Uploading song...");
@@ -166,7 +194,7 @@ const SongList = () => {
   return (
     <div className="song-list-wrapper">
       <div className="song-list-header">
-        <h1>{username}'s songs</h1>
+        <h1>My Songs</h1>
         <Button className="modal-btn uploadSongbtn" onClick={showModal}>
           <Space>
             <UploadOutlined /> Upload song
@@ -243,11 +271,23 @@ const SongList = () => {
           </Space>
         </Modal>
       </div>
-      {usersSongs.map((song, index) => (
-        <div className="song-list-content">
-          <div key={index}>{song.title}</div>
-        </div>
-      ))}
+      {usersSongs.length === 0 ? (
+        <Empty
+          description={<span>You haven't uploaded any songs</span>}
+          style={{ marginTop: "5rem" }}
+        />
+      ) : (
+        <Table
+          style={{
+            margin: "4rem auto",
+            maxWidth: "70%",
+          }}
+          dataSource={usersSongs}
+          columns={columns}
+          scroll={{ y: 240 }}
+          pagination={false}
+        />
+      )}
     </div>
   );
 };
