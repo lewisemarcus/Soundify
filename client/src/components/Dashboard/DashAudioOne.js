@@ -24,6 +24,7 @@ const DashAudioOne = ({
     getAudioOne,
     getOne,
     getIndexOne,
+    currentPlayer,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -44,19 +45,18 @@ const DashAudioOne = ({
     const originalData = [...songData]
 
     const intervalRef = useRef()
-    audioRef.current.volume = volume
+    if (audioRef !== undefined && audioRef.current !== undefined)
+        audioRef.current.volume = volume
     const isReady = useRef(false)
-
+    let duration
     // Destructure for conciseness
-    const { duration } = audioRef.current
-
+    if (audioRef !== undefined) duration = audioRef.current.duration
     const currentPercentage = duration
         ? `${(trackProgress / duration) * 100}%`
         : "0%"
     const trackStyling = `
     -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
   `
-
     const startTimer = () => {
         // Clear any timers already running
         clearInterval(intervalRef.current)
@@ -67,7 +67,7 @@ const DashAudioOne = ({
             } else {
                 setTrackProgress(audioRef.current.currentTime)
             }
-        }, [1000])
+        }, [100])
     }
 
     const onScrub = (value) => {
@@ -139,24 +139,27 @@ const DashAudioOne = ({
     }
 
     useEffect(() => {
-        if (audioRef.current.paused) {
-            setIsPlaying(false)
-            if (getOne !== undefined) getOne(false)
-        }
+        if (audioRef !== undefined)
+            if (audioRef.current.paused) {
+                setIsPlaying(false)
+                if (getOne !== undefined) getOne(false)
+            }
     })
 
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
-        if (isPlayingOne) {
-            audioRef.current.play()
-            startTimer()
-            setIsPlaying(true)
-            setCurrent(audioRef.current)
-            if (getOne !== undefined) getOne(true)
-        } else {
-            audioRef.current.pause()
-            setIsPlaying(false)
-            if (getOne !== undefined) getOne(false)
+        if (audioRef !== undefined) {
+            if (isPlayingOne) {
+                audioRef.current.play()
+                startTimer()
+                setIsPlaying(true)
+                setCurrent(audioRef.current)
+                if (getOne !== undefined) getOne(true)
+            } else {
+                audioRef.current.pause()
+                setIsPlaying(false)
+                if (getOne !== undefined) getOne(false)
+            }
         }
     }, [isPlayingOne])
 
@@ -194,28 +197,30 @@ const DashAudioOne = ({
                 setSongInfo(songData[trackIndex])
             }
         }
+        if (audioRef !== undefined) {
+            audioRef.current.pause()
+            audioRef.current = new Audio(songLink)
+            audioRef.current.addEventListener("loadedmetadata", (event) => {
+                getSongDur(event.target.duration)
+            })
+            audioRef.current.load()
+            if (getAudioOne !== undefined) {
+                getAudioOne(audioRef.current)
+            }
 
-        audioRef.current.pause()
-        audioRef.current = new Audio(songLink)
-        audioRef.current.addEventListener("loadedmetadata", (event) => {
-            getSongDur(event.target.duration)
-        })
-        audioRef.current.load()
-        if (getAudioOne !== undefined) {
-            getAudioOne(audioRef.current)
-        }
+            setTrackProgress(audioRef.current.currentTime)
+            if (isReady.current && genreBool) {
+                setGenreBool(false)
 
-        setTrackProgress(audioRef.current.currentTime)
-        if (isReady.current && genreBool) {
-            setGenreBool(false)
-            audioRef.current.play()
-            setIsPlaying(true)
-            if (getOne !== undefined) getOne(true)
+                audioRef.current.play()
+                setIsPlaying(true)
+                if (getOne !== undefined) getOne(true)
 
-            startTimer()
-        } else {
-            // Set the isReady ref as true for the next pass
-            isReady.current = true
+                startTimer()
+            } else {
+                // Set the isReady ref as true for the next pass
+                isReady.current = true
+            }
         }
     }, [trackIndex, clickedGenre, genreClickCount])
     useEffect(() => {
@@ -237,27 +242,28 @@ const DashAudioOne = ({
         chDisplay,
         cmDisplay,
         csDisplay
+    if (audioRef !== undefined) {
+        if (audioRef.current.currentTime === undefined)
+            audioRef.current.currentTime = 0
 
-    if (audioRef.current.currentTime === undefined)
-        audioRef.current.currentTime = 0
+        ch = Math.floor(audioRef.current.currentTime / 3600)
+        cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
+        cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
 
-    ch = Math.floor(audioRef.current.currentTime / 3600)
-    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+        chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
+        cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
+        csDisplay = cs < 10 ? "0" + cs : cs
 
-    chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-    cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
-    csDisplay = cs < 10 ? "0" + cs : cs
+        h = Math.floor(songDur / 3600)
+        m = Math.floor((songDur % 3600) / 60)
+        s = Math.floor((songDur % 3600) % 60)
+
+        hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
+        mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
+        sDisplay = s < 10 ? "0" + s : s
+    }
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
-
-    h = Math.floor(songDur / 3600)
-    m = Math.floor((songDur % 3600) / 60)
-    s = Math.floor((songDur % 3600) % 60)
-
-    hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-    mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-    sDisplay = s < 10 ? "0" + s : s
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 

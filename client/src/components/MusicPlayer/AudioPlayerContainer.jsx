@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react"
 // import "./styles/DashboardPlayer.css"
 import AudioPlayer from "./AudioPlayer"
 
-const AudioPlayerContainer = ({ playlistSong, setSelectedSong, selectedSong }) => {
+const AudioPlayerContainer = ({ playlistSong, setSelectedSong, selectedSong, newTitle, r, setR }) => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
+    // console.log(newTitle)
     useEffect(() => {
         const fetchSongs = async () => {
             try {
@@ -36,6 +36,9 @@ const AudioPlayerContainer = ({ playlistSong, setSelectedSong, selectedSong }) =
                 playlistSong={playlistSong}
                 selectedSong={selectedSong}
                 setSelectedSong={setSelectedSong}
+                newTitle={newTitle}
+                r={r}
+                setR={setR}
             />
         </div>
     )

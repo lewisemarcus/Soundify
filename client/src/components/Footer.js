@@ -11,12 +11,18 @@ const Footer = ({
     playing,
     prevCount,
     currentPlayer,
+    isOnePlaying,
+    isTwoPlaying,
+    isThreePlaying,
 }) => {
     // console.log(currentSong)
     return (
         // this link needs to be changed upon new click
         <div className="footer-container">
             <FooterAudioPlayer
+                isOnePlaying={isOnePlaying}
+                isTwoPlaying={isTwoPlaying}
+                isThreePlaying={isThreePlaying}
                 currentPlayer={currentPlayer}
                 prevCount={prevCount}
                 playing={playing}

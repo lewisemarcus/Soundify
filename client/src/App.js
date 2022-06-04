@@ -15,91 +15,112 @@ import Footer from "./components/Footer";
 import DashResults from "./components/Dashboard/DashResults";
 
 function App() {
-  const [genreClickCount, setGenreClickCount] = useState(0);
-  const currentPlayer = useRef(new Audio());
-  const [prevCount, setPrevCount] = useState(0);
-  const [audioR, setAudioR] = useState(null);
-  const [oneSongClick, setOneSongClick] = useState(false);
-  const [audioList, setAudioList] = useState([]);
-  const [currentSong, setCurrentSong] = useState(null);
-  const [playing, getPlaying] = useState(false);
-  const location = useLocation();
-  const [dashSearchResults, setDashSearchResults] = useState();
+
+    const [genreClickCount, setGenreClickCount] = useState(0)
+    const currentPlayer = useRef(new Audio())
+    const [prevCount, setPrevCount] = useState(0)
+    const [audioR, setAudioR] = useState(null)
+    const [oneSongClick, setOneSongClick] = useState(false)
+    const [audioList, setAudioList] = useState([])
+    const [currentSong, setCurrentSong] = useState(null)
+    const [playing, getPlaying] = useState(false)
+    const location = useLocation()
+    const [dashSearchResults, setDashSearchResults] = useState()
+    const [isOnePlaying, getOne] = useState(false)
+    const [isTwoPlaying, getTwo] = useState(false)
+    const [isThreePlaying, getThree] = useState(false)
 
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (location.pathname.split("/") !== "")
-      if (audioList[0] !== undefined)
-        for (let each in audioList) audioList[each].pause();
-  }, [location.pathname, currentPlayer.current.src]);
+    useEffect(() => {
+        if (location.pathname.split("/") !== "")
+            if (audioList[0] !== undefined)
+                for (let each in audioList) {
+                    if (
+                        audioList[each].src !== currentPlayer.current.src &&
+                        genreClickCount > prevCount
+                    ) {
+                        audioList[each].pause()
+                    }
+                }
+    }, [location.pathname, currentPlayer.current.src, isOnePlaying])
 
-  return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <LandingPage
-              currentPlayer={currentPlayer}
-              setPrevCount={setPrevCount}
-              setAudioList={setAudioList}
-              genreClickCount={genreClickCount}
-              setGenreClickCount={setGenreClickCount}
-              setAudioR={setAudioR}
-              setCurrentSong={setCurrentSong}
-              setDashSearchResults={setDashSearchResults}
-            />
-          }
-        />
-        <Route
-          path="/DashResults"
-          element={
-            <DashResults
-              currentPlayer={currentPlayer}
-              dashSearchResults={dashSearchResults}
-              setOneSongClick={setOneSongClick}
-            />
-          }
-        />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/upload" element={<AddSong />} /> */}
-        <Route
-          path="/songs"
-          element={user ? <SongList /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/song/:songId"
-          element={
-            <SongDetails
-              getPlaying={getPlaying}
-              setAudioR={setAudioR}
-              setCurrentSong={setCurrentSong}
-            />
-          }
-        />
-        <Route
-          path="/playlists"
-          element={user ? <Playlists /> : <Navigate to="/" />}
-        />
-      </Routes>
+    return (
+        <div>
+            <Navbar />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <LandingPage
+                            isOnePlaying={isOnePlaying}
+                            getOne={getOne}
+                            isTwoPlaying={isTwoPlaying}
+                            getTwo={getTwo}
+                            isThreePlaying={isThreePlaying}
+                            getThree={getThree}
+                            currentPlayer={currentPlayer}
+                            setPrevCount={setPrevCount}
+                            setAudioList={setAudioList}
+                            genreClickCount={genreClickCount}
+                            setGenreClickCount={setGenreClickCount}
+                            setAudioR={setAudioR}
+                            setCurrentSong={setCurrentSong}
+                            setDashSearchResults={setDashSearchResults}
+                        />
+                    }
+                />
+                <Route
+                    path="/DashResults"
+                    element={
+                        <DashResults
+                            currentPlayer={currentPlayer}
+                            dashSearchResults={dashSearchResults}
+                            setOneSongClick={setOneSongClick}
+                            setCurrentSong={setCurrentSong}
+                        />
+                    }
+                />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                {/* <Route path="/upload" element={<AddSong />} /> */}
+                <Route
+                    path="/songs"
+                    element={user ? <SongList /> : <Navigate to="/" />}
+                />
+                <Route
+                    path="/song/:songId"
+                    element={
+                        <SongDetails
+                            getPlaying={getPlaying}
+                            setAudioR={setAudioR}
+                            setCurrentSong={setCurrentSong}
+                        />
+                    }
+                />
+                <Route
+                    path="/playlists"
+                    element={user ? <Playlists /> : <Navigate to="/" />}
+                />
+            </Routes>
 
-      {user && (
-        <Footer
-          currentPlayer={currentPlayer}
-          playing={playing}
-          genreClickCount={genreClickCount}
-          prevCount={prevCount}
-          audioR={audioR}
-          currentSong={currentSong}
-          oneSongClick={oneSongClick}
-          setOneSongClick={setOneSongClick}
-        />
-      )}
-    </div>
-  );
+            {user && (
+                <Footer
+                    isOnePlaying={isOnePlaying}
+                    isTwoPlaying={isTwoPlaying}
+                    isThreePlaying={isThreePlaying}
+                    currentPlayer={currentPlayer}
+                    playing={playing}
+                    genreClickCount={genreClickCount}
+                    prevCount={prevCount}
+                    audioR={audioR}
+                    currentSong={currentSong}
+                    oneSongClick={oneSongClick}
+                    setOneSongClick={setOneSongClick}
+                />
+            )}
+        </div>
+    )
 }
 
 export default App;
