@@ -1,5 +1,4 @@
-import React, { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import React from "react"
 import FooterAudioPlayer from "./FooterPlayer/FooterAudioPlayer"
 import Footertracks from "./FooterPlayer/Footertracks"
 
@@ -9,16 +8,14 @@ const Footer = ({
     setOneSongClick,
     audioR,
     genreClickCount,
+    playing,
 }) => {
-    const location = useLocation()
-    useEffect(() => {
-        console.log(audioR)
-    }, [location])
     // console.log(currentSong)
     return (
         // this link needs to be changed upon new click
         <div className="footer-container">
             <FooterAudioPlayer
+                playing={playing}
                 genreClickCount={genreClickCount}
                 audioR={audioR}
                 tracks={Footertracks}

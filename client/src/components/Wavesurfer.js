@@ -38,7 +38,7 @@ let duration,
     cm,
     cs
 
-export default function Waveform({ song, audio }) {
+export default function Waveform({ song, audio, getPlaying }) {
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
     const volumeSlider = useRef(null)
@@ -98,6 +98,7 @@ export default function Waveform({ song, audio }) {
 
     const handlePlayPause = () => {
         setPlay(!playing)
+        getPlaying(!playing)
         wavesurfer.current.playPause()
     }
 

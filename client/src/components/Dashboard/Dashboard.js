@@ -7,8 +7,7 @@ import DashboardPlayerThree from "./DashboardPlayerThree"
 import "./styles/Dashboard.css"
 import DashAudioControls from "./DashAudioControlOne"
 import DashboardPlayerTwo from "./DashboardPlayerTwo"
-
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 const DashCarousel = ({
     setDashSearchResults,
@@ -16,6 +15,7 @@ const DashCarousel = ({
     setAudioR,
     genreClickCount,
     setGenreClickCount,
+    setAudioList,
 }) => {
     let navigate = useNavigate()
 
@@ -38,7 +38,7 @@ const DashCarousel = ({
     let audioList = [audioOne, audioTwo, audioThree]
 
     const [genreSongList, setGenreSongList] = useState([])
-
+    const location = useLocation()
     let dashOne, dashTwo, dashThree
     const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
         onCompleted: (songData) => {
@@ -67,6 +67,7 @@ const DashCarousel = ({
 
     useEffect(() => {
         if (audioList[0] !== undefined && currentEvent !== undefined) {
+            setAudioList(audioList)
             let dash =
                 currentEvent.ownerDocument.activeElement.parentNode.parentNode
                     .parentNode.parentNode
@@ -88,6 +89,14 @@ const DashCarousel = ({
         indexTwo,
         indexThree,
     ])
+
+    useEffect(() => {
+        if (audioList[0] !== undefined) {
+            for (let each in audioList) {
+                audioList[each].pause()
+            }
+        }
+    }, [location.pathname.split("/")[1] !== ""])
 
     let songListFromGenre = []
 
