@@ -15,6 +15,7 @@ import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
+    const [genreClickCount, setGenreClickCount] = useState(0)
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [currentSong, setCurrentSong] = useState(null)
@@ -31,6 +32,8 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            genreClickCount={genreClickCount}
+                            setGenreClickCount={setGenreClickCount}
                             setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
                             setDashSearchResults={setDashSearchResults}
@@ -71,6 +74,7 @@ function App() {
 
             {user && (
                 <Footer
+                    genreClickCount={genreClickCount}
                     audioR={audioR}
                     currentSong={currentSong}
                     oneSongClick={oneSongClick}
