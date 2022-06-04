@@ -63,6 +63,7 @@ const SongDetails = ({ setCurrentSong, setAudioR }) => {
     }
     useEffect(() => {
         if (querySong.link !== undefined) {
+            console.log(audio.current)
             setAudioR(audio)
             setCurrentSong(querySong.link)
         }

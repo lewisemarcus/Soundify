@@ -10,14 +10,15 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import SongDetails from "./pages/SongDetails"
 import { AuthContext } from "./context/authContext"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
-    const [currentSong, setCurrentSong] = useState()
+    const [currentSong, setCurrentSong] = useState(null)
+
     const [dashSearchResults, setDashSearchResults] = useState()
 
     const { user } = useContext(AuthContext)
@@ -30,6 +31,7 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
                             setDashSearchResults={setDashSearchResults}
                         />

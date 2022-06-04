@@ -45,7 +45,6 @@ export default function Waveform({ song, audio }) {
     const time = useRef(null)
     const [playing, setPlay] = useState(false)
     const [volume, setVolume] = useState(0.5)
-
     // create new WaveSurfer instance
     // On component mount and when url changes
     useEffect(() => {
