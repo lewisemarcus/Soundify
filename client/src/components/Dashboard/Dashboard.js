@@ -16,6 +16,7 @@ const DashCarousel = ({
     genreClickCount,
     setGenreClickCount,
     setAudioList,
+    setPrevCount,
 }) => {
     let navigate = useNavigate()
 
@@ -71,15 +72,16 @@ const DashCarousel = ({
             let dash =
                 currentEvent.ownerDocument.activeElement.parentNode.parentNode
                     .parentNode.parentNode
-
-            for (let i in dashes) {
-                if (dashes[i] !== dash) {
-                    audioList[i].pause()
-                } else {
-                    setCurrentSong(audioList[i].src)
-                    setAudioR(audioList[i])
+            if (isOnePlaying || isTwoPlaying || isThreePlaying)
+                for (let i in dashes) {
+                    if (dashes[i] !== dash) {
+                        audioList[i].pause()
+                    } else {
+                        console.log(audioList[i].src)
+                        setCurrentSong(audioList[i].src)
+                        setAudioR(audioList[i])
+                    }
                 }
-            }
         }
     }, [
         isOnePlaying,
@@ -89,6 +91,11 @@ const DashCarousel = ({
         indexTwo,
         indexThree,
     ])
+
+    useEffect(() => {
+        if (genreClickCount > prevClickCount)
+            if (setPrevCount) setPrevCount(prevClickCount)
+    }, [genreClickCount, prevClickCount])
 
     useEffect(() => {
         if (audioList[0] !== undefined) {

@@ -11,6 +11,7 @@ const LandingPage = ({
     genreClickCount,
     setGenreClickCount,
     setAudioList,
+    setPrevCount,
 }) => {
     const { user } = useContext(AuthContext)
 
@@ -19,6 +20,7 @@ const LandingPage = ({
             {user ? (
                 <>
                     <Dashboard
+                        setPrevCount={setPrevCount}
                         setAudioList={setAudioList}
                         genreClickCount={genreClickCount}
                         setGenreClickCount={setGenreClickCount}
