@@ -6,6 +6,7 @@ import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
+import Marquee from "react-fast-marquee"
 import { width } from "@mui/system"
 
 const AudioPlayer = ({
@@ -290,8 +291,27 @@ const AudioPlayer = ({
                     onPlayPauseClick={setIsPlaying}
                 />
                 <div className="musicianTrack">
+                {title.length > 6 ? (
+                    <Marquee gradient={false} delay={2}>
+                        <h2 className="footer-title">
+                            {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </h2>
+                    </Marquee>
+                ) : (
                     <h2 className="footer-title">{title}</h2>
-                    <h3 className="footer-artist">{artist}</h3>
+                )}
+
+                {title.length > 6 ? (
+                    <Marquee gradient={false} delay={2}>
+                        <h2 className="footer-artist">
+                            {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </h2>
+                    </Marquee>
+                ) : (
+                    <h2 className="footer-artist">{artist}</h2>
+                )}
+                    
+                    {/* <h3 className="footer-artist">{artist}</h3> */}
                 </div>
                 
                 <div id="startFooterTimer" >{displayTime}</div>
