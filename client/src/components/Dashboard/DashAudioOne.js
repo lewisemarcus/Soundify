@@ -28,7 +28,7 @@ const DashAudioOne = ({
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
-    const audioRef = currentPlayer
+    const audioRef = useRef(new Audio(songLink))
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -199,7 +199,7 @@ const DashAudioOne = ({
         }
         if (audioRef !== undefined) {
             audioRef.current.pause()
-            audioRef.current.src = songLink
+            audioRef.current = new Audio(songLink)
             audioRef.current.addEventListener("loadedmetadata", (event) => {
                 getSongDur(event.target.duration)
             })
