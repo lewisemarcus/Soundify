@@ -1,20 +1,21 @@
 import {
-    LandingPage,
-    Register,
-    Login,
-    AddSong,
-    SongList,
-    Playlists,
-} from "./pages"
-import { Routes, Route, Navigate, useLocation } from "react-router-dom"
-import Navbar from "./components/Navbar"
-import SongDetails from "./pages/SongDetails"
-import { AuthContext } from "./context/authContext"
-import { useContext, useEffect, useState, useRef } from "react"
-import Footer from "./components/Footer"
-import DashResults from "./components/Dashboard/DashResults"
+  LandingPage,
+  Register,
+  Login,
+  AddSong,
+  SongList,
+  Playlists,
+} from "./pages";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import SongDetails from "./pages/SongDetails";
+import { AuthContext } from "./context/authContext";
+import { useContext, useEffect, useState, useRef } from "react";
+import Footer from "./components/Footer";
+import DashResults from "./components/Dashboard/DashResults";
 
 function App() {
+
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(new Audio())
     const [prevCount, setPrevCount] = useState(0)
@@ -29,7 +30,7 @@ function App() {
     const [isTwoPlaying, getTwo] = useState(false)
     const [isThreePlaying, getThree] = useState(false)
 
-    const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (location.pathname.split("/") !== "")
@@ -122,4 +123,4 @@ function App() {
     )
 }
 
-export default App
+export default App;

@@ -53,6 +53,10 @@
   width: 255px;
 }
 
+#searchBar::placeholder {
+  font-size: 0.8rem;
+}
+
 #searchBtn {
   margin-left: 5px;
   /* width: 50px;
@@ -74,9 +78,7 @@
 }
 
 #searchBtn:hover {
-  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-  background-color: #476e9e;
-  transform: scale(1.1);
+  background-color: #e6862c;
 }
 
 #searchBtn:active {

@@ -286,6 +286,7 @@ const SongList = () => {
           columns={columns}
           scroll={{ y: 240 }}
           pagination={false}
+          className="table"
         />
       )}
     </div>

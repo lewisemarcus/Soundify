@@ -7,13 +7,16 @@ import client from "./ApolloClient";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
+import { SearchBarProvider } from "./context/searchBarContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthProvider>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <SearchBarProvider>
+          <App />
+        </SearchBarProvider>
       </BrowserRouter>
     </ApolloProvider>
   </AuthProvider>
