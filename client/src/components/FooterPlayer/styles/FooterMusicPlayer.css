@@ -35,10 +35,12 @@ body {
 }
 
 .musicianTrack h2 {
+    text-align: center;
     margin-block-end: 0;
 }
 
 .musicianTrack h3 {
+    text-align: center;
     margin-block-start: 0;
 }
 
@@ -91,11 +93,13 @@ body {
 
     .musicianTrack h2 {
         text-align: center;
-        font-size: 15px;
+        font-size: 10px;
+        font-weight: bold;
     }
     
     .musicianTrack h3 {
-        font-size: 10px;
+        text-align: center;
+        font-size: 9px;
     }
 }
 
