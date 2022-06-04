@@ -18,6 +18,9 @@ const AudioPlayer = ({
     playing,
     prevCount,
     currentPlayer,
+    isOnePlaying,
+    isTwoPlaying,
+    isThreePlaying,
 }) => {
     // State
     const location = useLocation()
@@ -47,12 +50,16 @@ const AudioPlayer = ({
         clearInterval(intervalRef.current)
 
         intervalRef.current = setInterval(() => {
-            if (audioRef.current && audioRef.current.ended) {
-                toNextTrack()
-            } else {
-                setTrackProgress(audioRef.current.currentTime)
+            if (audioRef) {
+                if (audioRef.current && audioRef.current.ended) toNextTrack()
+                else if (audioRef.ended) toNextTrack()
+                else {
+                    if (audioRef.current)
+                        setTrackProgress(audioRef.current.currentTime)
+                    else setTrackProgress(audioRef.currentTime)
+                }
             }
-        }, [1000])
+        }, [100])
     }
 
     const onScrub = (value) => {
@@ -96,10 +103,15 @@ const AudioPlayer = ({
             audioRef.current.volume = newVolume || 0.01
         }
     }
+    useEffect(() => {
+        if (isOnePlaying || isTwoPlaying || isThreePlaying) setIsPlaying(true)
+        else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying)
+            setIsPlaying(false)
+    }, [isOnePlaying, isTwoPlaying, isThreePlaying])
 
     useEffect(() => {
         if (genreClickCount > prevCount) {
-            if (audioRef.current) audioRef.current.src = ""
+            if (audioRef.current) audioRef.current.pause()
         }
     }, [genreClickCount, prevCount, currentSong])
 
@@ -116,36 +128,15 @@ const AudioPlayer = ({
     useEffect(() => {
         if (location.pathname.split("/")[1] !== "song") {
             if (audioRef.current !== undefined) {
-                if (audioRef.current.current !== undefined) {
-                    if (
-                        audioRef.current.current.src !== currentSong &&
-                        currentSong
-                    ) {
-                        audioRef.current.current.src = currentSong
-                    }
-                    if (isPlaying) {
-                        console.log("hi")
-                        audioRef.current.current.play()
-                        startTimer()
-                    } else {
-                        console.log("hi2")
-                        audioRef.current.current.pause()
-                    }
+                if (genreClickCount > prevCount) {
+                    audioRef.current.pause()
+                }
+
+                if (isPlaying) {
+                    audioRef.current.play()
+                    startTimer()
                 } else {
-                    if (audioRef.current.src !== currentSong && currentSong) {
-                        audioRef.current.src = currentSong
-                    }
-                    if (audioRef.current.src !== currentSong && currentSong) {
-                        audioRef.current.src = currentSong
-                    }
-                    if (audioRef.current !== undefined) {
-                        if (isPlaying) {
-                            audioRef.current.play()
-                            startTimer()
-                        } else {
-                            audioRef.current.pause()
-                        }
-                    }
+                    audioRef.current.pause()
                 }
             }
         } else {
@@ -155,7 +146,6 @@ const AudioPlayer = ({
                 }
 
                 if (playing && isPlaying) {
-                    console.log(audioRef.current)
                     audioRef.current.addEventListener("loadedmetadata", () => {
                         audioRef.current.play()
                     })
@@ -165,14 +155,13 @@ const AudioPlayer = ({
                 }
             }
         }
-    }, [isPlaying, location.pathname, playing])
+    }, [isPlaying, location.pathname, playing, genreClickCount])
 
     useEffect(() => {
         if (audioRef.current !== undefined)
             if (audioR && audioR.current) audioRef.current = audioR.current
             else if (audioR && !audioR.current) audioRef = audioR
             else if (!audioR) audioRef.current.src = currentSong
-        console.log(audioRef)
     }, [currentSong, audioR])
 
     useEffect(() => {
@@ -218,10 +207,9 @@ const AudioPlayer = ({
             setTrackProgress(audioRef.current.currentTime)
             if (
                 isReady.current &&
-                location.pathname.split("/")[1] == "DashResults"
+                location.pathname.split("/")[1] === "DashResults"
             ) {
                 if (audioRef.current !== null) {
-                    console.log(audioRef.current)
                     audioRef.current.addEventListener("loadedmetadata", () => {
                         audioRef.current.play()
                     })
@@ -233,7 +221,14 @@ const AudioPlayer = ({
                 isReady.current = true
             }
         }
-    }, [trackIndex, oneSongClick, currentSong, location.pathname, audioR])
+    }, [
+        trackIndex,
+        oneSongClick,
+        currentSong,
+        location.pathname,
+        audioR,
+        trackProgress,
+    ])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -293,26 +288,27 @@ const AudioPlayer = ({
                     <h2 className="footer-title">{title}</h2>
                     <h3 className="footer-artist">{artist}</h3>
                 </div>
-                
-                <div id="startFooterTimer" >{displayTime}</div>
+                <div style={{ width: "5%" }}>{displayTime}</div>
                 <input
                     type="range"
                     value={trackProgress}
                     max={duration ? duration : `${duration}`}
                     // time={currentTime}
                     className="footer-progress"
-                    id="footerTimerBar"
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ background: trackStyle }}
+                    style={{ width: "50%", background: trackStyle }}
                 />
                 <div
-                    id= "endFooterTimer"
+                    style={{
+                        width: "5%",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
                 >
                     {endTime}
                 </div>
-                
             </div>
             {/* Volume slider */}
             <div className="volContainer">

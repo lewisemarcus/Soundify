@@ -12,6 +12,13 @@ const LandingPage = ({
     setGenreClickCount,
     setAudioList,
     setPrevCount,
+    currentPlayer,
+    isOnePlaying,
+    getOne,
+    isTwoPlaying,
+    getTwo,
+    isThreePlaying,
+    getThree,
 }) => {
     const { user } = useContext(AuthContext)
 
@@ -20,6 +27,13 @@ const LandingPage = ({
             {user ? (
                 <>
                     <Dashboard
+                        isOnePlaying={isOnePlaying}
+                        getOne={getOne}
+                        isTwoPlaying={isTwoPlaying}
+                        getTwo={getTwo}
+                        isThreePlaying={isThreePlaying}
+                        getThree={getThree}
+                        currentPlayer={currentPlayer}
                         setPrevCount={setPrevCount}
                         setAudioList={setAudioList}
                         genreClickCount={genreClickCount}
