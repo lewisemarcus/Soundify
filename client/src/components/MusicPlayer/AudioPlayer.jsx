@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
-const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) => {
+const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong, newTitle, r, setR }) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -65,6 +65,7 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) =>
     const toPrevTrack = () => {
         if (trackIndex - 1 < 0) {
             setTrackIndex(tracks.length - 1)
+            console.log('.parentNode')
         } else {
             setTrackIndex(trackIndex - 1)
         }
@@ -100,12 +101,23 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong }) =>
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        if (newTitle !== undefined && r !== false) {
+            let i
+            for (i = 0; i < tracks.length; i++){
+                if (tracks[i].title === newTitle) { 
+                    break; 
+                }
+            }
+            setTrackIndex(i)
+            setR(false)
+        }
+    })
+    useEffect(() => {
         audioRef.current.pause()
         audioRef.current = new Audio(playlistSong)
         audioRef.current.load()
         audioRef.current.play()
         setSelectedSong(false)
-        console.log(link)
     }, [selectedSong])
 
     useEffect(() => {
