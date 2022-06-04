@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import { useLocation } from "react-router-dom"
 import FooterAudioControls from "./FooterAudioControls"
 import "./styles/FooterMusicPlayer.css"
 import Slider from "@mui/material/Slider"
@@ -13,9 +14,10 @@ const AudioPlayer = ({
     oneSongClick,
     setOneSongClick,
     audioR,
+    genreClickCount,
 }) => {
     // State
-
+    const location = useLocation()
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -100,37 +102,46 @@ const AudioPlayer = ({
     }
 
     useEffect(() => {
-        console.log(audioR)
-        console.log(audioRef)
-        if (isPlaying) {
-            audioRef.current.play()
-            startTimer()
-        } else {
-            audioRef.current.pause()
+        if (location.pathname.split("/")[1] !== "song") {
+            if (audioR && audioRef.current.src !== audioR.src)
+                audioRef.current = audioR
+            if (isPlaying) {
+                audioRef.current.play()
+                startTimer()
+            } else {
+                audioRef.current.pause()
+            }
         }
-    }, [isPlaying])
-
-    // Handles cleanup and setup when changing tracks
+    }, [isPlaying, location.pathname])
 
     useEffect(() => {
-        audioRef.current.pause()
+        isReady.current = false
+    }, [genreClickCount])
+
+    // Handles cleanup and setup when changing tracks
+    useEffect(() => {
         if (audioR && audioR.current) audioRef = audioR
+        else if (!audioR && currentSong)
+            audioRef.current = new Audio(currentSong)
         audioRef.current.load()
         setOneSongClick(false)
     }, [oneSongClick, currentSong, audioR])
 
     useEffect(() => {
-        console.log(audioR)
+        if (audioR) audioR.src = currentSong
+    }, [currentSong])
+    useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
         if (audioR && audioR.current) audioRef.current = audioR.current
         else if (audioR && !audioR.current) audioRef.current = audioR
-        // else if (currentSong) audioRef.current = new Audio(currentSong)
+        else if (!audioR && currentSong)
+            audioRef.current = new Audio(currentSong)
         setTrackProgress(audioRef.current.currentTime)
-
         if (isReady.current) {
-            // audioRef.current.play()
+            console.log("reasons")
+            audioRef.current.play()
             setIsPlaying(true)
-            startTimer()
+            // isReady.current = false
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true

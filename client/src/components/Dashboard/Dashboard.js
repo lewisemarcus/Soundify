@@ -10,13 +10,19 @@ import DashboardPlayerTwo from "./DashboardPlayerTwo"
 
 import { useNavigate } from "react-router-dom"
 
-const DashCarousel = ({ setDashSearchResults, setCurrentSong, setAudioR }) => {
+const DashCarousel = ({
+    setDashSearchResults,
+    setCurrentSong,
+    setAudioR,
+    genreClickCount,
+    setGenreClickCount,
+}) => {
     let navigate = useNavigate()
 
     let dashes = ["", "", ""]
 
     const [searchBar, setSearchBar] = useState("")
-    const [genreClickCount, setGenreClickCount] = useState(0)
+
     const [audioOne, getAudioOne] = useState()
     const [audioTwo, getAudioTwo] = useState()
     const [indexOne, getIndexOne] = useState(0)
