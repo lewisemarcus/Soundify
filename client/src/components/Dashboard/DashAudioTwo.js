@@ -24,10 +24,11 @@ const DashAudioTwo = ({
     getAudioTwo,
     getIndexTwo,
     setCurrent,
+    currentPlayer,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
-    const audioRef = useRef(new Audio(songLink))
+
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -44,11 +45,11 @@ const DashAudioTwo = ({
     const originalData = [...songData]
 
     const intervalRef = useRef()
-    audioRef.current.volume = volume
+    currentPlayer.current.volume = volume
     const isReady = useRef(false)
 
     // Destructure for conciseness
-    const { duration } = audioRef.current
+    const { duration } = currentPlayer.current
 
     const currentPercentage = duration
         ? `${(trackProgress / duration) * 100}%`
@@ -62,10 +63,10 @@ const DashAudioTwo = ({
         clearInterval(intervalRef.current)
 
         intervalRef.current = setInterval(() => {
-            if (audioRef.current.ended) {
+            if (currentPlayer.current.ended) {
                 toNextTrack()
             } else {
-                setTrackProgress(audioRef.current.currentTime)
+                setTrackProgress(currentPlayer.current.currentTime)
             }
         }, [1000])
     }
@@ -73,8 +74,8 @@ const DashAudioTwo = ({
     const onScrub = (value) => {
         // Clear any timers already running
         clearInterval(intervalRef.current)
-        audioRef.current.currentTime = value
-        setTrackProgress(audioRef.current.currentTime)
+        currentPlayer.current.currentTime = value
+        setTrackProgress(currentPlayer.current.currentTime)
     }
 
     const onScrubEnd = () => {
@@ -97,7 +98,7 @@ const DashAudioTwo = ({
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
             }
             if (getAudioTwo !== undefined) {
-                getAudioTwo(audioRef.current)
+                getAudioTwo(currentPlayer.current)
             }
         } else {
             if (trackIndex - 1 < 0) {
@@ -108,7 +109,7 @@ const DashAudioTwo = ({
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
             }
             if (getAudioTwo !== undefined) {
-                getAudioTwo(audioRef.current)
+                getAudioTwo(currentPlayer.current)
             }
         }
     }
@@ -140,12 +141,12 @@ const DashAudioTwo = ({
 
         if (newVolume) {
             setVolume(newVolume)
-            audioRef.current.volume = newVolume || 0.01
+            currentPlayer.current.volume = newVolume || 0.01
         }
     }
 
     useEffect(() => {
-        if (audioRef.current.paused) {
+        if (currentPlayer.current.paused && !isPlayingTwo) {
             setIsPlaying(false)
             if (getTwo !== undefined) getTwo(false)
         }
@@ -154,13 +155,13 @@ const DashAudioTwo = ({
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlayingTwo) {
-            setCurrent(audioRef.current)
-            audioRef.current.play()
+            setCurrent(currentPlayer.current)
+
             startTimer()
             setIsPlaying(true)
             if (getTwo !== undefined) getTwo(true)
         } else {
-            audioRef.current.pause()
+            currentPlayer.current.pause()
             setIsPlaying(false)
             if (getTwo !== undefined) getTwo(false)
         }
@@ -200,20 +201,20 @@ const DashAudioTwo = ({
             }
         }
 
-        audioRef.current.pause()
-        audioRef.current = new Audio(songLink)
-        audioRef.current.addEventListener("loadedmetadata", (event) => {
+        currentPlayer.current.pause()
+        currentPlayer.current.src = songLink
+        currentPlayer.current.addEventListener("loadedmetadata", (event) => {
             getSongDur(event.target.duration)
         })
-        audioRef.current.load()
+        currentPlayer.current.load()
         if (getAudioTwo !== undefined) {
-            getAudioTwo(audioRef.current)
+            getAudioTwo(currentPlayer.current)
         }
 
-        setTrackProgress(audioRef.current.currentTime)
+        setTrackProgress(currentPlayer.current.currentTime)
         if (isReady.current && genreBool) {
             setGenreBool(false)
-            audioRef.current.play()
+
             setIsPlaying(true)
             if (getTwo !== undefined) getTwo(true)
             startTimer()
@@ -226,7 +227,7 @@ const DashAudioTwo = ({
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
-            audioRef.current.pause()
+            currentPlayer.current.pause()
             clearInterval(intervalRef.current)
         }
     }, [])
@@ -243,12 +244,12 @@ const DashAudioTwo = ({
         cmDisplay,
         csDisplay
 
-    if (audioRef.current.currentTime === undefined)
-        audioRef.current.currentTime = 0
+    if (currentPlayer.current.currentTime === undefined)
+        currentPlayer.current.currentTime = 0
 
-    ch = Math.floor(audioRef.current.currentTime / 3600)
-    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+    ch = Math.floor(currentPlayer.current.currentTime / 3600)
+    cm = Math.floor((currentPlayer.current.currentTime % 3600) / 60)
+    cs = Math.floor((currentPlayer.current.currentTime % 3600) % 60)
 
     chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
     cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
