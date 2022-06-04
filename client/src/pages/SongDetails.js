@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { List, Typography, Divider } from "antd"
+import { List, Typography, Divider, Modal, Input, Space, Button } from "antd"
 import "../components/styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
 import { GET_SONG, GET_GENRES } from "../utils/queries/songQueries"
@@ -53,6 +53,48 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
         }
     }
 
+    // CREATE-ADD TO PLAYLIST MODAL
+    const handleChange = (event) => {
+        if (event.label) {
+            const value = event.value;
+            const name = "newPlaylist";
+            // setSong((prevInput) => {
+            //     return {
+            //         ...prevInput,
+            //         [name]: value,
+            //     };
+            // });
+        } else {
+            const { name, value } = event.target;
+            // setSong((prevInput) => {
+            //     return {
+            //         ...prevInput,
+            //         [name]: value,
+            //     };
+            // });
+        }
+    };
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleCancel = () => {
+        // setSong({
+        //     title: "",
+        //     genre: "",
+        //     username: username,
+        //     artist: "",
+        //     filename: "",
+        //     link: "",
+        // });
+            setIsModalVisible(false);
+        };
+
+// END PLAYLIST MODAL
+
     const getCommentText = (event) => {
         const { name, value } = event.target
 
@@ -63,7 +105,7 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
     }
     useEffect(() => {
         if (querySong.link !== undefined) {
-            console.log(audio.current)
+            // console.log(audio.current)
             setAudioR(audio)
             setCurrentSong(querySong.link)
         }
@@ -209,7 +251,33 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
                             Comments
                         </div>
                         <button style={{ margin: 10 }}>Share</button>
-                        <button style={{ margin: 10 }}>Add to Playlist</button>
+                        <button style={{ margin: 10 }} onClick={showModal}>Add to Playlist</button>
+                        <Modal
+                            title="Select Playlist"
+                            visible={isModalVisible}
+                            onCancel={handleCancel}
+                            destroyOnClose
+                            footer={[
+                                <Button key="cancel" onClick={handleCancel}>Cancel</Button>]}
+                        >
+                            <Space>
+                                <Input
+                                    onChange={handleChange}
+                                    name="newPlaylist"
+                                    // value={playlist.playlistname}
+                                    placeholder="Create Playlist"
+                                    size="large"
+                                    required
+                                />
+                                <ul>
+                                    {/* {playlists.map((playlist, index) => {
+                                        return (
+                                            <li onClcik={addToPlaylist}>{playlist.playlistname}</li>
+                                        );
+                                    })} */}
+                                </ul>
+                            </Space>
+                        </Modal>
                         <div style={{ margin: 10, marginRight: 20 }}>
                             Likes:
                         </div>

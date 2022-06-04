@@ -13,7 +13,7 @@ const DashResults = ({
 }) => {
   const { searchBar } = useContext(SearchBarContext);
   const navigate = useNavigate();
-  console.log(searchBar);
+  console.log(setCurrentSong);
 
   return (
     <div className="dash-result-container">
