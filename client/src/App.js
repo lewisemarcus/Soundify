@@ -25,14 +25,24 @@ function App() {
     const [playing, getPlaying] = useState(false)
     const location = useLocation()
     const [dashSearchResults, setDashSearchResults] = useState()
+    const [isOnePlaying, getOne] = useState(false)
+    const [isTwoPlaying, getTwo] = useState(false)
+    const [isThreePlaying, getThree] = useState(false)
 
     const { user } = useContext(AuthContext)
 
     useEffect(() => {
         if (location.pathname.split("/") !== "")
             if (audioList[0] !== undefined)
-                for (let each in audioList) audioList[each].pause()
-    }, [location.pathname, currentPlayer.current.src])
+                for (let each in audioList) {
+                    if (
+                        audioList[each].src !== currentPlayer.current.src &&
+                        genreClickCount > prevCount
+                    ) {
+                        audioList[each].pause()
+                    }
+                }
+    }, [location.pathname, currentPlayer.current.src, isOnePlaying])
 
     return (
         <div>
@@ -42,6 +52,12 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            isOnePlaying={isOnePlaying}
+                            getOne={getOne}
+                            isTwoPlaying={isTwoPlaying}
+                            getTwo={getTwo}
+                            isThreePlaying={isThreePlaying}
+                            getThree={getThree}
                             currentPlayer={currentPlayer}
                             setPrevCount={setPrevCount}
                             setAudioList={setAudioList}
@@ -89,6 +105,9 @@ function App() {
 
             {user && (
                 <Footer
+                    isOnePlaying={isOnePlaying}
+                    isTwoPlaying={isTwoPlaying}
+                    isThreePlaying={isThreePlaying}
                     currentPlayer={currentPlayer}
                     playing={playing}
                     genreClickCount={genreClickCount}

@@ -17,6 +17,13 @@ const DashCarousel = ({
     setGenreClickCount,
     setAudioList,
     setPrevCount,
+    currentPlayer,
+    isOnePlaying,
+    getOne,
+    isTwoPlaying,
+    getTwo,
+    isThreePlaying,
+    getThree,
 }) => {
     let navigate = useNavigate()
 
@@ -29,9 +36,6 @@ const DashCarousel = ({
     const [indexOne, getIndexOne] = useState(0)
     const [indexTwo, getIndexTwo] = useState(0)
     const [indexThree, getIndexThree] = useState(0)
-    const [isOnePlaying, getOne] = useState(false)
-    const [isTwoPlaying, getTwo] = useState(false)
-    const [isThreePlaying, getThree] = useState(false)
     const [audioThree, getAudioThree] = useState()
     const [currentEvent, setCurrent] = useState()
     const [prevClickCount, setPrevClickCount] = useState(0)
@@ -77,7 +81,7 @@ const DashCarousel = ({
                     if (dashes[i] !== dash) {
                         audioList[i].pause()
                     } else {
-                        console.log(audioList[i].src)
+                        console.log("hiya")
                         setCurrentSong(audioList[i].src)
                         setAudioR(audioList[i])
                     }
@@ -100,10 +104,16 @@ const DashCarousel = ({
     useEffect(() => {
         if (audioList[0] !== undefined) {
             for (let each in audioList) {
-                audioList[each].pause()
+                if (
+                    audioList[each].src !== currentPlayer.current.src ||
+                    genreClickCount > prevClickCount
+                )
+                    audioList[each].pause()
             }
         }
     }, [
+        genreClickCount,
+        prevClickCount,
         isOnePlaying,
         isTwoPlaying,
         isThreePlaying,
@@ -193,6 +203,7 @@ const DashCarousel = ({
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayerOne
+                        currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
                         getOne={getOne}
                         getIndexOne={getIndexOne}
