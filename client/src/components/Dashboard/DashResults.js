@@ -5,12 +5,14 @@ const DashResults = ({
     dashSearchResults,
     setCurrentSong,
     setOneSongClick,
+    currentPlayer,
 }) => {
     const handleSearchClick = (event) => {
         event.preventDefault()
 
         if (setOneSongClick !== undefined) {
             setOneSongClick(true)
+            currentPlayer.current.src = event.currentTarget.name
             setCurrentSong(event.currentTarget.name)
         }
     }

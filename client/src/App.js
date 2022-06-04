@@ -10,12 +10,14 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import SongDetails from "./pages/SongDetails"
 import { AuthContext } from "./context/authContext"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
+    const currentPlayer = useRef(new Audio())
+    const [prevCount, setPrevCount] = useState(0)
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [audioList, setAudioList] = useState([])
@@ -30,7 +32,7 @@ function App() {
         if (location.pathname.split("/") !== "")
             if (audioList[0] !== undefined)
                 for (let each in audioList) audioList[each].pause()
-    }, [location.pathname])
+    }, [location.pathname, currentPlayer.current.src])
 
     return (
         <div>
@@ -40,6 +42,8 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            currentPlayer={currentPlayer}
+                            setPrevCount={setPrevCount}
                             setAudioList={setAudioList}
                             genreClickCount={genreClickCount}
                             setGenreClickCount={setGenreClickCount}
@@ -53,6 +57,7 @@ function App() {
                     path="/DashResults"
                     element={
                         <DashResults
+                            currentPlayer={currentPlayer}
                             dashSearchResults={dashSearchResults}
                             setOneSongClick={setOneSongClick}
                             setCurrentSong={setCurrentSong}
@@ -84,8 +89,10 @@ function App() {
 
             {user && (
                 <Footer
+                    currentPlayer={currentPlayer}
                     playing={playing}
                     genreClickCount={genreClickCount}
+                    prevCount={prevCount}
                     audioR={audioR}
                     currentSong={currentSong}
                     oneSongClick={oneSongClick}

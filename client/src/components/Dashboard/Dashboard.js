@@ -10,74 +10,99 @@ import DashboardPlayerTwo from "./DashboardPlayerTwo";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const DashCarousel = ({
-  setDashSearchResults,
-  setCurrentSong,
-  setAudioR,
-  genreClickCount,
-  setGenreClickCount,
-  setAudioList,
+
+    setDashSearchResults,
+    setCurrentSong,
+    setAudioR,
+    genreClickCount,
+    setGenreClickCount,
+    setAudioList,
+    setPrevCount,
 }) => {
-  let navigate = useNavigate();
+    let navigate = useNavigate()
 
-  let dashes = ["", "", ""];
+    let dashes = ["", "", ""]
 
-  const [searchBar, setSearchBar] = useState("");
+    const [searchBar, setSearchBar] = useState("")
 
-  const [audioOne, getAudioOne] = useState();
-  const [audioTwo, getAudioTwo] = useState();
-  const [indexOne, getIndexOne] = useState(0);
-  const [indexTwo, getIndexTwo] = useState(0);
-  const [indexThree, getIndexThree] = useState(0);
-  const [isOnePlaying, getOne] = useState(false);
-  const [isTwoPlaying, getTwo] = useState(false);
-  const [isThreePlaying, getThree] = useState(false);
-  const [audioThree, getAudioThree] = useState();
-  const [currentEvent, setCurrent] = useState();
-  const [prevClickCount, setPrevClickCount] = useState(0);
-  const [clickedGenre, setClickedGenre] = useState("");
-  let audioList = [audioOne, audioTwo, audioThree];
+    const [audioOne, getAudioOne] = useState()
+    const [audioTwo, getAudioTwo] = useState()
+    const [indexOne, getIndexOne] = useState(0)
+    const [indexTwo, getIndexTwo] = useState(0)
+    const [indexThree, getIndexThree] = useState(0)
+    const [isOnePlaying, getOne] = useState(false)
+    const [isTwoPlaying, getTwo] = useState(false)
+    const [isThreePlaying, getThree] = useState(false)
+    const [audioThree, getAudioThree] = useState()
+    const [currentEvent, setCurrent] = useState()
+    const [prevClickCount, setPrevClickCount] = useState(0)
+    const [clickedGenre, setClickedGenre] = useState("")
+    let audioList = [audioOne, audioTwo, audioThree]
 
-  const [genreSongList, setGenreSongList] = useState([]);
-  const location = useLocation();
-  let dashOne, dashTwo, dashThree;
-  const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
-    onCompleted: (songData) => {
-      return songData;
-    },
-  });
+    const [genreSongList, setGenreSongList] = useState([])
+    const location = useLocation()
+    let dashOne, dashTwo, dashThree
+    const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
+        onCompleted: (songData) => {
+            return songData
+        },
+    })
 
-  if (currentEvent !== undefined) {
-    let dash =
-      currentEvent.ownerDocument.activeElement.parentNode.parentNode.parentNode
-        .parentNode;
+    if (currentEvent !== undefined) {
+        let dash =
+            currentEvent.ownerDocument.activeElement.parentNode.parentNode
+                .parentNode.parentNode
 
-    if (dash.id === "one") dashes[0] = dash;
-    else if (dash.id === "two") dashes[1] = dash;
-    else dashes[2] = dash;
-  }
+        if (dash.id === "one") dashes[0] = dash
+        else if (dash.id === "two") dashes[1] = dash
+        else dashes[2] = dash
+    }
 
-  const [
-    songByGenre,
-    { loading: loadingGenre, error: errorGenre, data: genreData },
-  ] = useLazyQuery(GET_GENRES, {
-    onCompleted: (genreData) => {
-      return genreData;
-    },
-  });
+    const [
+        songByGenre,
+        { loading: loadingGenre, error: errorGenre, data: genreData },
+    ] = useLazyQuery(GET_GENRES, {
+        onCompleted: (genreData) => {
+            return genreData
+        },
+    })
 
-  useEffect(() => {
-    if (audioList[0] !== undefined && currentEvent !== undefined) {
-      setAudioList(audioList);
-      let dash =
-        currentEvent.ownerDocument.activeElement.parentNode.parentNode
-          .parentNode.parentNode;
+    useEffect(() => {
+        if (audioList[0] !== undefined && currentEvent !== undefined) {
+            setAudioList(audioList)
+            let dash =
+                currentEvent.ownerDocument.activeElement.parentNode.parentNode
+                    .parentNode.parentNode
+            if (isOnePlaying || isTwoPlaying || isThreePlaying)
+                for (let i in dashes) {
+                    if (dashes[i] !== dash) {
+                        audioList[i].pause()
+                    } else {
+                        console.log(audioList[i].src)
+                        setCurrentSong(audioList[i].src)
+                        setAudioR(audioList[i])
+                    }
+                }
+        }
+    }, [
+        isOnePlaying,
+        isTwoPlaying,
+        isThreePlaying,
+        indexOne,
+        indexTwo,
+        indexThree,
+    ])
 
-      for (let i in dashes) {
-        if (dashes[i] !== dash) {
-          audioList[i].pause();
-        } else {
-          setCurrentSong(audioList[i].src);
-          setAudioR(audioList[i]);
+    useEffect(() => {
+        if (genreClickCount > prevClickCount)
+            if (setPrevCount) setPrevCount(prevClickCount)
+    }, [genreClickCount, prevClickCount])
+
+    useEffect(() => {
+        if (audioList[0] !== undefined) {
+            for (let each in audioList) {
+                audioList[each].pause()
+            }
         }
       }
     }

@@ -16,6 +16,8 @@ const AudioPlayer = ({
     audioR,
     genreClickCount,
     playing,
+    prevCount,
+    currentPlayer,
 }) => {
     // State
     const location = useLocation()
@@ -30,28 +32,15 @@ const AudioPlayer = ({
 
     // Refs
 
-    let audioRef = useRef(new Audio(currentSong))
-    console.log(audioRef)
-    console.log(audioR)
-    console.log(currentSong)
-    if (audioR && audioR.current) audioRef.current = audioR.current
-    else if (currentSong && !audioR) audioRef.current.src = currentSong
-    console.log(audioRef)
+    let audioRef = currentPlayer
+
     const isReady = useRef(false)
     const intervalRef = useRef()
-    let duration, currentPercentage
-    if (audioRef.current) {
-        audioRef.current.volume = volume
-        // Destructure for conciseness
-        duration = audioRef.current.duration
 
-        currentPercentage = duration
-            ? `${(trackProgress / duration) * 100}%`
-            : "0%"
-    }
-
-    const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))`
+    const [duration, setDuration] = useState(0)
+    const [trackStyle, setTrackStyle] = useState(`
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${0}, #fff), color-stop(${0}, #777))`)
+    const [currentPercent, setCurrentPercent] = useState(0)
 
     const startTimer = () => {
         // Clear any timers already running
@@ -69,6 +58,7 @@ const AudioPlayer = ({
     const onScrub = (value) => {
         // Clear any timers already running
         clearInterval(intervalRef.current)
+
         audioRef.current.currentTime = value
         setTrackProgress(audioRef.current.currentTime)
     }
@@ -108,18 +98,54 @@ const AudioPlayer = ({
     }
 
     useEffect(() => {
+        if (genreClickCount > prevCount) {
+            if (audioRef.current) audioRef.current.src = ""
+        }
+    }, [genreClickCount, prevCount, currentSong])
+
+    // Handles cleanup and setup when changing tracks
+    useEffect(() => {
+        if (audioRef.current) {
+            if (audioR && audioR.current) audioRef = audioR
+            else if (audioR && !audioR.current) audioRef.current = audioR
+
+            setOneSongClick(false)
+        }
+    }, [oneSongClick, currentSong, audioR])
+
+    useEffect(() => {
         if (location.pathname.split("/")[1] !== "song") {
-            console.log(audioRef.current)
-            if (audioRef.current) {
-                if (audioRef.current.src !== currentSong && currentSong) {
-                    audioRef.current.src = currentSong
-                }
-                console.log(audioRef.current)
-                if (isPlaying) {
-                    audioRef.current.play()
-                    startTimer()
+            if (audioRef.current !== undefined) {
+                if (audioRef.current.current !== undefined) {
+                    if (
+                        audioRef.current.current.src !== currentSong &&
+                        currentSong
+                    ) {
+                        audioRef.current.current.src = currentSong
+                    }
+                    if (isPlaying) {
+                        console.log("hi")
+                        audioRef.current.current.play()
+                        startTimer()
+                    } else {
+                        console.log("hi2")
+                        audioRef.current.current.pause()
+                    }
                 } else {
-                    audioRef.current.pause()
+                    if (audioRef.current.src !== currentSong && currentSong) {
+                        audioRef.current.src = currentSong
+                    }
+                    if (audioRef.current.src !== currentSong && currentSong) {
+                        audioRef.current.src = currentSong
+                    }
+                    if (audioRef.current !== undefined) {
+                        if (isPlaying) {
+                            audioRef.current.play()
+                            startTimer()
+                        } else {
+                            audioRef.current.pause()
+                        }
+                    }
                 }
             }
         } else {
@@ -127,12 +153,14 @@ const AudioPlayer = ({
                 if (audioRef.current.src !== currentSong && currentSong) {
                     audioRef.current.src = currentSong
                 }
-                console.log(playing, isPlaying)
+
                 if (playing && isPlaying) {
-                    audioRef.current.play()
+                    console.log(audioRef.current)
+                    audioRef.current.addEventListener("loadedmetadata", () => {
+                        audioRef.current.play()
+                    })
                     startTimer()
                 } else {
-                    console.log(audioRef.current)
                     audioRef.current.pause()
                 }
             }
@@ -140,36 +168,64 @@ const AudioPlayer = ({
     }, [isPlaying, location.pathname, playing])
 
     useEffect(() => {
-        //isReady.current = false
-    }, [genreClickCount])
-
-    // Handles cleanup and setup when changing tracks
-    useEffect(() => {
-        if (audioRef.current) {
-            if (audioR && audioR.current) audioRef = audioR
-            else if (!audioR && currentSong) {
-                audioRef.current = new Audio(currentSong)
-            }
-            audioRef.current.load()
-            setOneSongClick(false)
-        }
-    }, [oneSongClick, currentSong, audioR])
-
-    useEffect(() => {
-        console.log(audioR)
-        if (audioR && audioR.current) audioR.current.src = currentSong
-        else if (audioR) audioR.src = currentSong
-    }, [currentSong])
-    useEffect(() => {
-        if (audioRef.current) {
-            if (!audioRef.current.paused) audioRef.current.pause()
+        if (audioRef.current !== undefined)
             if (audioR && audioR.current) audioRef.current = audioR.current
-            else if (audioR && !audioR.current) audioRef.current = audioR
-            else if (!audioR && currentSong)
-                audioRef.current = new Audio(currentSong)
+            else if (audioR && !audioR.current) audioRef = audioR
+            else if (!audioR) audioRef.current.src = currentSong
+        console.log(audioRef)
+    }, [currentSong, audioR])
+
+    useEffect(() => {
+        if (audioRef && audioRef.current) {
+            audioRef.current.volume = volume
+            // Destructure for conciseness
+            setDuration(audioRef.current.duration)
+
+            setCurrentPercent(
+                duration ? `${(trackProgress / duration) * 100}%` : "0%",
+            )
+            setTrackStyle(`
+            -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
+
+            if (!audioRef.current.paused)
+                if (audioR && audioR.current)
+                    //audioRef.current.pause()
+                    audioRef.current = audioR.current
+                else if (audioR && !audioR.current) audioRef.current = audioR
+
             setTrackProgress(audioRef.current.currentTime)
-            if (isReady.current) {
-                audioRef.current.play()
+        }
+    }, [trackProgress, audioR, currentSong])
+
+    useEffect(() => {
+        if (audioRef && audioRef.current) {
+            audioRef.current.volume = volume
+            // Destructure for conciseness
+            setDuration(audioRef.current.duration)
+
+            setCurrentPercent(
+                duration ? `${(trackProgress / duration) * 100}%` : "0%",
+            )
+            setTrackStyle(`
+            -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
+
+            if (!audioRef.current.paused)
+                if (audioR && audioR.current)
+                    //audioRef.current.pause()
+                    audioRef.current = audioR.current
+                else if (audioR && !audioR.current) audioRef.current = audioR
+
+            setTrackProgress(audioRef.current.currentTime)
+            if (
+                isReady.current &&
+                location.pathname.split("/")[1] == "DashResults"
+            ) {
+                if (audioRef.current !== null) {
+                    console.log(audioRef.current)
+                    audioRef.current.addEventListener("loadedmetadata", () => {
+                        audioRef.current.play()
+                    })
+                }
                 setIsPlaying(true)
                 // isReady.current = false
             } else {
@@ -177,7 +233,7 @@ const AudioPlayer = ({
                 isReady.current = true
             }
         }
-    }, [trackIndex, oneSongClick, currentSong, audioR])
+    }, [trackIndex, oneSongClick, currentSong, location.pathname, audioR])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -247,7 +303,7 @@ const AudioPlayer = ({
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ width: "50%", background: trackStyling }}
+                    style={{ width: "50%", background: trackStyle }}
                 />
                 <div
                     style={{
