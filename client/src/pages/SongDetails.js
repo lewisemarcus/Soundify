@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { List, Typography, Divider, Modal, Input, Space, Button } from "antd"
 import "../components/styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
-import { GET_SONG, GET_GENRES } from "../utils/queries/songQueries"
+import { GET_SONG, GET_GENRES, GET_USER_PLAYLIST } from "../utils/queries/songQueries"
 import { useQuery, useMutation } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
 import { ADD_COMMENT } from "../utils/mutations/commentMutations"
@@ -54,6 +54,21 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
+    const { loading: playlistloading, data: playlistdata } = useState(window.innerWidth)= useQuery(GET_USER_PLAYLIST, {
+        variables: { username: username },
+    });
+
+    const usersPlaylists = data?.userPlaylists || [];
+
+    const success = async () => {
+        await message.loading("Uploading playlist...");
+        await message.success("Successfully added song to playlist!");
+    };
+    
+    const modalError = () => {
+        message.modalError("Error occured! Try again.");
+    };
+
     const handleChange = (event) => {
         if (event.label) {
             const value = event.value;
