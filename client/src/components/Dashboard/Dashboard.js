@@ -10,7 +10,7 @@ import DashboardPlayerTwo from "./DashboardPlayerTwo"
 
 import { useNavigate } from "react-router-dom"
 
-const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
+const DashCarousel = ({ setDashSearchResults, setCurrentSong, setAudioR }) => {
     let navigate = useNavigate()
 
     let dashes = ["", "", ""]
@@ -60,7 +60,7 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
     })
 
     useEffect(() => {
-        if (audioList[0] !== undefined) {
+        if (audioList[0] !== undefined && currentEvent !== undefined) {
             let dash =
                 currentEvent.ownerDocument.activeElement.parentNode.parentNode
                     .parentNode.parentNode
@@ -70,6 +70,7 @@ const DashCarousel = ({ setDashSearchResults, setCurrentSong }) => {
                     audioList[i].pause()
                 } else {
                     setCurrentSong(audioList[i].src)
+                    setAudioR(audioList[i])
                 }
             }
         }

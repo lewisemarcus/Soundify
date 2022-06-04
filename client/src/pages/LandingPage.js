@@ -4,7 +4,7 @@ import { Hero } from "../components"
 import Dashboard from "../components/Dashboard/Dashboard"
 import { AuthContext } from "../context/authContext"
 
-const LandingPage = ({ setDashSearchResults, setCurrentSong }) => {
+const LandingPage = ({ setDashSearchResults, setCurrentSong, setAudioR }) => {
     const { user } = useContext(AuthContext)
 
     return (
@@ -12,6 +12,7 @@ const LandingPage = ({ setDashSearchResults, setCurrentSong }) => {
             {user ? (
                 <>
                     <Dashboard
+                        setAudioR={setAudioR}
                         setCurrentSong={setCurrentSong}
                         setDashSearchResults={setDashSearchResults}
                     />
