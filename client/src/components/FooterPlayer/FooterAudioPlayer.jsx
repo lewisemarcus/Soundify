@@ -293,27 +293,26 @@ const AudioPlayer = ({
                     <h2 className="footer-title">{title}</h2>
                     <h3 className="footer-artist">{artist}</h3>
                 </div>
-                <div style={{ width: "5%" }}>{displayTime}</div>
+                
+                <div id="startFooterTimer" >{displayTime}</div>
                 <input
                     type="range"
                     value={trackProgress}
                     max={duration ? duration : `${duration}`}
                     // time={currentTime}
                     className="footer-progress"
+                    id="footerTimerBar"
                     onChange={(e) => onScrub(e.target.value)}
                     onMouseUp={onScrubEnd}
                     onKeyUp={onScrubEnd}
-                    style={{ width: "50%", background: trackStyle }}
+                    style={{ background: trackStyle }}
                 />
                 <div
-                    style={{
-                        width: "5%",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
+                    id= "endFooterTimer"
                 >
                     {endTime}
                 </div>
+                
             </div>
             {/* Volume slider */}
             <div className="volContainer">

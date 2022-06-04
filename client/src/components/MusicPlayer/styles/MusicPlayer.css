@@ -30,6 +30,7 @@ input[type="range"] {
     cursor: pointer;
 }
 
+
 .audio-player {
     max-width: 350px;
     padding: 3px;

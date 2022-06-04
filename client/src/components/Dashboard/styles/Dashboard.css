@@ -4,11 +4,11 @@
   background: var(--dark);
 }
 
-@media screen and (min-width: 900px) {
+/* @media screen and (min-width: 900px) {
   .main-container {
     height: 100vh;
   }
-}
+} */
 
 .musicPlayer {
   display: grid;
