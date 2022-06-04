@@ -1,6 +1,6 @@
 .song-list-wrapper {
   background-color: var(--dark);
-  color: var(--white);
+  color: var(--light);
   height: 90vh;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .song-list-header h1 {
-  color: var(--white);
+  color: var(--light);
 }
 
 .song-list-container {
@@ -64,9 +64,10 @@
 }
 
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):hover {
-  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-  background-color: #476e9e;
+  /* background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e; */
   transform: scale(1.02);
+  background-color: #e6862c;
 }
 
 .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger):active {
@@ -79,7 +80,7 @@
 }
 
 .ant-btn {
-  background-color: #73777b;
+  background-color: #be534c;
   border-radius: 5px;
   color: #fff;
 }
@@ -88,6 +89,7 @@
   background-color: rgb(171, 44, 44);
   color: #fff;
   border-color: rgb(171, 44, 44);
+  transform: scale(1.02);
 }
 
 .ant-btn:active {
@@ -106,4 +108,8 @@
 
 .anticon svg {
   color: var(--orange);
+}
+
+.ant-table {
+  /* background-color: var(--light); */
 }

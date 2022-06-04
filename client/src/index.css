@@ -26,7 +26,7 @@
 }
 
 body {
-  background-color: #141414;
+  background-color: var(--dark);
 }
 
 .ul-container .anticon svg {

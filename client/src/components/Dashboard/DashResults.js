@@ -1,45 +1,38 @@
-import "./styles/DashResults.css"
-import { useEffect } from "react"
+import { SearchBarContext } from "../../context/searchBarContext";
+import "./styles/DashResults.css";
+import { useContext } from "react";
+import { PageHeader } from "antd";
+import DashResultCard from "./DashResultCard";
+import { useNavigate } from "react-router-dom";
 
 const DashResults = ({
-    dashSearchResults,
-    setCurrentSong,
-    setOneSongClick,
-    currentPlayer,
+  dashSearchResults,
+  setCurrentSong,
+  setOneSongClick,
+  currentPlayer,
 }) => {
-    const handleSearchClick = (event) => {
-        event.preventDefault()
+  const { searchBar } = useContext(SearchBarContext);
+  const navigate = useNavigate();
+  console.log(searchBar);
 
-        if (setOneSongClick !== undefined) {
-            setOneSongClick(true)
-            currentPlayer.current.src = event.currentTarget.name
-            setCurrentSong(event.currentTarget.name)
-        }
-    }
+  return (
+    <div className="dash-result-container">
+      <PageHeader
+        className="site-page-header"
+        onBack={() => navigate(-1)}
+        title={`Search results for "${searchBar}"`}
+      />
 
-    return (
-        <div className="searchResults">
-            <div className="subResults">
-                {dashSearchResults.map((song, index) => {
-                    return (
-                        <>
-                            <button
-                                className="resultsCard"
-                                id="resultsBtn"
-                                name={song.link}
-                                key={index}
-                                onClick={handleSearchClick}
-                            >
-                                <h1>Title: {song.title}</h1>
-                                <p>Artist: {song.artist}</p>
-                                <p>Genre: {song.genre}</p>
-                            </button>
-                        </>
-                    )
-                })}
-            </div>
-        </div>
-    )
-}
+      {dashSearchResults.map((searchItem) => (
+        <DashResultCard
+          setCurrentSong={setCurrentSong}
+          dashSearchResults={searchItem}
+          setOneSongClick={setOneSongClick}
+          currentPlayer={currentPlayer}
+        />
+      ))}
+    </div>
+  );
+};
 
-export default DashResults
+export default DashResults;
