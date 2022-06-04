@@ -1,6 +1,6 @@
 .main-container {
   padding: 2rem 2rem 3rem;
-  height: fit-content;
+  height: 90vh;
   background: var(--dark);
 }
 

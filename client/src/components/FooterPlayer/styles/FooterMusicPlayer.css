@@ -37,7 +37,6 @@ body {
 }
 
 .musicianTrack h2 {
-
   margin-block-end: 0;
 }
 
@@ -49,89 +48,82 @@ body {
   width: 30%;
 }
 
-    text-align: center;
-    margin-block-end: 0;
-}
-
 .musicianTrack h3 {
-    text-align: center;
-    margin-block-start: 0;
+  text-align: center;
+  margin-block-start: 0;
 }
 
 .volContainer {
-    width: 30%;
+  width: 30%;
 }
 
 .footerTimeSlider {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 #startFooterTimer {
-    display: flex;
-    justify-content: center;
-    padding-right: 5px;
+  display: flex;
+  justify-content: center;
+  padding-right: 5px;
 }
 
 #endFooterTimer {
-    display: flex;
-    justify-content: center;
-    padding-left: 5px;
+  display: flex;
+  justify-content: center;
+  padding-left: 5px;
 }
 
 #footerTimerBar {
-    width: 50%;
+  width: 50%;
 }
 
 @media screen and (max-width: 800px) {
-    .volContainer {
-        display: none;
-    }
+  .volContainer {
+    display: none;
+  }
 
-    #endFooterTimer {
-        margin-right: 5px;
-    }
-
+  #endFooterTimer {
+    margin-right: 5px;
+  }
 }
 
-
 @media screen and (max-width: 800px) {
-    #footerTimerBar {
-        width: 60%;
-    }
+  #footerTimerBar {
+    width: 60%;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    #footerTimerBar {
-        width: 50%;
-    }
+  #footerTimerBar {
+    width: 50%;
+  }
 
-    .musicianTrack h2 {
-        text-align: center;
-        font-size: 10px;
-        font-weight: bold;
-    }
-    
-    .musicianTrack h3 {
-        text-align: center;
-        font-size: 9px;
-    }
+  .musicianTrack h2 {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .musicianTrack h3 {
+    text-align: center;
+    font-size: 9px;
+  }
 }
 
 @media screen and (max-width: 522px) {
-.footer-audio-controls {
+  .footer-audio-controls {
     width: 30%;
-}
+  }
 }
 
 @media screen and (max-width: 515px) {
-    #footerTimerBar {
-        width: 47%
-    }
+  #footerTimerBar {
+    width: 47%;
+  }
 }
 
 @media screen and (max-width: 450px) {
-    .musicianTrack {
-        margin-right: 15px
-    }
+  .musicianTrack {
+    margin-right: 15px;
+  }
 }
-
