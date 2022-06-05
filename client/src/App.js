@@ -1,21 +1,20 @@
 import {
-  LandingPage,
-  Register,
-  Login,
-  AddSong,
-  SongList,
-  Playlists,
-} from "./pages";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import SongDetails from "./pages/SongDetails";
-import { AuthContext } from "./context/authContext";
-import { useContext, useEffect, useState, useRef } from "react";
-import Footer from "./components/Footer";
-import DashResults from "./components/Dashboard/DashResults";
+    LandingPage,
+    Register,
+    Login,
+    AddSong,
+    SongList,
+    Playlists,
+} from "./pages"
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"
+import Navbar from "./components/Navbar"
+import SongDetails from "./pages/SongDetails"
+import { AuthContext } from "./context/authContext"
+import { useContext, useEffect, useState, useRef } from "react"
+import Footer from "./components/Footer"
+import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
-
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(new Audio())
     const [prevCount, setPrevCount] = useState(0)
@@ -30,20 +29,21 @@ function App() {
     const [isTwoPlaying, getTwo] = useState(false)
     const [isThreePlaying, getThree] = useState(false)
 
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext)
 
     useEffect(() => {
+        console.log(currentSong, audioList)
         if (location.pathname.split("/") !== "")
             if (audioList[0] !== undefined)
                 for (let each in audioList) {
                     if (
-                        audioList[each].src !== currentPlayer.current.src &&
+                        audioList[each].src !== currentSong &&
                         genreClickCount > prevCount
                     ) {
                         audioList[each].pause()
-                    }
+                    } else console.log("hi")
                 }
-    }, [location.pathname, currentPlayer.current.src, isOnePlaying])
+    }, [location.pathname, currentSong])
 
     return (
         <div>
@@ -92,6 +92,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            currentPlayer={currentPlayer}
                             getPlaying={getPlaying}
                             setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
@@ -100,7 +101,16 @@ function App() {
                 />
                 <Route
                     path="/playlists"
-                    element={user ? <Playlists currentPlayer={currentPlayer} setCurrentSong={setCurrentSong} /> : <Navigate to="/" />}
+                    element={
+                        user ? (
+                            <Playlists
+                                currentPlayer={currentPlayer}
+                                setCurrentSong={setCurrentSong}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
                 />
             </Routes>
 
@@ -123,4 +133,4 @@ function App() {
     )
 }
 
-export default App;
+export default App

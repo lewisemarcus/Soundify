@@ -104,6 +104,9 @@ const AudioPlayer = ({
             audioRef.current.volume = newVolume || 0.01
         }
     }
+
+    useEffect(() => {}, [currentSong])
+
     useEffect(() => {
         if (isOnePlaying || isTwoPlaying || isThreePlaying) setIsPlaying(true)
         else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying)
@@ -134,7 +137,8 @@ const AudioPlayer = ({
                 }
 
                 if (isPlaying) {
-                    audioRef.current.play()
+                    currentPlayer.current.play()
+
                     startTimer()
                 } else {
                     audioRef.current.pause()
@@ -148,7 +152,7 @@ const AudioPlayer = ({
 
                 if (playing && isPlaying) {
                     audioRef.current.addEventListener("loadedmetadata", () => {
-                        audioRef.current.play()
+                        //audioRef.current.play()
                     })
                     startTimer()
                 } else {
@@ -206,15 +210,8 @@ const AudioPlayer = ({
                 else if (audioR && !audioR.current) audioRef.current = audioR
 
             setTrackProgress(audioRef.current.currentTime)
-            if (
-                isReady.current &&
-                location.pathname.split("/")[1] === "DashResults"
-            ) {
-                if (audioRef.current !== null) {
-                    audioRef.current.addEventListener("loadedmetadata", () => {
-                        audioRef.current.play()
-                    })
-                }
+            if (isReady.current) {
+                audioRef.current.play()
                 setIsPlaying(true)
                 // isReady.current = false
             } else {
@@ -286,26 +283,26 @@ const AudioPlayer = ({
                     onPlayPauseClick={setIsPlaying}
                 />
                 <div className="musicianTrack">
-                {title.length > 6 ? (
-                    <Marquee gradient={false} delay={2}>
-                        <h2 className="footer-title">
-                            {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </h2>
-                    </Marquee>
-                ) : (
-                    <h2 className="footer-title">{title}</h2>
-                )}
+                    {title.length > 6 ? (
+                        <Marquee gradient={false} delay={2}>
+                            <h2 className="footer-title">
+                                {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h2>
+                        </Marquee>
+                    ) : (
+                        <h2 className="footer-title">{title}</h2>
+                    )}
 
-                {title.length > 6 ? (
-                    <Marquee gradient={false} delay={2}>
-                        <h2 className="footer-artist">
-                            {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </h2>
-                    </Marquee>
-                ) : (
-                    <h2 className="footer-artist">{artist}</h2>
-                )}
-                    
+                    {title.length > 6 ? (
+                        <Marquee gradient={false} delay={2}>
+                            <h2 className="footer-artist">
+                                {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h2>
+                        </Marquee>
+                    ) : (
+                        <h2 className="footer-artist">{artist}</h2>
+                    )}
+
                     {/* <h3 className="footer-artist">{artist}</h3> */}
                 </div>
                 <div id="startFooterTimer">{displayTime}</div>

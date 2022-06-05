@@ -28,7 +28,7 @@ const DashAudioOne = ({
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
-    const audioRef = useRef(new Audio(songLink))
+
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -45,12 +45,12 @@ const DashAudioOne = ({
     const originalData = [...songData]
 
     const intervalRef = useRef()
-    if (audioRef !== undefined && audioRef.current !== undefined)
-        audioRef.current.volume = volume
+    if (currentPlayer !== undefined && currentPlayer.current !== undefined)
+        currentPlayer.current.volume = volume
     const isReady = useRef(false)
     let duration
     // Destructure for conciseness
-    if (audioRef !== undefined) duration = audioRef.current.duration
+    if (currentPlayer !== undefined) duration = currentPlayer.current.duration
     const currentPercentage = duration
         ? `${(trackProgress / duration) * 100}%`
         : "0%"
@@ -62,10 +62,10 @@ const DashAudioOne = ({
         clearInterval(intervalRef.current)
 
         intervalRef.current = setInterval(() => {
-            if (audioRef.current.ended) {
+            if (currentPlayer.current.ended) {
                 toNextTrack()
             } else {
-                setTrackProgress(audioRef.current.currentTime)
+                setTrackProgress(currentPlayer.current.currentTime)
             }
         }, [100])
     }
@@ -73,8 +73,8 @@ const DashAudioOne = ({
     const onScrub = (value) => {
         // Clear any timers already running
         clearInterval(intervalRef.current)
-        audioRef.current.currentTime = value
-        setTrackProgress(audioRef.current.currentTime)
+        currentPlayer.current.currentTime = value
+        setTrackProgress(currentPlayer.current.currentTime)
     }
 
     const onScrubEnd = () => {
@@ -87,7 +87,9 @@ const DashAudioOne = ({
     }
 
     const toPrevTrack = () => {
+        setIsPlaying(false)
         setGenreBool(true)
+
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(tracks.length - 1)
@@ -109,6 +111,7 @@ const DashAudioOne = ({
 
     const toNextTrack = () => {
         setGenreBool(true)
+        setIsPlaying(false)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
                 setTrackIndex(trackIndex + 1)
@@ -134,13 +137,13 @@ const DashAudioOne = ({
 
         if (newVolume) {
             setVolume(newVolume)
-            audioRef.current.volume = newVolume || 0.01
+            currentPlayer.current.volume = newVolume || 0.01
         }
     }
 
     useEffect(() => {
-        if (audioRef !== undefined)
-            if (audioRef.current.paused) {
+        if (currentPlayer !== undefined)
+            if (currentPlayer.current.paused && !isPlayingOne) {
                 setIsPlaying(false)
                 if (getOne !== undefined) getOne(false)
             }
@@ -148,15 +151,14 @@ const DashAudioOne = ({
 
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
-        if (audioRef !== undefined) {
+        if (currentPlayer !== undefined) {
             if (isPlayingOne) {
-                audioRef.current.play()
                 startTimer()
                 setIsPlaying(true)
-                setCurrent(audioRef.current)
+                setCurrent(currentPlayer.current)
                 if (getOne !== undefined) getOne(true)
             } else {
-                audioRef.current.pause()
+                currentPlayer.current.pause()
                 setIsPlaying(false)
                 if (getOne !== undefined) getOne(false)
             }
@@ -197,22 +199,25 @@ const DashAudioOne = ({
                 setSongInfo(songData[trackIndex])
             }
         }
-        if (audioRef !== undefined) {
-            audioRef.current.pause()
-            audioRef.current = new Audio(songLink)
-            audioRef.current.addEventListener("loadedmetadata", (event) => {
-                getSongDur(event.target.duration)
-            })
-            audioRef.current.load()
+        if (currentPlayer !== undefined) {
+            currentPlayer.current.pause()
+            console.log(songLink)
+            currentPlayer.current.src = songLink
+            currentPlayer.current.addEventListener(
+                "loadedmetadata",
+                (event) => {
+                    getSongDur(event.target.duration)
+                },
+            )
+            currentPlayer.current.load()
             if (getAudioOne !== undefined) {
-                getAudioOne(audioRef.current)
+                getAudioOne(currentPlayer.current)
             }
 
-            setTrackProgress(audioRef.current.currentTime)
+            setTrackProgress(currentPlayer.current.currentTime)
             if (isReady.current && genreBool) {
                 setGenreBool(false)
 
-                audioRef.current.play()
                 setIsPlaying(true)
                 if (getOne !== undefined) getOne(true)
 
@@ -226,7 +231,7 @@ const DashAudioOne = ({
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
-            audioRef.current.pause()
+            currentPlayer.current.pause()
             clearInterval(intervalRef.current)
         }
     }, [])
@@ -242,13 +247,13 @@ const DashAudioOne = ({
         chDisplay,
         cmDisplay,
         csDisplay
-    if (audioRef !== undefined) {
-        if (audioRef.current.currentTime === undefined)
-            audioRef.current.currentTime = 0
+    if (currentPlayer !== undefined) {
+        if (currentPlayer.current.currentTime === undefined)
+            currentPlayer.current.currentTime = 0
 
-        ch = Math.floor(audioRef.current.currentTime / 3600)
-        cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-        cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+        ch = Math.floor(currentPlayer.current.currentTime / 3600)
+        cm = Math.floor((currentPlayer.current.currentTime % 3600) / 60)
+        cs = Math.floor((currentPlayer.current.currentTime % 3600) % 60)
 
         chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
         cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
@@ -269,7 +274,7 @@ const DashAudioOne = ({
 
     return (
         <div className="audio-play">
-            <div className="track-information">
+            <div id={songInfo.link} className="track-information">
                 {songInfo.title.length > 16 ? (
                     <Marquee gradient={false} delay={1}>
                         <h2 className="songTitle">

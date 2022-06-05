@@ -12,7 +12,12 @@ import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 
-const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
+const SongDetails = ({
+    setCurrentSong,
+    setAudioR,
+    getPlaying,
+    currentPlayer,
+}) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
     const { songId } = useParams()
@@ -118,6 +123,11 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
             setCharacterCount(value.length)
         }
     }
+
+    useEffect(() => {
+        currentPlayer.current.src = querySong.link
+    })
+
     useEffect(() => {
         if (querySong.link !== undefined) {
             // console.log(audio.current)
@@ -202,7 +212,7 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
                     <Waveform
                         getPlaying={getPlaying}
                         song={querySong}
-                        audio={audio}
+                        audio={currentPlayer}
                     />
                     <div
                         style={{

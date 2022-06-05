@@ -24,10 +24,11 @@ const DashAudioThree = ({
     getAudioThree,
     getIndexThree,
     setCurrent,
+    currentPlayer,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
-    const audioRef = useRef(new Audio(songLink))
+
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -44,11 +45,11 @@ const DashAudioThree = ({
     const originalData = [...songData]
 
     const intervalRef = useRef()
-    audioRef.current.volume = volume
+    currentPlayer.current.volume = volume
     const isReady = useRef(false)
 
     // Destructure for conciseness
-    const { duration } = audioRef.current
+    const { duration } = currentPlayer.current
 
     const currentPercentage = duration
         ? `${(trackProgress / duration) * 100}%`
@@ -62,10 +63,10 @@ const DashAudioThree = ({
         clearInterval(intervalRef.current)
 
         intervalRef.current = setInterval(() => {
-            if (audioRef.current.ended) {
+            if (currentPlayer.current.ended) {
                 toNextTrack()
             } else {
-                setTrackProgress(audioRef.current.currentTime)
+                setTrackProgress(currentPlayer.current.currentTime)
             }
         }, [1000])
     }
@@ -73,8 +74,8 @@ const DashAudioThree = ({
     const onScrub = (value) => {
         // Clear any timers already running
         clearInterval(intervalRef.current)
-        audioRef.current.currentTime = value
-        setTrackProgress(audioRef.current.currentTime)
+        currentPlayer.current.currentTime = value
+        setTrackProgress(currentPlayer.current.currentTime)
     }
 
     const onScrubEnd = () => {
@@ -98,7 +99,7 @@ const DashAudioThree = ({
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
             }
             if (getAudioThree !== undefined) {
-                getAudioThree(audioRef.current)
+                getAudioThree(currentPlayer.current)
             }
         } else {
             if (trackIndex - 1 < 0) {
@@ -110,7 +111,7 @@ const DashAudioThree = ({
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
             }
             if (getAudioThree !== undefined) {
-                getAudioThree(audioRef.current)
+                getAudioThree(currentPlayer.current)
             }
         }
     }
@@ -142,12 +143,12 @@ const DashAudioThree = ({
 
         if (newVolume) {
             setVolume(newVolume)
-            audioRef.current.volume = newVolume || 0.01
+            currentPlayer.current.volume = newVolume || 0.01
         }
     }
 
     useEffect(() => {
-        if (audioRef.current.paused) {
+        if (currentPlayer.current.paused && !isPlayingThree) {
             setIsPlaying(false)
             if (getThree !== undefined) getThree(false)
         }
@@ -156,13 +157,13 @@ const DashAudioThree = ({
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlayingThree) {
-            setCurrent(audioRef.current)
-            audioRef.current.play()
+            setCurrent(currentPlayer.current)
+            currentPlayer.current.play()
             startTimer()
             setIsPlaying(true)
             if (getThree !== undefined) getThree(true)
         } else {
-            audioRef.current.pause()
+            currentPlayer.current.pause()
             setIsPlaying(false)
             if (getThree !== undefined) getThree(false)
         }
@@ -202,20 +203,20 @@ const DashAudioThree = ({
             }
         }
 
-        audioRef.current.pause()
-        audioRef.current = new Audio(songLink)
-        audioRef.current.addEventListener("loadedmetadata", (event) => {
+        currentPlayer.current.pause()
+        currentPlayer.current.src = songLink
+        currentPlayer.current.addEventListener("loadedmetadata", (event) => {
             getSongDur(event.target.duration)
         })
-        audioRef.current.load()
+        currentPlayer.current.load()
         if (getAudioThree !== undefined) {
-            getAudioThree(audioRef.current)
+            getAudioThree(currentPlayer.current)
         }
 
-        setTrackProgress(audioRef.current.currentTime)
+        setTrackProgress(currentPlayer.current.currentTime)
         if (isReady.current && genreBool) {
             setGenreBool(false)
-            audioRef.current.play()
+            currentPlayer.current.play()
             setIsPlaying(true)
             if (getThree !== undefined) getThree(true)
             startTimer()
@@ -228,7 +229,7 @@ const DashAudioThree = ({
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
-            audioRef.current.pause()
+            currentPlayer.current.pause()
             clearInterval(intervalRef.current)
         }
     }, [])
@@ -245,12 +246,12 @@ const DashAudioThree = ({
         cmDisplay,
         csDisplay
 
-    if (audioRef.current.currentTime === undefined)
-        audioRef.current.currentTime = 0
+    if (currentPlayer.current.currentTime === undefined)
+        currentPlayer.current.currentTime = 0
 
-    ch = Math.floor(audioRef.current.currentTime / 3600)
-    cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
-    cs = Math.floor((audioRef.current.currentTime % 3600) % 60)
+    ch = Math.floor(currentPlayer.current.currentTime / 3600)
+    cm = Math.floor((currentPlayer.current.currentTime % 3600) / 60)
+    cs = Math.floor((currentPlayer.current.currentTime % 3600) % 60)
 
     chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
     cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
@@ -258,9 +259,9 @@ const DashAudioThree = ({
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
 
-    h = Math.floor(audioRef.current.duration / 3600)
-    m = Math.floor((audioRef.current.duration % 3600) / 60)
-    s = Math.floor((audioRef.current.duration % 3600) % 60)
+    h = Math.floor(currentPlayer.current.duration / 3600)
+    m = Math.floor((currentPlayer.current.duration % 3600) / 60)
+    s = Math.floor((currentPlayer.current.duration % 3600) % 60)
 
     hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
     mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
