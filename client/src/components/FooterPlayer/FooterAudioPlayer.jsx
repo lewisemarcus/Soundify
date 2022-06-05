@@ -14,7 +14,7 @@ const AudioPlayer = ({
     currentSong,
     oneSongClick,
     setOneSongClick,
-    audioR,
+
     genreClickCount,
     playing,
     prevCount,
@@ -104,6 +104,9 @@ const AudioPlayer = ({
             audioRef.current.volume = newVolume || 0.01
         }
     }
+
+    useEffect(() => {}, [currentSong])
+
     useEffect(() => {
         if (isOnePlaying || isTwoPlaying || isThreePlaying) setIsPlaying(true)
         else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying)
@@ -117,14 +120,6 @@ const AudioPlayer = ({
     }, [genreClickCount, prevCount, currentSong])
 
     // Handles cleanup and setup when changing tracks
-    useEffect(() => {
-        if (audioRef.current) {
-            if (audioR && audioR.current) audioRef = audioR
-            else if (audioR && !audioR.current) audioRef.current = audioR
-
-            setOneSongClick(false)
-        }
-    }, [oneSongClick, currentSong, audioR])
 
     useEffect(() => {
         if (location.pathname.split("/")[1] !== "song") {
@@ -134,7 +129,8 @@ const AudioPlayer = ({
                 }
 
                 if (isPlaying) {
-                    audioRef.current.play()
+                    currentPlayer.current.play()
+
                     startTimer()
                 } else {
                     audioRef.current.pause()
@@ -148,10 +144,11 @@ const AudioPlayer = ({
 
                 if (playing && isPlaying) {
                     audioRef.current.addEventListener("loadedmetadata", () => {
-                        audioRef.current.play()
+                        //audioRef.current.play()
                     })
                     startTimer()
                 } else {
+                    console.log(audioRef)
                     audioRef.current.pause()
                 }
             }
@@ -159,13 +156,6 @@ const AudioPlayer = ({
     }, [isPlaying, location.pathname, playing, genreClickCount])
 
     useEffect(() => {
-        if (audioRef.current !== undefined)
-            if (audioR && audioR.current) audioRef.current = audioR.current
-            else if (audioR && !audioR.current) audioRef = audioR
-            else if (!audioR) audioRef.current.src = currentSong
-    }, [currentSong, audioR])
-
-    useEffect(() => {
         if (audioRef && audioRef.current) {
             audioRef.current.volume = volume
             // Destructure for conciseness
@@ -176,16 +166,10 @@ const AudioPlayer = ({
             )
             setTrackStyle(`
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
-
-            if (!audioRef.current.paused)
-                if (audioR && audioR.current)
-                    //audioRef.current.pause()
-                    audioRef.current = audioR.current
-                else if (audioR && !audioR.current) audioRef.current = audioR
 
             setTrackProgress(audioRef.current.currentTime)
         }
-    }, [trackProgress, audioR, currentSong])
+    }, [trackProgress, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {
@@ -199,22 +183,8 @@ const AudioPlayer = ({
             setTrackStyle(`
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
 
-            if (!audioRef.current.paused)
-                if (audioR && audioR.current)
-                    //audioRef.current.pause()
-                    audioRef.current = audioR.current
-                else if (audioR && !audioR.current) audioRef.current = audioR
-
             setTrackProgress(audioRef.current.currentTime)
-            if (
-                isReady.current &&
-                location.pathname.split("/")[1] === "DashResults"
-            ) {
-                if (audioRef.current !== null) {
-                    audioRef.current.addEventListener("loadedmetadata", () => {
-                        audioRef.current.play()
-                    })
-                }
+            if (isReady.current) {
                 setIsPlaying(true)
                 // isReady.current = false
             } else {
@@ -227,7 +197,6 @@ const AudioPlayer = ({
         oneSongClick,
         currentSong,
         location.pathname,
-        audioR,
         trackProgress,
     ])
 
@@ -286,26 +255,26 @@ const AudioPlayer = ({
                     onPlayPauseClick={setIsPlaying}
                 />
                 <div className="musicianTrack">
-                {title.length > 6 ? (
-                    <Marquee gradient={false} delay={2}>
-                        <h2 className="footer-title">
-                            {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </h2>
-                    </Marquee>
-                ) : (
-                    <h2 className="footer-title">{title}</h2>
-                )}
+                    {title.length > 6 ? (
+                        <Marquee gradient={false} delay={2}>
+                            <h2 className="footer-title">
+                                {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h2>
+                        </Marquee>
+                    ) : (
+                        <h2 className="footer-title">{title}</h2>
+                    )}
 
-                {title.length > 6 ? (
-                    <Marquee gradient={false} delay={2}>
-                        <h2 className="footer-artist">
-                            {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </h2>
-                    </Marquee>
-                ) : (
-                    <h2 className="footer-artist">{artist}</h2>
-                )}
-                    
+                    {title.length > 6 ? (
+                        <Marquee gradient={false} delay={2}>
+                            <h2 className="footer-artist">
+                                {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h2>
+                        </Marquee>
+                    ) : (
+                        <h2 className="footer-artist">{artist}</h2>
+                    )}
+
                     {/* <h3 className="footer-artist">{artist}</h3> */}
                 </div>
                 <div id="startFooterTimer">{displayTime}</div>
@@ -321,11 +290,7 @@ const AudioPlayer = ({
                     onKeyUp={onScrubEnd}
                     style={{ background: trackStyle }}
                 />
-                <div
-                   id="endFooterTimer"
-                >
-                    {endTime}
-                </div>
+                <div id="endFooterTimer">{endTime}</div>
             </div>
             {/* Volume slider */}
             <div className="volContainer">
