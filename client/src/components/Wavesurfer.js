@@ -49,15 +49,18 @@ export default function Waveform({ song, audio, getPlaying }) {
     // On component mount and when url changes
     useEffect(() => {
         setPlay(false)
+        console.log(audio.current.src)
         const options = formWaveSurferOptions(waveformRef.current)
         wavesurfer.current = WaveSurfer.create(options)
+        if (audio.current.src !== undefined)
+            wavesurfer.current.load(audio.current)
 
-        wavesurfer.current.load(audio.current)
-
-        wavesurfer.current.on("ready", function () {
+        wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
-            // wavesurfer.current.play();
+            //wavesurfer.current.play()
             // setPlay(true);
+
+            audio.current.play()
 
             // make sure object still available when file loaded
             if (wavesurfer.current) {
@@ -94,12 +97,12 @@ export default function Waveform({ song, audio, getPlaying }) {
         // Removes events, elements and disconnects Web Audio nodes.
         // when component unmount
         return () => wavesurfer.current.destroy()
-    }, [song])
+    }, [song, audio.current.src])
 
     const handlePlayPause = () => {
         setPlay(!playing)
         getPlaying(!playing)
-        wavesurfer.current.playPause()
+        //wavesurfer.current.playPause()
     }
 
     const onVolumeChange = (e) => {

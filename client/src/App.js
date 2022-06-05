@@ -16,7 +16,7 @@ import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
-    const currentPlayer = useRef(new Audio())
+    const currentPlayer = useRef(null)
     const [prevCount, setPrevCount] = useState(0)
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
@@ -129,6 +129,12 @@ function App() {
                     setOneSongClick={setOneSongClick}
                 />
             )}
+            <audio
+                id="audio-element"
+                crossOrigin="anonymous"
+                ref={currentPlayer}
+                src={currentSong}
+            ></audio>
         </div>
     )
 }
