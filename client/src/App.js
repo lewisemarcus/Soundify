@@ -92,6 +92,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            currentPlayer={currentPlayer}
                             getPlaying={getPlaying}
                             setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}

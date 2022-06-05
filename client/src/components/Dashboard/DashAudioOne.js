@@ -201,6 +201,7 @@ const DashAudioOne = ({
         }
         if (currentPlayer !== undefined) {
             currentPlayer.current.pause()
+            console.log(songLink)
             currentPlayer.current.src = songLink
             currentPlayer.current.addEventListener(
                 "loadedmetadata",
