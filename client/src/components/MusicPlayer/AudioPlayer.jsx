@@ -7,7 +7,17 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
-const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong, newTitle, r, setR }) => {
+const AudioPlayer = ({ 
+    tracks, 
+    playlistSong, 
+    setSelectedSong, 
+    selectedSong, 
+    newTitle, 
+    r, 
+    setR,
+    currentPlayer,
+    setCurrentSong
+}) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
@@ -178,6 +188,8 @@ const AudioPlayer = ({ tracks, playlistSong, setSelectedSong, selectedSong, newT
     sDisplay = s < 10 ? "0" + s : s
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
+
+    currentPlayer.current.src = audioRef.current.src
 
     return (
         <div className="audio-player">

@@ -30,7 +30,7 @@ function App() {
     const [isTwoPlaying, getTwo] = useState(false)
     const [isThreePlaying, getThree] = useState(false)
 
-  const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (location.pathname.split("/") !== "")
@@ -100,7 +100,7 @@ function App() {
                 />
                 <Route
                     path="/playlists"
-                    element={user ? <Playlists /> : <Navigate to="/" />}
+                    element={user ? <Playlists currentPlayer={currentPlayer} setCurrentSong={setCurrentSong} /> : <Navigate to="/" />}
                 />
             </Routes>
 

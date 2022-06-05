@@ -54,20 +54,20 @@ const SongDetails = ({ setCurrentSong, setAudioR, getPlaying }) => {
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
-    const { loading: playlistloading, data: playlistdata } = useState(window.innerWidth)= useQuery(GET_USER_PLAYLIST, {
-        variables: { username: username },
-    });
+    // const { loading: playlistloading, data: playlistdata } = useState(window.innerWidth)= useQuery(GET_USER_PLAYLIST, {
+    //     variables: { username: username },
+    // });
 
-    const usersPlaylists = data?.userPlaylists || [];
+    // const usersPlaylists = data?.userPlaylists || [];
 
-    const success = async () => {
-        await message.loading("Uploading playlist...");
-        await message.success("Successfully added song to playlist!");
-    };
+    // const success = async () => {
+    //     await message.loading("Uploading playlist...");
+    //     await message.success("Successfully added song to playlist!");
+    // };
     
-    const modalError = () => {
-        message.modalError("Error occured! Try again.");
-    };
+    // const modalError = () => {
+    //     message.modalError("Error occured! Try again.");
+    // };
 
     const handleChange = (event) => {
         if (event.label) {
