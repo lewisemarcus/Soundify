@@ -2,7 +2,16 @@ import React, { useEffect, useState } from "react"
 // import "./styles/DashboardPlayer.css"
 import AudioPlayer from "./AudioPlayer"
 
-const AudioPlayerContainer = ({ playlistSong, setSelectedSong, selectedSong, newTitle, r, setR }) => {
+const AudioPlayerContainer = ({ 
+    playlistSong, 
+    setSelectedSong, 
+    selectedSong, 
+    newTitle, 
+    r, 
+    setR,
+    setCurrentSong,
+    currentPlayer
+}) => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     // console.log(newTitle)
@@ -39,6 +48,8 @@ const AudioPlayerContainer = ({ playlistSong, setSelectedSong, selectedSong, new
                 newTitle={newTitle}
                 r={r}
                 setR={setR}
+                currentPlayer={currentPlayer}
+                setCurrentSong={setCurrentSong}
             />
         </div>
     )

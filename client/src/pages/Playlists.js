@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client"
 import { qrySongs } from "../utils/queries/songQueries"
 import { useLocation } from "react-router-dom"
 
-const Playlists = () => {
+const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
   const { loading, data } = useQuery(qrySongs)
   const [playlistSong, setPlaylistSong] = useState()
   const [selectedSong, setSelectedSong] = useState(false)
@@ -37,6 +37,7 @@ const Playlists = () => {
       setR(true)
     }
   }
+
   // console.log(newTitle)
   
   // useEffect(() => {
@@ -59,6 +60,8 @@ const Playlists = () => {
           newTitle={newTitle}
           r={r}
           setR={setR}
+          currentPlayer={currentPlayer}
+          setCurrentSong={setCurrentSong}
         />
         <div className="item">
           <div className="content">
