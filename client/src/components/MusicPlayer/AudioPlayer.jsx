@@ -75,17 +75,66 @@ const AudioPlayer = ({
     const toPrevTrack = () => {
         if (trackIndex - 1 < 0) {
             setTrackIndex(tracks.length - 1)
-            console.log('.parentNode')
+            let find = document.querySelectorAll('.active')
+            find.forEach((find) => {
+                find.classList.remove('active')
+            })
+            let row = document.querySelectorAll('button[title]')
+            let r
+            r = row[row.length - 1]
+            row = r.parentNode
+            console.log(row)
+            row.classList.add("active")
         } else {
             setTrackIndex(trackIndex - 1)
+            let find = document.querySelectorAll('.active')
+            find.forEach((find) => {
+                find.classList.remove('active')
+            })
+            let row = document.querySelectorAll('button[title]')
+            let btnTitle = {title}.title
+            let r
+            for (r = 0; r < row.length; r++){
+                if (row[r].title === btnTitle) { 
+                    break; 
+                }  
+            }
+            r--
+            row = row[r].parentNode
+            row.classList.add("active")
         }
+        
     }
 
     const toNextTrack = () => {
         if (trackIndex < tracks.length - 1) {
             setTrackIndex(trackIndex + 1)
+            let find = document.querySelectorAll('.active')
+            find.forEach((find) => {
+                find.classList.remove('active')
+            })
+            let row = document.querySelectorAll('button[title]')
+            let btnTitle = {title}.title
+            let r
+            for (r = 0; r < row.length; r++){
+                if (row[r].title === btnTitle) { 
+                    break; 
+                }  
+            }
+            r++
+            row = row[r].parentNode
+            row.classList.add("active")
         } else {
             setTrackIndex(0)
+            let find = document.querySelectorAll('.active')
+            find.forEach((find) => {
+                find.classList.remove('active')
+            })
+            let row = document.querySelectorAll('button[title]')
+            let r
+            r = row[0]
+            row = r.parentNode
+            row.classList.add("active")
         }
     }
 
