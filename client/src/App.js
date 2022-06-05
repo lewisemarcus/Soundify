@@ -32,7 +32,7 @@ function App() {
     const { user } = useContext(AuthContext)
 
     useEffect(() => {
-        console.log(currentSong, audioList)
+        console.log(currentPlayer)
         if (location.pathname.split("/") !== "")
             if (audioList[0] !== undefined)
                 for (let each in audioList) {
@@ -53,6 +53,7 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            currentSong={currentSong}
                             isOnePlaying={isOnePlaying}
                             getOne={getOne}
                             isTwoPlaying={isTwoPlaying}

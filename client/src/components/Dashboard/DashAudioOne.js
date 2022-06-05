@@ -2,10 +2,6 @@ import React, { useState, useEffect, useRef } from "react"
 import DashAudioControlOne from "./DashAudioControlOne"
 import DashBackDropOne from "./DashBackDropOne"
 import "./styles/DashAudio.css"
-import Slider from "@mui/material/Slider"
-import Stack from "@mui/material/Stack"
-import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
-import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import { Link } from "react-router-dom"
 import Marquee from "react-fast-marquee"
 import shuffleArray from "../../utils/helpers/shuffleArray"
@@ -15,76 +11,28 @@ import shuffleArray from "../../utils/helpers/shuffleArray"
  * https://letsbuildui.dev/articles/building-an-audio-player-with-react-hooks
  */
 const DashAudioOne = ({
-    setCurrent,
     tracks,
     songData,
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    getAudioOne,
+    setCurrentSong,
     getOne,
     getIndexOne,
     currentPlayer,
+    setCurrent,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // State
     const [trackIndex, setTrackIndex] = useState(0)
-    const [trackProgress, setTrackProgress] = useState(0)
     const [isPlayingOne, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
-    const [volume, setVolume] = useState(0.2)
-    const firstSong = new Audio(tracks[0].link)
-    let firstDur
-    firstSong.addEventListener("loadedmetadata", (event) => {
-        firstDur = event.target.duration
-    })
-    const [songDur, getSongDur] = useState(firstDur)
 
     const originalData = [...songData]
 
-    const intervalRef = useRef()
-    if (currentPlayer !== undefined && currentPlayer.current !== undefined)
-        currentPlayer.current.volume = volume
     const isReady = useRef(false)
-    let duration
-    // Destructure for conciseness
-    if (currentPlayer !== undefined) duration = currentPlayer.current.duration
-    const currentPercentage = duration
-        ? `${(trackProgress / duration) * 100}%`
-        : "0%"
-    const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
-  `
-    const startTimer = () => {
-        // Clear any timers already running
-        clearInterval(intervalRef.current)
-
-        intervalRef.current = setInterval(() => {
-            if (currentPlayer.current.ended) {
-                toNextTrack()
-            } else {
-                setTrackProgress(currentPlayer.current.currentTime)
-            }
-        }, [100])
-    }
-
-    const onScrub = (value) => {
-        // Clear any timers already running
-        clearInterval(intervalRef.current)
-        currentPlayer.current.currentTime = value
-        setTrackProgress(currentPlayer.current.currentTime)
-    }
-
-    const onScrubEnd = () => {
-        // If not already playing, start
-        if (!isPlayingOne) {
-            setIsPlaying(false)
-            if (getOne !== undefined) getOne(false)
-        }
-        startTimer()
-    }
 
     const toPrevTrack = () => {
         setIsPlaying(false)
@@ -131,16 +79,6 @@ const DashAudioOne = ({
         }
     }
 
-    const onVolumeChange = (e) => {
-        const { target } = e
-        const newVolume = +target.value
-
-        if (newVolume) {
-            setVolume(newVolume)
-            currentPlayer.current.volume = newVolume || 0.01
-        }
-    }
-
     useEffect(() => {
         if (currentPlayer !== undefined)
             if (currentPlayer.current.paused && !isPlayingOne) {
@@ -153,13 +91,14 @@ const DashAudioOne = ({
     useEffect(() => {
         if (currentPlayer !== undefined) {
             if (isPlayingOne) {
-                startTimer()
-                setIsPlaying(true)
-                setCurrent(currentPlayer.current)
+                document
+                    .getElementById("one")
+                    .setAttribute("name", songInfo.link)
+                setCurrent(document.getElementById("one"))
+
+                setCurrentSong(songInfo.link)
                 if (getOne !== undefined) getOne(true)
             } else {
-                currentPlayer.current.pause()
-                setIsPlaying(false)
                 if (getOne !== undefined) getOne(false)
             }
         }
@@ -203,25 +142,14 @@ const DashAudioOne = ({
             currentPlayer.current.pause()
             console.log(songLink)
             currentPlayer.current.src = songLink
-            currentPlayer.current.addEventListener(
-                "loadedmetadata",
-                (event) => {
-                    getSongDur(event.target.duration)
-                },
-            )
-            currentPlayer.current.load()
-            if (getAudioOne !== undefined) {
-                getAudioOne(currentPlayer.current)
-            }
 
-            setTrackProgress(currentPlayer.current.currentTime)
+            currentPlayer.current.load()
+
             if (isReady.current && genreBool) {
                 setGenreBool(false)
 
                 setIsPlaying(true)
                 if (getOne !== undefined) getOne(true)
-
-                startTimer()
             } else {
                 // Set the isReady ref as true for the next pass
                 isReady.current = true
@@ -232,45 +160,8 @@ const DashAudioOne = ({
         // Pause and clean up on unmount
         return () => {
             currentPlayer.current.pause()
-            clearInterval(intervalRef.current)
         }
     }, [])
-    let h,
-        m,
-        s,
-        hDisplay,
-        mDisplay,
-        sDisplay,
-        ch,
-        cm,
-        cs,
-        chDisplay,
-        cmDisplay,
-        csDisplay
-    if (currentPlayer !== undefined) {
-        if (currentPlayer.current.currentTime === undefined)
-            currentPlayer.current.currentTime = 0
-
-        ch = Math.floor(currentPlayer.current.currentTime / 3600)
-        cm = Math.floor((currentPlayer.current.currentTime % 3600) / 60)
-        cs = Math.floor((currentPlayer.current.currentTime % 3600) % 60)
-
-        chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
-        cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "0:"
-        csDisplay = cs < 10 ? "0" + cs : cs
-
-        h = Math.floor(songDur / 3600)
-        m = Math.floor((songDur % 3600) / 60)
-        s = Math.floor((songDur % 3600) % 60)
-
-        hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : ""
-        mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "0:"
-        sDisplay = s < 10 ? "0" + s : s
-    }
-
-    const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
-
-    const endTime = `${hDisplay}${mDisplay}${sDisplay}`
 
     return (
         <div className="audio-play">
@@ -294,56 +185,7 @@ const DashAudioOne = ({
                     onNextClick={toNextTrack}
                     onPlayPauseClick={setIsPlaying}
                 />
-                <input
-                    type="range"
-                    value={trackProgress}
-                    step="1"
-                    min="0"
-                    max={duration ? duration : `${duration}`}
-                    className="progress"
-                    onChange={(e) => onScrub(e.target.value)}
-                    onMouseUp={onScrubEnd}
-                    onKeyUp={onScrubEnd}
-                    style={{ background: trackStyling }}
-                />
-                <div className="time">
-                    <div>{displayTime}</div>
-                    <div>{endTime}</div>
-                </div>
-                {/* Volume slider */}
-                <Stack
-                    spacing={2}
-                    direction="row"
-                    sx={{ mb: 0, mt: 2 }}
-                    alignItems="center"
-                >
-                    <VolumeDownRounded />
-                    <Slider
-                        onChange={onVolumeChange}
-                        aria-label="Volume"
-                        defaultValue={0.2}
-                        max={1}
-                        min={0.01}
-                        step={0.01}
-                        sx={{
-                            "& .MuiSlider-track": {
-                                border: "none",
-                            },
-                            "& .MuiSlider-thumb": {
-                                width: 16,
-                                height: 16,
-                                backgroundColor: "#fff",
-                                "&:before": {
-                                    boxShadow: "0 8px 16px rgba(0,0,0,0.4)",
-                                },
-                                "&:hover, &.Mui-focusVisible, &.Mui-active": {
-                                    boxShadow: "none",
-                                },
-                            },
-                        }}
-                    />
-                    <VolumeUpRounded />
-                </Stack>
+
                 <DashBackDropOne
                     trackIndex={trackIndex}
                     // activeColor={color}

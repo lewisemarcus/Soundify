@@ -185,8 +185,6 @@ const AudioPlayer = ({
 
             setTrackProgress(audioRef.current.currentTime)
             if (isReady.current) {
-                console.log(audioRef)
-
                 setIsPlaying(true)
                 // isReady.current = false
             } else {

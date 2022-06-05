@@ -10,11 +10,11 @@ const DashboardPlayerOne = ({
     prevClickCount,
     tracks,
     songData,
-    getAudioOne,
     getOne,
     getIndexOne,
     setCurrent,
     currentPlayer,
+    setCurrentSong,
 }) => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -44,11 +44,11 @@ const DashboardPlayerOne = ({
     ) : (
         <div className="DashPlayer" id="one">
             <DashAudioOne
+                setCurrentSong={setCurrentSong}
                 currentPlayer={currentPlayer}
                 setCurrent={setCurrent}
                 getOne={getOne}
                 getIndexOne={getIndexOne}
-                getAudioOne={getAudioOne}
                 clickedGenre={clickedGenre}
                 genreClickCount={genreClickCount}
                 prevClickCount={prevClickCount}

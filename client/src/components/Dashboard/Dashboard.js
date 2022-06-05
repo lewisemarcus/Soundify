@@ -25,6 +25,7 @@ const DashCarousel = ({
     getTwo,
     isThreePlaying,
     getThree,
+    currentSong,
 }) => {
     let navigate = useNavigate()
 
@@ -71,41 +72,33 @@ const DashCarousel = ({
         },
     })
     useEffect(() => {
-        if (audioList[0] !== undefined && currentEvent !== undefined) {
+        if (currentEvent !== undefined) {
             let dash =
                 currentEvent.ownerDocument.activeElement.parentNode.parentNode
 
             for (let i in dashes) {
                 if (dashes[i] !== dash) {
-                    audioList[i].pause()
                     getters[i](false)
                 } else {
-                    setCurrentSong(audioList[i].src)
-                    setAudioR(audioList[i])
-                    currentPlayer.current = audioList[i]
+                    setCurrentSong(currentSong)
+                    currentPlayer.current.src = currentSong
                 }
             }
         }
     }, [indexOne, indexTwo, indexThree])
 
     useEffect(() => {
-        console.log(indexOne, indexTwo, indexThree)
-        if (audioList[0] !== undefined && currentEvent !== undefined) {
+        console.log(currentEvent)
+        if (currentEvent !== undefined) {
             setAudioList(audioList)
-            console.log(currentEvent)
-            let dash =
-                currentEvent.ownerDocument.activeElement.parentNode.parentNode
-                    .parentNode.parentNode
-
+            let dash = currentEvent
+            console.log(dash)
             if (isOnePlaying || isTwoPlaying || isThreePlaying)
                 for (let i in dashes) {
                     if (dashes[i] !== dash) {
-                        audioList[i].pause()
                         getters[i](false)
                     } else {
-                        setCurrentSong(audioList[i].src)
-                        setAudioR(audioList[i])
-                        currentPlayer.current = audioList[i]
+                        currentPlayer.current.src = dash.attributes.name.value
                     }
                 }
         }
@@ -168,7 +161,6 @@ const DashCarousel = ({
 
     useEffect(() => {
         if (audioList[0] !== undefined && currentEvent !== undefined) {
-            setAudioList(audioList)
             let dash =
                 currentEvent.ownerDocument.activeElement.parentNode.parentNode
                     .parentNode.parentNode
@@ -179,7 +171,7 @@ const DashCarousel = ({
                     } else {
                         setCurrentSong(audioList[i].src)
                         setAudioR(audioList[i])
-                        currentPlayer.current = audioList[i]
+                        currentPlayer.current = currentSong
                     }
                 }
         }
@@ -291,12 +283,12 @@ const DashCarousel = ({
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayerOne
+                        setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
                         getOne={getOne}
                         getIndexOne={getIndexOne}
                         selectedAudio={audioOne}
-                        getAudioOne={getAudioOne}
                         songData={genreSongList}
                         genreClickCount={genreClickCount}
                         prevClickCount={prevClickCount}
@@ -305,6 +297,7 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerTwo
+                        setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
                         getTwo={getTwo}
@@ -318,6 +311,7 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerThree
+                        setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
                         getAudioThree={getAudioThree}
