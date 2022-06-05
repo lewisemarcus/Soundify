@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react"
 import { List, Typography, Divider, Modal, Input, Space, Button } from "antd"
 import "../components/styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
-import { GET_SONG, GET_GENRES, GET_USER_PLAYLIST } from "../utils/queries/songQueries"
+import {
+    GET_SONG,
+    GET_GENRES,
+    GET_USER_PLAYLIST,
+} from "../utils/queries/songQueries"
 import { useQuery, useMutation } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
 import { ADD_COMMENT } from "../utils/mutations/commentMutations"
@@ -12,12 +16,7 @@ import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 
-const SongDetails = ({
-    setCurrentSong,
-    setAudioR,
-    getPlaying,
-    currentPlayer,
-}) => {
+const SongDetails = ({ setCurrentSong, getPlaying, currentPlayer }) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
     const { songId } = useParams()
@@ -69,15 +68,15 @@ const SongDetails = ({
     //     await message.loading("Uploading playlist...");
     //     await message.success("Successfully added song to playlist!");
     // };
-    
+
     // const modalError = () => {
     //     message.modalError("Error occured! Try again.");
     // };
 
     const handleChange = (event) => {
         if (event.label) {
-            const value = event.value;
-            const name = "newPlaylist";
+            const value = event.value
+            const name = "newPlaylist"
             // setSong((prevInput) => {
             //     return {
             //         ...prevInput,
@@ -85,7 +84,7 @@ const SongDetails = ({
             //     };
             // });
         } else {
-            const { name, value } = event.target;
+            const { name, value } = event.target
             // setSong((prevInput) => {
             //     return {
             //         ...prevInput,
@@ -93,13 +92,13 @@ const SongDetails = ({
             //     };
             // });
         }
-    };
+    }
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
     const showModal = () => {
-        setIsModalVisible(true);
-    };
+        setIsModalVisible(true)
+    }
 
     const handleCancel = () => {
         // setSong({
@@ -110,10 +109,10 @@ const SongDetails = ({
         //     filename: "",
         //     link: "",
         // });
-            setIsModalVisible(false);
-        };
+        setIsModalVisible(false)
+    }
 
-// END PLAYLIST MODAL
+    // END PLAYLIST MODAL
 
     const getCommentText = (event) => {
         const { name, value } = event.target
@@ -129,9 +128,9 @@ const SongDetails = ({
     })
 
     useEffect(() => {
+        console.log(document.getElementById("audio-element"))
         if (querySong.link !== undefined) {
             // console.log(audio.current)
-            setAudioR(audio)
             setCurrentSong(querySong.link)
         }
     }, [querySong.link])
@@ -227,14 +226,8 @@ const SongDetails = ({
                             height={100}
                             width={width}
                             id="audio-canvas"
-                            audioId="audio-element"
+                            audioEle={currentPlayer.current}
                         />
-                        <audio
-                            id="audio-element"
-                            crossOrigin="anonymous"
-                            ref={audio}
-                            src={querySong.link}
-                        ></audio>
                     </div>
                 </div>
             </div>
@@ -276,14 +269,19 @@ const SongDetails = ({
                             Comments
                         </div>
                         <button style={{ margin: 10 }}>Share</button>
-                        <button style={{ margin: 10 }} onClick={showModal}>Add to Playlist</button>
+                        <button style={{ margin: 10 }} onClick={showModal}>
+                            Add to Playlist
+                        </button>
                         <Modal
                             title="Select Playlist"
                             visible={isModalVisible}
                             onCancel={handleCancel}
                             destroyOnClose
                             footer={[
-                                <Button key="cancel" onClick={handleCancel}>Cancel</Button>]}
+                                <Button key="cancel" onClick={handleCancel}>
+                                    Cancel
+                                </Button>,
+                            ]}
                         >
                             <Space>
                                 <Input

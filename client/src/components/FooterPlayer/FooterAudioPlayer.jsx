@@ -14,7 +14,7 @@ const AudioPlayer = ({
     currentSong,
     oneSongClick,
     setOneSongClick,
-    audioR,
+
     genreClickCount,
     playing,
     prevCount,
@@ -120,14 +120,6 @@ const AudioPlayer = ({
     }, [genreClickCount, prevCount, currentSong])
 
     // Handles cleanup and setup when changing tracks
-    useEffect(() => {
-        if (audioRef.current) {
-            if (audioR && audioR.current) audioRef = audioR
-            else if (audioR && !audioR.current) audioRef.current = audioR
-
-            setOneSongClick(false)
-        }
-    }, [oneSongClick, currentSong, audioR])
 
     useEffect(() => {
         if (location.pathname.split("/")[1] !== "song") {
@@ -156,6 +148,7 @@ const AudioPlayer = ({
                     })
                     startTimer()
                 } else {
+                    console.log(audioRef)
                     audioRef.current.pause()
                 }
             }
@@ -163,13 +156,6 @@ const AudioPlayer = ({
     }, [isPlaying, location.pathname, playing, genreClickCount])
 
     useEffect(() => {
-        if (audioRef.current !== undefined)
-            if (audioR && audioR.current) audioRef.current = audioR.current
-            else if (audioR && !audioR.current) audioRef = audioR
-            else if (!audioR) audioRef.current.src = currentSong
-    }, [currentSong, audioR])
-
-    useEffect(() => {
         if (audioRef && audioRef.current) {
             audioRef.current.volume = volume
             // Destructure for conciseness
@@ -180,16 +166,10 @@ const AudioPlayer = ({
             )
             setTrackStyle(`
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
-
-            if (!audioRef.current.paused)
-                if (audioR && audioR.current)
-                    //audioRef.current.pause()
-                    audioRef.current = audioR.current
-                else if (audioR && !audioR.current) audioRef.current = audioR
 
             setTrackProgress(audioRef.current.currentTime)
         }
-    }, [trackProgress, audioR, currentSong])
+    }, [trackProgress, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {
@@ -203,15 +183,10 @@ const AudioPlayer = ({
             setTrackStyle(`
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
 
-            if (!audioRef.current.paused)
-                if (audioR && audioR.current)
-                    //audioRef.current.pause()
-                    audioRef.current = audioR.current
-                else if (audioR && !audioR.current) audioRef.current = audioR
-
             setTrackProgress(audioRef.current.currentTime)
             if (isReady.current) {
-                audioRef.current.play()
+                console.log(audioRef)
+
                 setIsPlaying(true)
                 // isReady.current = false
             } else {
@@ -224,7 +199,6 @@ const AudioPlayer = ({
         oneSongClick,
         currentSong,
         location.pathname,
-        audioR,
         trackProgress,
     ])
 
@@ -318,11 +292,7 @@ const AudioPlayer = ({
                     onKeyUp={onScrubEnd}
                     style={{ background: trackStyle }}
                 />
-                <div
-                   id="endFooterTimer"
-                >
-                    {endTime}
-                </div>
+                <div id="endFooterTimer">{endTime}</div>
             </div>
             {/* Volume slider */}
             <div className="volContainer">
