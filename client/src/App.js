@@ -101,7 +101,16 @@ function App() {
                 />
                 <Route
                     path="/playlists"
-                    element={user ? <Playlists /> : <Navigate to="/" />}
+                    element={
+                        user ? (
+                            <Playlists
+                                currentPlayer={currentPlayer}
+                                setCurrentSong={setCurrentSong}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
                 />
             </Routes>
 

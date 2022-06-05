@@ -23,7 +23,7 @@ const SongList = () => {
     variables: { username: username },
   });
   const usersSongs = data?.userSongs || [];
-  console.log(usersSongs);
+  // console.log(usersSongs);
   const [song, setSong] = useState({
     title: "",
     genre: "",
@@ -286,7 +286,6 @@ const SongList = () => {
           columns={columns}
           scroll={{ y: 240 }}
           pagination={false}
-          className="table"
         />
       )}
     </div>

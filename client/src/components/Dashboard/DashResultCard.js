@@ -8,7 +8,7 @@ const DashResultCard = ({
   currentPlayer,
   setCurrentSong,
 }) => {
-  console.log(dashSearchResults);
+  // console.log(dashSearchResults);
 
   const handleSearchClick = (event) => {
     event.preventDefault();
@@ -16,6 +16,7 @@ const DashResultCard = ({
     if (setOneSongClick !== undefined) {
       setOneSongClick(true);
       currentPlayer.current.src = event.currentTarget.name;
+      console.log(event.currentTarget)
       setCurrentSong(event.currentTarget.name);
     }
   };
