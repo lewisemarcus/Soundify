@@ -17,7 +17,6 @@ const AudioPlayer = ({
     currentPlayer,
     isPlaying,
     setIsPlaying,
-    footerId,
 }) => {
     // State
     const location = useLocation()
@@ -125,9 +124,6 @@ const AudioPlayer = ({
 
                 if (isPlaying) {
                     startTimer()
-                } else {
-                    console.log("here")
-                    audioRef.current.pause()
                 }
             }
         } else {
@@ -135,7 +131,8 @@ const AudioPlayer = ({
                 if (audioRef.current.src !== currentSong && currentSong) {
                     audioRef.current.src = currentSong
                 }
-                if (isReady.current && !isPlaying) {
+                if (isReady.current && !isPlaying && count < 1) {
+                    count++
                     setIsPlaying(true)
                     // isReady.current = false
                 } else {
@@ -144,9 +141,6 @@ const AudioPlayer = ({
                 }
                 if (isPlaying) {
                     startTimer()
-                } else {
-                    console.log("here2")
-                    audioRef.current.pause()
                 }
             }
         }

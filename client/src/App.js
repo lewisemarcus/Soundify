@@ -22,7 +22,6 @@ function App() {
     const [oneSongClick, setOneSongClick] = useState(false)
     const [audioList, setAudioList] = useState([])
     const [currentSong, setCurrentSong] = useState(null)
-    const [playing, getPlaying] = useState(false)
     const location = useLocation()
     const [currentEvent, setCurrent] = useState()
     const [isPlaying, setIsPlaying] = useState(false)
@@ -32,9 +31,14 @@ function App() {
     const [isThreePlaying, getThree] = useState(false)
     const [footerId, setFooterId] = useState("")
     const { user } = useContext(AuthContext)
-
+    let dashes = []
     useEffect(() => {
-        console.log(currentEvent)
+        if (document.getElementById("one"))
+            dashes[0] = document.getElementById("one")
+        if (document.getElementById("two"))
+            dashes[1] = document.getElementById("two")
+        if (document.getElementById("three"))
+            dashes[2] = document.getElementById("three")
         if (currentPlayer.current.src !== "")
             if (isOnePlaying || isTwoPlaying || isThreePlaying || isPlaying) {
                 currentPlayer.current.play()
@@ -88,6 +92,7 @@ function App() {
                 getTwo(false)
                 getThree(false)
             }
+            console.log(isPlaying)
             if (isPlaying) currentPlayer.current.play()
             if (!isPlaying) currentPlayer.current.pause()
         }
@@ -143,9 +148,9 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            isPlaying={isPlaying}
+                            setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
-                            getPlaying={getPlaying}
-                            setAudioR={setAudioR}
                             setCurrentSong={setCurrentSong}
                         />
                     }
@@ -174,7 +179,6 @@ function App() {
                     isTwoPlaying={isTwoPlaying}
                     isThreePlaying={isThreePlaying}
                     currentPlayer={currentPlayer}
-                    playing={playing}
                     genreClickCount={genreClickCount}
                     prevCount={prevCount}
                     audioR={audioR}
