@@ -13,8 +13,6 @@ const AudioPlayer = ({
     tracks,
     currentSong,
     oneSongClick,
-    setOneSongClick,
-
     genreClickCount,
     playing,
     prevCount,
@@ -154,22 +152,6 @@ const AudioPlayer = ({
             }
         }
     }, [isPlaying, location.pathname, playing, genreClickCount])
-
-    useEffect(() => {
-        if (audioRef && audioRef.current) {
-            audioRef.current.volume = volume
-            // Destructure for conciseness
-            setDuration(audioRef.current.duration)
-
-            setCurrentPercent(
-                duration ? `${(trackProgress / duration) * 100}%` : "0%",
-            )
-            setTrackStyle(`
-            -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
-
-            setTrackProgress(audioRef.current.currentTime)
-        }
-    }, [trackProgress, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {
