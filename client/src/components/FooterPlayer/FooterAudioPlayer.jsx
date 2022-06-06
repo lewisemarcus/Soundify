@@ -7,33 +7,28 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import Marquee from "react-fast-marquee"
-import { width } from "@mui/system"
-
+let count = 0
 const AudioPlayer = ({
     tracks,
     currentSong,
     oneSongClick,
     genreClickCount,
-    playing,
     prevCount,
     currentPlayer,
-    isOnePlaying,
-    isTwoPlaying,
-    isThreePlaying,
+    isPlaying,
+    setIsPlaying,
+    footerId,
 }) => {
     // State
     const location = useLocation()
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(0.2)
-    // const [style, setStyle] = useState({ display: 'none' });
 
     // Destructure for conciseness
     const { title, artist, audioSrc } = tracks[trackIndex]
 
     // Refs
-
     let audioRef = currentPlayer
 
     const isReady = useRef(false)
@@ -103,17 +98,9 @@ const AudioPlayer = ({
         }
     }
 
-    useEffect(() => {}, [currentSong])
-
-    useEffect(() => {
-        if (isOnePlaying || isTwoPlaying || isThreePlaying) setIsPlaying(true)
-        else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying)
-            setIsPlaying(false)
-    }, [isOnePlaying, isTwoPlaying, isThreePlaying])
-
     useEffect(() => {
         if (genreClickCount > prevCount) {
-            if (audioRef.current) audioRef.current.pause()
+            audioRef.current.pause()
         }
     }, [genreClickCount, prevCount, currentSong])
 
@@ -126,11 +113,20 @@ const AudioPlayer = ({
                     audioRef.current.pause()
                 }
 
-                if (isPlaying) {
-                    currentPlayer.current.play()
+                if (isReady.current && !isPlaying && count < 1) {
+                    count++
 
+                    setIsPlaying(true)
+                    // isReady.current = false
+                } else {
+                    // Set the isReady ref as true for the next pass
+                    isReady.current = true
+                }
+
+                if (isPlaying) {
                     startTimer()
                 } else {
+                    console.log("here")
                     audioRef.current.pause()
                 }
             }
@@ -139,19 +135,22 @@ const AudioPlayer = ({
                 if (audioRef.current.src !== currentSong && currentSong) {
                     audioRef.current.src = currentSong
                 }
-
-                if (playing && isPlaying) {
-                    audioRef.current.addEventListener("loadedmetadata", () => {
-                        //audioRef.current.play()
-                    })
+                if (isReady.current && !isPlaying) {
+                    setIsPlaying(true)
+                    // isReady.current = false
+                } else {
+                    // Set the isReady ref as true for the next pass
+                    isReady.current = true
+                }
+                if (isPlaying) {
                     startTimer()
                 } else {
-                    console.log(audioRef)
+                    console.log("here2")
                     audioRef.current.pause()
                 }
             }
         }
-    }, [isPlaying, location.pathname, playing, genreClickCount])
+    }, [isPlaying, location.pathname, genreClickCount, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {
@@ -166,13 +165,6 @@ const AudioPlayer = ({
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
 
             setTrackProgress(audioRef.current.currentTime)
-            if (isReady.current) {
-                setIsPlaying(true)
-                // isReady.current = false
-            } else {
-                // Set the isReady ref as true for the next pass
-                isReady.current = true
-            }
         }
     }, [
         trackIndex,

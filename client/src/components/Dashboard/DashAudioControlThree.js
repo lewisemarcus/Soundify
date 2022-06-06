@@ -10,6 +10,8 @@ const DashAudioControlThree = ({
     onPrevClick,
     onNextClick,
     genreBool,
+    getThree,
+    isThreePlaying,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -20,11 +22,12 @@ const DashAudioControlThree = ({
         >
             <Prev />
         </button>
-        {isPlaying && !genreBool ? (
+        {isPlaying && isThreePlaying && !genreBool ? (
             <button
                 type="button"
                 className="pause-btn"
                 onClick={() => {
+                    getThree(false)
                     onPlayPauseClick(false)
                 }}
                 aria-label="Pause"
@@ -36,6 +39,7 @@ const DashAudioControlThree = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
+                    getThree(true)
                     onPlayPauseClick(true)
                 }}
                 aria-label="Play"

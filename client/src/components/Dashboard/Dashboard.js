@@ -20,20 +20,21 @@ const DashCarousel = ({
     isOnePlaying,
     isTwoPlaying,
     isThreePlaying,
+    getOne,
+    getTwo,
+    getThree,
+    currentEvent,
+    setCurrent,
 }) => {
     let navigate = useNavigate()
-
-    let dashes = ["", "", ""]
 
     const { searchBar, setSearchBar } = useContext(SearchBarContext)
 
     const [indexOne, getIndexOne] = useState(0)
     const [indexTwo, getIndexTwo] = useState(0)
     const [indexThree, getIndexThree] = useState(0)
-    const [currentEvent, setCurrent] = useState()
     const [prevClickCount, setPrevClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
-
     const [genreSongList, setGenreSongList] = useState([])
 
     const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
@@ -53,8 +54,14 @@ const DashCarousel = ({
 
     useEffect(() => {
         if (currentEvent !== undefined) {
-            if (isOnePlaying || isTwoPlaying || isThreePlaying)
-                currentPlayer.current.src = currentEvent.attributes.name.value
+            if (isOnePlaying || isTwoPlaying || isThreePlaying) {
+                if (
+                    currentPlayer.current.src !==
+                    currentEvent.attributes.name.value
+                )
+                    currentPlayer.current.src =
+                        currentEvent.attributes.name.value
+            }
         }
     }, [
         isOnePlaying,
@@ -70,11 +77,6 @@ const DashCarousel = ({
             if (setPrevCount) setPrevCount(prevClickCount)
     }, [genreClickCount, prevClickCount])
 
-    useEffect(() => {
-        if (genreClickCount > prevClickCount)
-            if (setPrevCount) setPrevCount(prevClickCount)
-    }, [genreClickCount, prevClickCount])
-
     let songListFromGenre = []
 
     if (loading) return <p>Loading ...</p>
@@ -84,19 +86,6 @@ const DashCarousel = ({
     const onChange = (event) => {
         const { value } = event.target
         setSearchBar(value)
-    }
-
-    const handleSearchButtonClick = async () => {
-        if (searchBar !== "") {
-            let { data } = await song({
-                variables: { title: searchBar },
-            })
-
-            let songList = Object.values(Object.values(data)[0])
-            if (setDashSearchResults !== undefined)
-                setDashSearchResults(songList)
-            handleSearchClick(songList)
-        }
     }
 
     const handleGenreClick = async (genre) => {
@@ -148,8 +137,13 @@ const DashCarousel = ({
                             })
 
                             let songList = Object.values(Object.values(data)[0])
-                            if (setDashSearchResults !== undefined)
+                            if (setDashSearchResults !== undefined) {
                                 setDashSearchResults(songList)
+                                localStorage.setItem(
+                                    "searchResults",
+                                    JSON.stringify(songList),
+                                )
+                            }
                             handleSearchClick(songList)
                         }
                     }}
@@ -161,6 +155,8 @@ const DashCarousel = ({
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayerOne
+                        isOnePlaying={isOnePlaying}
+                        getOne={getOne}
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
@@ -173,6 +169,8 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerTwo
+                        isTwoPlaying={isTwoPlaying}
+                        getTwo={getTwo}
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
@@ -185,6 +183,8 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerThree
+                        isThreePlaying={isThreePlaying}
+                        getThree={getThree}
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}

@@ -20,6 +20,8 @@ const DashAudioThree = ({
     setCurrent,
     currentPlayer,
     setCurrentSong,
+    getThree,
+    isThreePlaying,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -86,10 +88,8 @@ const DashAudioThree = ({
             setCurrent(document.getElementById("three"))
 
             setCurrentSong(songInfo.link)
-        } else {
-            currentPlayer.current.pause()
         }
-    }, [isPlayingThree])
+    }, [isPlayingThree, songInfo.link])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
@@ -124,7 +124,6 @@ const DashAudioThree = ({
             }
         }
 
-        currentPlayer.current.pause()
         currentPlayer.current.src = songLink
 
         if (isReady.current && genreBool) {
@@ -161,6 +160,8 @@ const DashAudioThree = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlThree
+                    isThreePlaying={isThreePlaying}
+                    getThree={getThree}
                     isPlaying={isPlayingThree}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
@@ -169,6 +170,7 @@ const DashAudioThree = ({
                 />
 
                 <DashBackDropThree
+                    isThreePlaying={isThreePlaying}
                     trackIndex={trackIndex}
                     // activeColor={color}
                     isPlaying={isPlayingThree}
