@@ -178,6 +178,7 @@ const SongDetails = ({
                 alignItems: "center",
                 flexWrap: "wrap",
                 marginBottom: 100,
+                paddingBottom: 100,
             }}
         >
             <div
