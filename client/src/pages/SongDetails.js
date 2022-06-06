@@ -16,7 +16,12 @@ import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 
-const SongDetails = ({ setCurrentSong, getPlaying, currentPlayer }) => {
+const SongDetails = ({
+    setCurrentSong,
+    isPlaying,
+    currentPlayer,
+    setIsPlaying,
+}) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
     const { songId } = useParams()
@@ -125,7 +130,7 @@ const SongDetails = ({ setCurrentSong, getPlaying, currentPlayer }) => {
 
     useEffect(() => {
         currentPlayer.current.src = querySong.link
-    })
+    }, [querySong.link])
 
     useEffect(() => {
         console.log(document.getElementById("audio-element"))
@@ -142,7 +147,10 @@ const SongDetails = ({ setCurrentSong, getPlaying, currentPlayer }) => {
             let top = 5
             while (count < top) {
                 if (recList[count] === undefined) count++
-                else if (querySong.title !== recList[count].title) {
+                else if (
+                    querySong.title !== recList[count].title &&
+                    !recSongs.includes(recList[count])
+                ) {
                     recSongs.push(recList[count])
                     count++
                 } else {
@@ -209,7 +217,8 @@ const SongDetails = ({ setCurrentSong, getPlaying, currentPlayer }) => {
                         </h2>
                     </div>
                     <Waveform
-                        getPlaying={getPlaying}
+                        isPlaying={isPlaying}
+                        setIsPlaying={setIsPlaying}
                         song={querySong}
                         audio={currentPlayer}
                     />

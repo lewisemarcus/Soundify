@@ -38,18 +38,13 @@ let duration,
     cm,
     cs
 
-export default function Waveform({ song, audio, getPlaying }) {
+export default function Waveform({ song, audio, setIsPlaying, isPlaying }) {
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
-    const volumeSlider = useRef(null)
     const time = useRef(null)
-    const [playing, setPlay] = useState(false)
-    const [volume, setVolume] = useState(0.5)
     // create new WaveSurfer instance
     // On component mount and when url changes
     useEffect(() => {
-        setPlay(false)
-        console.log(audio.current.src)
         const options = formWaveSurferOptions(waveformRef.current)
         wavesurfer.current = WaveSurfer.create(options)
         if (audio.current.src !== undefined)
@@ -58,15 +53,11 @@ export default function Waveform({ song, audio, getPlaying }) {
         wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
             //wavesurfer.current.play()
-            // setPlay(true);
-
-            audio.current.play()
+            //setIsPlaying(true)
+            // audio.current.play()
 
             // make sure object still available when file loaded
             if (wavesurfer.current) {
-                wavesurfer.current.setVolume(volume)
-                setVolume(volume)
-
                 duration = wavesurfer.current.getDuration()
                 h = Math.floor(duration / 3600)
                 m = Math.floor((duration % 3600) / 60)
@@ -100,19 +91,8 @@ export default function Waveform({ song, audio, getPlaying }) {
     }, [song, audio.current.src])
 
     const handlePlayPause = () => {
-        setPlay(!playing)
-        getPlaying(!playing)
-        //wavesurfer.current.playPause()
-    }
-
-    const onVolumeChange = (e) => {
-        const { target } = e
-        const newVolume = +target.value
-
-        if (newVolume) {
-            setVolume(newVolume)
-            wavesurfer.current.setVolume(newVolume || 1)
-        }
+        setIsPlaying(!isPlaying)
+        wavesurfer.current.playPause()
     }
 
     return (
@@ -136,40 +116,8 @@ export default function Waveform({ song, audio, getPlaying }) {
                 }}
             >
                 <PlayButton style={{ margin: 10 }} onClick={handlePlayPause}>
-                    {!playing ? <BsFillPlayFill /> : <BsPauseFill />}
+                    {!isPlaying ? <BsFillPlayFill /> : <BsPauseFill />}
                 </PlayButton>
-                <input
-                    ref={volumeSlider}
-                    style={{
-                        background: `linear-gradient(90deg, #ec994b ${(
-                            volume * 100
-                        ).toFixed(0)}%, rgb(214, 214, 214) ${(
-                            volume * 100
-                        ).toFixed(0)}%)`,
-                    }}
-                    type="range"
-                    id="volume"
-                    className="slider"
-                    name="volume"
-                    // waveSurfer recognize value of `0` same as `1`
-                    //  so we need to set some zero-ish value for silence
-                    min="0.01"
-                    max="1"
-                    step=".025"
-                    onMouseMove={(event) => {
-                        let color = `linear-gradient(90deg, #ec994b ${(
-                            volume * 100
-                        ).toFixed(0)}%, rgb(214, 214, 214) ${(
-                            volume * 100
-                        ).toFixed(0)}%)`
-                        event.target.style.background = color
-                    }}
-                    onChange={onVolumeChange}
-                    defaultValue={volume}
-                />
-                <p style={{ color: "white" }}>
-                    Vol: <span>{(volume * 100).toFixed(0)}%</span>
-                </p>
             </div>
             <div
                 style={{
