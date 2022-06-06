@@ -9,8 +9,6 @@ const DashboardPlayerThree = ({
     genreClickCount,
     prevClickCount,
     songData,
-    getThree,
-    getAudioThree,
     getIndexThree,
     setCurrent,
     currentPlayer,
@@ -48,8 +46,6 @@ const DashboardPlayerThree = ({
                 currentPlayer={currentPlayer}
                 setCurrent={setCurrent}
                 getIndexThree={getIndexThree}
-                getAudioThree={getAudioThree}
-                getThree={getThree}
                 clickedGenre={clickedGenre}
                 genreClickCount={genreClickCount}
                 prevClickCount={prevClickCount}

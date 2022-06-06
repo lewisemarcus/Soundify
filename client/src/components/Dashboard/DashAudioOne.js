@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react"
 import DashAudioControlOne from "./DashAudioControlOne"
 import DashBackDropOne from "./DashBackDropOne"
 import "./styles/DashAudio.css"
+import shuffleArray from "../../utils/helpers/shuffleArray"
 import { Link } from "react-router-dom"
 import Marquee from "react-fast-marquee"
-import shuffleArray from "../../utils/helpers/shuffleArray"
 
 /*
  * Read the blog post here:
@@ -16,11 +16,10 @@ const DashAudioOne = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    setCurrentSong,
-    getOne,
     getIndexOne,
-    currentPlayer,
     setCurrent,
+    currentPlayer,
+    setCurrentSong,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -32,12 +31,12 @@ const DashAudioOne = ({
 
     const originalData = [...songData]
 
+    const intervalRef = useRef()
+
     const isReady = useRef(false)
 
     const toPrevTrack = () => {
-        setIsPlaying(false)
         setGenreBool(true)
-
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(tracks.length - 1)
@@ -59,7 +58,6 @@ const DashAudioOne = ({
 
     const toNextTrack = () => {
         setGenreBool(true)
-        setIsPlaying(false)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
                 setTrackIndex(trackIndex + 1)
@@ -79,28 +77,15 @@ const DashAudioOne = ({
         }
     }
 
-    useEffect(() => {
-        if (currentPlayer !== undefined)
-            if (currentPlayer.current.paused && !isPlayingOne) {
-                setIsPlaying(false)
-                if (getOne !== undefined) getOne(false)
-            }
-    })
-
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
-        if (currentPlayer !== undefined) {
-            if (isPlayingOne) {
-                document
-                    .getElementById("one")
-                    .setAttribute("name", songInfo.link)
-                setCurrent(document.getElementById("one"))
+        if (isPlayingOne) {
+            document.getElementById("one").setAttribute("name", songInfo.link)
+            setCurrent(document.getElementById("one"))
 
-                setCurrentSong(songInfo.link)
-                if (getOne !== undefined) getOne(true)
-            } else {
-                if (getOne !== undefined) getOne(false)
-            }
+            setCurrentSong(songInfo.link)
+        } else {
+            currentPlayer.current.pause()
         }
     }, [isPlayingOne])
 
@@ -108,7 +93,6 @@ const DashAudioOne = ({
     useEffect(() => {
         if (genreClickCount > prevClickCount) {
             setIsPlaying(false)
-            if (getOne !== undefined) getOne(false)
         }
         if (clickedGenre === "") {
             // Destructure for conciseness
@@ -134,38 +118,34 @@ const DashAudioOne = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
-
                 setSongInfo(songData[trackIndex])
             }
         }
-        if (currentPlayer !== undefined) {
-            currentPlayer.current.pause()
-            console.log(songLink)
-            currentPlayer.current.src = songLink
 
-            currentPlayer.current.load()
+        currentPlayer.current.pause()
+        currentPlayer.current.src = songLink
 
-            if (isReady.current && genreBool) {
-                setGenreBool(false)
-
-                setIsPlaying(true)
-                if (getOne !== undefined) getOne(true)
-            } else {
-                // Set the isReady ref as true for the next pass
-                isReady.current = true
-            }
+        if (isReady.current && genreBool) {
+            setGenreBool(false)
+            currentPlayer.current.play()
+            setIsPlaying(true)
+        } else {
+            // Set the isReady ref as true for the next pass
+            isReady.current = true
         }
     }, [trackIndex, clickedGenre, genreClickCount])
+
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
             currentPlayer.current.pause()
+            clearInterval(intervalRef.current)
         }
     }, [])
 
     return (
         <div className="audio-play">
-            <div id={songInfo.link} className="track-information">
+            <div className="track-information">
                 {songInfo.title.length > 16 ? (
                     <Marquee gradient={false} delay={1}>
                         <h2 className="songTitle">

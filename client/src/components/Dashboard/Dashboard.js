@@ -13,19 +13,13 @@ import { SearchBarContext } from "../../context/searchBarContext"
 const DashCarousel = ({
     setDashSearchResults,
     setCurrentSong,
-    setAudioR,
     genreClickCount,
     setGenreClickCount,
-    setAudioList,
     setPrevCount,
     currentPlayer,
     isOnePlaying,
-    getOne,
     isTwoPlaying,
-    getTwo,
     isThreePlaying,
-    getThree,
-    currentSong,
 }) => {
     let navigate = useNavigate()
 
@@ -33,35 +27,20 @@ const DashCarousel = ({
 
     const { searchBar, setSearchBar } = useContext(SearchBarContext)
 
-    const [audioOne, getAudioOne] = useState()
-    const [audioTwo, getAudioTwo] = useState()
     const [indexOne, getIndexOne] = useState(0)
     const [indexTwo, getIndexTwo] = useState(0)
     const [indexThree, getIndexThree] = useState(0)
-    const [audioThree, getAudioThree] = useState()
     const [currentEvent, setCurrent] = useState()
     const [prevClickCount, setPrevClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
-    let audioList = [audioOne, audioTwo, audioThree]
-    let getters = [getOne, getTwo, getThree]
+
     const [genreSongList, setGenreSongList] = useState([])
-    const location = useLocation()
-    let dashOne, dashTwo, dashThree
+
     const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
         onCompleted: (songData) => {
             return songData
         },
     })
-
-    if (currentEvent !== undefined) {
-        let dash =
-            currentEvent.ownerDocument.activeElement.parentNode.parentNode
-                .parentNode.parentNode
-
-        if (dash.id === "one") dashes[0] = dash
-        else if (dash.id === "two") dashes[1] = dash
-        else dashes[2] = dash
-    }
 
     const [
         songByGenre,
@@ -71,36 +50,11 @@ const DashCarousel = ({
             return genreData
         },
     })
-    useEffect(() => {
-        if (currentEvent !== undefined) {
-            let dash =
-                currentEvent.ownerDocument.activeElement.parentNode.parentNode
-
-            for (let i in dashes) {
-                if (dashes[i] !== dash) {
-                    getters[i](false)
-                } else {
-                    setCurrentSong(currentSong)
-                    currentPlayer.current.src = currentSong
-                }
-            }
-        }
-    }, [indexOne, indexTwo, indexThree])
 
     useEffect(() => {
-        console.log(currentEvent)
         if (currentEvent !== undefined) {
-            setAudioList(audioList)
-            let dash = currentEvent
-            console.log(dash)
             if (isOnePlaying || isTwoPlaying || isThreePlaying)
-                for (let i in dashes) {
-                    if (dashes[i] !== dash) {
-                        getters[i](false)
-                    } else {
-                        currentPlayer.current.src = dash.attributes.name.value
-                    }
-                }
+                currentPlayer.current.src = currentEvent.attributes.name.value
         }
     }, [
         isOnePlaying,
@@ -117,85 +71,9 @@ const DashCarousel = ({
     }, [genreClickCount, prevClickCount])
 
     useEffect(() => {
-        if (audioList[0] !== undefined) {
-            for (let each in audioList) {
-                if (
-                    audioList[each].src !== currentPlayer.current.src ||
-                    genreClickCount > prevClickCount
-                )
-                    audioList[each].pause()
-            }
-        }
-    }, [
-        genreClickCount,
-        prevClickCount,
-        isOnePlaying,
-        isTwoPlaying,
-        isThreePlaying,
-        indexOne,
-        indexTwo,
-        indexThree,
-    ])
-
-    useEffect(() => {
-        if (audioList[0] !== undefined) {
-            for (let each in audioList) {
-                audioList[each].pause()
-            }
-        }
-    }, [location.pathname.split("/")[1] !== ""])
-
-    if (currentEvent !== undefined) {
-        let dash =
-            currentEvent.ownerDocument.activeElement.parentNode.parentNode
-                .parentNode.parentNode
-
-        if (dash.id === "one") {
-            dashes[0] = dash
-        } else if (dash.id === "two") {
-            dashes[1] = dash
-        } else {
-            dashes[2] = dash
-        }
-    }
-
-    useEffect(() => {
-        if (audioList[0] !== undefined && currentEvent !== undefined) {
-            let dash =
-                currentEvent.ownerDocument.activeElement.parentNode.parentNode
-                    .parentNode.parentNode
-            if (isOnePlaying || isTwoPlaying || isThreePlaying)
-                for (let i in dashes) {
-                    if (dashes[i] !== dash) {
-                        audioList[i].pause()
-                    } else {
-                        setCurrentSong(audioList[i].src)
-                        setAudioR(audioList[i])
-                        currentPlayer.current = currentSong
-                    }
-                }
-        }
-    }, [
-        isOnePlaying,
-        isTwoPlaying,
-        isThreePlaying,
-        indexOne,
-        indexTwo,
-        indexThree,
-    ])
-
-    useEffect(() => {
         if (genreClickCount > prevClickCount)
             if (setPrevCount) setPrevCount(prevClickCount)
     }, [genreClickCount, prevClickCount])
-
-    useEffect(() => {
-        if (audioList[0] !== undefined) {
-            for (let each in audioList) {
-                audioList[each].pause()
-            }
-        }
-    }, [location.pathname.split("/")[1] !== ""])
 
     let songListFromGenre = []
 
@@ -286,9 +164,7 @@ const DashCarousel = ({
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
-                        getOne={getOne}
                         getIndexOne={getIndexOne}
-                        selectedAudio={audioOne}
                         songData={genreSongList}
                         genreClickCount={genreClickCount}
                         prevClickCount={prevClickCount}
@@ -300,10 +176,8 @@ const DashCarousel = ({
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
-                        getTwo={getTwo}
                         getIndexTwo={getIndexTwo}
                         songData={genreSongList}
-                        getAudioTwo={getAudioTwo}
                         genreClickCount={genreClickCount}
                         prevClickCount={prevClickCount}
                         clickedGenre={clickedGenre}
@@ -314,9 +188,7 @@ const DashCarousel = ({
                         setCurrentSong={setCurrentSong}
                         currentPlayer={currentPlayer}
                         setCurrent={setCurrent}
-                        getAudioThree={getAudioThree}
                         getIndexThree={getIndexThree}
-                        getThree={getThree}
                         songData={genreSongList}
                         genreClickCount={genreClickCount}
                         prevClickCount={prevClickCount}

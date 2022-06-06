@@ -8,9 +8,7 @@ const DashboardPlayerOne = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    tracks,
     songData,
-    getOne,
     getIndexOne,
     setCurrent,
     currentPlayer,
@@ -47,7 +45,6 @@ const DashboardPlayerOne = ({
                 setCurrentSong={setCurrentSong}
                 currentPlayer={currentPlayer}
                 setCurrent={setCurrent}
-                getOne={getOne}
                 getIndexOne={getIndexOne}
                 clickedGenre={clickedGenre}
                 genreClickCount={genreClickCount}
