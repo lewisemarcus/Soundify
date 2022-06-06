@@ -25,7 +25,6 @@ const CommentSection = ({ comments, songId }) => {
     const removeCommentHandler = async (event) => {
         event.preventDefault()
         try {
-            console.log(event.currentTarget.name, event.currentTarget.id)
             await removeComment({
                 variables: {
                     songId: songId,

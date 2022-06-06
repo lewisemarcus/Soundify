@@ -133,7 +133,6 @@ const SongDetails = ({
     }, [querySong.link])
 
     useEffect(() => {
-        console.log(document.getElementById("audio-element"))
         if (querySong.link !== undefined) {
             // console.log(audio.current)
             setCurrentSong(querySong.link)
@@ -178,6 +177,7 @@ const SongDetails = ({
                 flexDirection: "column",
                 alignItems: "center",
                 flexWrap: "wrap",
+                marginBottom: 100,
             }}
         >
             <div
