@@ -7,12 +7,14 @@ const DashResultCard = ({
     setOneSongClick,
     currentPlayer,
     setCurrentSong,
+    setIsPlaying,
 }) => {
-    // console.log(dashSearchResults);
+    let searchResults =
+        dashSearchResults || JSON.parse(localStorage.getItem("searchResults"))
 
     const handleSearchClick = (event) => {
         event.preventDefault()
-
+        setIsPlaying(true)
         if (setOneSongClick !== undefined) {
             setOneSongClick(true)
             currentPlayer.current.src =
@@ -62,7 +64,7 @@ const DashResultCard = ({
                     >
                         <img src={shakeygraves} alt="Album Cover" />
                         <PlayCircleTwoTone
-                            name={dashSearchResults.link}
+                            name={searchResults.link}
                             onClick={handleSearchClick}
                             style={{
                                 fontSize: "3rem",
@@ -80,7 +82,7 @@ const DashResultCard = ({
                                     fontFamily: "Poppins",
                                 }}
                             >
-                                {dashSearchResults.title}
+                                {searchResults.title}
                             </h1>
                             <h3
                                 style={{
@@ -89,7 +91,7 @@ const DashResultCard = ({
                                     fontFamily: "Poppins",
                                 }}
                             >
-                                By {dashSearchResults.artist}
+                                By {searchResults.artist}
                             </h3>
                         </div>
                     </div>

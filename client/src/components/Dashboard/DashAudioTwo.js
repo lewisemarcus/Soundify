@@ -20,6 +20,8 @@ const DashAudioTwo = ({
     setCurrent,
     currentPlayer,
     setCurrentSong,
+    getTwo,
+    isTwoPlaying,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -84,10 +86,8 @@ const DashAudioTwo = ({
             setCurrent(document.getElementById("two"))
 
             setCurrentSong(songInfo.link)
-        } else {
-            currentPlayer.current.pause()
         }
-    }, [isPlayingTwo])
+    }, [isPlayingTwo, songInfo.link])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
@@ -122,7 +122,6 @@ const DashAudioTwo = ({
             }
         }
 
-        currentPlayer.current.pause()
         currentPlayer.current.src = songLink
 
         if (isReady.current && genreBool) {
@@ -159,6 +158,8 @@ const DashAudioTwo = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlTwo
+                    isTwoPlaying={isTwoPlaying}
+                    getTwo={getTwo}
                     isPlaying={isPlayingTwo}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
@@ -167,6 +168,7 @@ const DashAudioTwo = ({
                 />
 
                 <DashBackDropTwo
+                    isTwoPlaying={isTwoPlaying}
                     trackIndex={trackIndex}
                     // activeColor={color}
                     isPlaying={isPlayingTwo}

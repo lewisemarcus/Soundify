@@ -20,6 +20,8 @@ const DashAudioOne = ({
     setCurrent,
     currentPlayer,
     setCurrentSong,
+    getOne,
+    isOnePlaying,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -84,10 +86,8 @@ const DashAudioOne = ({
             setCurrent(document.getElementById("one"))
 
             setCurrentSong(songInfo.link)
-        } else {
-            currentPlayer.current.pause()
         }
-    }, [isPlayingOne])
+    }, [isPlayingOne, songInfo.link])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
@@ -122,12 +122,10 @@ const DashAudioOne = ({
             }
         }
 
-        currentPlayer.current.pause()
         currentPlayer.current.src = songLink
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
-            currentPlayer.current.play()
             setIsPlaying(true)
         } else {
             // Set the isReady ref as true for the next pass
@@ -159,6 +157,8 @@ const DashAudioOne = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlOne
+                    isOnePlaying={isOnePlaying}
+                    getOne={getOne}
                     isPlaying={isPlayingOne}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
@@ -167,6 +167,7 @@ const DashAudioOne = ({
                 />
 
                 <DashBackDropOne
+                    isOnePlaying={isOnePlaying}
                     trackIndex={trackIndex}
                     // activeColor={color}
                     isPlaying={isPlayingOne}

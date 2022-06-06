@@ -24,27 +24,74 @@ function App() {
     const [currentSong, setCurrentSong] = useState(null)
     const [playing, getPlaying] = useState(false)
     const location = useLocation()
+    const [currentEvent, setCurrent] = useState()
+    const [isPlaying, setIsPlaying] = useState(false)
     const [dashSearchResults, setDashSearchResults] = useState()
     const [isOnePlaying, getOne] = useState(false)
     const [isTwoPlaying, getTwo] = useState(false)
     const [isThreePlaying, getThree] = useState(false)
-
+    const [footerId, setFooterId] = useState("")
     const { user } = useContext(AuthContext)
 
     useEffect(() => {
-        console.log(currentPlayer)
-        if (location.pathname.split("/") !== "")
-            if (audioList[0] !== undefined)
-                for (let each in audioList) {
-                    if (
-                        audioList[each].src !== currentSong &&
-                        genreClickCount > prevCount
-                    ) {
-                        audioList[each].pause()
-                    } else console.log("hi")
-                }
-    }, [location.pathname, currentSong])
+        console.log(currentEvent)
+        if (currentPlayer.current.src !== "")
+            if (isOnePlaying || isTwoPlaying || isThreePlaying || isPlaying) {
+                currentPlayer.current.play()
+            }
+    }, [currentSong, currentEvent])
 
+    useEffect(() => {
+        console.log(isThreePlaying)
+        if (currentEvent !== undefined) {
+            console.log("playing", isPlaying)
+            if (isOnePlaying) {
+                setIsPlaying(true)
+                getOne(true)
+                getTwo(false)
+                getThree(false)
+            } else if (isTwoPlaying) {
+                setIsPlaying(true)
+                getOne(false)
+                getTwo(true)
+                getThree(false)
+            } else if (isThreePlaying) {
+                setIsPlaying(true)
+                getOne(false)
+                getTwo(false)
+                getThree(true)
+            } else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying) {
+                setIsPlaying(false)
+                getOne(false)
+                getTwo(false)
+                getThree(false)
+            }
+        }
+    }, [isOnePlaying, isTwoPlaying, isThreePlaying])
+
+    useEffect(() => {
+        if (currentEvent !== undefined) {
+            setFooterId(currentEvent.id)
+            if (isPlaying) {
+                if (currentEvent.id === "one") {
+                    getOne(true)
+                }
+                if (currentEvent.id === "two") {
+                    getTwo(true)
+                }
+                if (currentEvent.id === "three") {
+                    getThree(true)
+                }
+                currentPlayer.current.play()
+            } else {
+                getOne(false)
+                getTwo(false)
+                getThree(false)
+            }
+            if (isPlaying) currentPlayer.current.play()
+            if (!isPlaying) currentPlayer.current.pause()
+        }
+    }, [isPlaying])
     return (
         <div>
             <Navbar />
@@ -53,6 +100,8 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            currentEvent={currentEvent}
+                            setCurrent={setCurrent}
                             currentSong={currentSong}
                             isOnePlaying={isOnePlaying}
                             getOne={getOne}
@@ -75,6 +124,7 @@ function App() {
                     path="/DashResults"
                     element={
                         <DashResults
+                            setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
                             dashSearchResults={dashSearchResults}
                             setOneSongClick={setOneSongClick}
@@ -117,6 +167,9 @@ function App() {
 
             {user && (
                 <Footer
+                    footerId={footerId}
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
                     isOnePlaying={isOnePlaying}
                     isTwoPlaying={isTwoPlaying}
                     isThreePlaying={isThreePlaying}

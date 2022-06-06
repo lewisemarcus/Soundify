@@ -10,6 +10,8 @@ const DashAudioControlTwo = ({
     onPrevClick,
     onNextClick,
     genreBool,
+    getTwo,
+    isTwoPlaying,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -20,11 +22,12 @@ const DashAudioControlTwo = ({
         >
             <Prev />
         </button>
-        {isPlaying && !genreBool ? (
+        {isPlaying && isTwoPlaying && !genreBool ? (
             <button
                 type="button"
                 className="pause-btn"
                 onClick={() => {
+                    getTwo(false)
                     onPlayPauseClick(false)
                 }}
                 aria-label="Pause"
@@ -36,6 +39,7 @@ const DashAudioControlTwo = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
+                    getTwo(true)
                     onPlayPauseClick(true)
                 }}
                 aria-label="Play"
