@@ -106,6 +106,7 @@ const AudioPlayer = ({
     // Handles cleanup and setup when changing tracks
 
     useEffect(() => {
+        if (location.pathname.split("/")[1] !== "") count++
         if (location.pathname.split("/")[1] !== "song") {
             if (audioRef.current !== undefined) {
                 if (genreClickCount > prevCount) {
@@ -114,7 +115,6 @@ const AudioPlayer = ({
 
                 if (isReady.current && !isPlaying && count < 1) {
                     count++
-
                     setIsPlaying(true)
                     // isReady.current = false
                 } else {
@@ -144,7 +144,7 @@ const AudioPlayer = ({
                 }
             }
         }
-    }, [isPlaying, location.pathname, genreClickCount, currentSong])
+    }, [isPlaying, genreClickCount, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {

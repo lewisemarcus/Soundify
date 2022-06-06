@@ -46,9 +46,7 @@ function App() {
     }, [currentSong, currentEvent])
 
     useEffect(() => {
-        console.log(isThreePlaying)
         if (currentEvent !== undefined) {
-            console.log("playing", isPlaying)
             if (isOnePlaying) {
                 setIsPlaying(true)
                 getOne(true)
@@ -86,16 +84,14 @@ function App() {
                 if (currentEvent.id === "three") {
                     getThree(true)
                 }
-                currentPlayer.current.play()
             } else {
                 getOne(false)
                 getTwo(false)
                 getThree(false)
             }
-            console.log(isPlaying)
-            if (isPlaying) currentPlayer.current.play()
-            if (!isPlaying) currentPlayer.current.pause()
         }
+        if (isPlaying) currentPlayer.current.play()
+        if (!isPlaying) currentPlayer.current.pause()
     }, [isPlaying])
     return (
         <div>

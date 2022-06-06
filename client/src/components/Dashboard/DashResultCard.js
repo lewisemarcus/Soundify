@@ -14,6 +14,7 @@ const DashResultCard = ({
 
     const handleSearchClick = (event) => {
         event.preventDefault()
+
         setIsPlaying(true)
         if (setOneSongClick !== undefined) {
             setOneSongClick(true)
