@@ -92,5 +92,10 @@ export default gql `
             songId: ID!
             username: String!
         ): Playlist
+        removeFromPlaylist(
+            songId: ID!
+            playlistname: String!
+            username: String!
+        ): Playlist
     }
 `

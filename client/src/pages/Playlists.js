@@ -38,14 +38,6 @@ const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
     }
   }
 
-  // console.log(newTitle)
-  
-  // useEffect(() => {
-  //   if (location.pathname.split("/") !== "")
-  //       if (audioList[0] !== undefined)
-  //           for (let each in audioList) audioList[each].pause()
-  // }, [location.pathname, currentPlayer.current.src])
-
   return (
     <div>
       <aside className="plaaylistNames">
