@@ -115,7 +115,7 @@ const AudioPlayer = ({
 
                 if (isReady.current && !isPlaying && count < 1) {
                     count++
-                    setIsPlaying(true)
+                    //setIsPlaying(true)
                     // isReady.current = false
                 } else {
                     // Set the isReady ref as true for the next pass
@@ -133,7 +133,7 @@ const AudioPlayer = ({
                 }
                 if (isReady.current && !isPlaying && count < 1) {
                     count++
-                    setIsPlaying(true)
+                    //setIsPlaying(true)
                     // isReady.current = false
                 } else {
                     // Set the isReady ref as true for the next pass
