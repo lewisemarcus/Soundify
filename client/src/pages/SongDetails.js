@@ -18,6 +18,7 @@ import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 import  { useForm } from "../utils/hooks/hooks";
 import { CREATEPLAYLIST } from "../utils/mutations/playlistMutations"
+import "./styles/SongDetail.css";
 
 const SongDetails = ({
     setCurrentSong,
@@ -323,18 +324,20 @@ const SongDetails = ({
                         </button>
                         <Modal
                             title="Select Playlist"
+                            className="select-list"
                             visible={isModalVisible}
                             onCancel={handleCancel}
                             destroyOnClose
                             footer={[
                                 <Button key="cancel" onClick={handleCancel}>
                                     Cancel
-                                </Button>,
+                                </Button>
                             ]}
                         >
                             <Space>
                                 <Input
                                     onChange={onChange}
+                                    className="create-playlistinput"
                                     name="playlistname"
                                     value={values.playlistname}
                                     placeholder="Create Playlist"

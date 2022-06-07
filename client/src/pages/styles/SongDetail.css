@@ -1,0 +1,17 @@
+
+.create-playlist {
+    margin-left: 15px;
+    height: 100%;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.create-playlistinput{
+    width: 100%;
+}
+
+@media screen and (max-width: 365px) {
+    .select-list {
+      width: 75%;
+    }
+  }
