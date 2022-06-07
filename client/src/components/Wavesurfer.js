@@ -38,7 +38,13 @@ let duration,
     cm,
     cs
 
-export default function Waveform({ song, audio, setIsPlaying, isPlaying }) {
+export default function Waveform({
+    song,
+    audio,
+    setIsPlaying,
+    isPlaying,
+    isDetailsPlaying,
+}) {
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
     const time = useRef(null)
@@ -92,6 +98,7 @@ export default function Waveform({ song, audio, setIsPlaying, isPlaying }) {
 
     const handlePlayPause = () => {
         setIsPlaying(!isPlaying)
+        isDetailsPlaying(!isPlaying)
         wavesurfer.current.playPause()
     }
 
