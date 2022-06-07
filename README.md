@@ -5,12 +5,25 @@
 
 ## Description:
 ---
-A webpage that allows the user to upload music or listen to someone else's music.
+Soundify is a online music player where users are required to create an account or login to our site to listen, upload, and comment on songs. Users will be allowed to either login or create a new & unique username and password in order to enter. After entering, users can listen to 3 seperate music cards on their dashboard. Users can also pick preselected genres to listen to. The user may use the search bar to search for song titles or artist names. At the bottom of the page is a interactive sound bar for users to listen to music regardless of which page they are on. The user can also upload songs by clicking "Upload". Next, the user will have to enter song title, artist name, and genre. Then the user will have to click or drag the music file to upload. The user will also be able to view their uploaded songs on this page. To view their playlist, users must click on the nav bar and click on "My Playlists". The user can then view thier playlist and the songs within. The user can click on the individual song and it will update and play on the music card. If the user wishes they can delete songs from the playlist by click the red "X" next to the song of their choice. Furthermore, users can log out of the site and still retain all the songs they downloaded. Whenever a user re-logs in to our site, the songs they have downloaded will still be on their account.
+
+<br>
+
+## User Story:
+---
+
+
+<br>
+
+## Acceptance Criteria:
+---
+
 
 <br>
 
 ## Table of Contents:
 ---
+- [Heroku](#heroku)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
@@ -19,6 +32,12 @@ A webpage that allows the user to upload music or listen to someone else's music
 - [URL](#url)
 - [Authors](#authors)
 - [Credits](#credits)
+
+<br>
+
+## Heroku:
+---
+[![Heroku-Link](images/heroku-screenshot.png)]()
 
 <br>
 
