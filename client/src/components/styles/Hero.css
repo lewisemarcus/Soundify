@@ -1,6 +1,5 @@
 .hero-container {
   font-family: var(--main-font);
-  margin: 0 auto;
   width: 20rem;
   padding: 3rem 0 0;
   color: var(--light);
@@ -8,14 +7,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 10px 20px 25px rgba(0, 0, 0, 0.2);
 }
 
 .hero-container h1 {
   font-weight: var(--poppins-bold);
   color: var(--light);
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   text-align: center;
 }
 
@@ -78,21 +75,19 @@
 @media screen and (min-width: 1400px) {
   .hero-container {
     font-family: var(--main-font);
-    margin: 0 auto;
-    width: 80rem;
-    padding: 5rem 0 0;
+    width: 30rem;
     color: var(--light);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 10px 20px 25px rgba(0, 0, 0, 0.2);
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .hero-container h1 {
     font-weight: var(--poppins-bold);
     color: var(--light);
-    font-size: 2.9rem;
+    font-size: 2.7rem;
+    text-align: left;
+    width: 30rem;
   }
 
   .hero-container p {
@@ -100,15 +95,19 @@
     letter-spacing: 0.1rem;
     font-size: 1rem;
     color: var(--orange);
+    text-align: left;
+    padding: 0;
+    width: 23rem;
   }
 
   .hero-button-wrapper {
+    padding: 0;
+    text-align: left;
     width: 40rem;
-    padding: 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-top: 0.5rem;
     margin-bottom: 3rem;
   }
@@ -116,6 +115,6 @@
   .hero-btn {
     width: 12rem;
     height: 3.2rem;
-    margin: 0 0.3rem;
+    margin: 0 0.5rem 0 0;
   }
 }
