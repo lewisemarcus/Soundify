@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from "react"
-import { AiFillPlusCircle } from "react-icons/ai";
-import { List, Typography, Divider, Modal, message, Input, Space, Button } from "antd"
+import { AiFillPlusCircle } from "react-icons/ai"
+import {
+    List,
+    Typography,
+    Divider,
+    Modal,
+    message,
+    Input,
+    Space,
+    Button,
+} from "antd"
 import "../components/styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
 import {
@@ -16,15 +25,16 @@ import CommentSection from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
-import  { useForm } from "../utils/hooks/hooks";
+import { useForm } from "../utils/hooks/hooks"
 import { CREATEPLAYLIST } from "../utils/mutations/playlistMutations"
-import "./styles/SongDetail.css";
+import "./styles/SongDetail.css"
 
 const SongDetails = ({
     setCurrentSong,
     isPlaying,
     currentPlayer,
     setIsPlaying,
+    getSongInfo,
 }) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
@@ -67,47 +77,49 @@ const SongDetails = ({
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
-    const { loading: playlistloading, data: userPlaylists } = useQuery(GET_USER_PLAYLIST, {
-        variables: { owner: username },
-    });
-    const usersPlaylists = userPlaylists?.userPlaylists || [];
+    const { loading: playlistloading, data: userPlaylists } = useQuery(
+        GET_USER_PLAYLIST,
+        {
+            variables: { owner: username },
+        },
+    )
+    const usersPlaylists = userPlaylists?.userPlaylists || []
     const uPL = Object.values(usersPlaylists)
     console.log(userPlaylists)
 
     useEffect(() => {
-    console.log(uPL)
+        console.log(uPL)
     }, [usersPlaylists])
-
-    
 
     // const [newPlaylist, setNewPlaylist] = useState()
 
     function registerUserCallback() {
-        console.log("callback hit");
-        const hide = message.loading("Creating playlist...", 0);
-        setTimeout(hide, 1100);
+        console.log("callback hit")
+        const hide = message.loading("Creating playlist...", 0)
+        setTimeout(hide, 1100)
     }
 
     const { onChange, onSubmit, values } = useForm(registerUserCallback, {
         playlistname: "",
-    });
+    })
 
-    const [createPlaylist, { error: playlistCreationError }] = useMutation(CREATEPLAYLIST)
+    const [createPlaylist, { error: playlistCreationError }] =
+        useMutation(CREATEPLAYLIST)
 
     const [playlist, setPlaylist] = useState({
-        playlistname: '',
+        playlistname: "",
         username: username,
-        songId: songId
+        songId: songId,
     })
 
     const success = async () => {
-        await message.loading("Uploading playlist...");
-        await message.success("Successfully added song to playlist!");
-    };
+        await message.loading("Uploading playlist...")
+        await message.success("Successfully added song to playlist!")
+    }
 
     const modalError = () => {
-        message.error("Must give playlist a name.");
-    };
+        message.error("Must give playlist a name.")
+    }
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -123,13 +135,13 @@ const SongDetails = ({
 
         await createPlaylist({
             variables: {
-                    playlistname: values.playlistname,
-                    username: username,
-                    songId: querySong._id
-                }
+                playlistname: values.playlistname,
+                username: username,
+                songId: querySong._id,
+            },
         })
-        setIsModalVisible(false);
-        success();
+        setIsModalVisible(false)
+        success()
     }
 
     // const addToPlaylist = (e) => {
@@ -169,6 +181,7 @@ const SongDetails = ({
     }
 
     useEffect(() => {
+        if (Object.keys(querySong).length !== 0) getSongInfo(querySong)
         currentPlayer.current.src = querySong.link
     }, [querySong.link])
 
@@ -331,7 +344,7 @@ const SongDetails = ({
                             footer={[
                                 <Button key="cancel" onClick={handleCancel}>
                                     Cancel
-                                </Button>
+                                </Button>,
                             ]}
                         >
                             <Space>
@@ -344,12 +357,13 @@ const SongDetails = ({
                                     size="large"
                                     required
                                 />
-                                <AiFillPlusCircle className="create-playlist" onClick={handleCreatePlaylist} />
+                                <AiFillPlusCircle
+                                    className="create-playlist"
+                                    onClick={handleCreatePlaylist}
+                                />
                                 <ul>
                                     {usersPlaylists.map((playlist, index) => {
-                                        return (
-                                            <li >{playlist.plTitle}</li>
-                                        );
+                                        return <li>{playlist.plTitle}</li>
                                     })}
                                 </ul>
                             </Space>

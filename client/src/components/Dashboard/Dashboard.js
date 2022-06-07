@@ -25,7 +25,8 @@ const DashCarousel = ({
     getThree,
     currentEvent,
     setCurrent,
-    setSongObject,
+    getSongInfo,
+    getTrackIndex,
 }) => {
     let navigate = useNavigate()
 
@@ -37,7 +38,7 @@ const DashCarousel = ({
     const [prevClickCount, setPrevClickCount] = useState(0)
     const [clickedGenre, setClickedGenre] = useState("")
     const [genreSongList, setGenreSongList] = useState([])
-
+    const [genreClicked, isGenreClicked] = useState(false)
     const [song, { loading, error, data: songData }] = useLazyQuery(GET_SONGS, {
         onCompleted: (songData) => {
             return songData
@@ -93,6 +94,7 @@ const DashCarousel = ({
         let { data } = await songByGenre({ variables: { genre: genre } })
         songListFromGenre = Object.values(Object.values(data)[0])
         setGenreSongList(songListFromGenre)
+
         setClickedGenre(genre)
         setPrevClickCount(genreClickCount)
         setGenreClickCount((count) => count + 1)
@@ -160,6 +162,10 @@ const DashCarousel = ({
                         key={index}
                         className="genre1"
                         onClick={(event) => {
+                            getOne(false)
+                            getTwo(false)
+                            getThree(false)
+                            isGenreClicked(true)
                             DashAudioControls.onPlayPauseClick = false
                             let { innerHTML } = event.target
                             handleGenreClick(innerHTML)
@@ -172,7 +178,10 @@ const DashCarousel = ({
             <div className="musicPlayer">
                 <div className="main-items">
                     <DashboardPlayerOne
-                        setSongObject={setSongObject}
+                        genreClicked={genreClicked}
+                        isGenreClicked={isGenreClicked}
+                        getSongInfo={getSongInfo}
+                        getTrackIndex={getTrackIndex}
                         isOnePlaying={isOnePlaying}
                         getOne={getOne}
                         setCurrentSong={setCurrentSong}
@@ -187,7 +196,10 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerTwo
-                        setSongObject={setSongObject}
+                        genreClicked={genreClicked}
+                        isGenreClicked={isGenreClicked}
+                        getSongInfo={getSongInfo}
+                        getTrackIndex={getTrackIndex}
                         isTwoPlaying={isTwoPlaying}
                         getTwo={getTwo}
                         setCurrentSong={setCurrentSong}
@@ -202,7 +214,10 @@ const DashCarousel = ({
                 </div>
                 <div className="main-items">
                     <DashboardPlayerThree
-                        setSongObject={setSongObject}
+                        genreClicked={genreClicked}
+                        isGenreClicked={isGenreClicked}
+                        getSongInfo={getSongInfo}
+                        getTrackIndex={getTrackIndex}
                         isThreePlaying={isThreePlaying}
                         getThree={getThree}
                         setCurrentSong={setCurrentSong}

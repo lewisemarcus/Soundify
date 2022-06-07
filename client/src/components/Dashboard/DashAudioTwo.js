@@ -22,37 +22,46 @@ const DashAudioTwo = ({
     setCurrentSong,
     getTwo,
     isTwoPlaying,
-    setSongObject,
+    getTrackIndex,
+    getSongInfo,
+    genreClicked,
 }) => {
-    shuffleArray(tracks)
+    useEffect(() => {
+        shuffleArray(tracks)
+    }, [])
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [isPlayingTwo, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
-
+    const [songList, setSongList] = useState([{}])
     const originalData = [...songData]
-
+    const [changed, setChanged] = useState(false)
     const intervalRef = useRef()
 
     const isReady = useRef(false)
 
     const toPrevTrack = () => {
         setGenreBool(true)
+        setChanged(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(tracks.length - 1)
                 setTrackIndex(tracks.length - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(tracks.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
             }
         } else {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(songData.length - 1)
                 setTrackIndex(songData.length - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(songData.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
             }
@@ -61,19 +70,24 @@ const DashAudioTwo = ({
 
     const toNextTrack = () => {
         setGenreBool(true)
+        setChanged(true)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
+                getTrackIndex(trackIndex + 1)
                 setTrackIndex(trackIndex + 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexTwo !== undefined) getIndexTwo(0)
             }
         } else {
             if (trackIndex < songData.length - 1) {
                 setTrackIndex(trackIndex + 1)
+                getTrackIndex(trackIndex + 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexTwo !== undefined) getIndexTwo(0)
             }
@@ -92,6 +106,7 @@ const DashAudioTwo = ({
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
+        console.log(changed)
         if (genreClickCount > prevClickCount) {
             setIsPlaying(false)
         }
@@ -105,6 +120,7 @@ const DashAudioTwo = ({
             songGenre = genre
             songId = _id
             songLink = link
+            if (changed) getSongInfo(tracks[trackIndex])
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
@@ -119,7 +135,10 @@ const DashAudioTwo = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
+                setSongList(songData)
                 setSongInfo(songData[trackIndex])
+                if ((changed || genreClicked) && isTwoPlaying)
+                    getSongInfo(songData[trackIndex])
             }
         }
 
@@ -133,7 +152,7 @@ const DashAudioTwo = ({
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre, genreClickCount])
+    }, [trackIndex, clickedGenre, genreClickCount, changed])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -159,8 +178,11 @@ const DashAudioTwo = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlTwo
-                    setSongObject={setSongObject}
+                    getSongInfo={getSongInfo}
                     songInfo={songInfo}
+                    setChanged={setChanged}
+                    songList={songList}
+                    songData={tracks}
                     setCurrent={setCurrent}
                     isTwoPlaying={isTwoPlaying}
                     getTwo={getTwo}
