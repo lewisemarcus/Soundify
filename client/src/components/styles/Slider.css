@@ -20,3 +20,8 @@
     cursor: pointer;
     border-radius: 50%;
 }
+
+.create-playlist {
+    color: #ec994b;
+    cursor: pointer;
+}

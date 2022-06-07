@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
-import { List, Typography, Divider, Modal, Input, Space, Button } from "antd"
+import { AiFillPlusCircle } from "react-icons/ai";
+import { List, Typography, Divider, Modal, message, Input, Space, Button } from "antd"
 import "../components/styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
 import {
@@ -63,46 +64,88 @@ const SongDetails = ({
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
-    // const { loading: playlistloading, data: playlistdata } = useState(window.innerWidth)= useQuery(GET_USER_PLAYLIST, {
-    //     variables: { username: username },
-    // });
+    const { loading: playlistloading, data: playlistdata } = useQuery(GET_USER_PLAYLIST, {
+        variables: { username: username },
+    });
 
-    // const usersPlaylists = data?.userPlaylists || [];
+    const usersPlaylists = data?.userPlaylists || [];
 
-    // const success = async () => {
-    //     await message.loading("Uploading playlist...");
-    //     await message.success("Successfully added song to playlist!");
-    // };
+    console.log(usersPlaylists)
 
-    // const modalError = () => {
-    //     message.modalError("Error occured! Try again.");
-    // };
+    const [newPlaylist, setNewPlaylist] = useState({
+        playlistname: '',
+        username: username
+    })
 
-    const handleChange = (event) => {
-        if (event.label) {
-            const value = event.value
-            const name = "newPlaylist"
-            // setSong((prevInput) => {
-            //     return {
-            //         ...prevInput,
-            //         [name]: value,
-            //     };
-            // });
-        } else {
-            const { name, value } = event.target
-            // setSong((prevInput) => {
-            //     return {
-            //         ...prevInput,
-            //         [name]: value,
-            //     };
-            // });
-        }
+    const [playlist, setPlaylist] = useState({
+        playlistname: '',
+        username: username
+    })
+
+    const success = async () => {
+        await message.loading("Uploading playlist...");
+        await message.success("Successfully added song to playlist!");
+    };
+
+    const modalError = () => {
+        message.error("Must give playlist a name.");
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setNewPlaylist(() => {
+            return {
+                [name]: value,
+            };
+        });
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     const showModal = () => {
         setIsModalVisible(true)
+    }
+
+    const handleCreatePlaylist = () => {
+        if (newPlaylist.playlistname === "") {
+            return modalError()
+        }
+        setIsModalVisible(false);
+        success();
+        const formData = new FormData();
+        formData.append("username", newPlaylist.username);
+        formData.append("playlistname", newPlaylist.playlistname);
+        // try {
+        //     const res = await axios({
+        //         method: "post",
+        //         url: "/upload",
+        //         data: formData,
+        //         headers: { "Content-Type": "multipart/form-data" },
+        //     });
+        //     await window.location.reload();
+        // }   catch (err) {
+        //         error();
+        // }
+    }
+
+    const addToPlaylist = (e) => {
+        e.preventDefault();
+        setIsModalVisible(false);
+        success();
+        const formData = new FormData();
+        formData.append("username", playlist.username);
+        formData.append("playlistname", e.currentTarget.name);
+        // try {
+        //     const res = await axios({
+        //         method: "post",
+        //         url: "/upload",
+        //         data: formData,
+        //         headers: { "Content-Type": "multipart/form-data" },
+        //     });
+        //     await window.location.reload();
+        // }   catch (err) {
+        //         error();
+        // }
     }
 
     const handleCancel = () => {
@@ -295,13 +338,16 @@ const SongDetails = ({
                         >
                             <Space>
                                 <Input
-                                    onChange={handleChange}
+                                    onClick={handleChange}
                                     name="newPlaylist"
-                                    // value={playlist.playlistname}
+                                    value={newPlaylist.playlistname}
                                     placeholder="Create Playlist"
                                     size="large"
                                     required
                                 />
+                                {/* <Button> */}
+                                    <AiFillPlusCircle className="create-playlist" onClick={handleCreatePlaylist} />
+                                {/* </Button> */}
                                 <ul>
                                     {/* {playlists.map((playlist, index) => {
                                         return (
