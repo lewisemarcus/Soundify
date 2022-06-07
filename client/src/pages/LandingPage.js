@@ -7,22 +7,25 @@ import landingPageImg from "../assets/landingPage.svg";
 // import landingPageImg from "../assets/landingPage2.svg";
 
 const LandingPage = ({
-  setDashSearchResults,
-  setCurrentSong,
-  setAudioR,
-  genreClickCount,
-  setGenreClickCount,
-  setAudioList,
-  setPrevCount,
-  currentPlayer,
-  isOnePlaying,
-  getOne,
-  isTwoPlaying,
-  getTwo,
-  isThreePlaying,
-  getThree,
-  currentEvent,
-  setCurrent,
+
+    setDashSearchResults,
+    setCurrentSong,
+    setAudioR,
+    genreClickCount,
+    setGenreClickCount,
+    setAudioList,
+    setPrevCount,
+    currentPlayer,
+    isOnePlaying,
+    getOne,
+    isTwoPlaying,
+    getTwo,
+    isThreePlaying,
+    getThree,
+    currentEvent,
+    setCurrent,
+    setSongObject,
+
 }) => {
   const { user } = useContext(AuthContext);
 
@@ -30,24 +33,34 @@ const LandingPage = ({
     <>
       {user ? (
         <>
-          <Dashboard
-            currentEvent={currentEvent}
-            setCurrent={setCurrent}
-            isOnePlaying={isOnePlaying}
-            getOne={getOne}
-            isTwoPlaying={isTwoPlaying}
-            getTwo={getTwo}
-            isThreePlaying={isThreePlaying}
-            getThree={getThree}
-            currentPlayer={currentPlayer}
-            setPrevCount={setPrevCount}
-            setAudioList={setAudioList}
-            genreClickCount={genreClickCount}
-            setGenreClickCount={setGenreClickCount}
-            setAudioR={setAudioR}
-            setCurrentSong={setCurrentSong}
-            setDashSearchResults={setDashSearchResults}
-          />
+            {user ? (
+                <>
+                    <Dashboard
+                        setSongObject={setSongObject}
+                        currentEvent={currentEvent}
+                        setCurrent={setCurrent}
+                        isOnePlaying={isOnePlaying}
+                        getOne={getOne}
+                        isTwoPlaying={isTwoPlaying}
+                        getTwo={getTwo}
+                        isThreePlaying={isThreePlaying}
+                        getThree={getThree}
+                        currentPlayer={currentPlayer}
+                        setPrevCount={setPrevCount}
+                        setAudioList={setAudioList}
+                        genreClickCount={genreClickCount}
+                        setGenreClickCount={setGenreClickCount}
+                        setAudioR={setAudioR}
+                        setCurrentSong={setCurrentSong}
+                        setDashSearchResults={setDashSearchResults}
+                    />
+                </>
+            ) : (
+                <div className="landing-page-wrapper">
+                    <Hero />
+                </div>
+            )}
+
         </>
       ) : (
         <div className="landing-page-wrapper">

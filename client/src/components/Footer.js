@@ -17,11 +17,13 @@ const Footer = ({
     isPlaying,
     setIsPlaying,
     footerId,
+    songObject,
 }) => {
     return (
         // this link needs to be changed upon new click
         <div className="footer-container" dashId={`dash-${footerId}`}>
             <FooterAudioPlayer
+                songObject={songObject}
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
                 isOnePlaying={isOnePlaying}

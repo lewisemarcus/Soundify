@@ -22,6 +22,7 @@ const DashAudioOne = ({
     setCurrentSong,
     getOne,
     isOnePlaying,
+    setSongObject,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -104,6 +105,7 @@ const DashAudioOne = ({
             songGenre = genre
             songId = _id
             songLink = link
+
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
@@ -118,11 +120,13 @@ const DashAudioOne = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
+
                 setSongInfo(songData[trackIndex])
             }
         }
 
         currentPlayer.current.src = songLink
+        console.log("hi")
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
@@ -157,6 +161,8 @@ const DashAudioOne = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlOne
+                    songInfo={songInfo}
+                    setSongObject={setSongObject}
                     setCurrent={setCurrent}
                     isOnePlaying={isOnePlaying}
                     getOne={getOne}

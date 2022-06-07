@@ -18,6 +18,7 @@ function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
     const [prevCount, setPrevCount] = useState(0)
+    const [songObject, setSongObject] = useState({})
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [audioList, setAudioList] = useState([])
@@ -32,6 +33,7 @@ function App() {
     const [footerId, setFooterId] = useState("")
     const { user } = useContext(AuthContext)
     let dashes = []
+
     useEffect(() => {
         if (currentPlayer.current.src !== "")
             if (isOnePlaying || isTwoPlaying || isThreePlaying || isPlaying) {
@@ -60,7 +62,7 @@ function App() {
 
     useEffect(() => {
         if (currentEvent !== undefined) {
-            console.log(isOnePlaying)
+            console.log(songObject)
             if (isOnePlaying) {
                 setIsPlaying(true)
                 getTwo(false)
@@ -86,8 +88,7 @@ function App() {
     }, [isOnePlaying, isTwoPlaying, isThreePlaying])
 
     useEffect(() => {
-        debugger
-        console.log("89", isPlaying)
+        //debugger
         if (currentEvent !== undefined) {
             setFooterId(currentEvent.id)
             if (isPlaying) {
@@ -120,6 +121,7 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            setSongObject={setSongObject}
                             currentEvent={currentEvent}
                             setCurrent={setCurrent}
                             currentSong={currentSong}
@@ -187,6 +189,7 @@ function App() {
 
             {user && (
                 <Footer
+                    songObject={songObject}
                     footerId={footerId}
                     isPlaying={isPlaying}
                     setIsPlaying={setIsPlaying}

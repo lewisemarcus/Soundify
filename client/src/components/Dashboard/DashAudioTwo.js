@@ -22,6 +22,7 @@ const DashAudioTwo = ({
     setCurrentSong,
     getTwo,
     isTwoPlaying,
+    setSongObject,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -158,6 +159,8 @@ const DashAudioTwo = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlTwo
+                    setSongObject={setSongObject}
+                    songInfo={songInfo}
                     setCurrent={setCurrent}
                     isTwoPlaying={isTwoPlaying}
                     getTwo={getTwo}

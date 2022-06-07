@@ -22,6 +22,7 @@ const DashAudioThree = ({
     setCurrentSong,
     getThree,
     isThreePlaying,
+    setSongObject,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -125,7 +126,6 @@ const DashAudioThree = ({
         }
 
         currentPlayer.current.src = songLink
-
         if (isReady.current && genreBool) {
             setGenreBool(false)
             currentPlayer.current.play()
@@ -160,6 +160,8 @@ const DashAudioThree = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlThree
+                    setSongObject={setSongObject}
+                    songInfo={songInfo}
                     setCurrent={setCurrent}
                     isThreePlaying={isThreePlaying}
                     getThree={getThree}
