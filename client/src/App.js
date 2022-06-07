@@ -161,6 +161,7 @@ function App() {
                     path="/DashResults"
                     element={
                         <DashResults
+                            getSongInfo={getSongInfo}
                             setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
                             dashSearchResults={dashSearchResults}
