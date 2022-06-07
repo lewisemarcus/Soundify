@@ -1,17 +1,14 @@
 .dash-result-container {
-  height: 100vh;
-  background-color: var(--light);
+  height: fit-content;
+  background-color: var(--dark);
+  padding: 0 0 7rem;
 }
 
 .searchResults {
   display: grid;
   padding: 2rem 2rem 3rem;
-
-  /* background-color: black; */
-  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
-  /* height: 75vh; */
   height: fit-content;
   margin-bottom: 32px;
 }
@@ -19,12 +16,12 @@
 @media screen and (max-width: 1280px) {
   .searchResults {
     height: fit-content;
-    /* background-color: black; */
     margin-bottom: 32px;
   }
 }
 
 .site-page-header {
-  color: var(--white);
   background-color: var(--light);
+  padding: 2rem;
+  margin-bottom: 1rem;
 }

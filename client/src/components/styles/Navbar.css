@@ -3,6 +3,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #ec994b;
+  color: #fff;
   padding: 0.5rem;
 }
 
@@ -14,12 +15,12 @@ nav {
   text-shadow: red -3px 0, cyan 3px 0;
   transition: text-shadow 200ms;
   letter-spacing: 2px; */
- display: flex;
- align-items: center;
- height: 90px;
- width: 100px;
- margin-top: 5px;
- margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 90px;
+  width: 100px;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 
 .ul-container {
@@ -35,12 +36,12 @@ nav {
 
 .upload a {
   cursor: pointer;
-  transition: 0.3s ease-in-out all;
-  color: var(--dark);
+  transition: 0.2s ease-in-out all;
+  color: #fff;
 }
 
 .upload a:hover {
-  color: var(--white);
+  color: var(--dark);
 }
 
 .profile {
@@ -54,4 +55,13 @@ nav {
 
 .logout .ant-modal-body {
   background: var(--light);
+}
+
+.ant-btn {
+  border: none;
+}
+
+.ant-btn:hover {
+  background-color: rgb(163, 0, 0);
+  color: white;
 }

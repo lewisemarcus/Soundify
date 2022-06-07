@@ -1,7 +1,9 @@
 .landing-page-wrapper {
   background: var(--dark);
-  height: 100vh;
-  padding: 2rem 0;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-name {
