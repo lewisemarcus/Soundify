@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react"
 import DashAudioControlTwo from "./DashAudioControlTwo"
 import DashBackDropTwo from "./DashBackDropTwo"
 import "./styles/DashAudio.css"
+import shuffleArray from "../../utils/helpers/shuffleArray"
 import { Link } from "react-router-dom"
 import Marquee from "react-fast-marquee"
-import shuffleArray from "../../utils/helpers/shuffleArray"
 
 /*
  * Read the blog post here:
@@ -16,23 +16,24 @@ const DashAudioTwo = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    getTwo,
-    getAudioTwo,
     getIndexTwo,
     setCurrent,
     currentPlayer,
     setCurrentSong,
+    getTwo,
+    isTwoPlaying,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // State
     const [trackIndex, setTrackIndex] = useState(0)
-
     const [isPlayingTwo, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
 
     const originalData = [...songData]
+
+    const intervalRef = useRef()
 
     const isReady = useRef(false)
 
@@ -46,9 +47,6 @@ const DashAudioTwo = ({
                 setTrackIndex(trackIndex - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
             }
-            if (getAudioTwo !== undefined) {
-                getAudioTwo(currentPlayer.current)
-            }
         } else {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(songData.length - 1)
@@ -56,9 +54,6 @@ const DashAudioTwo = ({
             } else {
                 setTrackIndex(trackIndex - 1)
                 if (getIndexTwo !== undefined) getIndexTwo(trackIndex - 1)
-            }
-            if (getAudioTwo !== undefined) {
-                getAudioTwo(currentPlayer.current)
             }
         }
     }
@@ -84,32 +79,20 @@ const DashAudioTwo = ({
         }
     }
 
-    useEffect(() => {
-        if (currentPlayer.current.paused && !isPlayingTwo) {
-            setIsPlaying(false)
-            if (getTwo !== undefined) getTwo(false)
-        }
-    })
-
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlayingTwo) {
             document.getElementById("two").setAttribute("name", songInfo.link)
-            setCurrent(document.getElementById("one"))
+            setCurrent(document.getElementById("two"))
 
             setCurrentSong(songInfo.link)
-        } else {
-            currentPlayer.current.pause()
-
-            if (getTwo !== undefined) getTwo(false)
         }
-    }, [isPlayingTwo])
+    }, [isPlayingTwo, songInfo.link])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
         if (genreClickCount > prevClickCount) {
             setIsPlaying(false)
-            if (getTwo !== undefined) getTwo(false)
         }
         if (clickedGenre === "") {
             // Destructure for conciseness
@@ -139,19 +122,12 @@ const DashAudioTwo = ({
             }
         }
 
-        currentPlayer.current.pause()
         currentPlayer.current.src = songLink
-
-        currentPlayer.current.load()
-        if (getAudioTwo !== undefined) {
-            getAudioTwo(currentPlayer.current)
-        }
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
-
+            currentPlayer.current.play()
             setIsPlaying(true)
-            if (getTwo !== undefined) getTwo(true)
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
@@ -162,6 +138,7 @@ const DashAudioTwo = ({
         // Pause and clean up on unmount
         return () => {
             currentPlayer.current.pause()
+            clearInterval(intervalRef.current)
         }
     }, [])
 
@@ -181,6 +158,8 @@ const DashAudioTwo = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlTwo
+                    isTwoPlaying={isTwoPlaying}
+                    getTwo={getTwo}
                     isPlaying={isPlayingTwo}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
@@ -189,6 +168,7 @@ const DashAudioTwo = ({
                 />
 
                 <DashBackDropTwo
+                    isTwoPlaying={isTwoPlaying}
                     trackIndex={trackIndex}
                     // activeColor={color}
                     isPlaying={isPlayingTwo}

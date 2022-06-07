@@ -7,35 +7,27 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import Marquee from "react-fast-marquee"
-import { width } from "@mui/system"
-
+let count = 0
 const AudioPlayer = ({
     tracks,
     currentSong,
     oneSongClick,
-    setOneSongClick,
-
     genreClickCount,
-    playing,
     prevCount,
     currentPlayer,
-    isOnePlaying,
-    isTwoPlaying,
-    isThreePlaying,
+    isPlaying,
+    setIsPlaying,
 }) => {
     // State
     const location = useLocation()
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(0.2)
-    // const [style, setStyle] = useState({ display: 'none' });
 
     // Destructure for conciseness
     const { title, artist, audioSrc } = tracks[trackIndex]
 
     // Refs
-
     let audioRef = currentPlayer
 
     const isReady = useRef(false)
@@ -105,35 +97,33 @@ const AudioPlayer = ({
         }
     }
 
-    useEffect(() => {}, [currentSong])
-
-    useEffect(() => {
-        if (isOnePlaying || isTwoPlaying || isThreePlaying) setIsPlaying(true)
-        else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying)
-            setIsPlaying(false)
-    }, [isOnePlaying, isTwoPlaying, isThreePlaying])
-
     useEffect(() => {
         if (genreClickCount > prevCount) {
-            if (audioRef.current) audioRef.current.pause()
+            audioRef.current.pause()
         }
     }, [genreClickCount, prevCount, currentSong])
 
     // Handles cleanup and setup when changing tracks
 
     useEffect(() => {
+        if (location.pathname.split("/")[1] !== "") count++
         if (location.pathname.split("/")[1] !== "song") {
             if (audioRef.current !== undefined) {
                 if (genreClickCount > prevCount) {
                     audioRef.current.pause()
                 }
 
-                if (isPlaying) {
-                    currentPlayer.current.play()
-
-                    startTimer()
+                if (isReady.current && !isPlaying && count < 1) {
+                    count++
+                    setIsPlaying(true)
+                    // isReady.current = false
                 } else {
-                    audioRef.current.pause()
+                    // Set the isReady ref as true for the next pass
+                    isReady.current = true
+                }
+
+                if (isPlaying) {
+                    startTimer()
                 }
             }
         } else {
@@ -141,19 +131,20 @@ const AudioPlayer = ({
                 if (audioRef.current.src !== currentSong && currentSong) {
                     audioRef.current.src = currentSong
                 }
-
-                if (playing && isPlaying) {
-                    audioRef.current.addEventListener("loadedmetadata", () => {
-                        //audioRef.current.play()
-                    })
-                    startTimer()
+                if (isReady.current && !isPlaying && count < 1) {
+                    count++
+                    setIsPlaying(true)
+                    // isReady.current = false
                 } else {
-                    console.log(audioRef)
-                    audioRef.current.pause()
+                    // Set the isReady ref as true for the next pass
+                    isReady.current = true
+                }
+                if (isPlaying) {
+                    startTimer()
                 }
             }
         }
-    }, [isPlaying, location.pathname, playing, genreClickCount])
+    }, [isPlaying, genreClickCount, currentSong])
 
     useEffect(() => {
         if (audioRef && audioRef.current) {
@@ -168,29 +159,6 @@ const AudioPlayer = ({
             -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
 
             setTrackProgress(audioRef.current.currentTime)
-        }
-    }, [trackProgress, currentSong])
-
-    useEffect(() => {
-        if (audioRef && audioRef.current) {
-            audioRef.current.volume = volume
-            // Destructure for conciseness
-            setDuration(audioRef.current.duration)
-
-            setCurrentPercent(
-                duration ? `${(trackProgress / duration) * 100}%` : "0%",
-            )
-            setTrackStyle(`
-            -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercent}, #fff), color-stop(${currentPercent}, #777))`)
-
-            setTrackProgress(audioRef.current.currentTime)
-            if (isReady.current) {
-                setIsPlaying(true)
-                // isReady.current = false
-            } else {
-                // Set the isReady ref as true for the next pass
-                isReady.current = true
-            }
         }
     }, [
         trackIndex,

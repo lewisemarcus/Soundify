@@ -16,12 +16,12 @@ const DashAudioThree = ({
     clickedGenre,
     genreClickCount,
     prevClickCount,
-    getThree,
-    getAudioThree,
     getIndexThree,
     setCurrent,
     currentPlayer,
     setCurrentSong,
+    getThree,
+    isThreePlaying,
 }) => {
     shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
@@ -48,9 +48,6 @@ const DashAudioThree = ({
                 setTrackIndex(trackIndex - 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
             }
-            if (getAudioThree !== undefined) {
-                getAudioThree(currentPlayer.current)
-            }
         } else {
             if (trackIndex - 1 < 0) {
                 setTrackIndex(songData.length - 1)
@@ -59,9 +56,6 @@ const DashAudioThree = ({
             } else {
                 setTrackIndex(trackIndex - 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
-            }
-            if (getAudioThree !== undefined) {
-                getAudioThree(currentPlayer.current)
             }
         }
     }
@@ -87,31 +81,20 @@ const DashAudioThree = ({
         }
     }
 
-    useEffect(() => {
-        if (currentPlayer.current.paused && !isPlayingThree) {
-            setIsPlaying(false)
-            if (getThree !== undefined) getThree(false)
-        }
-    })
-
     const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlayingThree) {
             document.getElementById("three").setAttribute("name", songInfo.link)
-            setCurrent(document.getElementById("one"))
+            setCurrent(document.getElementById("three"))
 
             setCurrentSong(songInfo.link)
-        } else {
-            currentPlayer.current.pause()
-            if (getThree !== undefined) getThree(false)
         }
-    }, [isPlayingThree])
+    }, [isPlayingThree, songInfo.link])
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
         if (genreClickCount > prevClickCount) {
             setIsPlaying(false)
-            if (getThree !== undefined) getThree(false)
         }
         if (clickedGenre === "") {
             // Destructure for conciseness
@@ -141,19 +124,12 @@ const DashAudioThree = ({
             }
         }
 
-        currentPlayer.current.pause()
         currentPlayer.current.src = songLink
-
-        currentPlayer.current.load()
-        if (getAudioThree !== undefined) {
-            getAudioThree(currentPlayer.current)
-        }
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
             currentPlayer.current.play()
             setIsPlaying(true)
-            if (getThree !== undefined) getThree(true)
         } else {
             // Set the isReady ref as true for the next pass
             isReady.current = true
@@ -184,6 +160,8 @@ const DashAudioThree = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlThree
+                    isThreePlaying={isThreePlaying}
+                    getThree={getThree}
                     isPlaying={isPlayingThree}
                     genreBool={genreBool}
                     onPrevClick={toPrevTrack}
@@ -192,6 +170,7 @@ const DashAudioThree = ({
                 />
 
                 <DashBackDropThree
+                    isThreePlaying={isThreePlaying}
                     trackIndex={trackIndex}
                     // activeColor={color}
                     isPlaying={isPlayingThree}
