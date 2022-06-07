@@ -39,8 +39,8 @@ const resolvers = {
                 return output.results
             })
         },
-        playlist: async(parent, { plTitle }) => {
-            return Playlist.findOne({ plTitle: plTitle })
+        playlist: async(parent, { ID }) => {
+            return Playlist.findOne({ _id: ID }).populate.songs
         },
         userSongs: async(parent, { username }) => {
             const params = username ? { username } : {}
@@ -48,15 +48,18 @@ const resolvers = {
         },
         userPlaylists: async(parent, { owner }) => {
             const params = owner ? { owner } : {}
-            return Playlist.find(params).sort({ createdAt: -1 })
+            const playlist = await Playlist.find(params).sort({ createdAt: -1 }).populate("songs")
+                // console.log(playlist)
+            return playlist
+                // return Playlist.find(params).sort({ createdAt: -1 })
         },
-        userPlaylists: async(parent, args, context) => {
-            if (context.user)
-                return User.findOne({ _id: context.user._id })
-                    .populate("playlists")
-                    .sort({ createdAt: -1 })
-            throw new AuthenticationError("You need to be logged in!")
-        },
+        // userPlaylists: async(parent, args, context) => {
+        //     if (context.user)
+        //         return User.findOne({ _id: context.user._id })
+        //             .populate("playlists")
+        //             .sort({ createdAt: -1 })
+        //     throw new AuthenticationError("You need to be logged in!")
+        // },
     },
     Mutation: {
         registerUser: async(
@@ -174,9 +177,17 @@ const resolvers = {
         // ) => {
 
         // },
-        // removeFromPlaylist: async() => {
-
-        // },
+        removeFromPlaylist: async(
+            parent, { songId, playlistname, username }
+        ) => {
+            return Playlist.findOneAndUpdate({ _id: mongoose.Types.ObjectId(pLs._id) }, {
+                $pull: {
+                    songs: {
+                        _id: mongoose.Types.ObjectId(songId)
+                    },
+                },
+            }, { new: true }, )
+        },
     },
 }
 

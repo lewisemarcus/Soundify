@@ -103,23 +103,26 @@ export const GET_USER_SONGS = gql `
     }
 `
 export const GET_USER_PLAYLIST = gql `
-    query userPlaylists($username: String!) {
-        userPlaylists(username: $username) {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
+    query userPlaylists($owner: String!) {
+        userPlaylists(owner: $owner) {
+            plTitle
+            owner
+            songs {
+                title
+                genre
+                link
+                artist
+                uploaded
+                comments {
+                    _id
+                    commentText
+                    commentAuthor
+                    createdAt
+                }
+                filename
                 _id
-                commentText
-                commentAuthor
-                createdAt
+                username
             }
-            filename
-            _id
-            username
-            playlistname
         }
     }
 `

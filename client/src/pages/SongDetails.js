@@ -66,11 +66,18 @@ const SongDetails = ({
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
-    const { loading: playlistloading, data: playlistdata } = useQuery(GET_USER_PLAYLIST, {
-        variables: { username: username },
+    const { loading: playlistloading, data: userPlaylists } = useQuery(GET_USER_PLAYLIST, {
+        variables: { owner: username },
     });
+    const usersPlaylists = userPlaylists?.userPlaylists || [];
+    const uPL = Object.values(usersPlaylists)
+    console.log(userPlaylists)
 
-    const usersPlaylists = data?.userPlaylists || [];
+    useEffect(() => {
+    console.log(uPL)
+    }, [usersPlaylists])
+
+    
 
     // const [newPlaylist, setNewPlaylist] = useState()
 
@@ -101,15 +108,6 @@ const SongDetails = ({
         message.error("Must give playlist a name.");
     };
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target
-    //     setNewPlaylist(() => {
-    //         return {
-    //             [name]: value,
-    //         };
-    //     });
-    // }
-
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     const showModal = () => {
@@ -131,29 +129,20 @@ const SongDetails = ({
         })
         setIsModalVisible(false);
         success();
-        
-        
     }
 
-    const addToPlaylist = (e) => {
-        e.preventDefault();
-        setIsModalVisible(false);
-        success();
-        const formData = new FormData();
-        formData.append("username", playlist.username);
-        formData.append("playlistname", e.currentTarget.name);
-        // try {
-        //     const res = await axios({
-        //         method: "post",
-        //         url: "/upload",
-        //         data: formData,
-        //         headers: { "Content-Type": "multipart/form-data" },
-        //     });
-        //     await window.location.reload();
-        // }   catch (err) {
-        //         error();
-        // }
-    }
+    // const addToPlaylist = (e) => {
+    //     e.preventDefault();
+    //     await addToPlaylist({
+    //         variables: {
+    //                 playlistname: values.playlistname,
+    //                 username: username,
+    //                 songId: querySong._id
+    //             }
+    //     })
+    //     setIsModalVisible(false);
+    //     success();
+    // }
 
     const handleCancel = () => {
         // setSong({
@@ -354,11 +343,11 @@ const SongDetails = ({
                                 />
                                 <AiFillPlusCircle className="create-playlist" onClick={handleCreatePlaylist} />
                                 <ul>
-                                    {/* {playlists.map((playlist, index) => {
+                                    {usersPlaylists.map((playlist, index) => {
                                         return (
-                                            <li onClcik={addToPlaylist}>{playlist.playlistname}</li>
+                                            <li >{playlist.plTitle}</li>
                                         );
-                                    })} */}
+                                    })}
                                 </ul>
                             </Space>
                         </Modal>
