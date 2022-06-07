@@ -160,6 +160,7 @@ const DashAudioThree = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlThree
+                    setCurrent={setCurrent}
                     isThreePlaying={isThreePlaying}
                     getThree={getThree}
                     isPlaying={isPlayingThree}

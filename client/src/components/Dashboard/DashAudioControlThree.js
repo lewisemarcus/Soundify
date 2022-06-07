@@ -12,6 +12,7 @@ const DashAudioControlThree = ({
     genreBool,
     getThree,
     isThreePlaying,
+    setCurrent,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -27,6 +28,7 @@ const DashAudioControlThree = ({
                 type="button"
                 className="pause-btn"
                 onClick={() => {
+                    setCurrent(document.getElementById("three"))
                     getThree(false)
                     onPlayPauseClick(false)
                 }}
@@ -39,6 +41,7 @@ const DashAudioControlThree = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
+                    setCurrent(document.getElementById("three"))
                     getThree(true)
                     onPlayPauseClick(true)
                 }}

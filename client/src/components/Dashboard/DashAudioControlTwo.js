@@ -12,6 +12,7 @@ const DashAudioControlTwo = ({
     genreBool,
     getTwo,
     isTwoPlaying,
+    setCurrent,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -27,6 +28,7 @@ const DashAudioControlTwo = ({
                 type="button"
                 className="pause-btn"
                 onClick={() => {
+                    setCurrent(document.getElementById("two"))
                     getTwo(false)
                     onPlayPauseClick(false)
                 }}
@@ -39,6 +41,7 @@ const DashAudioControlTwo = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
+                    setCurrent(document.getElementById("two"))
                     getTwo(true)
                     onPlayPauseClick(true)
                 }}
