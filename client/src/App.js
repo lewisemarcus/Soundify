@@ -13,7 +13,7 @@ import { AuthContext } from "./context/authContext"
 import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
-
+let count = 0
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
@@ -33,36 +33,53 @@ function App() {
     const { user } = useContext(AuthContext)
     let dashes = []
     useEffect(() => {
-        if (document.getElementById("one"))
-            dashes[0] = document.getElementById("one")
-        if (document.getElementById("two"))
-            dashes[1] = document.getElementById("two")
-        if (document.getElementById("three"))
-            dashes[2] = document.getElementById("three")
         if (currentPlayer.current.src !== "")
             if (isOnePlaying || isTwoPlaying || isThreePlaying || isPlaying) {
                 currentPlayer.current.play()
             }
-    }, [currentSong, currentEvent])
+        getOne(false)
+        getTwo(false)
+        getThree(false)
+        setIsPlaying(false)
+        if (currentEvent)
+            switch (currentEvent.id) {
+                case "one":
+                    getOne(true)
+                    setIsPlaying(true)
+                    count = 1
+                    break
+                case "two":
+                    setIsPlaying(true)
+                    getTwo(true)
+                    count = 1
+                    break
+                case "three":
+                    setIsPlaying(true)
+                    getThree(true)
+                    count = 1
+                    break
+            }
+    }, [currentEvent])
 
     useEffect(() => {
+        console.log(isOnePlaying)
         if (currentEvent !== undefined) {
             if (isOnePlaying) {
                 setIsPlaying(true)
-                getOne(true)
                 getTwo(false)
                 getThree(false)
-            } else if (isTwoPlaying) {
+            }
+            if (isTwoPlaying) {
                 setIsPlaying(true)
                 getOne(false)
-                getTwo(true)
                 getThree(false)
-            } else if (isThreePlaying) {
+            }
+            if (isThreePlaying) {
                 setIsPlaying(true)
                 getOne(false)
                 getTwo(false)
-                getThree(true)
-            } else if (!isOnePlaying && !isTwoPlaying && !isThreePlaying) {
+            }
+            if (!isOnePlaying && !isTwoPlaying && !isThreePlaying) {
                 setIsPlaying(false)
                 getOne(false)
                 getTwo(false)
@@ -72,17 +89,21 @@ function App() {
     }, [isOnePlaying, isTwoPlaying, isThreePlaying])
 
     useEffect(() => {
+        console.log("89", isPlaying)
         if (currentEvent !== undefined) {
             setFooterId(currentEvent.id)
             if (isPlaying) {
                 if (currentEvent.id === "one") {
-                    getOne(true)
+                    getTwo(false)
+                    getThree(false)
                 }
                 if (currentEvent.id === "two") {
-                    getTwo(true)
+                    getOne(false)
+                    getThree(false)
                 }
                 if (currentEvent.id === "three") {
-                    getThree(true)
+                    getTwo(false)
+                    getOne(false)
                 }
             } else {
                 getOne(false)
@@ -92,7 +113,7 @@ function App() {
         }
         if (isPlaying) currentPlayer.current.play()
         if (!isPlaying) currentPlayer.current.pause()
-    }, [isPlaying])
+    }, [isPlaying, currentSong])
     return (
         <div>
             <Navbar />

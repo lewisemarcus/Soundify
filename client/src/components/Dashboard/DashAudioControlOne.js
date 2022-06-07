@@ -12,6 +12,7 @@ const DashAudioControlOne = ({
     genreBool,
     getOne,
     isOnePlaying,
+    setCurrent,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -27,8 +28,9 @@ const DashAudioControlOne = ({
                 type="button"
                 className="pause-btn"
                 onClick={() => {
-                    getOne(false)
+                    setCurrent(document.getElementById("one"))
                     onPlayPauseClick(false)
+                    getOne(false)
                 }}
                 aria-label="Pause"
             >
@@ -39,8 +41,9 @@ const DashAudioControlOne = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
-                    getOne(true)
+                    setCurrent(document.getElementById("one"))
                     onPlayPauseClick(true)
+                    getOne(true)
                 }}
                 aria-label="Play"
             >

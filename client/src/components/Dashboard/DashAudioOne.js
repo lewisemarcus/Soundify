@@ -83,7 +83,7 @@ const DashAudioOne = ({
     useEffect(() => {
         if (isPlayingOne) {
             document.getElementById("one").setAttribute("name", songInfo.link)
-            setCurrent(document.getElementById("one"))
+            //setCurrent(document.getElementById("one"))
 
             setCurrentSong(songInfo.link)
         }
@@ -157,6 +157,7 @@ const DashAudioOne = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlOne
+                    setCurrent={setCurrent}
                     isOnePlaying={isOnePlaying}
                     getOne={getOne}
                     isPlaying={isPlayingOne}

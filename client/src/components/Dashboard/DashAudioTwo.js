@@ -158,6 +158,7 @@ const DashAudioTwo = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlTwo
+                    setCurrent={setCurrent}
                     isTwoPlaying={isTwoPlaying}
                     getTwo={getTwo}
                     isPlaying={isPlayingTwo}
