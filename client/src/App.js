@@ -14,15 +14,22 @@ import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
+//instead of strictly a song Object, make it a song list
+//Determine if the length of list < 1, treat as single song
+//Else track song's index here and set current to current song index
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
     const [prevCount, setPrevCount] = useState(0)
-    const [songObject, setSongObject] = useState({})
+    const [songInfo, getSongInfo] = useState({
+        title: "",
+        artist: "",
+    })
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [audioList, setAudioList] = useState([])
     const [currentSong, setCurrentSong] = useState(null)
+    const [trackIndex, getTrackIndex] = useState(0)
     const location = useLocation()
     const [currentEvent, setCurrent] = useState()
     const [isPlaying, setIsPlaying] = useState(false)
@@ -58,11 +65,10 @@ function App() {
                     getThree(true)
                     break
             }
-    }, [currentEvent])
+    }, [currentEvent, currentSong])
 
     useEffect(() => {
         if (currentEvent !== undefined) {
-            console.log(songObject)
             if (isOnePlaying) {
                 setIsPlaying(true)
                 getTwo(false)
@@ -93,16 +99,19 @@ function App() {
             setFooterId(currentEvent.id)
             if (isPlaying) {
                 if (currentEvent.id === "one") {
+                    getOne(true)
                     getTwo(false)
                     getThree(false)
                 }
                 if (currentEvent.id === "two") {
                     getOne(false)
+                    getTwo(true)
                     getThree(false)
                 }
                 if (currentEvent.id === "three") {
                     getTwo(false)
                     getOne(false)
+                    getThree(true)
                 }
             } else {
                 getOne(false)
@@ -110,6 +119,7 @@ function App() {
                 getThree(false)
             }
         }
+
         if (isPlaying) currentPlayer.current.play()
         if (!isPlaying) currentPlayer.current.pause()
     }, [isPlaying])
@@ -121,8 +131,9 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
-                            setSongObject={setSongObject}
                             currentEvent={currentEvent}
+                            getSongInfo={getSongInfo}
+                            getTrackIndex={getTrackIndex}
                             setCurrent={setCurrent}
                             currentSong={currentSong}
                             isOnePlaying={isOnePlaying}
@@ -165,6 +176,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            getSongInfo={getSongInfo}
                             isPlaying={isPlaying}
                             setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
@@ -189,7 +201,9 @@ function App() {
 
             {user && (
                 <Footer
-                    songObject={songObject}
+                    songInfo={songInfo}
+                    getTrackIndex={getTrackIndex}
+                    trackIndex={trackIndex}
                     footerId={footerId}
                     isPlaying={isPlaying}
                     setIsPlaying={setIsPlaying}

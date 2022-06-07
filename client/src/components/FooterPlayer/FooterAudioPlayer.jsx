@@ -17,15 +17,18 @@ const AudioPlayer = ({
     currentPlayer,
     isPlaying,
     setIsPlaying,
+    songInfo,
+    trackIndex,
+    getTrackIndex,
 }) => {
     // State
     const location = useLocation()
-    const [trackIndex, setTrackIndex] = useState(0)
+    //const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [volume, setVolume] = useState(0.2)
-
+    const [song, setSong] = useState({ title: "", artist: "" })
     // Destructure for conciseness
-    const { title, artist, audioSrc } = tracks[trackIndex]
+    useEffect(() => {}, [])
 
     // Refs
     let audioRef = currentPlayer
@@ -73,17 +76,17 @@ const AudioPlayer = ({
 
     const toPrevTrack = () => {
         if (trackIndex - 1 < 0) {
-            setTrackIndex(tracks.length - 1)
+            getTrackIndex(tracks.length - 1)
         } else {
-            setTrackIndex(trackIndex - 1)
+            getTrackIndex(trackIndex - 1)
         }
     }
 
     const toNextTrack = () => {
         if (trackIndex < tracks.length - 1) {
-            setTrackIndex(trackIndex + 1)
+            getTrackIndex(trackIndex + 1)
         } else {
-            setTrackIndex(0)
+            getTrackIndex(0)
         }
     }
 
@@ -223,24 +226,24 @@ const AudioPlayer = ({
                     onPlayPauseClick={setIsPlaying}
                 />
                 <div className="musicianTrack">
-                    {title.length > 6 ? (
+                    {songInfo.title.length > 6 ? (
                         <Marquee gradient={false} delay={2}>
                             <h2 className="footer-title">
-                                {title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h2>
                         </Marquee>
                     ) : (
-                        <h2 className="footer-title">{title}</h2>
+                        <h2 className="footer-title">{songInfo.title}</h2>
                     )}
 
-                    {title.length > 6 ? (
+                    {songInfo.artist.length > 8 ? (
                         <Marquee gradient={false} delay={2}>
                             <h2 className="footer-artist">
-                                {artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {songInfo.artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h2>
                         </Marquee>
                     ) : (
-                        <h2 className="footer-artist">{artist}</h2>
+                        <h2 className="footer-artist">{songInfo.artist}</h2>
                     )}
 
                     {/* <h3 className="footer-artist">{artist}</h3> */}

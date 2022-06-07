@@ -22,39 +22,48 @@ const DashAudioThree = ({
     setCurrentSong,
     getThree,
     isThreePlaying,
-    setSongObject,
+    getSongInfo,
+    getTrackIndex,
+    genreClicked,
 }) => {
-    shuffleArray(tracks)
+    useEffect(() => {
+        shuffleArray(tracks)
+    }, [])
     let songTitle, songFilename, songYear, songGenre, songId, songLink
 
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [isPlayingThree, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
-
+    const [songList, setSongList] = useState([{}])
     const originalData = [...songData]
-
+    const [changed, setChanged] = useState(false)
     const intervalRef = useRef()
 
     const isReady = useRef(false)
 
     const toPrevTrack = () => {
         setGenreBool(true)
+        setChanged(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(tracks.length - 1)
                 setTrackIndex(tracks.length - 1)
                 if (getIndexThree !== undefined)
                     getIndexThree(tracks.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
             }
         } else {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(songData.length - 1)
                 setTrackIndex(songData.length - 1)
                 if (getIndexThree !== undefined)
                     getIndexThree(songData.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex - 1)
             }
@@ -63,19 +72,24 @@ const DashAudioThree = ({
 
     const toNextTrack = () => {
         setGenreBool(true)
+        setChanged(true)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
+                getTrackIndex(trackIndex + 1)
                 setTrackIndex(trackIndex + 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexThree !== undefined) getIndexThree(0)
             }
         } else {
             if (trackIndex < songData.length - 1) {
+                getTrackIndex(trackIndex + 1)
                 setTrackIndex(trackIndex + 1)
                 if (getIndexThree !== undefined) getIndexThree(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexThree !== undefined) getIndexThree(0)
             }
@@ -107,6 +121,7 @@ const DashAudioThree = ({
             songGenre = genre
             songId = _id
             songLink = link
+            if (changed) getSongInfo(tracks[trackIndex])
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
@@ -121,7 +136,10 @@ const DashAudioThree = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
+                setSongList(songData)
                 setSongInfo(songData[trackIndex])
+                if ((changed || genreClicked) && isThreePlaying)
+                    getSongInfo(songData[trackIndex])
             }
         }
 
@@ -134,7 +152,7 @@ const DashAudioThree = ({
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre, genreClickCount])
+    }, [trackIndex, clickedGenre, genreClickCount, changed])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -160,8 +178,11 @@ const DashAudioThree = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlThree
-                    setSongObject={setSongObject}
+                    getSongInfo={getSongInfo}
                     songInfo={songInfo}
+                    setChanged={setChanged}
+                    songData={tracks}
+                    songList={songList}
                     setCurrent={setCurrent}
                     isThreePlaying={isThreePlaying}
                     getThree={getThree}

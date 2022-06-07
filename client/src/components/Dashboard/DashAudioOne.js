@@ -22,37 +22,45 @@ const DashAudioOne = ({
     setCurrentSong,
     getOne,
     isOnePlaying,
-    setSongObject,
+    getSongInfo,
+    getTrackIndex,
+    genreClicked,
 }) => {
-    shuffleArray(tracks)
     let songTitle, songFilename, songYear, songGenre, songId, songLink
-
+    useEffect(() => {
+        shuffleArray(tracks)
+        if (songData) shuffleArray(songData)
+    }, [songData])
     // State
     const [trackIndex, setTrackIndex] = useState(0)
     const [isPlayingOne, setIsPlaying] = useState(false)
     const [genreBool, setGenreBool] = useState(false)
-
+    const [songList, setSongList] = useState([{}])
     const originalData = [...songData]
-
     const intervalRef = useRef()
-
+    const [changed, setChanged] = useState(false)
     const isReady = useRef(false)
 
     const toPrevTrack = () => {
+        setChanged(true)
         setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(tracks.length - 1)
                 setTrackIndex(tracks.length - 1)
                 if (getIndexOne !== undefined) getIndexOne(tracks.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexOne !== undefined) getIndexOne(trackIndex - 1)
             }
         } else {
             if (trackIndex - 1 < 0) {
+                getTrackIndex(songData.length - 1)
                 setTrackIndex(songData.length - 1)
                 if (getIndexOne !== undefined) getIndexOne(songData.length - 1)
             } else {
+                getTrackIndex(trackIndex - 1)
                 setTrackIndex(trackIndex - 1)
                 if (getIndexOne !== undefined) getIndexOne(trackIndex - 1)
             }
@@ -60,20 +68,25 @@ const DashAudioOne = ({
     }
 
     const toNextTrack = () => {
+        setChanged(true)
         setGenreBool(true)
         if (clickedGenre === "") {
             if (trackIndex < tracks.length - 1) {
+                getTrackIndex(trackIndex + 1)
                 setTrackIndex(trackIndex + 1)
                 if (getIndexOne !== undefined) getIndexOne(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexOne !== undefined) getIndexOne(0)
             }
         } else {
             if (trackIndex < songData.length - 1) {
+                getTrackIndex(trackIndex + 1)
                 setTrackIndex(trackIndex + 1)
                 if (getIndexOne !== undefined) getIndexOne(trackIndex + 1)
             } else {
+                getTrackIndex(0)
                 setTrackIndex(0)
                 if (getIndexOne !== undefined) getIndexOne(0)
             }
@@ -105,12 +118,14 @@ const DashAudioOne = ({
             songGenre = genre
             songId = _id
             songLink = link
-
+            if (changed) {
+                getSongInfo(tracks[trackIndex])
+            }
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
                 setGenreBool(false)
-                shuffleArray(songData)
+                //shuffleArray(songData)
                 // Destructure for conciseness
                 const { title, filename, year, genre, _id, link } =
                     songData[trackIndex]
@@ -120,13 +135,14 @@ const DashAudioOne = ({
                 songGenre = genre
                 songId = _id
                 songLink = link
-
+                setSongList(songData)
+                if ((changed || genreClicked) && isOnePlaying)
+                    getSongInfo(songData[trackIndex])
                 setSongInfo(songData[trackIndex])
             }
         }
 
         currentPlayer.current.src = songLink
-        console.log("hi")
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
@@ -135,7 +151,7 @@ const DashAudioOne = ({
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex, clickedGenre, genreClickCount])
+    }, [trackIndex, clickedGenre, genreClickCount, changed])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -161,8 +177,11 @@ const DashAudioOne = ({
                 <br></br>
                 <br></br>
                 <DashAudioControlOne
+                    getSongInfo={getSongInfo}
                     songInfo={songInfo}
-                    setSongObject={setSongObject}
+                    setChanged={setChanged}
+                    songList={songList}
+                    songData={tracks}
                     setCurrent={setCurrent}
                     isOnePlaying={isOnePlaying}
                     getOne={getOne}
