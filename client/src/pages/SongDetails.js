@@ -354,9 +354,6 @@ const SongDetails = ({
                                 </ul>
                             </Space>
                         </Modal>
-                        <div style={{ margin: 10, marginRight: 20 }}>
-                            Likes:
-                        </div>
                     </div>
 
                     <CommentSection
