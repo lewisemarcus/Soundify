@@ -13,7 +13,7 @@ import { AuthContext } from "./context/authContext"
 import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
-let count = 0
+
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
@@ -46,24 +46,21 @@ function App() {
                 case "one":
                     getOne(true)
                     setIsPlaying(true)
-                    count = 1
                     break
                 case "two":
                     setIsPlaying(true)
                     getTwo(true)
-                    count = 1
                     break
                 case "three":
                     setIsPlaying(true)
                     getThree(true)
-                    count = 1
                     break
             }
     }, [currentEvent])
 
     useEffect(() => {
-        console.log(isOnePlaying)
         if (currentEvent !== undefined) {
+            console.log(isOnePlaying)
             if (isOnePlaying) {
                 setIsPlaying(true)
                 getTwo(false)
@@ -89,6 +86,7 @@ function App() {
     }, [isOnePlaying, isTwoPlaying, isThreePlaying])
 
     useEffect(() => {
+        debugger
         console.log("89", isPlaying)
         if (currentEvent !== undefined) {
             setFooterId(currentEvent.id)
@@ -113,7 +111,7 @@ function App() {
         }
         if (isPlaying) currentPlayer.current.play()
         if (!isPlaying) currentPlayer.current.pause()
-    }, [isPlaying, currentSong])
+    }, [isPlaying])
     return (
         <div>
             <Navbar />
