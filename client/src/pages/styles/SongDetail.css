@@ -1,17 +1,38 @@
-
 .create-playlist {
     margin-left: 15px;
-    height: 100%;
-    width: 100%;
+    height: 30px;
+    width: 30px;
     margin-top: 5px;
 }
 
-.create-playlistinput{
+.create-playlistinput {
     width: 100%;
+}
+
+.create-plist {
+    display: flex;
+}
+
+.add-playlist {
+    font-size: larger;
+    font-weight: bold;
+    margin: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.add-playlist:hover {
+    background-color: #ec994b;
+}
+
+.select-list {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
 }
 
 @media screen and (max-width: 365px) {
     .select-list {
-      width: 75%;
+        width: 75%;
     }
-  }
+}

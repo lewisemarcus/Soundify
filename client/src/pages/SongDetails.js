@@ -346,39 +346,39 @@ const SongDetails = ({
                         <button style={{ margin: 10 }} onClick={showModal}>
                             Add to Playlist
                         </button>
-                        <Modal
-                            title="Select Playlist"
-                            className="select-list"
-                            visible={isModalVisible}
-                            onCancel={handleCancel}
-                            destroyOnClose
-                            footer={[
-                                <Button key="cancel" onClick={handleCancel}>
-                                    Cancel
-                                </Button>,
-                            ]}
-                        >
-                            <Space>
-                                <Input
-                                    onChange={onChange}
-                                    className="create-playlistinput"
-                                    name="playlistname"
-                                    value={values.playlistname}
-                                    placeholder="Create Playlist"
-                                    size="large"
-                                    required
-                                />
-                                <AiFillPlusCircle
-                                    className="create-playlist"
-                                    onClick={handleCreatePlaylist}
-                                />
-                                <ul>
-                                    {usersPlaylists.map((playlist, index) => {
-                                        return <li>{playlist.plTitle}</li>
-                                    })}
-                                </ul>
-                            </Space>
-                        </Modal>
+                            <Modal
+                                title="Select Playlist"
+                                className="select-list"
+                                visible={isModalVisible}
+                                onCancel={handleCancel}
+                                destroyOnClose
+                                footer={[
+                                    <Button key="cancel" onClick={handleCancel}>
+                                        Cancel
+                                    </Button>,
+                                ]}
+                            >
+                                <Space style={{ display: "block" }}>
+                                    <div className="create-plist">
+                                        <Input
+                                            onChange={onChange}
+                                            className="create-playlistinput"
+                                            name="playlistname"
+                                            value={values.playlistname}
+                                            placeholder="Create Playlist"
+                                            size="large"
+                                            required
+                                        />
+                                        <AiFillPlusCircle
+                                            className="create-playlist"
+                                            onClick={handleCreatePlaylist}
+                                        />
+                                    </div>
+                                        {usersPlaylists.map((playlist, index) => {
+                                            return <button className="add-playlist">{playlist.plTitle}</button>
+                                        })}
+                                </Space>
+                            </Modal>
                     </div>
 
                     <CommentSection
