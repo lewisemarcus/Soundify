@@ -1,23 +1,30 @@
 .song-list-wrapper {
   background-color: var(--dark);
   color: var(--light);
-  height: 90vh;
+  height: fit-content;
+  padding: 2rem 2rem 7rem;
 }
 
 .song-list-header {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding-top: 2rem;
+  padding: 2rem;
 }
 
 .song-list-header h1 {
   color: var(--light);
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .song-list-header h1 {
+    font-size: 2rem;
+  }
 }
 
 .song-list-container {
   padding: 2rem;
-  border: 1px solid red;
 }
 
 .song-list-content {
@@ -25,22 +32,23 @@
 }
 
 .modal-btn {
-  width: 12rem;
+  width: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
   background: var(--orange);
   color: #fff;
-  height: 50px;
+  height: 40px;
   transition: all 0.4s;
   border-style: none;
   font-family: var(--main-font);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .modal-btn:hover {
   cursor: pointer;
+  background-color: rgba(255, 194, 82, 0.864);
 }
 
 .uploadSongbtn .anticon svg {
@@ -92,10 +100,10 @@
   transform: scale(1.02);
 }
 
-.ant-btn:active {
+/* .ant-btn:active {
   position: relative;
   top: 1px;
-}
+} */
 
 .ant-modal-header {
   background-color: var(--light);
@@ -111,5 +119,5 @@
 }
 
 .ant-table {
-  /* background-color: var(--light); */
+  font-family: var(--main-font);
 }

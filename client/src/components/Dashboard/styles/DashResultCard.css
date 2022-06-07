@@ -1,0 +1,38 @@
+.dash-result-card-container {
+  padding: 0.5rem;
+}
+
+.result-play-btn {
+  transition: 0.3s;
+}
+
+.result-play-btn:hover {
+  transform: scale(1.07);
+}
+
+.dash-result-img {
+  display: none;
+}
+
+.song-title {
+  font-size: 1.2rem;
+}
+
+.song-artist {
+  font-size: 0.7rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .dash-result-img {
+    display: block;
+  }
+  .result-play-btn {
+    margin-left: 3rem;
+  }
+  .song-title {
+    font-size: 2rem;
+  }
+  .song-artist {
+    font-size: 1rem;
+  }
+}
