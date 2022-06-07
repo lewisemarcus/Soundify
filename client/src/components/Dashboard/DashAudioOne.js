@@ -118,7 +118,8 @@ const DashAudioOne = ({
             songGenre = genre
             songId = _id
             songLink = link
-            if (changed) {
+            if (changed && isOnePlaying) {
+                currentPlayer.current.src = songLink
                 getSongInfo(tracks[trackIndex])
             }
             setSongInfo(tracks[trackIndex])
@@ -136,13 +137,13 @@ const DashAudioOne = ({
                 songId = _id
                 songLink = link
                 setSongList(songData)
-                if ((changed || genreClicked) && isOnePlaying)
+                if ((changed || genreClicked) && isOnePlaying) {
+                    currentPlayer.current.src = songLink
                     getSongInfo(songData[trackIndex])
+                }
                 setSongInfo(songData[trackIndex])
             }
         }
-
-        currentPlayer.current.src = songLink
 
         if (isReady.current && genreBool) {
             setGenreBool(false)

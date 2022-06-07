@@ -35,6 +35,7 @@ const SongDetails = ({
     currentPlayer,
     setIsPlaying,
     getSongInfo,
+    isDetailsPlaying,
 }) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
@@ -52,7 +53,6 @@ const SongDetails = ({
     })
     const recommended = recdata?.songByGenre || []
     const recList = Object.values(recommended)
-
     const audio = useRef(null)
     const [width, setWidth] = useState(window.innerWidth * (1075 / 1280))
     let loadedPlayer = false
@@ -271,6 +271,7 @@ const SongDetails = ({
                         </h2>
                     </div>
                     <Waveform
+                        isDetailsPlaying={isDetailsPlaying}
                         isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying}
                         song={querySong}
@@ -331,7 +332,17 @@ const SongDetails = ({
                         <div style={{ margin: 10, marginLeft: 20 }}>
                             Comments
                         </div>
-                        <button style={{ margin: 10 }}>Share</button>
+                        <button
+                            style={{ margin: 10 }}
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    window.location.href,
+                                )
+                                alert("Song URL copied to clipboard!")
+                            }}
+                        >
+                            Share
+                        </button>
                         <button style={{ margin: 10 }} onClick={showModal}>
                             Add to Playlist
                         </button>

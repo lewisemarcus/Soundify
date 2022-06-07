@@ -34,6 +34,7 @@ function App() {
     const [currentEvent, setCurrent] = useState()
     const [isPlaying, setIsPlaying] = useState(false)
     const [dashSearchResults, setDashSearchResults] = useState()
+    const [detailsPlaying, isDetailsPlaying] = useState(false)
     const [isOnePlaying, getOne] = useState(false)
     const [isTwoPlaying, getTwo] = useState(false)
     const [isThreePlaying, getThree] = useState(false)
@@ -41,6 +42,9 @@ function App() {
     const { user } = useContext(AuthContext)
     let dashes = []
 
+    useEffect(() => {
+        if (detailsPlaying) setIsPlaying(true)
+    }, [detailsPlaying, location.pathname])
     useEffect(() => {
         if (currentPlayer.current.src !== "")
             if (isOnePlaying || isTwoPlaying || isThreePlaying || isPlaying) {
@@ -176,6 +180,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            isDetailsPlaying={isDetailsPlaying}
                             getSongInfo={getSongInfo}
                             isPlaying={isPlaying}
                             setIsPlaying={setIsPlaying}

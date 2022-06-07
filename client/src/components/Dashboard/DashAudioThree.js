@@ -121,7 +121,10 @@ const DashAudioThree = ({
             songGenre = genre
             songId = _id
             songLink = link
-            if (changed) getSongInfo(tracks[trackIndex])
+            if (changed && isThreePlaying) {
+                currentPlayer.current.src = songLink
+                getSongInfo(tracks[trackIndex])
+            }
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
@@ -138,12 +141,13 @@ const DashAudioThree = ({
                 songLink = link
                 setSongList(songData)
                 setSongInfo(songData[trackIndex])
-                if ((changed || genreClicked) && isThreePlaying)
+                if ((changed || genreClicked) && isThreePlaying) {
+                    currentPlayer.current.src = songLink
                     getSongInfo(songData[trackIndex])
+                }
             }
         }
 
-        currentPlayer.current.src = songLink
         if (isReady.current && genreBool) {
             setGenreBool(false)
             currentPlayer.current.play()

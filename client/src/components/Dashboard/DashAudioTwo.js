@@ -120,7 +120,10 @@ const DashAudioTwo = ({
             songGenre = genre
             songId = _id
             songLink = link
-            if (changed) getSongInfo(tracks[trackIndex])
+            if (changed && isTwoPlaying) {
+                currentPlayer.current.src = songLink
+                getSongInfo(tracks[trackIndex])
+            }
             setSongInfo(tracks[trackIndex])
         } else {
             if (songData[trackIndex] !== undefined) {
@@ -137,12 +140,12 @@ const DashAudioTwo = ({
                 songLink = link
                 setSongList(songData)
                 setSongInfo(songData[trackIndex])
-                if ((changed || genreClicked) && isTwoPlaying)
+                if ((changed || genreClicked) && isTwoPlaying) {
+                    currentPlayer.current.src = songLink
                     getSongInfo(songData[trackIndex])
+                }
             }
         }
-
-        currentPlayer.current.src = songLink
 
         if (isReady.current && genreBool) {
             setGenreBool(false)
