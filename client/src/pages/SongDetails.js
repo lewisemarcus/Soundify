@@ -16,6 +16,8 @@ import CommentSection from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
+import  { useForm } from "../utils/hooks/hooks";
+import { CREATEPLAYLIST } from "../utils/mutations/playlistMutations"
 
 const SongDetails = ({
     setCurrentSong,
@@ -70,16 +72,24 @@ const SongDetails = ({
 
     const usersPlaylists = data?.userPlaylists || [];
 
-    console.log(usersPlaylists)
+    // const [newPlaylist, setNewPlaylist] = useState()
 
-    const [newPlaylist, setNewPlaylist] = useState({
-        playlistname: '',
-        username: username
-    })
+    function registerUserCallback() {
+        console.log("callback hit");
+        const hide = message.loading("Creating playlist...", 0);
+        setTimeout(hide, 1100);
+    }
+
+    const { onChange, onSubmit, values } = useForm(registerUserCallback, {
+        playlistname: "",
+    });
+
+    const [createPlaylist, { error: playlistCreationError }] = useMutation(CREATEPLAYLIST)
 
     const [playlist, setPlaylist] = useState({
         playlistname: '',
-        username: username
+        username: username,
+        songId: songId
     })
 
     const success = async () => {
@@ -91,14 +101,14 @@ const SongDetails = ({
         message.error("Must give playlist a name.");
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setNewPlaylist(() => {
-            return {
-                [name]: value,
-            };
-        });
-    }
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target
+    //     setNewPlaylist(() => {
+    //         return {
+    //             [name]: value,
+    //         };
+    //     });
+    // }
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -106,26 +116,23 @@ const SongDetails = ({
         setIsModalVisible(true)
     }
 
-    const handleCreatePlaylist = () => {
-        if (newPlaylist.playlistname === "") {
+    const handleCreatePlaylist = async (e) => {
+        e.preventDefault()
+        if (values.playlistname === "") {
             return modalError()
         }
+
+        await createPlaylist({
+            variables: {
+                    playlistname: values.playlistname,
+                    username: username,
+                    songId: querySong._id
+                }
+        })
         setIsModalVisible(false);
         success();
-        const formData = new FormData();
-        formData.append("username", newPlaylist.username);
-        formData.append("playlistname", newPlaylist.playlistname);
-        // try {
-        //     const res = await axios({
-        //         method: "post",
-        //         url: "/upload",
-        //         data: formData,
-        //         headers: { "Content-Type": "multipart/form-data" },
-        //     });
-        //     await window.location.reload();
-        // }   catch (err) {
-        //         error();
-        // }
+        
+        
     }
 
     const addToPlaylist = (e) => {
@@ -338,16 +345,14 @@ const SongDetails = ({
                         >
                             <Space>
                                 <Input
-                                    onClick={handleChange}
-                                    name="newPlaylist"
-                                    value={newPlaylist.playlistname}
+                                    onChange={onChange}
+                                    name="playlistname"
+                                    value={values.playlistname}
                                     placeholder="Create Playlist"
                                     size="large"
                                     required
                                 />
-                                {/* <Button> */}
-                                    <AiFillPlusCircle className="create-playlist" onClick={handleCreatePlaylist} />
-                                {/* </Button> */}
+                                <AiFillPlusCircle className="create-playlist" onClick={handleCreatePlaylist} />
                                 <ul>
                                     {/* {playlists.map((playlist, index) => {
                                         return (
