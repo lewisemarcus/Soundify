@@ -13,6 +13,8 @@ const DashAudioControlThree = ({
     getThree,
     isThreePlaying,
     setCurrent,
+    setSongObject,
+    songInfo,
 }) => (
     <div className="audio-ctrls">
         <button
@@ -41,6 +43,7 @@ const DashAudioControlThree = ({
                 type="button"
                 className="play-btn"
                 onClick={() => {
+                    setSongObject(songInfo)
                     setCurrent(document.getElementById("three"))
                     getThree(true)
                     onPlayPauseClick(true)

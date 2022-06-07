@@ -15,6 +15,7 @@ const DashboardPlayerTwo = ({
     setCurrentSong,
     getTwo,
     isTwoPlaying,
+    setSongObject,
 }) => {
     const [songs, setSongs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -44,6 +45,7 @@ const DashboardPlayerTwo = ({
     ) : (
         <div className="DashPlayer" id="two">
             <DashAudioTwo
+                setSongObject={setSongObject}
                 isTwoPlaying={isTwoPlaying}
                 getTwo={getTwo}
                 setCurrentSong={setCurrentSong}

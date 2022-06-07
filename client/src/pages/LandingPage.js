@@ -21,6 +21,7 @@ const LandingPage = ({
     getThree,
     currentEvent,
     setCurrent,
+    setSongObject,
 }) => {
     const { user } = useContext(AuthContext)
 
@@ -29,6 +30,7 @@ const LandingPage = ({
             {user ? (
                 <>
                     <Dashboard
+                        setSongObject={setSongObject}
                         currentEvent={currentEvent}
                         setCurrent={setCurrent}
                         isOnePlaying={isOnePlaying}
