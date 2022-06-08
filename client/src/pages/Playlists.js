@@ -14,6 +14,8 @@ const Playlists = ({
     setSinglePL,
     setPlaylists,
     playlists,
+    setPlaylistClicked,
+    playlistClicked,
 }) => {
     const username = localStorage.getItem("username")
     const { loading, data: songData } = useQuery(qrySongs)
@@ -69,8 +71,8 @@ const Playlists = ({
 
     const switchPlaylist = (e) => {
         e.preventDefault()
+        setPlaylistClicked(true)
         for (let i = 0; i < usersPlaylists.length; i++) {
-            console.log(e.currentTarget.id)
             if (usersPlaylists[i]._id === e.currentTarget.id) {
                 setSinglePL(usersPlaylists[i])
             }
@@ -149,7 +151,9 @@ const Playlists = ({
                                 </Row>
                             </div>
                             {singlePL.songs &&
+                                playlistClicked &&
                                 singlePL.songs.map((song) => {
+                                    console.log(playlistClicked)
                                     return (
                                         <Row key={song._id}>
                                             <button

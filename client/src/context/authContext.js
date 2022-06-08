@@ -62,6 +62,8 @@ function AuthProvider(props) {
     const logout = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("username")
+        localStorage.removeItem("playlists")
+        localStorage.removeItem("singlePL")
         window.location.assign("/")
         dispatch({ type: "LOGOUT" })
     }
