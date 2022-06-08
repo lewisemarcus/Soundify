@@ -15,7 +15,6 @@ const AudioPlayerContainer = ({
     currentPlayer,
     singlePL,
 }) => {
-    console.log(singlePL)
     const [songs, setSongs] = useState()
     // console.log(localStorage)
     const [isLoading, setIsLoading] = useState(true)

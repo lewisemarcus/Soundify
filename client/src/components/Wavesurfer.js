@@ -44,6 +44,7 @@ export default function Waveform({
     setIsPlaying,
     isPlaying,
     isDetailsPlaying,
+    querySong,
 }) {
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
@@ -53,9 +54,14 @@ export default function Waveform({
     useEffect(() => {
         const options = formWaveSurferOptions(waveformRef.current)
         wavesurfer.current = WaveSurfer.create(options)
-        if (audio.current.src !== undefined)
-            wavesurfer.current.load(audio.current)
 
+        if (audio.current !== null && audio.current.src !== "") {
+            let songUrl = new URL(audio.current.src).pathname.split("/")[1]
+            if (audio.current.src !== undefined && songUrl !== "undefined") {
+                console.log(audio.current.src)
+                wavesurfer.current.load(querySong.link)
+            }
+        }
         wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
             //wavesurfer.current.play()
@@ -94,7 +100,7 @@ export default function Waveform({
         // Removes events, elements and disconnects Web Audio nodes.
         // when component unmount
         return () => wavesurfer.current.destroy()
-    }, [song, audio.current.src])
+    }, [audio.current.src])
 
     const handlePlayPause = () => {
         setIsPlaying(!isPlaying)
