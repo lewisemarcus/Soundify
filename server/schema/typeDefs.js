@@ -68,7 +68,7 @@ export default gql `
         me: User
         songById(_id: ID!): Song
         userPlaylists(owner: String!): [Playlist]
-        playlist(plTitle: String!): Playlist
+        playlist(_id: ID!): Playlist
     }
 
     type Mutation {
@@ -91,6 +91,10 @@ export default gql `
             playlistname: String!
             songId: ID!
             username: String!
+        ): Playlist
+        addToPlaylist(
+            _id: String!
+            songId: ID!
         ): Playlist
         removeFromPlaylist(
             songId: ID!

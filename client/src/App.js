@@ -13,6 +13,8 @@ import { AuthContext } from "./context/authContext"
 import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
+import { useLazyQuery } from "@apollo/client"
+import { GET_USER_PLAYLIST } from "./utils/queries/songQueries"
 
 //instead of strictly a song Object, make it a song list
 //Determine if the length of list < 1, treat as single song
@@ -41,6 +43,7 @@ function App() {
     const [footerId, setFooterId] = useState("")
     const { user } = useContext(AuthContext)
     let dashes = []
+    
 
     useEffect(() => {
         if (detailsPlaying) setIsPlaying(true)

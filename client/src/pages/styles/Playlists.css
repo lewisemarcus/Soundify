@@ -60,3 +60,12 @@
 .active .playlist-header {
     color: orange;
 }
+
+.playlistNames {
+    background-color: #ec994b;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+
+.playlist-List {}

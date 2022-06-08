@@ -39,8 +39,8 @@ const resolvers = {
                 return output.results
             })
         },
-        playlist: async(parent, { ID }) => {
-            return Playlist.findOne({ _id: ID }).populate.songs
+        playlist: async(parent, { _id }) => {
+            return Playlist.findById(_id).populate("songs")
         },
         userSongs: async(parent, { username }) => {
             const params = username ? { username } : {}
@@ -172,11 +172,17 @@ const resolvers = {
             })
 
         },
-        // addToPlaylist: async(
-        //     playlistname, songId, username
-        // ) => {
-
-        // },
+        addToPlaylist: async(
+            parent, { _id, songId }, context
+        ) => {
+            if (context.user) {
+                return Playlist.findOneAndUpdate({ _id: mongoose.Types.ObjectId(_id) }, {
+                    $addToSet: {
+                        songs: songId
+                    }
+                })
+            }
+        },
         removeFromPlaylist: async(
             parent, { songId, playlistname, username }
         ) => {

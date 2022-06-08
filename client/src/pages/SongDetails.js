@@ -26,7 +26,7 @@ import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 import { useForm } from "../utils/hooks/hooks"
-import { CREATEPLAYLIST } from "../utils/mutations/playlistMutations"
+import { CREATEPLAYLIST, ADDTOPLAYLIST } from "../utils/mutations/playlistMutations"
 import "./styles/SongDetail.css"
 
 const SongDetails = ({
@@ -106,6 +106,9 @@ const SongDetails = ({
     const [createPlaylist, { error: playlistCreationError }] =
         useMutation(CREATEPLAYLIST)
 
+    const [addToPlaylist, { error: addToPlaylistError }] =
+    useMutation(ADDTOPLAYLIST)
+
     const [playlist, setPlaylist] = useState({
         playlistname: "",
         username: username,
@@ -144,18 +147,17 @@ const SongDetails = ({
         success()
     }
 
-    // const addToPlaylist = (e) => {
-    //     e.preventDefault();
-    //     await addToPlaylist({
-    //         variables: {
-    //                 playlistname: values.playlistname,
-    //                 username: username,
-    //                 songId: querySong._id
-    //             }
-    //     })
-    //     setIsModalVisible(false);
-    //     success();
-    // }
+    const handleAddToPlaylist = async (e) => {
+        e.preventDefault();
+        await addToPlaylist({
+            variables: {
+                    _id: e.currentTarget.id,
+                    songId: querySong._id
+                }
+        })
+        setIsModalVisible(false);
+        success();
+    }
 
     const handleCancel = () => {
         // setSong({
@@ -375,7 +377,7 @@ const SongDetails = ({
                                         />
                                     </div>
                                         {usersPlaylists.map((playlist, index) => {
-                                            return <button className="add-playlist">{playlist.plTitle}</button>
+                                            return <button id={playlist._id} className="add-playlist" onClick={handleAddToPlaylist}>{playlist.plTitle}</button>
                                         })}
                                 </Space>
                             </Modal>

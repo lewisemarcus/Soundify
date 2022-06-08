@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 // import "./styles/DashboardPlayer.css"
 import AudioPlayer from "./AudioPlayer"
+import { GET_PLAYLIST } from "../../utils/queries/songQueries"
+import { useQuery } from "@apollo/client"
 
 const AudioPlayerContainer = ({ 
     playlistSong, 
@@ -10,38 +12,25 @@ const AudioPlayerContainer = ({
     r, 
     setR,
     setCurrentSong,
-    currentPlayer
+    currentPlayer,
+    singlePL
 }) => {
-    const [songs, setSongs] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    // console.log(newTitle)
-    useEffect(() => {
-        const fetchSongs = async () => {
-            try {
-                const songData = await fetch("/songs", {
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                })
+        console.log(singlePL)
+        const [songs, setSongs] = useState()
+        // console.log(localStorage)
+        const [isLoading, setIsLoading] = useState(true)
+        let newPlaylist = singlePL || JSON.parse(localStorage.getItem("playlists")).userPlaylists[0].songs
+        
+        useEffect(() => {
+            // console.log(Object.values(newPlaylist.userPlaylists).length)
+            // setSongs(newPlaylist.userPlaylists[0].songs)
+        },[])
 
-                const songList = await songData.json()
-
-                setSongs(songList)
-                setIsLoading(false)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        fetchSongs()
-    }, [])
-
-    return isLoading ? (
-        "loading"
-    ) : (
+    return (
         <div className="PlaylistPlayer">
-            <AudioPlayer
-                tracks={songs}
+            {Object.values(newPlaylist).length !== 0 ? (
+                <AudioPlayer
+                tracks={newPlaylist.songs}
                 playlistSong={playlistSong}
                 selectedSong={selectedSong}
                 setSelectedSong={setSelectedSong}
@@ -51,6 +40,10 @@ const AudioPlayerContainer = ({
                 currentPlayer={currentPlayer}
                 setCurrentSong={setCurrentSong}
             />
+            ) : (
+                <div>No playlists found!</div>
+            )}
+            
         </div>
     )
 }

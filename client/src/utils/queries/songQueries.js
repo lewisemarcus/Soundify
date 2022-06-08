@@ -105,6 +105,7 @@ export const GET_USER_SONGS = gql `
 export const GET_USER_PLAYLIST = gql `
     query userPlaylists($owner: String!) {
         userPlaylists(owner: $owner) {
+            _id
             plTitle
             owner
             songs {
@@ -113,12 +114,25 @@ export const GET_USER_PLAYLIST = gql `
                 link
                 artist
                 uploaded
-                comments {
-                    _id
-                    commentText
-                    commentAuthor
-                    createdAt
-                }
+                filename
+                _id
+                username
+            }
+        }
+    }
+`
+export const GET_PLAYLIST = gql `
+    query playlist($_id: ID!) {
+        playlist(_id: $_id) {
+            _id
+            plTitle
+            owner
+            songs {
+                title
+                genre
+                link
+                artist
+                uploaded
                 filename
                 _id
                 username
