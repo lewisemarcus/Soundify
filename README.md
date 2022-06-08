@@ -99,7 +99,7 @@ Go to the github link provided below and clone the repository. In VSC open termi
 <br>
 
 [Screenshot6] Uploaded Songs: User can view all songs they have uploaded and view each one individualy.
-<img src="./client/src/assets/uploadedSongs-Screenshot.png">
+<img src="./client/src/assets/uploadedSongs-screenshot.png">
 
 <br>
 
