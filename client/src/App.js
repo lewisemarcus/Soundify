@@ -18,6 +18,7 @@ import DashResults from "./components/Dashboard/DashResults"
 //Determine if the length of list < 1, treat as single song
 //Else track song's index here and set current to current song index
 function App() {
+    const [playlistClicked, setPlaylistClicked] = useState(false)
     const [playlists, setPlaylists] = useState([])
     const [singlePL, setSinglePL] = useState([
         {
@@ -51,6 +52,9 @@ function App() {
     let dashes = []
 
     useEffect(() => {
+        console.log(location.pathname.split("/")[1])
+        if (location.pathname.split("/")[1] !== "playlists")
+            setPlaylistClicked(false)
         if (detailsPlaying) setIsPlaying(true)
     }, [detailsPlaying, location.pathname])
     useEffect(() => {
@@ -203,6 +207,8 @@ function App() {
                     element={
                         user ? (
                             <Playlists
+                                playlistClicked={playlistClicked}
+                                setPlaylistClicked={setPlaylistClicked}
                                 playlists={playlists}
                                 setPlaylists={setPlaylists}
                                 singlePL={singlePL}

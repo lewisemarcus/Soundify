@@ -217,7 +217,7 @@ const SongDetails = ({
             }
             setList(recSongs)
         }
-    }, [recList.length != 0])
+    }, [recList.length])
     useEffect(() => {
         window.addEventListener("resize", function () {
             setWidth(window.innerWidth * (1075 / 1280))
