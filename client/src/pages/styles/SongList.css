@@ -121,3 +121,7 @@
 .ant-table {
   font-family: var(--main-font);
 }
+
+.ant-table-tbody:hover {
+  cursor: pointer;
+}

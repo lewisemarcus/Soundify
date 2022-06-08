@@ -9,21 +9,26 @@ import {
   Empty,
   Table,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  UploadOutlined,
+  QuestionCircleOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import Button from "../components/Button";
 import "./styles/SongList.css";
 import { GET_USER_SONGS } from "../utils/queries/songQueries";
-import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import axios from "axios";
 
 const SongList = () => {
   const username = localStorage.getItem("username");
+
   const { loading, data } = useQuery(GET_USER_SONGS, {
     variables: { username: username },
   });
+
   const usersSongs = data?.userSongs || [];
-  // console.log(usersSongs);
+
   const [song, setSong] = useState({
     title: "",
     genre: "",
@@ -50,14 +55,22 @@ const SongList = () => {
       dataIndex: "genre",
       key: "genre",
     },
+    {
+      title: "Delete",
+      key: "delete",
+      render: () => <DeleteOutlined style={{ fontSize: "1.2rem" }} />,
+    },
   ];
 
-  const success = async () => {
+  const loadingSong = async () => {
     await message.loading("Uploading song...");
+  };
+
+  const success = async () => {
     await message.success("Successfully uploaded song!");
   };
 
-  const error = () => {
+  const errorMessage = () => {
     message.error("Must fill out all fields!");
   };
 
@@ -95,10 +108,10 @@ const SongList = () => {
       song.genre === "" ||
       file === null
     ) {
-      return error();
+      return errorMessage();
     }
+    loadingSong();
     setIsModalVisible(false);
-    success();
     const tags = song.title.split(" ");
     tags.push(song.genre, song.artist.split(" "));
     const formData = new FormData();
@@ -115,9 +128,23 @@ const SongList = () => {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
+      await success();
       await window.location.reload();
     } catch (err) {
-      error();
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async (e) => {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `/delete/${usersSongs[e]._id}`,
+        data: usersSongs[e]._id,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -282,7 +309,34 @@ const SongList = () => {
           columns={columns}
           scroll={{ y: 240 }}
           pagination={false}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                Modal.confirm({
+                  title: "Confirm",
+                  icon: <QuestionCircleOutlined style={{ color: "red" }} />,
+                  content: "Are you sure you want to delete this song?",
+                  okText: "Yes",
+                  cancelText: "No",
+                  className: "logout",
+                  onOk() {
+                    message.success("Successfully deleted song");
+                    setTimeout(() => {
+                      handleDelete(rowIndex);
+                      window.location.reload();
+                    }, 500);
+                  },
+                });
+              },
+            };
+          }}
         />
+        // usersSongs.map((song) => (
+        //   <div>
+        //     <div>{song.title}</div>
+        //     <button onClick={handleDelete}>delete</button>
+        //   </div>
+        // ))
       )}
     </div>
   );
