@@ -4,7 +4,7 @@ import { BsFillPlayFill } from "react-icons/bs"
 import { BsPauseFill } from "react-icons/bs"
 import { PlayButton } from "./styles/Wavesurfer.styled"
 
-import "../components/styles/Slider.css"
+import "./styles/Slider.css"
 
 const formWaveSurferOptions = (ref) => ({
     container: ref,
