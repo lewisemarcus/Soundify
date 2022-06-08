@@ -157,9 +157,9 @@ const DashCarousel = ({
             </div>
 
             <div className="genreContainer">
-                {genreList.map((genre, index) => (
+                {genreList.map((genre) => (
                     <button
-                        key={index}
+                        key={genre}
                         className="genre1"
                         onClick={(event) => {
                             getOne(false)
