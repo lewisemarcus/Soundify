@@ -1,67 +1,60 @@
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ec994b;
-  color: #fff;
-  padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ec994b;
+    color: #fff;
+    padding: 0.5rem 2rem;
 }
 
 .logo img {
-  /* font-size: 2rem;
-  color: var(--dark);
-  text-decoration: none;
-  margin-left: 1rem;
-  text-shadow: red -3px 0, cyan 3px 0;
-  transition: text-shadow 200ms;
-  letter-spacing: 2px; */
-  display: flex;
-  align-items: center;
-  height: 90px;
-  width: 100px;
-  margin-top: 5px;
-  margin-left: 5px;
+    display: flex;
+    align-items: center;
+    height: 90px;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 .ul-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ul-container li {
-  list-style: none;
-  padding: 0 1rem;
+    list-style: none;
+    padding: 0 1rem;
 }
 
 .upload a {
-  cursor: pointer;
-  transition: 0.2s ease-in-out all;
-  color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+    color: #fff;
 }
 
 .upload a:hover {
-  color: var(--dark);
+    color: var(--dark);
 }
 
 .profile {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .nav-btn {
-  width: 11rem;
-  border: 1px solid white;
+    width: 11rem;
+    border: 1px solid white;
 }
 
 .logout .ant-modal-body {
-  background: var(--light);
+    background: var(--light);
 }
 
 .ant-btn {
-  border: none;
+    border: none;
 }
 
 .ant-btn:hover {
-  background-color: rgb(163, 0, 0);
-  color: white;
+    background-color: rgb(163, 0, 0);
+    color: white;
 }

@@ -1,47 +1,36 @@
 .card-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
-  width: 12rem;
-  margin: 0 0.4rem 0 0.4rem;
+    width: 12rem;
+    margin: 0 0.4rem 0 0.4rem;
 }
 
 .card img {
-  width: 100%;
+    width: 100%;
 }
 
 .card img:hover {
-  width: 100%;
+    width: 100%;
 }
 
 .card h4 {
-  color: #fff;
+    color: #fff;
 }
 
 .card h5 {
-  color: #fff;
-  opacity: 0.5;
-  margin-top: -0.5rem;
+    color: #fff;
+    opacity: 0.5;
+    margin-top: -0.5rem;
 }
 
 BsIcons.BsPlayCircleFill.music-play-btn:hover {
-  color: blue;
+    color: blue;
 }
 
 .DashPlayer {
-  margin-top: 50px;
+    margin-top: 50px;
 }
-
-/* .music-play-btn {
-    position: relative;
-    top: 120px;
-    left: 75px;
-    color: var(--light);
-    font-size: 3rem;
-    z-index: 100;
-  } */
-
-/******* MusicPlayer CSS ******/

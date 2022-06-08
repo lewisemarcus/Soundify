@@ -14,6 +14,8 @@ const Playlists = ({
     setSinglePL,
     setPlaylists,
     playlists,
+    setPlaylistClicked,
+    playlistClicked,
 }) => {
     const username = localStorage.getItem("username")
     const { loading, data: songData } = useQuery(qrySongs)
@@ -25,19 +27,23 @@ const Playlists = ({
     const location = useLocation()
     let audioList = []
 
-    const { loading: playlistloading, data } = useQuery(GET_USER_PLAYLIST, {
+    const {
+        loading: playlistloading,
+        data,
+        refetch,
+    } = useQuery(GET_USER_PLAYLIST, {
         variables: { owner: username },
     })
     const usersPlaylists = data?.userPlaylists || []
-    console.log(data)
     useEffect(() => {
+        console.log("hi")
         if (data !== undefined)
             localStorage.setItem("playlists", JSON.stringify(usersPlaylists))
     }, [usersPlaylists])
-    console.log(localStorage.getItem("playlists"))
 
     useEffect(() => {
-        if (usersPlaylists.length !== 0) setPlaylists(usersPlaylists)
+        console.log("hi2")
+        //if (usersPlaylists.length !== 0) setPlaylists(usersPlaylists)
     }, [usersPlaylists])
     // useEffect(() => {
     //     async function loadPlists() {
@@ -53,6 +59,7 @@ const Playlists = ({
     // }, [location.pathname])
 
     useEffect(() => {
+        refetch()
         if (usersPlaylists[0] !== undefined) {
             setSinglePL(usersPlaylists[0])
         }
@@ -64,10 +71,10 @@ const Playlists = ({
 
     const switchPlaylist = (e) => {
         e.preventDefault()
-        for (let i = 0; i < playlists.length; i++) {
-            console.log(e.currentTarget.id)
-            if (playlists[i]._id === e.currentTarget.id) {
-                setSinglePL(playlists[i])
+        setPlaylistClicked(true)
+        for (let i = 0; i < usersPlaylists.length; i++) {
+            if (usersPlaylists[i]._id === e.currentTarget.id) {
+                setSinglePL(usersPlaylists[i])
             }
         }
     }
@@ -90,15 +97,28 @@ const Playlists = ({
     if (loading) {
         return <div>Loading...</div>
     }
+
     return (
-        <div>
+        <div style={{ marginBottom: 100, height: "100vh" }}>
             <div>
                 <aside className="playlistNames">
-                    <h2>Playlists:</h2>
-                    {playlists.map((playlist, index) => {
+                    <h2
+                        style={{
+                            color: "white",
+                            fontWeight: "bolder",
+                        }}
+                    >
+                        Playlists:
+                    </h2>
+                    {usersPlaylists.map((playlist) => {
                         return (
                             <button
-                                key={index}
+                                style={{
+                                    color: "white",
+                                    fontWeight: "bolder",
+                                    padding: 5,
+                                }}
+                                key={playlist.title}
                                 id={playlist._id}
                                 onClick={switchPlaylist}
                                 className="playlist-List"
@@ -143,9 +163,11 @@ const Playlists = ({
                                 </Row>
                             </div>
                             {singlePL.songs &&
-                                singlePL.songs.map((song, index) => {
+                                playlistClicked &&
+                                singlePL.songs.map((song) => {
+                                    console.log(playlistClicked)
                                     return (
-                                        <Row key={index}>
+                                        <Row key={song._id}>
                                             <button
                                                 name={song.link}
                                                 title={song.title}
@@ -164,15 +186,18 @@ const Playlists = ({
                                             </Col>
                                             <Col span={8}>
                                                 <button id="removeBtn">
-                                                    <span
-                                                        className="trashcan"
-                                                        style={{
-                                                            color: "red",
-                                                            marginTop: "7px",
-                                                        }}
-                                                    >
-                                                        <AiFillCloseCircle />
-                                                    </span>
+                                                    <div>
+                                                        <span
+                                                            className="trashcan"
+                                                            style={{
+                                                                color: "red",
+                                                                marginTop:
+                                                                    "7px",
+                                                            }}
+                                                        >
+                                                            <AiFillCloseCircle />
+                                                        </span>
+                                                    </div>
                                                 </button>
                                             </Col>
                                         </Row>

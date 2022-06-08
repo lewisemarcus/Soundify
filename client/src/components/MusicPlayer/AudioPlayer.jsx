@@ -27,7 +27,6 @@ const AudioPlayer = ({
     let title, artist, link, _id
     // Destructure for conciseness
     if (singlePL.songs && singlePL.songs[trackIndex]) {
-        console.log("hi")
         title = singlePL.songs[trackIndex].title
         artist = singlePL.songs[trackIndex].artist
         link = singlePL.songs[trackIndex].link
@@ -48,6 +47,7 @@ const AudioPlayer = ({
     }, [trackIndex])
 
     // Refs
+    console.log(link)
     const audioRef = useRef(new Audio(link))
     const intervalRef = useRef()
     audioRef.current.volume = volume
@@ -190,16 +190,17 @@ const AudioPlayer = ({
         }
     })
     useEffect(() => {
+        console.log("193", playlistSong, link, song.link)
         audioRef.current.pause()
         audioRef.current = new Audio(playlistSong)
         audioRef.current.load()
         audioRef.current.play()
         setSelectedSong(false)
-    }, [selectedSong])
+    }, [selectedSong, playlistSong, trackIndex])
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
-        audioRef.current = new Audio(song.link)
+        audioRef.current = new Audio(playlistSong)
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current) {

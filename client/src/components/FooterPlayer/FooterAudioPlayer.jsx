@@ -174,7 +174,7 @@ const AudioPlayer = ({
     useEffect(() => {
         // Pause and clean up on unmount
         return () => {
-            audioRef.current.pause()
+            if (audioRef.current) audioRef.current.pause()
             clearInterval(intervalRef.current)
         }
     }, [])
@@ -226,7 +226,7 @@ const AudioPlayer = ({
                     onPlayPauseClick={setIsPlaying}
                 />
                 <div className="musicianTrack">
-                    {songInfo.title.length > 6 ? (
+                    {songInfo.title && songInfo.title.length > 6 ? (
                         <Marquee gradient={false} delay={2}>
                             <h2 className="footer-title">
                                 {songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -236,7 +236,7 @@ const AudioPlayer = ({
                         <h2 className="footer-title">{songInfo.title}</h2>
                     )}
 
-                    {songInfo.artist.length > 8 ? (
+                    {songInfo.artist && songInfo.artist.length > 8 ? (
                         <Marquee gradient={false} delay={2}>
                             <h2 className="footer-artist">
                                 {songInfo.artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

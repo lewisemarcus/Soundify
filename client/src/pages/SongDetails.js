@@ -10,7 +10,7 @@ import {
     Space,
     Button,
 } from "antd"
-import "../components/styles/Slider.css"
+import "./styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
 import {
     GET_SONG,
@@ -26,7 +26,10 @@ import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
 import shuffleArray from "../utils/helpers/shuffleArray"
 import { useForm } from "../utils/hooks/hooks"
-import { CREATEPLAYLIST, ADDTOPLAYLIST } from "../utils/mutations/playlistMutations"
+import {
+    CREATEPLAYLIST,
+    ADDTOPLAYLIST,
+} from "../utils/mutations/playlistMutations"
 import "./styles/SongDetail.css"
 
 const SongDetails = ({
@@ -107,7 +110,7 @@ const SongDetails = ({
         useMutation(CREATEPLAYLIST)
 
     const [addToPlaylist, { error: addToPlaylistError }] =
-    useMutation(ADDTOPLAYLIST)
+        useMutation(ADDTOPLAYLIST)
 
     const [playlist, setPlaylist] = useState({
         playlistname: "",
@@ -148,15 +151,15 @@ const SongDetails = ({
     }
 
     const handleAddToPlaylist = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         await addToPlaylist({
             variables: {
-                    _id: e.currentTarget.id,
-                    songId: querySong._id
-                }
+                _id: e.currentTarget.id,
+                songId: querySong._id,
+            },
         })
-        setIsModalVisible(false);
-        success();
+        setIsModalVisible(false)
+        success()
     }
 
     const handleCancel = () => {
@@ -214,7 +217,7 @@ const SongDetails = ({
             }
             setList(recSongs)
         }
-    }, [recList.length != 0])
+    }, [recList.length])
     useEffect(() => {
         window.addEventListener("resize", function () {
             setWidth(window.innerWidth * (1075 / 1280))
@@ -273,6 +276,7 @@ const SongDetails = ({
                         </h2>
                     </div>
                     <Waveform
+                        querySong={querySong}
                         isDetailsPlaying={isDetailsPlaying}
                         isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying}
@@ -348,39 +352,48 @@ const SongDetails = ({
                         <button style={{ margin: 10 }} onClick={showModal}>
                             Add to Playlist
                         </button>
-                            <Modal
-                                title="Select Playlist"
-                                className="select-list"
-                                visible={isModalVisible}
-                                onCancel={handleCancel}
-                                destroyOnClose
-                                footer={[
-                                    <Button key="cancel" onClick={handleCancel}>
-                                        Cancel
-                                    </Button>,
-                                ]}
-                            >
-                                <Space style={{ display: "block" }}>
-                                    <div className="create-plist">
-                                        <Input
-                                            onChange={onChange}
-                                            className="create-playlistinput"
-                                            name="playlistname"
-                                            value={values.playlistname}
-                                            placeholder="Create Playlist"
-                                            size="large"
-                                            required
-                                        />
-                                        <AiFillPlusCircle
-                                            className="create-playlist"
-                                            onClick={handleCreatePlaylist}
-                                        />
-                                    </div>
-                                        {usersPlaylists.map((playlist, index) => {
-                                            return <button id={playlist._id} className="add-playlist" onClick={handleAddToPlaylist}>{playlist.plTitle}</button>
-                                        })}
-                                </Space>
-                            </Modal>
+                        <Modal
+                            title="Select Playlist"
+                            className="select-list"
+                            visible={isModalVisible}
+                            onCancel={handleCancel}
+                            destroyOnClose
+                            footer={[
+                                <Button key="cancel" onClick={handleCancel}>
+                                    Cancel
+                                </Button>,
+                            ]}
+                        >
+                            <Space style={{ display: "block" }}>
+                                <div className="create-plist">
+                                    <Input
+                                        onChange={onChange}
+                                        className="create-playlistinput"
+                                        name="playlistname"
+                                        value={values.playlistname}
+                                        placeholder="Create Playlist"
+                                        size="large"
+                                        required
+                                    />
+                                    <AiFillPlusCircle
+                                        className="create-playlist"
+                                        onClick={handleCreatePlaylist}
+                                    />
+                                </div>
+                                {usersPlaylists.map((playlist) => {
+                                    return (
+                                        <button
+                                            key={playlist._id}
+                                            id={playlist._id}
+                                            className="add-playlist"
+                                            onClick={handleAddToPlaylist}
+                                        >
+                                            {playlist.plTitle}
+                                        </button>
+                                    )
+                                })}
+                            </Space>
+                        </Modal>
                     </div>
 
                     <CommentSection
