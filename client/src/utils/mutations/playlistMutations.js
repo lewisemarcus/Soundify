@@ -33,6 +33,31 @@ export const CREATEPLAYLIST = gql `
         }
     }
 `
+export const ADDTOPLAYLIST = gql `
+    mutation addToPlaylist(
+        $_id: String!
+        $songId: ID!
+    ){
+        addToPlaylist (
+            _id: $_id
+            songId: $songId
+        ){
+            _id
+            plTitle
+            owner
+            songs {
+                title
+                genre
+                link
+                artist
+                uploaded
+                filename
+                _id
+                username
+            }
+        }
+    }
+`
 export const REMOVE_FROM_PLAYLIST = gql `
     mutation removeFromPlaylist(
         $playlistname: String!

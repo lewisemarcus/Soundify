@@ -3,11 +3,11 @@ import AudioPlayerContainer from "../components/MusicPlayer/AudioPlayerContainer
 import { AiFillCloseCircle } from "react-icons/ai";
 import "./styles/Playlists.css"
 import { Row, Col } from "antd"
-import { useQuery } from "@apollo/client"
-import { qrySongs } from "../utils/queries/songQueries"
+import { useQuery, useLazyQuery } from "@apollo/client"
+import { qrySongs, GET_USER_PLAYLIST } from "../utils/queries/songQueries"
 import { useLocation } from "react-router-dom"
 
-const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
+const Playlists = ({ currentPlayer, setCurrentSong  }) => {
   const { loading, data } = useQuery(qrySongs)
   const [playlistSong, setPlaylistSong] = useState()
   const [selectedSong, setSelectedSong] = useState(false)
@@ -16,8 +16,51 @@ const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
   const [r, setR] = useState(false)
   const location = useLocation()
   let audioList = []
-  // console.log(songs)
+  const username = localStorage.getItem("username")
+  const { loading: playlistloading, data: userPlaylistsdata } = useQuery(GET_USER_PLAYLIST, {
+    variables: { owner: username },
+  },)
 
+  const usersPlaylists = userPlaylistsdata?.userPlaylists || []
+
+  const [userPlaylists, { loading: plloading, data: playlistData }] = useLazyQuery(GET_USER_PLAYLIST, {
+    variables: { owner: username }
+    // onCompleted: (playlistData) => { 
+    //     localStorage.setItem("playlists", JSON.stringify(playlistData))
+    //     return playlistData
+    // }
+},)
+// localStorage.setItem("playlists", JSON.stringify(playlistData))
+// let newlist = JSON.parse(localStorage.getItem("playlists")) newlist.userPlaylists[0]? newlist.userPlaylists[0] : [{title: "No Playlists", artist: "No Playlists", link: "No Playlists"}]
+const [playlist, setPlaylist] = useState()
+const [singlePL, setSinglePL] = useState()
+
+useEffect(() => {
+  async function loanPlists () {
+  const plists = await userPlaylists()
+  console.log(plists)
+}
+loanPlists()
+})
+
+useEffect(() => {
+    async function loadplaylists() {
+        let { data } = userPlaylists()
+        setPlaylist(data)
+    }
+    loadplaylists()        
+},[playlist, singlePL])
+
+  const switchPlaylist = (e) => {
+    e.preventDefault()
+    for (let i = 0; i < playlist.userPlaylists.length; i++){
+      console.log(e.currentTarget.id)
+      if (playlist.userPlaylists[i]._id === e.currentTarget.id){
+        setSinglePL(playlist.userPlaylists[i])
+    }}
+  }
+  
+  
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -40,10 +83,12 @@ const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
 
   return (
     <div>
-      <aside className="plaaylistNames">
-        <h2>Playlists</h2>
+      <aside className="playlistNames">
+        <h2>Playlists:</h2>
+        {usersPlaylists.map((playlist, index) => {
+          return <button id={playlist._id} onClick={switchPlaylist} className="playlist-List">{playlist.plTitle}</button>
+        })}
       </aside>
-      <h1>Playlist created by user</h1>
       <div className="Playlist-container">
         <AudioPlayerContainer
           playlistSong={playlistSong}
@@ -54,6 +99,7 @@ const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
           setR={setR}
           currentPlayer={currentPlayer}
           setCurrentSong={setCurrentSong}
+          singlePL={singlePL}
         />
         <div className="item">
           <div className="content">
@@ -65,7 +111,8 @@ const Playlists = ({ currentPlayer, setCurrentSong,  }) => {
                 <Col span={8}><h2 className="playlist-header">Remove</h2></Col>
               </Row>
             </div>
-            {songs.map((song, index) => {
+            {singlePL.songs.map((song, index) => {
+              console.log(song)
               return (
                 <Row>
                   <button name={song.link} title={song.title} onClick={handleClick}><Col span={8}><h2 className="playlist-header">{song.title}</h2></Col></button>
