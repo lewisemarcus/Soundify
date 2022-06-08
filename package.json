@@ -4,7 +4,6 @@
     "description": "SoundClone: The SoundCloud clone",
     "main": "server/server.js",
     "scripts": {
-        "start": "node server/server.js",
         "server": "nodemon server/server.js --ignore client",
         "client": "npm start --prefix client",
         "install": "cd server && npm i && cd ../client && npm i",
