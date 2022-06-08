@@ -7,27 +7,45 @@ import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 
-const AudioPlayer = ({ 
-    tracks, 
-    playlistSong, 
-    setSelectedSong, 
-    selectedSong, 
-    newTitle, 
-    r, 
+const AudioPlayer = ({
+    singlePL,
+    playlistSong,
+    setSelectedSong,
+    selectedSong,
+    newTitle,
+    r,
     setR,
     currentPlayer,
-    setCurrentSong
+    setCurrentSong,
 }) => {
-    console.log(tracks)
     // State
+    console.log(singlePL)
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(0.2)
-    
+    let title, artist, link, _id
     // Destructure for conciseness
-    const { title, artist, filename, year, genre, _id, link } = tracks[trackIndex]
-    // const { title, artist, color, image, audioSrc } = tracks[trackIndex]
+    if (singlePL.songs && singlePL.songs[trackIndex]) {
+        console.log("hi")
+        title = singlePL.songs[trackIndex].title
+        artist = singlePL.songs[trackIndex].artist
+        link = singlePL.songs[trackIndex].link
+        _id = singlePL.songs[trackIndex]._id
+    }
+
+    const [song, setSong] = useState({
+        title: title,
+        artist: artist,
+        link: link,
+        _id: _id,
+    })
+    useEffect(() => {
+        if (singlePL.songs) setSong(singlePL.songs[trackIndex])
+        console.log(singlePL)
+        // const { title, artist, color, image, audioSrc } = tracks[trackIndex]
+        console.log(title)
+    }, [trackIndex])
 
     // Refs
     const audioRef = useRef(new Audio(link))
@@ -75,12 +93,12 @@ const AudioPlayer = ({
 
     const toPrevTrack = () => {
         if (trackIndex - 1 < 0) {
-            setTrackIndex(tracks.length - 1)
-            let find = document.querySelectorAll('.active')
+            setTrackIndex(singlePL.songs.length - 1)
+            let find = document.querySelectorAll(".active")
             find.forEach((find) => {
-                find.classList.remove('active')
+                find.classList.remove("active")
             })
-            let row = document.querySelectorAll('button[title]')
+            let row = document.querySelectorAll("button[title]")
             let r
             r = row[row.length - 1]
             row = r.parentNode
@@ -88,50 +106,49 @@ const AudioPlayer = ({
             row.classList.add("active")
         } else {
             setTrackIndex(trackIndex - 1)
-            let find = document.querySelectorAll('.active')
+            let find = document.querySelectorAll(".active")
             find.forEach((find) => {
-                find.classList.remove('active')
+                find.classList.remove("active")
             })
-            let row = document.querySelectorAll('button[title]')
-            let btnTitle = {title}.title
+            let row = document.querySelectorAll("button[title]")
+            let btnTitle = song.title.title
             let r
-            for (r = 0; r < row.length; r++){
-                if (row[r].title === btnTitle) { 
-                    break; 
-                }  
+            for (r = 0; r < row.length; r++) {
+                if (row[r].title === btnTitle) {
+                    break
+                }
             }
             r--
             row = row[r].parentNode
             row.classList.add("active")
         }
-        
     }
 
     const toNextTrack = () => {
-        if (trackIndex < tracks.length - 1) {
+        if (trackIndex < singlePL.songs.length - 1) {
             setTrackIndex(trackIndex + 1)
-            let find = document.querySelectorAll('.active')
+            let find = document.querySelectorAll(".active")
             find.forEach((find) => {
-                find.classList.remove('active')
+                find.classList.remove("active")
             })
-            let row = document.querySelectorAll('button[title]')
-            let btnTitle = {title}.title
+            let row = document.querySelectorAll("button[title]")
+            let btnTitle = song.title.title
             let r
-            for (r = 0; r < row.length; r++){
-                if (row[r].title === btnTitle) { 
-                    break; 
-                }  
+            for (r = 0; r < row.length; r++) {
+                if (row[r].title === btnTitle) {
+                    break
+                }
             }
             r++
             row = row[r].parentNode
             row.classList.add("active")
         } else {
             setTrackIndex(0)
-            let find = document.querySelectorAll('.active')
+            let find = document.querySelectorAll(".active")
             find.forEach((find) => {
-                find.classList.remove('active')
+                find.classList.remove("active")
             })
-            let row = document.querySelectorAll('button[title]')
+            let row = document.querySelectorAll("button[title]")
             let r
             r = row[0]
             row = r.parentNode
@@ -163,9 +180,9 @@ const AudioPlayer = ({
     useEffect(() => {
         if (newTitle !== undefined && r !== false) {
             let i
-            for (i = 0; i < tracks.length; i++){
-                if (tracks[i].title === newTitle) { 
-                    break; 
+            for (i = 0; i < singlePL.songs.length; i++) {
+                if (singlePL.songs[i].title === newTitle) {
+                    break
                 }
             }
             setTrackIndex(i)
@@ -182,7 +199,7 @@ const AudioPlayer = ({
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
-        audioRef.current = new Audio(link)
+        audioRef.current = new Audio(song.link)
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current) {
@@ -216,7 +233,8 @@ const AudioPlayer = ({
         cmDisplay,
         csDisplay
 
-    if (audioRef.current.currentTime === undefined) audioRef.current.currentTime = 0
+    if (audioRef.current.currentTime === undefined)
+        audioRef.current.currentTime = 0
 
     ch = Math.floor(audioRef.current.currentTime / 3600)
     cm = Math.floor((audioRef.current.currentTime % 3600) / 60)
@@ -227,7 +245,6 @@ const AudioPlayer = ({
     csDisplay = cs < 10 ? "0" + cs : cs
 
     const displayTime = `${chDisplay}${cmDisplay}${csDisplay}`
-
 
     h = Math.floor(audioRef.current.duration / 3600)
     m = Math.floor((audioRef.current.duration % 3600) / 60)
@@ -244,8 +261,8 @@ const AudioPlayer = ({
     return (
         <div className="audio-player">
             <div className="track-info">
-                <h2 className="title">{title}</h2>
-                <h3 className="artist">{artist}</h3>
+                <h2 className="title">{newTitle}</h2>
+                <h3 className="artist">{song.artist}</h3>
                 <AudioControls
                     isPlaying={isPlaying}
                     onPrevClick={toPrevTrack}

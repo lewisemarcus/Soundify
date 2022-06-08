@@ -13,13 +13,19 @@ import { AuthContext } from "./context/authContext"
 import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
-import { useLazyQuery } from "@apollo/client"
-import { GET_USER_PLAYLIST } from "./utils/queries/songQueries"
 
 //instead of strictly a song Object, make it a song list
 //Determine if the length of list < 1, treat as single song
 //Else track song's index here and set current to current song index
 function App() {
+    const [playlists, setPlaylists] = useState([])
+    const [singlePL, setSinglePL] = useState([
+        {
+            title: "NO PLAYLISTS AVAILABLE",
+            artist: "NO PLAYLISTS AVAILABLE",
+            link: "NO PLAYLISTS AVAILABLE",
+        },
+    ])
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
     const [prevCount, setPrevCount] = useState(0)
@@ -43,7 +49,6 @@ function App() {
     const [footerId, setFooterId] = useState("")
     const { user } = useContext(AuthContext)
     let dashes = []
-    
 
     useEffect(() => {
         if (detailsPlaying) setIsPlaying(true)
@@ -198,6 +203,10 @@ function App() {
                     element={
                         user ? (
                             <Playlists
+                                playlists={playlists}
+                                setPlaylists={setPlaylists}
+                                singlePL={singlePL}
+                                setSinglePL={setSinglePL}
                                 currentPlayer={currentPlayer}
                                 setCurrentSong={setCurrentSong}
                             />
@@ -208,7 +217,7 @@ function App() {
                 />
             </Routes>
 
-            {user && (
+            {user && location.pathname.split("/")[1] !== "playlists" && (
                 <Footer
                     songInfo={songInfo}
                     getTrackIndex={getTrackIndex}
