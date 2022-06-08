@@ -1,0 +1,71 @@
+.Playlist-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.PlaylistPlayer {
+    margin-top: 10px;
+    width: 25%;
+}
+
+.playlist-title {
+    color: white;
+    text-align: center;
+}
+
+.headers .ant-col,
+.playlistCard .ant-col {
+    margin-bottom: 10px;
+}
+
+.playlist-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ant-row {
+    justify-content: space-between;
+}
+
+.ant-row .ant-col-8 {
+    max-width: 100%;
+    margin-bottom: 10px;
+    padding-right: 20px;
+}
+
+.ant-row button {
+    display: contents;
+}
+
+.playlist-header {
+    color: white;
+}
+
+.item {
+    width: 65%;
+}
+
+.item .content,
+.item .headers {
+    text-align: center;
+}
+
+.trashcan {
+    font-size: 20px;
+}
+
+.active .playlist-header {
+    color: orange;
+}
+
+.playlistNames {
+    background-color: #ec994b;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+
+.playlist-List {}

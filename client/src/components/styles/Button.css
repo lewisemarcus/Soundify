@@ -1,0 +1,99 @@
+.outline-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: transparent;
+  width: 7rem;
+  height: 40px;
+  transition: all 0.4s;
+  margin-right: 0.8rem;
+  border: 1px solid var(--light);
+  color: var(--light);
+  font-family: var(--main-font);
+}
+.outline-btn:hover {
+  cursor: pointer;
+}
+.outline-btn span {
+  cursor: pointer;
+  position: relative;
+  top: -11px;
+  transition: 0.4s;
+}
+.outline-btn span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.outline-btn:hover span {
+  padding-right: 25px;
+}
+.outline-btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.outline-btn:active {
+  transform: scale(1.05);
+  transition: transform 200ms;
+}
+
+.solid-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--orange);
+  color: #fff;
+  width: 7rem;
+  height: 40px;
+  transition: all 0.4s;
+  border-style: none;
+  font-family: var(--main-font);
+}
+.solid-btn:hover {
+  cursor: pointer;
+}
+.solid-btn span {
+  cursor: pointer;
+  position: relative;
+  top: -11px;
+  transition: 0.4s;
+}
+.solid-btn span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.solid-btn:hover span {
+  padding-right: 25px;
+}
+.solid-btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.solid-btn:active {
+  transform: scale(1.05);
+  transition: transform 200ms;
+}
+
+.login-btn {
+  width: 80%;
+  margin: 0 auto 1.2rem;
+
+  height: 45px;
+  font-family: var(--main-font);
+}
+.login-btn span {
+  cursor: pointer;
+  position: relative;
+  top: -11px;
+  transition: 0.4s;
+  cursor: pointer;
+}

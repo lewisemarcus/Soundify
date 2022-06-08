@@ -1,0 +1,26 @@
+.landing-page-wrapper {
+  background: var(--dark);
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-page-wrapper img {
+  display: none;
+}
+
+.user-name {
+  color: var(--light);
+  margin-left: 10px;
+}
+
+@media screen and (min-width: 1400px) {
+  .landing-img-container {
+    margin-left: 2rem;
+  }
+  .landing-page-wrapper img {
+    display: flex;
+    width: 30rem;
+  }
+}

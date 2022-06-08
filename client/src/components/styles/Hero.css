@@ -1,0 +1,120 @@
+.hero-container {
+  font-family: var(--main-font);
+  width: 20rem;
+  padding: 3rem 0 0;
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-container h1 {
+  font-weight: var(--poppins-bold);
+  color: var(--light);
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.hero-container p {
+  font-weight: var(--poppins-thin);
+  letter-spacing: 0.1rem;
+  font-size: 0.7rem;
+  color: var(--orange);
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.hero-button-wrapper {
+  width: 20rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.hero-btn {
+  width: 10rem;
+  height: 3.2rem;
+  margin: 0.5rem 0.3rem;
+}
+
+@media screen and (min-width: 800px) {
+  .hero-container {
+    width: 45rem;
+  }
+  .hero-container h1 {
+    font-weight: var(--poppins-bold);
+    color: var(--light);
+    font-size: 2.3rem;
+  }
+
+  .hero-container p {
+    font-weight: var(--poppins-thin);
+    letter-spacing: 0.1rem;
+    font-size: 1rem;
+    color: var(--orange);
+    padding: 0 7rem;
+  }
+
+  .hero-button-wrapper {
+    width: 40rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .hero-container {
+    font-family: var(--main-font);
+    width: 30rem;
+    color: var(--light);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .hero-container h1 {
+    font-weight: var(--poppins-bold);
+    color: var(--light);
+    font-size: 2.7rem;
+    text-align: left;
+    width: 30rem;
+  }
+
+  .hero-container p {
+    font-weight: var(--poppins-thin);
+    letter-spacing: 0.1rem;
+    font-size: 1rem;
+    color: var(--orange);
+    text-align: left;
+    padding: 0;
+    width: 23rem;
+  }
+
+  .hero-button-wrapper {
+    padding: 0;
+    text-align: left;
+    width: 40rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero-btn {
+    width: 12rem;
+    height: 3.2rem;
+    margin: 0 0.5rem 0 0;
+  }
+}
