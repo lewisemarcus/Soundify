@@ -11,13 +11,37 @@ Soundify is a online music player where users are required to create an account 
 
 ## User Story:
 ---
-
+I love listening to music but I hate all the hoops I have to jump through to create an account on a major music playing platform. I have a lot of music and would love to create a personal playlist for those songs but I dont want to spend money. I want a application that I can login and upload all my favorite songs and create a playlist. I want to be able to view other peoples playlists. Other people can go to my uploaded songs or playlist and comment on them. If I decide I dont want a song anymore I want to be able to delete the song.
 
 <br>
 
 ## Acceptance Criteria:
 ---
+- Users must create a original username and password in order to login to our web application.
+<br>
 
+- Users must use username, email, and password to create a account.
+<br>
+
+- Users can listen to music from 3 differnt music cards on the users dashboard.
+<br>
+
+- Users can play music by choosing from preselected genres.
+<br>
+
+- Users can search song titles and artist names.
+<br>
+
+- Users can upload songs by entering the song name, artist name, genre, and the music file.
+<br>
+
+- Users can delete songs from playlists.
+<br>
+
+- Users can create a playlist with songs they have uploaded or by others.
+<br>
+
+- Users can log out and all their songs and playlist will be saved to their account.
 
 <br>
 
@@ -83,13 +107,6 @@ Go to the github link provided below and clone the repository. In VSC open termi
 <img src="./client/src/assets/song-screenshot.png">
 
 <br>
-
-## Features:
----
-- React.js built front end
-- Register/Login page
--
--
 
 ## Contribute:
 ---
