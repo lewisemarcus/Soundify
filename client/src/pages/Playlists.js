@@ -99,13 +99,25 @@ const Playlists = ({
     }
 
     return (
-        <div>
+        <div style={{ marginBottom: 100, height: "100vh" }}>
             <div>
                 <aside className="playlistNames">
-                    <h2>Playlists:</h2>
+                    <h2
+                        style={{
+                            color: "white",
+                            fontWeight: "bolder",
+                        }}
+                    >
+                        Playlists:
+                    </h2>
                     {usersPlaylists.map((playlist) => {
                         return (
                             <button
+                                style={{
+                                    color: "white",
+                                    fontWeight: "bolder",
+                                    padding: 5,
+                                }}
                                 key={playlist.title}
                                 id={playlist._id}
                                 onClick={switchPlaylist}
