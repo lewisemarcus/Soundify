@@ -12,46 +12,48 @@ const { sign } = jsonPkg
 
 const resolvers = {
     Query: {
-        user: async(parent, { _id }) => {
+        user: async (parent, { _id }) => {
             return User.findById(_id)
         },
-        songById: async(parent, { _id }) => {
+        songById: async (parent, { _id }) => {
             return Song.findById(_id)
         },
-        songByArtist: async(parent, { username }) => {
+        songByArtist: async (parent, { username }) => {
             const params = username ? { username } : {}
             return Song.find(params).sort({ uploaded: -1 })
         },
-        songByGenre: async(parent, { genre }) => {
+        songByGenre: async (parent, { genre }) => {
             const params = genre ? { genre } : {}
             return Song.find(params).sort({ uploaded: -1 })
         },
 
-        users: async() => {
+        users: async () => {
             return User.find().populate("songs")
         },
-        songs: async() => {
+        songs: async () => {
             return Song.find()
         },
-        song: async(parent, { title }) => {
+        song: async (parent, { title }) => {
             return Song.search(title, (err, output) => {
                 if (err) return console.log(">>>>>ERR", err)
                 return output.results
             })
         },
-        playlist: async(parent, { _id }) => {
+        playlist: async (parent, { _id }) => {
             return Playlist.findById(_id).populate("songs")
         },
-        userSongs: async(parent, { username }) => {
+        userSongs: async (parent, { username }) => {
             const params = username ? { username } : {}
             return Song.find(params).sort({ uploaded: -1 })
         },
-        userPlaylists: async(parent, { owner }) => {
+        userPlaylists: async (parent, { owner }, context) => {
             const params = owner ? { owner } : {}
-            const playlist = await Playlist.find(params).sort({ createdAt: -1 }).populate("songs")
-                // console.log(playlist)
-            return playlist
-                // return Playlist.find(params).sort({ createdAt: -1 })
+            if (context.user)
+                return Playlist.find(params)
+                    .populate("songs")
+                    .sort({ createdAt: -1 })
+
+            throw new AuthenticationError("You need to be logged in!")
         },
         // userPlaylists: async(parent, args, context) => {
         //     if (context.user)
@@ -62,8 +64,9 @@ const resolvers = {
         // },
     },
     Mutation: {
-        registerUser: async(
-            _, { registerInput: { username, email, password } },
+        registerUser: async (
+            _,
+            { registerInput: { username, email, password } },
         ) => {
             const oldUser = await User.findOne({ email })
             if (oldUser) {
@@ -81,14 +84,16 @@ const resolvers = {
                 password: hashedPassword,
             })
 
-            const token = sign({
+            const token = sign(
+                {
                     payload: {
                         user_id: newUser._id,
                         email: email,
                         username: username,
                     },
                 },
-                secret, {
+                secret,
+                {
                     expiresIn: Math.floor(Date.now() / 1000) + 60 * 60,
                 },
             )
@@ -99,7 +104,7 @@ const resolvers = {
                 ...res._doc,
             }
         },
-        loginUser: async(parent, { loginInput: { email, password } }) => {
+        loginUser: async (parent, { loginInput: { email, password } }) => {
             const user = await User.findOne({ email })
             const bool = user && (await compare(password, user.password))
             if (bool) {
@@ -120,79 +125,95 @@ const resolvers = {
                 )
             }
         },
-        addComment: async(
-            parent, { songId, commentText, commentAuthor, token },
+        addComment: async (
+            parent,
+            { songId, commentText, commentAuthor, token },
             context,
         ) => {
             if (context.user) {
-                return Song.findOneAndUpdate({ _id: mongoose.Types.ObjectId(songId) }, {
-                    $addToSet: {
-                        comments: {
-                            commentText: commentText,
-                            commentAuthor: commentAuthor,
+                return Song.findOneAndUpdate(
+                    { _id: mongoose.Types.ObjectId(songId) },
+                    {
+                        $addToSet: {
+                            comments: {
+                                commentText: commentText,
+                                commentAuthor: commentAuthor,
+                            },
                         },
                     },
-                }, {
-                    new: true,
-                    runValidators: true,
-                }, )
+                    {
+                        new: true,
+                        runValidators: true,
+                    },
+                )
             }
             throw new AuthenticationError("You need to be logged in!")
         },
-        removeComment: async(
-            parent, { songId, commentId, token, commentAuthor },
+        removeComment: async (
+            parent,
+            { songId, commentId, token, commentAuthor },
             context,
         ) => {
             console.log(context.user)
             if (context.user && context.user.username === commentAuthor) {
-                return Song.findOneAndUpdate({ _id: mongoose.Types.ObjectId(songId) }, {
-                    $pull: {
-                        comments: {
-                            _id: mongoose.Types.ObjectId(commentId),
+                return Song.findOneAndUpdate(
+                    { _id: mongoose.Types.ObjectId(songId) },
+                    {
+                        $pull: {
+                            comments: {
+                                _id: mongoose.Types.ObjectId(commentId),
+                            },
                         },
                     },
-                }, { new: true }, )
+                    { new: true },
+                )
             }
             throw new AuthenticationError("You need to be logged in!")
         },
-        createPlaylist: async(
-            parent, { playlistname, songId, username }
-        ) => {
+        createPlaylist: async (parent, { playlistname, songId, username }) => {
             const newPlaylist = new Playlist({
                 owner: username,
-                plTitle: playlistname
+                plTitle: playlistname,
             })
 
             const pLs = await newPlaylist.save()
 
-            return Playlist.findOneAndUpdate({ _id: mongoose.Types.ObjectId(pLs._id) }, {
-                $addToSet: {
-                    songs: songId
-                }
-            })
-
-        },
-        addToPlaylist: async(
-            parent, { _id, songId }, context
-        ) => {
-            if (context.user) {
-                return Playlist.findOneAndUpdate({ _id: mongoose.Types.ObjectId(_id) }, {
+            return Playlist.findOneAndUpdate(
+                { _id: mongoose.Types.ObjectId(pLs._id) },
+                {
                     $addToSet: {
-                        songs: songId
-                    }
-                })
-            }
-        },
-        removeFromPlaylist: async(
-            parent, { songId, playlistname, username }
-        ) => {
-            return Playlist.findOneAndUpdate({ _id: mongoose.Types.ObjectId(pLs._id) }, {
-                $pull: {
-                    songs: {
-                        _id: mongoose.Types.ObjectId(songId)
+                        songs: songId,
                     },
                 },
-            }, { new: true }, )
+            )
+        },
+        addToPlaylist: async (parent, { _id, songId }, context) => {
+            if (context.user) {
+                return Playlist.findOneAndUpdate(
+                    { _id: mongoose.Types.ObjectId(_id) },
+                    {
+                        $addToSet: {
+                            songs: songId,
+                        },
+                    },
+                )
+            }
+        },
+        removeFromPlaylist: async (
+            parent,
+            { songId, playlistname, username },
+        ) => {
+            return Playlist.findOneAndUpdate(
+                { _id: mongoose.Types.ObjectId(pLs._id) },
+                {
+                    $pull: {
+                        songs: {
+                            _id: mongoose.Types.ObjectId(songId),
+                        },
+                    },
+                },
+                { new: true },
+            )
         },
     },
 }
