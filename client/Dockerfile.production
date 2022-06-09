@@ -1,0 +1,21 @@
+##First Stage
+
+FROM node
+
+WORKDIR /usr/src/app
+
+COPY ./package.json ./
+COPY ./package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+### Second Stage
+
+FROM caddy:2.1.1-alpine
+
+ARG CADDYFILE
+COPY ${CADDYFILE} /etc/caddy/Caddyfile

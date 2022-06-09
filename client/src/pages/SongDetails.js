@@ -10,7 +10,7 @@ import {
     Space,
     Button,
 } from "antd"
-import "../components/styles/Slider.css"
+import "./styles/Slider.css"
 import { Link, useParams } from "react-router-dom"
 import {
     GET_SONG,

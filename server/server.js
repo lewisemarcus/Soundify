@@ -6,15 +6,9 @@ import morgan from "morgan"
 import { authMiddleware } from "./utils/auth.js"
 import { ApolloServer } from "apollo-server-express"
 import mongoose from "mongoose"
-
+import * as path from "path"
 import bodyParser from "body-parser"
-
-// import { default as typeDefs } from "./schema/typeDefs.js";
-// import typeDefs from "./schema/typeDefs.js";
-// const typeDefs = require("./graphql/typeDefs")
-// import { default as resolvers } from "./schema/Users.js";
-// import { resolvers } from "./schema/resolvers/Users.js";
-// const resolvers = require("./graphql/resolvers")
+import { fileURLToPath } from "url"
 import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 
@@ -26,6 +20,9 @@ const server = new ApolloServer({
     resolvers,
     context: authMiddleware,
 })
+const __filename = fileURLToPath(import.meta.url)
+
+const __dirname = path.dirname(__filename)
 
 const app = express()
 server.applyMiddleware({ app })
@@ -54,6 +51,12 @@ mongoose
     })
     .then((res) => {
         console.log(
-            `Server running at http://localhost:${port}${server.graphqlPath}`,
+            `Server running at http://soundify-home.herokuapp.com:${port}${server.graphqlPath}`,
         )
     })
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "..", "public", "index.html")))
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "..", "public", "index.html"))
+    })
+}
