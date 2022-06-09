@@ -60,9 +60,6 @@ const Playlists = ({
 
     useEffect(() => {
         refetch()
-        if (usersPlaylists[0] !== undefined) {
-            setSinglePL(usersPlaylists[0])
-        }
     }, [playlists, location.pathname])
 
     useEffect(() => {
