@@ -39,6 +39,8 @@ const SongDetails = ({
     setIsPlaying,
     getSongInfo,
     isDetailsPlaying,
+    trackProgress,
+    setTrackProgress,
 }) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
@@ -46,6 +48,7 @@ const SongDetails = ({
     const { loading, data } = useQuery(GET_SONG, {
         variables: { songId: songId },
     })
+    const [waveref, setWaveref] = useState()
     const recSongs = []
     const [list, setList] = useState([])
     const [commentText, setCommentText] = useState("")
@@ -276,6 +279,10 @@ const SongDetails = ({
                         </h2>
                     </div>
                     <Waveform
+                        setWaveref={setWaveref}
+                        setTrackProgress={setTrackProgress}
+                        trackProgress={trackProgress}
+                        currentPlayer={currentPlayer}
                         querySong={querySong}
                         isDetailsPlaying={isDetailsPlaying}
                         isPlaying={isPlaying}

@@ -19,11 +19,15 @@ const Footer = ({
     songInfo,
     trackIndex,
     getTrackIndex,
+    trackProgress,
+    setTrackProgress,
 }) => {
     return (
         // this link needs to be changed upon new click
         <div className="footer-container" dashid={`dash-${footerId}`}>
             <FooterAudioPlayer
+                trackProgress={trackProgress}
+                setTrackProgress={setTrackProgress}
                 songInfo={songInfo}
                 trackIndex={trackIndex}
                 getTrackIndex={getTrackIndex}

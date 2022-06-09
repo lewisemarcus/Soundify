@@ -6,23 +6,6 @@ import { PlayButton } from "./styles/Wavesurfer.styled"
 
 import "./styles/Slider.css"
 
-const formWaveSurferOptions = (ref) => ({
-    container: ref,
-    waveColor: "#eee",
-    progressColor: "#ec994b",
-    cursorColor: "#ec994b",
-    barWidth: 5,
-    backend: "MediaElement",
-    scrollParent: true,
-    barRadius: 3,
-    responsive: true,
-    height: 100,
-    // If true, normalize by the maximum peak instead of 1.0.
-    normalize: true,
-    // Use the PeakCache to improve rendering speed of large waveforms.
-    partialRender: true,
-})
-
 let duration,
     currentTime,
     hDisplay,
@@ -45,23 +28,45 @@ export default function Waveform({
     isPlaying,
     isDetailsPlaying,
     querySong,
+    currentPlayer,
+    trackProgress,
+    setTrackProgress,
+    setWaveref,
 }) {
+    const formWaveSurferOptions = (ref) => ({
+        container: ref,
+        waveColor: "#eee",
+        progressColor: "#ec994b",
+        cursorColor: "#ec994b",
+        barWidth: 5,
+        backend: "MediaElementWebAudio",
+        scrollParent: true,
+        barRadius: 3,
+        responsive: true,
+        height: 100,
+        // If true, normalize by the maximum peak instead of 1.0.
+        normalize: true,
+        // Use the PeakCache to improve rendering speed of large waveforms.
+        partialRender: true,
+    })
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
     const time = useRef(null)
     // create new WaveSurfer instance
     // On component mount and when url changes
+
     useEffect(() => {
         const options = formWaveSurferOptions(waveformRef.current)
         wavesurfer.current = WaveSurfer.create(options)
-
+        console.log(options)
         if (audio.current !== null && audio.current.src !== "") {
             let songUrl = new URL(audio.current.src).pathname.split("/")[1]
             if (audio.current.src !== undefined && songUrl !== "undefined") {
-                console.log(audio.current.src)
-                wavesurfer.current.load(querySong.link)
+                wavesurfer.current.load(audio.current)
             }
         }
+
+        console.log(wavesurfer.current.backend.media)
         wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
             //wavesurfer.current.play()
@@ -89,11 +94,9 @@ export default function Waveform({
             ch = Math.floor(currentTime / 3600)
             cm = Math.floor((currentTime % 3600) / 60)
             cs = Math.floor((wavesurfer.current.getCurrentTime() % 3600) % 60)
-
             chDisplay = ch > 0 ? ch + (ch === 1 ? ":" : ":") : ""
             cmDisplay = cm > 0 ? cm + (cm === 1 ? ":" : ":") : "00:"
             csDisplay = cs < 10 ? "0" + cs : cs
-
             time.current.innerHTML = `${chDisplay}${cmDisplay}${csDisplay} / ${hDisplay}${mDisplay}${sDisplay}`
         })
 
@@ -105,7 +108,10 @@ export default function Waveform({
     const handlePlayPause = () => {
         setIsPlaying(!isPlaying)
         isDetailsPlaying(!isPlaying)
+        //wavesurfer.current.setMute(true)
+        console.log(wavesurfer)
         wavesurfer.current.playPause()
+        console.log(wavesurfer.current.isPlaying())
     }
 
     return (

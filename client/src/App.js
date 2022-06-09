@@ -31,6 +31,7 @@ function App() {
         title: "",
         artist: "",
     })
+    const [trackProgress, setTrackProgress] = useState(0)
     const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [audioList, setAudioList] = useState([])
@@ -49,7 +50,6 @@ function App() {
     let dashes = []
 
     useEffect(() => {
-        console.log(location.pathname.split("/")[1])
         if (location.pathname.split("/")[1] !== "playlists")
             setPlaylistClicked(false)
         if (detailsPlaying) setIsPlaying(true)
@@ -190,6 +190,8 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            setTrackProgress={setTrackProgress}
+                            trackProgress={trackProgress}
                             isDetailsPlaying={isDetailsPlaying}
                             getSongInfo={getSongInfo}
                             isPlaying={isPlaying}
@@ -222,6 +224,8 @@ function App() {
 
             {user && location.pathname.split("/")[1] !== "playlists" && (
                 <Footer
+                    trackProgress={trackProgress}
+                    setTrackProgress={setTrackProgress}
                     songInfo={songInfo}
                     getTrackIndex={getTrackIndex}
                     trackIndex={trackIndex}
