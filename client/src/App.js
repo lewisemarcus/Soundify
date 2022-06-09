@@ -15,15 +15,6 @@ import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
-    const [playlistClicked, setPlaylistClicked] = useState(false)
-    const [playlists, setPlaylists] = useState([])
-    const [singlePL, setSinglePL] = useState([
-        {
-            title: "NO PLAYLISTS AVAILABLE",
-            artist: "NO PLAYLISTS AVAILABLE",
-            link: "NO PLAYLISTS AVAILABLE",
-        },
-    ])
     const [genreClickCount, setGenreClickCount] = useState(0)
     const currentPlayer = useRef(null)
     const [prevCount, setPrevCount] = useState(0)
@@ -50,8 +41,6 @@ function App() {
     let dashes = []
 
     useEffect(() => {
-        if (location.pathname.split("/")[1] !== "playlists")
-            setPlaylistClicked(false)
         if (detailsPlaying) setIsPlaying(true)
     }, [detailsPlaying, location.pathname])
     useEffect(() => {
@@ -205,16 +194,7 @@ function App() {
                     path="/playlists"
                     element={
                         user ? (
-                            <Playlists
-                                playlistClicked={playlistClicked}
-                                setPlaylistClicked={setPlaylistClicked}
-                                playlists={playlists}
-                                setPlaylists={setPlaylists}
-                                singlePL={singlePL}
-                                setSinglePL={setSinglePL}
-                                currentPlayer={currentPlayer}
-                                setCurrentSong={setCurrentSong}
-                            />
+                            <Playlists currentPlayer={currentPlayer} />
                         ) : (
                             <Navigate to="/" />
                         )
@@ -244,12 +224,17 @@ function App() {
                     setOneSongClick={setOneSongClick}
                 />
             )}
-            <audio
-                id="audio-element"
-                crossOrigin="anonymous"
-                ref={currentPlayer}
-                src={currentSong}
-            ></audio>
+            <div>
+                <div>
+                    {" "}
+                    <audio
+                        id="audio-element"
+                        crossOrigin="anonymous"
+                        ref={currentPlayer}
+                        src={currentSong}
+                    ></audio>
+                </div>
+            </div>
         </div>
     )
 }

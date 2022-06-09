@@ -111,7 +111,7 @@ function Register(props) {
                                 description="Something went wrong. Please try again."
                                 type="error"
                                 showIcon
-                                key={index + 1}
+                                key={`${error}${index}`}
                             />
                         )
                     })}

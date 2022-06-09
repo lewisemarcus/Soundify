@@ -3,26 +3,18 @@ import AudioPlayerContainer from "../components/MusicPlayer/AudioPlayerContainer
 import { AiFillCloseCircle } from "react-icons/ai"
 import "./styles/Playlists.css"
 import { Row, Col } from "antd"
-import { useQuery, useLazyQuery } from "@apollo/client"
-import { qrySongs, GET_USER_PLAYLIST } from "../utils/queries/songQueries"
+import { useQuery } from "@apollo/client"
+import { GET_USER_PLAYLIST } from "../utils/queries/songQueries"
 import { useLocation } from "react-router-dom"
 
-const Playlists = ({
-    currentPlayer,
-    setCurrentSong,
-    singlePL,
-    setSinglePL,
-    setPlaylists,
-    playlists,
-    setPlaylistClicked,
-    playlistClicked,
-}) => {
+const Playlists = ({ currentPlayer }) => {
+    const [singlePL, setSinglePL] = useState([])
     const username = localStorage.getItem("username")
-    const { loading, data: songData } = useQuery(qrySongs)
+    const [playlistClicked, setPlaylistClicked] = useState(false)
     const [playlistSong, setPlaylistSong] = useState()
     const [selectedSong, setSelectedSong] = useState(false)
     const [newTitle, setTitle] = useState()
-    const songs = songData?.allSongs || []
+
     const [r, setR] = useState(false)
     const location = useLocation()
     let audioList = []
@@ -34,33 +26,23 @@ const Playlists = ({
     } = useQuery(GET_USER_PLAYLIST, {
         variables: { owner: username },
     })
-    const usersPlaylists = data?.userPlaylists || []
+    let currentPlaylists = data?.userPlaylists || []
     useEffect(() => {
         console.log("hi")
         if (data !== undefined)
-            localStorage.setItem("playlists", JSON.stringify(usersPlaylists))
-    }, [usersPlaylists])
+            localStorage.setItem("playlists", JSON.stringify(currentPlaylists))
+    }, [currentPlaylists])
 
     useEffect(() => {
-        console.log("hi2")
-        //if (usersPlaylists.length !== 0) setPlaylists(usersPlaylists)
-    }, [usersPlaylists])
-    // useEffect(() => {
-    //     async function loadPlists() {
-    //         let { data } = await refetchPlaylists()
-    //         setPlaylists(data.userPlaylists)
-    //         localStorage.setItem(
-    //             "playlists",
-    //             JSON.stringify(data.userPlaylists),
-    //         )
-    //         return data
-    //     }
-    //     loadPlists()
-    // }, [location.pathname])
+        return setPlaylistClicked(false) && setSinglePL([])
+    }, [])
 
     useEffect(() => {
-        refetch()
-    }, [playlists, location.pathname])
+        const fetchPlaylists = async () => {
+            await refetch()
+        }
+        fetchPlaylists()
+    }, [location.pathname])
 
     useEffect(() => {
         localStorage.setItem("singlePL", JSON.stringify(singlePL))
@@ -69,9 +51,9 @@ const Playlists = ({
     const switchPlaylist = (e) => {
         e.preventDefault()
         setPlaylistClicked(true)
-        for (let i = 0; i < usersPlaylists.length; i++) {
-            if (usersPlaylists[i]._id === e.currentTarget.id) {
-                setSinglePL(usersPlaylists[i])
+        for (let i = 0; i < currentPlaylists.length; i++) {
+            if (currentPlaylists[i]._id === e.currentTarget.id) {
+                setSinglePL(currentPlaylists[i])
             }
         }
     }
@@ -91,11 +73,10 @@ const Playlists = ({
             setR(true)
         }
     }
-    if (loading) {
-        return <div>Loading...</div>
-    }
 
-    return (
+    return playlistloading ? (
+        <div>Loading...</div>
+    ) : (
         <div style={{ marginBottom: 100, height: "100vh" }}>
             <div>
                 <aside className="playlistNames">
@@ -107,7 +88,7 @@ const Playlists = ({
                     >
                         Playlists:
                     </h2>
-                    {usersPlaylists.map((playlist) => {
+                    {currentPlaylists.map((playlist) => {
                         return (
                             <button
                                 style={{
@@ -134,7 +115,6 @@ const Playlists = ({
                         r={r}
                         setR={setR}
                         currentPlayer={currentPlayer}
-                        setCurrentSong={setCurrentSong}
                         singlePL={singlePL}
                     />
                     <div className="item">
@@ -159,8 +139,7 @@ const Playlists = ({
                                     </Col>
                                 </Row>
                             </div>
-                            {singlePL.songs &&
-                                playlistClicked &&
+                            {playlistClicked ? (
                                 singlePL.songs.map((song) => {
                                     console.log(playlistClicked)
                                     return (
@@ -199,7 +178,12 @@ const Playlists = ({
                                             </Col>
                                         </Row>
                                     )
-                                })}
+                                })
+                            ) : (
+                                <div style={{ color: "white" }}>
+                                    NO PLAYLIST DATA
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

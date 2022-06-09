@@ -16,10 +16,9 @@ const AudioPlayer = ({
     r,
     setR,
     currentPlayer,
-    setCurrentSong,
 }) => {
     // State
-    console.log(singlePL)
+
     const [trackIndex, setTrackIndex] = useState(0)
     const [trackProgress, setTrackProgress] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -256,8 +255,7 @@ const AudioPlayer = ({
     sDisplay = s < 10 ? "0" + s : s
 
     const endTime = `${hDisplay}${mDisplay}${sDisplay}`
-
-    currentPlayer.current.src = audioRef.current.src
+    if (currentPlayer.current) currentPlayer.current.src = audioRef.current.src
 
     return (
         <div className="audio-player">
