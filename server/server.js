@@ -46,9 +46,10 @@ mongoose
     })
     .then((res) => {
         console.log(
-            `Server running at http://localhost:${port}${server.graphqlPath}`,
+            `Server running at http://164.92.83.96/:${port}${server.graphqlPath}`,
         )
     })
+//if prod
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "..", "client", "build")))
     app.get("*", (req, res) => {
