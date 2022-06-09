@@ -9,7 +9,7 @@ import DashResults from "./components/Dashboard/DashResults"
 
 function App() {
     const [genreClickCount, setGenreClickCount] = useState(0)
-    const currentPlayer = useRef(null)
+    const currentPlayer = useRef(new Audio())
     const [prevCount, setPrevCount] = useState(0)
     const [songInfo, getSongInfo] = useState({
         title: "",
