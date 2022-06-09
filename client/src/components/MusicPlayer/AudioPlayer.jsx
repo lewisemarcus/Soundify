@@ -40,9 +40,6 @@ const AudioPlayer = ({
     })
     useEffect(() => {
         if (singlePL.songs) setSong(singlePL.songs[trackIndex])
-        console.log(singlePL)
-        // const { title, artist, color, image, audioSrc } = tracks[trackIndex]
-        console.log(title)
     }, [trackIndex])
 
     // Refs
@@ -158,14 +155,13 @@ const AudioPlayer = ({
     const onVolumeChange = (e) => {
         const { target } = e
         const newVolume = +target.value
-        // console.log(newVolume)
+
         if (newVolume) {
             setVolume(newVolume)
             audioRef.current.volume = newVolume || 0.01
         }
     }
 
-    // const [songInfo, setSongInfo] = useState(tracks[trackIndex])
     useEffect(() => {
         if (isPlaying) {
             audioRef.current.play()

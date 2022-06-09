@@ -1,11 +1,4 @@
-import {
-    LandingPage,
-    Register,
-    Login,
-    AddSong,
-    SongList,
-    Playlists,
-} from "./pages"
+import { LandingPage, Register, Login, SongList, Playlists } from "./pages"
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import SongDetails from "./pages/SongDetails"
