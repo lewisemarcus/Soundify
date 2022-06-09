@@ -55,18 +55,18 @@ export default function Waveform({
         console.log(options)
         if (audio.current !== null && audio.current.src !== "") {
             let songUrl = new URL(audio.current.src).pathname.split("/")[1]
-            if (audio.current.src !== undefined && songUrl !== "undefined") {
+            console.log(wavesurfer.current.backend)
+            if (
+                audio.current.src !== undefined &&
+                songUrl !== "undefined" &&
+                wavesurfer.current.backend == null
+            ) {
                 wavesurfer.current.load(audio.current)
             }
         }
 
-        console.log(wavesurfer.current.backend.media)
         wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
-            //wavesurfer.current.play()
-            //setIsPlaying(true)
-            // audio.current.play()
-
             // make sure object still available when file loaded
             if (wavesurfer.current) {
                 duration = wavesurfer.current.getDuration()

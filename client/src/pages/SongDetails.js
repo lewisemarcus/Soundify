@@ -174,12 +174,11 @@ const SongDetails = ({
 
     useEffect(() => {
         if (Object.keys(querySong).length !== 0) getSongInfo(querySong)
-        currentPlayer.current.src = querySong.link
+        if (currentPlayer.current) currentPlayer.current.src = querySong.link
     }, [querySong.link])
 
     useEffect(() => {
         if (querySong.link !== undefined) {
-            // console.log(audio.current)
             setCurrentSong(querySong.link)
         }
     }, [querySong.link])
