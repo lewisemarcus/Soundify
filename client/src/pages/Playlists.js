@@ -28,7 +28,6 @@ const Playlists = ({ currentPlayer }) => {
     })
     let currentPlaylists = data?.userPlaylists || []
     useEffect(() => {
-        console.log("hi")
         if (data !== undefined)
             localStorage.setItem("playlists", JSON.stringify(currentPlaylists))
     }, [currentPlaylists])

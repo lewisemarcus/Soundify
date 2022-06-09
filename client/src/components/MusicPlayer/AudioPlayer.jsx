@@ -43,7 +43,6 @@ const AudioPlayer = ({
     }, [trackIndex])
 
     // Refs
-    console.log(link)
     const audioRef = useRef(new Audio(link))
     const intervalRef = useRef()
     audioRef.current.volume = volume
@@ -185,17 +184,15 @@ const AudioPlayer = ({
         }
     })
     useEffect(() => {
-        console.log("193", playlistSong, link, song.link)
         audioRef.current.pause()
-        audioRef.current = new Audio(playlistSong)
-        audioRef.current.load()
+        audioRef.current = new Audio(link)
         audioRef.current.play()
         setSelectedSong(false)
-    }, [selectedSong, playlistSong, trackIndex])
+    }, [selectedSong, playlistSong, link, trackIndex])
 
     useEffect(() => {
         if (!audioRef.current.paused) audioRef.current.pause()
-        audioRef.current = new Audio(playlistSong)
+        audioRef.current = new Audio(link)
 
         setTrackProgress(audioRef.current.currentTime)
         if (isReady.current) {
@@ -206,7 +203,7 @@ const AudioPlayer = ({
             // Set the isReady ref as true for the next pass
             isReady.current = true
         }
-    }, [trackIndex])
+    }, [trackIndex, link])
 
     useEffect(() => {
         // Pause and clean up on unmount
@@ -256,7 +253,7 @@ const AudioPlayer = ({
     return (
         <div className="audio-player">
             <div className="track-info">
-                <h2 className="title">{newTitle}</h2>
+                <h2 className="title">{song.title}</h2>
                 <h3 className="artist">{song.artist}</h3>
                 <AudioControls
                     isPlaying={isPlaying}
