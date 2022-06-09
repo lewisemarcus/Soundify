@@ -51,7 +51,7 @@ mongoose
     })
     .then((res) => {
         console.log(
-            `Server running at http://localhost:${port}${server.graphqlPath}`,
+            `Server running at http://soundify-home.herokuapp.com:${port}${server.graphqlPath}`,
         )
     })
 if (process.env.NODE_ENV === "production") {
