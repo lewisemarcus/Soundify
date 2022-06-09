@@ -13,6 +13,12 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 475px) {
+    .musicPlayer {
+        padding: 0rem;
+    }
+}
+
 @media screen and (min-width: 1150px) {
     .musicPlayer {
         grid-template-columns: repeat(3, 1fr);
