@@ -124,7 +124,7 @@ const SongList = () => {
     try {
       const res = await axios({
         method: "post",
-        url: "/upload",
+        url: "https://soundify-home.herokuapp.com/upload",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
