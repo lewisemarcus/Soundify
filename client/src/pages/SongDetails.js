@@ -90,14 +90,6 @@ const SongDetails = ({
         },
     )
     const usersPlaylists = userPlaylists?.userPlaylists || []
-    const uPL = Object.values(usersPlaylists)
-    console.log(userPlaylists)
-
-    useEffect(() => {
-        console.log(uPL)
-    }, [usersPlaylists])
-
-    // const [newPlaylist, setNewPlaylist] = useState()
 
     function registerUserCallback() {
         console.log("callback hit")
@@ -166,14 +158,6 @@ const SongDetails = ({
     }
 
     const handleCancel = () => {
-        // setSong({
-        //     title: "",
-        //     genre: "",
-        //     username: username,
-        //     artist: "",
-        //     filename: "",
-        //     link: "",
-        // });
         setIsModalVisible(false)
     }
 
@@ -279,15 +263,9 @@ const SongDetails = ({
                         </h2>
                     </div>
                     <Waveform
-                        setWaveref={setWaveref}
-                        setTrackProgress={setTrackProgress}
-                        trackProgress={trackProgress}
-                        currentPlayer={currentPlayer}
-                        querySong={querySong}
                         isDetailsPlaying={isDetailsPlaying}
                         isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying}
-                        song={querySong}
                         audio={currentPlayer}
                     />
                     <div

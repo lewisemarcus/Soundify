@@ -22,16 +22,10 @@ let duration,
     cs
 
 export default function Waveform({
-    song,
     audio,
     setIsPlaying,
     isPlaying,
     isDetailsPlaying,
-    querySong,
-    currentPlayer,
-    trackProgress,
-    setTrackProgress,
-    setWaveref,
 }) {
     const formWaveSurferOptions = (ref) => ({
         container: ref,
