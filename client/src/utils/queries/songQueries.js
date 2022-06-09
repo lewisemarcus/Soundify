@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
-export const qrySongs = gql `
-    query songs{
-        songs{
+export const qrySongs = gql`
+    query allSongs {
+        songs {
             title
             genre
             link
@@ -21,7 +21,7 @@ export const qrySongs = gql `
     }
 `
 
-export const GET_SONGS = gql `
+export const GET_SONGS = gql`
     query song($title: String!) {
         song(title: $title) {
             title
@@ -42,8 +42,8 @@ export const GET_SONGS = gql `
     }
 `
 
-export const GET_GENRES = gql `
-    query songs($genre: String!) {
+export const GET_GENRES = gql`
+    query songByGenre($genre: String!) {
         songByGenre(genre: $genre) {
             title
             genre
@@ -62,7 +62,7 @@ export const GET_GENRES = gql `
         }
     }
 `
-export const GET_SONG = gql `
+export const GET_SONG = gql`
     query songById($songId: ID!) {
         songById(_id: $songId) {
             title
@@ -82,7 +82,7 @@ export const GET_SONG = gql `
         }
     }
 `
-export const GET_USER_SONGS = gql `
+export const GET_USER_SONGS = gql`
     query userSongs($username: String!) {
         userSongs(username: $username) {
             title
@@ -102,7 +102,7 @@ export const GET_USER_SONGS = gql `
         }
     }
 `
-export const GET_USER_PLAYLIST = gql `
+export const GET_USER_PLAYLIST = gql`
     query userPlaylists($owner: String!) {
         userPlaylists(owner: $owner) {
             _id
@@ -121,7 +121,7 @@ export const GET_USER_PLAYLIST = gql `
         }
     }
 `
-export const GET_PLAYLIST = gql `
+export const GET_PLAYLIST = gql`
     query playlist($_id: ID!) {
         playlist(_id: $_id) {
             _id

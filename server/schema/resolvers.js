@@ -30,7 +30,7 @@ const resolvers = {
         users: async () => {
             return User.find().populate("songs")
         },
-        songs: async () => {
+        allSongs: async () => {
             return Song.find()
         },
         song: async (parent, { title }) => {

@@ -51,7 +51,7 @@ const Navbar = () => {
                 },
                 {
                     label: (
-                        <Link to="/songs">
+                        <Link to="/uploads">
                             <li className="menu-item">Songs</li>
                         </Link>
                     ),

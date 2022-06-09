@@ -6,8 +6,8 @@ import Song from "../models/Songs.js"
 import User from "../models/User.js"
 const s3 = new S3({
     // Jason - add changed here ***
-    accessKeyId: process.env.AWS_ACCESS_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 })
 
 const uploadSong = (content, song) => {

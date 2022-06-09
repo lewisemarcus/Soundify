@@ -1,6 +1,6 @@
 import { gql } from "apollo-server"
 
-export default gql `
+export default gql`
     type User {
         _id: ID
         username: String
@@ -61,7 +61,7 @@ export default gql `
         users: [User]
         userByUsername(username: String!): User
         user(_id: ID!): User
-        songs: [Song]
+        allSongs: [Song]
         songByGenre(genre: String!): [Song]
         userSongs(username: String!): [Song]
         song(title: String!): [Song]
@@ -92,10 +92,7 @@ export default gql `
             songId: ID!
             username: String!
         ): Playlist
-        addToPlaylist(
-            _id: String!
-            songId: ID!
-        ): Playlist
+        addToPlaylist(_id: String!, songId: ID!): Playlist
         removeFromPlaylist(
             songId: ID!
             playlistname: String!
