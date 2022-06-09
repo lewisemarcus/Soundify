@@ -46,7 +46,7 @@ mongoose
     })
     .then((res) => {
         console.log(
-            `Server running at http://164.92.83.96/:${port}${server.graphqlPath}`,
+            `Server running at http://localhost/:${port}${server.graphqlPath}`,
         )
     })
 //if prod
