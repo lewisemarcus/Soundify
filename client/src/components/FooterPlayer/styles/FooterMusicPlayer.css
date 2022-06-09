@@ -1,129 +1,129 @@
 body {
-  height: 100vh;
+    height: 100vh;
 }
 
 .footer-audio-player {
-  bottom: 0;
-  background-color: rgb(179, 179, 179);
-  height: 70px;
-  position: fixed;
-  z-index: 10000;
+    bottom: 0;
+    background-color: rgb(179, 179, 179);
+    height: 70px;
+    position: fixed;
+    z-index: 10000;
 }
 
 .footer-audio-player,
 .footer-track-info {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
 }
 
 .footer-audio-controls {
-  display: flex;
-  padding: 10px;
-  width: 20%;
-  justify-content: space-evenly;
+    display: flex;
+    padding: 10px;
+    width: 20%;
+    justify-content: space-evenly;
 }
 
 .footer-audio-controls button {
-  color: black;
-  padding: 5px;
+    color: black;
+    padding: 5px;
 }
 
 .musicianTrack {
-  margin: 0 10px;
-  width: 15%;
-  text-align: center;
+    margin: 0 10px;
+    width: 15%;
+    text-align: center;
 }
 
 .musicianTrack h2 {
-  margin-block-end: 0;
+    margin-block-end: 0;
 }
 
 .musicianTrack h3 {
-  margin-block-start: 0;
+    margin-block-start: 0;
 }
 
 .volContainer {
-  width: 30%;
+    width: 30%;
 }
 
 .musicianTrack h3 {
-  text-align: center;
-  margin-block-start: 0;
+    text-align: center;
+    margin-block-start: 0;
 }
 
 .volContainer {
-  width: 30%;
+    width: 30%;
 }
 
 .footerTimeSlider {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 #startFooterTimer {
-  display: flex;
-  justify-content: center;
-  padding-right: 5px;
+    display: flex;
+    justify-content: center;
+    padding-right: 5px;
 }
 
 #endFooterTimer {
-  display: flex;
-  justify-content: center;
-  padding-left: 5px;
+    display: flex;
+    justify-content: center;
+    padding-left: 5px;
 }
 
 #footerTimerBar {
-  width: 50%;
+    width: 50%;
 }
 
 @media screen and (max-width: 800px) {
-  .volContainer {
-    display: none;
-  }
+    .volContainer {
+        display: none;
+    }
 
-  #endFooterTimer {
-    margin-right: 5px;
-  }
+    #endFooterTimer {
+        margin-right: 5px;
+    }
 }
 
 @media screen and (max-width: 800px) {
-  #footerTimerBar {
-    width: 60%;
-  }
+    #footerTimerBar {
+        width: 60%;
+    }
 }
 
 @media screen and (max-width: 600px) {
-  #footerTimerBar {
-    width: 50%;
-  }
+    #footerTimerBar {
+        width: 50%;
+    }
 
-  .musicianTrack h2 {
-    text-align: center;
-    font-size: 10px;
-    font-weight: bold;
-  }
+    .musicianTrack h2 {
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+    }
 
-  .musicianTrack h3 {
-    text-align: center;
-    font-size: 9px;
-  }
+    .musicianTrack h3 {
+        text-align: center;
+        font-size: 9px;
+    }
 }
 
 @media screen and (max-width: 522px) {
-  .footer-audio-controls {
-    width: 30%;
-  }
+    .footer-audio-controls {
+        width: 30%;
+    }
 }
 
 @media screen and (max-width: 515px) {
-  #footerTimerBar {
-    width: 47%;
-  }
+    #footerTimerBar {
+        width: 47%;
+    }
 }
 
 @media screen and (max-width: 450px) {
-  .musicianTrack {
-    margin-right: 15px;
-  }
+    .musicianTrack {
+        margin-right: 15px;
+    }
 }
