@@ -183,7 +183,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/upload" element={<AddSong />} /> */}
                 <Route
-                    path="/songs"
+                    path="/uploads"
                     element={user ? <SongList /> : <Navigate to="/" />}
                 />
                 <Route

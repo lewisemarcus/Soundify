@@ -85,7 +85,7 @@ const Navbar = () => {
             {user ? (
                 <div className="ul-container">
                     <li className="upload">
-                        <Link to="/songs">Upload</Link>
+                        <Link to="/uploads">Upload</Link>
                     </li>
                     <li className="profile">
                         <Dropdown
