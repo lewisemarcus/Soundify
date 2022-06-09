@@ -14,9 +14,6 @@ import { useContext, useEffect, useState, useRef } from "react"
 import Footer from "./components/Footer"
 import DashResults from "./components/Dashboard/DashResults"
 
-//instead of strictly a song Object, make it a song list
-//Determine if the length of list < 1, treat as single song
-//Else track song's index here and set current to current song index
 function App() {
     const [playlistClicked, setPlaylistClicked] = useState(false)
     const [playlists, setPlaylists] = useState([])
