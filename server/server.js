@@ -9,12 +9,7 @@ import mongoose from "mongoose"
 import path from "path"
 import bodyParser from "body-parser"
 dotenv.config()
-// import { default as typeDefs } from "./schema/typeDefs.js";
-// import typeDefs from "./schema/typeDefs.js";
-// const typeDefs = require("./graphql/typeDefs")
-// import { default as resolvers } from "./schema/Users.js";
-// import { resolvers } from "./schema/resolvers/Users.js";
-// const resolvers = require("./graphql/resolvers")
+
 import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 
