@@ -20,29 +20,28 @@ let duration,
     ch,
     cm,
     cs
-
+const formWaveSurferOptions = (ref) => ({
+    container: ref,
+    waveColor: "#eee",
+    progressColor: "#ec994b",
+    cursorColor: "#ec994b",
+    barWidth: 5,
+    backend: "MediaElement",
+    scrollParent: true,
+    barRadius: 3,
+    responsive: true,
+    height: 100,
+    // If true, normalize by the maximum peak instead of 1.0.
+    normalize: true,
+    // Use the PeakCache to improve rendering speed of large waveforms.
+    partialRender: true,
+})
 export default function Waveform({
     audio,
     setIsPlaying,
     isPlaying,
     isDetailsPlaying,
 }) {
-    const formWaveSurferOptions = (ref) => ({
-        container: ref,
-        waveColor: "#eee",
-        progressColor: "#ec994b",
-        cursorColor: "#ec994b",
-        barWidth: 5,
-        backend: "MediaElementWebAudio",
-        scrollParent: true,
-        barRadius: 3,
-        responsive: true,
-        height: 100,
-        // If true, normalize by the maximum peak instead of 1.0.
-        normalize: true,
-        // Use the PeakCache to improve rendering speed of large waveforms.
-        partialRender: true,
-    })
     const waveformRef = useRef(null)
     const wavesurfer = useRef(null)
     const time = useRef(null)
@@ -52,19 +51,13 @@ export default function Waveform({
     useEffect(() => {
         const options = formWaveSurferOptions(waveformRef.current)
         wavesurfer.current = WaveSurfer.create(options)
-        console.log(options)
         if (audio.current !== null && audio.current.src !== "") {
             let songUrl = new URL(audio.current.src).pathname.split("/")[1]
             console.log(wavesurfer.current.backend)
-            if (
-                audio.current.src !== undefined &&
-                songUrl !== "undefined" &&
-                wavesurfer.current.backend == null
-            ) {
+            if (audio.current.src !== undefined && songUrl !== "undefined") {
                 wavesurfer.current.load(audio.current)
             }
         }
-
         wavesurfer.current.on("waveform-ready", function () {
             // https://wavesurfer-js.org/docs/methods.html
             // make sure object still available when file loaded

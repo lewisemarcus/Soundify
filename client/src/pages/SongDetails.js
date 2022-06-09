@@ -280,7 +280,7 @@ const SongDetails = ({
                             height={100}
                             width={width}
                             id="audio-canvas"
-                            audioEle={currentPlayer.current}
+                            audioId="audio-element"
                         />
                     </div>
                 </div>
