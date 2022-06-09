@@ -170,6 +170,12 @@ const resolvers = {
             }
             throw new AuthenticationError("You need to be logged in!")
         },
+        removeSong: async (parent, { songId, token }, context) => {
+            if (context.user) {
+                return Song.deleteOne({ _id: mongoose.Types.ObjectId(songId) })
+            }
+            throw new AuthenticationError("You need to be logged in!")
+        },
         createPlaylist: async (parent, { playlistname, songId, username }) => {
             const newPlaylist = new Playlist({
                 owner: username,
