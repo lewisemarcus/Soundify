@@ -58,7 +58,7 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://127.0.0.1:4000/",
+    "proxy": "http://164.92.83.96:4000/",
     "devDependencies": {
         "cross-env": "^7.0.3"
     }
