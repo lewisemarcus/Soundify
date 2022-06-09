@@ -36,7 +36,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "react-scripts build && mv build ../public",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -58,7 +58,7 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://164.92.83.96:4000/",
+    "proxy": "http://localhost:4000/",
     "devDependencies": {
         "cross-env": "^7.0.3"
     }
