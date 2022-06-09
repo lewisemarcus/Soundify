@@ -62,12 +62,8 @@ const SongList = () => {
     },
   ];
 
-  const loadingSong = async () => {
-    await message.loading("Uploading song...");
-  };
-
-  const success = async () => {
-    await message.success("Successfully uploaded song!");
+  const loadingSong = () => {
+    message.loading("Uploading song...", 10);
   };
 
   const errorMessage = () => {
@@ -128,19 +124,18 @@ const SongList = () => {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
-      await success();
       await window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (row) => {
     try {
       const response = await axios({
         method: "delete",
-        url: `/delete/${usersSongs[e]._id}`,
-        data: usersSongs[e]._id,
+        url: `/delete/${usersSongs[row]._id}`,
+        data: usersSongs[row]._id,
         headers: { "Content-Type": "multipart/form-data" },
       });
     } catch (error) {
