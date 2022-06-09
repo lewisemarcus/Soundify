@@ -8,7 +8,7 @@ import { ApolloServer } from "apollo-server-express"
 import mongoose from "mongoose"
 import * as path from "path"
 import bodyParser from "body-parser"
-
+import { fileURLToPath } from "url"
 import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 
@@ -20,6 +20,9 @@ const server = new ApolloServer({
     resolvers,
     context: authMiddleware,
 })
+const __filename = fileURLToPath(import.meta.url)
+
+const __dirname = path.dirname(__filename)
 
 const app = express()
 server.applyMiddleware({ app })
