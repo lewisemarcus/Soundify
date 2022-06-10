@@ -11,9 +11,10 @@ import bodyParser from "body-parser"
 import { fileURLToPath } from "url"
 import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
+import * as fs from "fs"
+import * as https from "https"
 
-const MONGODB = "mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone"
-// const MONGODB = process.env.MONGO_URL
+const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
     typeDefs,
@@ -50,11 +51,27 @@ mongoose
         return app.listen(port)
     })
     .then((res) => {
-        console.log(
-            `Server running at http://soundify-home.herokuapp.com:${port}${server.graphqlPath}`,
-        )
+        console.log(`Server running`)
     })
 if (process.env.NODE_ENV === "production") {
+    const privateKey = fs.readFileSync(process.env.PRIVATEKEY, "utf8")
+    const certificate = fs.readFileSync(process.env.CERT, "utf8")
+
+    const credentials = {
+        key: privateKey,
+        cert: certificate,
+    }
+    https.createServer(credentials, app).listen(443, () => {
+        console.log("HTTPS Server running on port 443")
+    })
+    https
+        .createServer(function (req, res) {
+            res.writeHead(301, {
+                Location: "https://" + req.headers["host"] + req.url,
+            })
+            res.end()
+        })
+        .listen(80)
     app.use(express.static(path.join(__dirname, "..", "client", "build")))
     app.get("*", (req, res) => {
         res.sendFile(
