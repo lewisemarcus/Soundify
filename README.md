@@ -47,7 +47,7 @@ I love listening to music but I hate all the hoops I have to jump through to cre
 
 ## Table of Contents:
 ---
-- [Heroku](#heroku)
+- [Digital Ocean](#Digital Ocean)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
@@ -59,9 +59,9 @@ I love listening to music but I hate all the hoops I have to jump through to cre
 
 <br>
 
-## Heroku:
+## Digital Ocean:
 ---
-[![Heroku-Link](images/heroku-screenshot.png)]()
+[![Deployed Application](https://www.soundify.live/)]
 
 <br>
 
