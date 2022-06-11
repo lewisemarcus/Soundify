@@ -9,7 +9,7 @@ const secret = "UNSAFE_STRING"
 import { default as jsonPkg } from "jsonwebtoken"
 import { AuthenticationError } from "apollo-server-express"
 const { sign } = jsonPkg
-
+import { deleteSong } from "../S3Service/index.js"
 const resolvers = {
     Query: {
         user: async (parent, { _id }) => {
@@ -170,8 +170,9 @@ const resolvers = {
             }
             throw new AuthenticationError("You need to be logged in!")
         },
-        removeSong: async (parent, { songId, token }, context) => {
+        removeSong: async (parent, { songId, token, key }, context) => {
             if (context.user) {
+                deleteSong(key)
                 return Song.deleteOne({ _id: mongoose.Types.ObjectId(songId) })
             }
             throw new AuthenticationError("You need to be logged in!")

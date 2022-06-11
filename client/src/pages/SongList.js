@@ -71,6 +71,12 @@ const SongList = () => {
         message.loading("Uploading song...", 10)
     }
 
+    const success = () => {
+        setTimeout(() => {
+            message.success("Successfully uploaded song!")
+        }, 10000)
+    }
+
     const errorMessage = () => {
         message.error("Must fill out all fields!")
     }
@@ -111,7 +117,6 @@ const SongList = () => {
         ) {
             return errorMessage()
         }
-        loadingSong()
         setIsModalVisible(false)
         const tags = song.title.split(" ")
         tags.push(song.genre, song.artist.split(" "))
@@ -122,10 +127,12 @@ const SongList = () => {
         formData.append("title", song.title)
         formData.append("tags", tags)
         formData.append("filename", file)
+        await loadingSong()
+        await success()
         try {
             const res = await axios({
                 method: "post",
-                url: "https://soundify-home.herokuapp.com/upload",
+                url: "/upload",
                 data: formData,
                 headers: { "Content-Type": "multipart/form-data" },
             })
@@ -152,6 +159,7 @@ const SongList = () => {
                 variables: {
                     songId: usersSongs[row]._id,
                     token: token,
+                    key: usersSongs[row].filename,
                 },
             })
             setDeleted(true)
@@ -226,6 +234,7 @@ const SongList = () => {
                     onOk={handleOk}
                     onCancel={handleCancel}
                     destroyOnClose
+                    style={{ top: 20 }}
                 >
                     <Space
                         direction="vertical"

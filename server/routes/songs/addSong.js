@@ -6,7 +6,7 @@ import multer from "multer"
 import { memoryStorage } from "multer"
 import dotenv from "dotenv"
 dotenv.config()
-import uploadSong from "../../S3Service/index.js"
+import { uploadSong } from "../../S3Service/index.js"
 
 const storage = memoryStorage()
 const upload = multer({ storage: storage })
@@ -14,9 +14,9 @@ const upload = multer({ storage: storage })
 router.post("/upload", upload.single("filename"), async (req, res) => {
     const { originalname } = req.file
     const { title, genre, username, tags, artist } = req.body
-
+    const fName = tags.toString() + username
     const content = {
-        filename: title,
+        filename: fName,
         bucketname: "soundclone-music",
         file: req.file.buffer,
     }
@@ -27,7 +27,7 @@ router.post("/upload", upload.single("filename"), async (req, res) => {
         genre: genre,
         artist: artist,
         username: username,
-        filename: originalname,
+        filename: fName,
     }
     await uploadSong(content, newSong)
 

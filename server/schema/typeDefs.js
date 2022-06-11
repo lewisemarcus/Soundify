@@ -80,7 +80,7 @@ export default gql`
             token: String!
             commentAuthor: String!
         ): Song
-        removeSong(songId: String!, token: String!): Song
+        removeSong(songId: String!, token: String!, key: String!): Song
         addComment(
             songId: ID!
             commentText: String!
