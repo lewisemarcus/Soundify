@@ -1,9 +1,11 @@
 import pkg from "aws-sdk"
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3"
 const { S3 } = pkg
 import dotenv from "dotenv"
 dotenv.config()
 import Song from "../models/Songs.js"
 import User from "../models/User.js"
+const s3Client = new S3Client({ region: "us-west-1" })
 const s3 = new S3({
     apiVersion: "latest",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -29,7 +31,7 @@ const uploadSong = (content, song) => {
                     tags: song.tags,
                     artist: song.artist,
                     username: song.username,
-                    filename: song.filename,
+                    filename: content.filename,
                     link: data.Location,
                 })
                 newSong.save()
@@ -43,4 +45,16 @@ const uploadSong = (content, song) => {
     })
 }
 
-export default uploadSong
+const deleteSong = async (key) => {
+    try {
+        const data = await s3Client.send(
+            new DeleteObjectCommand({ Bucket: "soundclone-music", Key: key }),
+        )
+        console.log("Succes. Object deleted.", data)
+        return data
+    } catch (err) {
+        console.log("Error.", err)
+    }
+}
+
+export { uploadSong, deleteSong }

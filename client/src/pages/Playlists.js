@@ -77,7 +77,7 @@ const Playlists = ({ currentPlayer }) => {
         <div>Loading...</div>
     ) : (
         <div style={{ marginBottom: 100, height: "100vh" }}>
-            <div>
+            <div style={{ display: "flex" }}>
                 <aside className="playlistNames">
                     <h2
                         style={{
