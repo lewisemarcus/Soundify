@@ -13,7 +13,7 @@ import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 import * as fs from "fs"
 import * as https from "https"
-
+dotenv.config()
 const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
@@ -27,8 +27,6 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 server.applyMiddleware({ app })
-
-dotenv.config()
 
 const port = process.env.PORT || 4000
 
