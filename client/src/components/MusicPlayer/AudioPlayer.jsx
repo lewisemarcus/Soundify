@@ -106,7 +106,7 @@ const AudioPlayer = ({
                 find.classList.remove("active")
             })
             let row = document.querySelectorAll("button[title]")
-            let btnTitle = song.title
+            let btnTitle = song.title.title
             let r
             for (r = 0; r < row.length; r++) {
                 if (row[r].title === btnTitle) {
@@ -116,7 +116,6 @@ const AudioPlayer = ({
             r--
             row = row[r].parentNode
             row.classList.add("active")
-            r = 0
         }
     }
 
@@ -128,7 +127,7 @@ const AudioPlayer = ({
                 find.classList.remove("active")
             })
             let row = document.querySelectorAll("button[title]")
-            let btnTitle = song.title
+            let btnTitle = song.title.title
             let r
             for (r = 0; r < row.length; r++) {
                 if (row[r].title === btnTitle) {
@@ -138,7 +137,6 @@ const AudioPlayer = ({
             r++
             row = row[r].parentNode
             row.classList.add("active")
-            r = 0
         } else {
             setTrackIndex(0)
             let find = document.querySelectorAll(".active")
