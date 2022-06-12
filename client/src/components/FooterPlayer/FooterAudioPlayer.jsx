@@ -226,22 +226,35 @@ const AudioPlayer = ({
                 <div className="musicianTrack">
                     {songInfo.title && songInfo.title.length > 6 ? (
                         <Marquee gradient={false} delay={2}>
-                            <h2 className="footer-title">
+                            <h2
+                                className="footer-title"
+                                style={{ color: "white" }}
+                            >
                                 {songInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h2>
                         </Marquee>
                     ) : (
-                        <h2 className="footer-title">{songInfo.title}</h2>
+                        <h2 className="footer-title" style={{ color: "white" }}>
+                            {songInfo.title}
+                        </h2>
                     )}
 
                     {songInfo.artist && songInfo.artist.length > 8 ? (
                         <Marquee gradient={false} delay={2}>
-                            <h2 className="footer-artist">
+                            <h2
+                                className="footer-artist"
+                                style={{ color: "white" }}
+                            >
                                 {songInfo.artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </h2>
                         </Marquee>
                     ) : (
-                        <h2 className="footer-artist">{songInfo.artist}</h2>
+                        <h2
+                            className="footer-artist"
+                            style={{ color: "white" }}
+                        >
+                            {songInfo.artist}
+                        </h2>
                     )}
                 </div>
                 <div id="startFooterTimer">{displayTime}</div>
