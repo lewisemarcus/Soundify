@@ -31,8 +31,23 @@
     flex-direction: column;
 }
 
+.comment-details {
+    width: 62%;
+}
+
+.recommended {
+    width: 20%;
+}
+
 @media screen and (max-width: 365px) {
     .select-list {
         width: 75%;
+    }
+}
+
+@media screen and (max-width: 936px) {
+    .comment-details,
+    .recommended {
+        width: 100%;
     }
 }

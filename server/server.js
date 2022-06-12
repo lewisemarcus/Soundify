@@ -13,7 +13,7 @@ import resolvers from "./schema/resolvers.js"
 import typeDefs from "./schema/typeDefs.js"
 import * as fs from "fs"
 import * as https from "https"
-
+dotenv.config()
 const MONGODB = process.env.MONGO_URL
 
 const server = new ApolloServer({
@@ -27,8 +27,6 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 server.applyMiddleware({ app })
-
-dotenv.config()
 
 const port = process.env.PORT || 4000
 
@@ -54,24 +52,25 @@ mongoose
         console.log(`Server running`)
     })
 if (process.env.NODE_ENV === "production") {
-    const privateKey = fs.readFileSync(process.env.PRIVATEKEY, "utf8")
-    const certificate = fs.readFileSync(process.env.CERT, "utf8")
-
-    const credentials = {
-        key: privateKey,
-        cert: certificate,
-    }
-    https.createServer(credentials, app).listen(443, () => {
-        console.log("HTTPS Server running on port 443")
-    })
-    https
-        .createServer(function (req, res) {
-            res.writeHead(301, {
-                Location: "https://" + req.headers["host"] + req.url,
-            })
-            res.end()
-        })
-        .listen(80)
+    // const privateKey = fs.readFileSync(process.env.PRIVATEKEY, "utf8")
+    // const certificate = fs.readFileSync(process.env.CERT, "utf8")
+    // const ca = fs.readFileSync(process.env.CA, "utf8")
+    // const credentials = {
+    //     key: privateKey,
+    //     cert: certificate,
+    //     ca: ca,
+    // }
+    // https.createServer(credentials, app).listen(443, () => {
+    //     console.log("HTTPS Server running on port 443")
+    // })
+    // https
+    //     .createServer(function (req, res) {
+    //         res.writeHead(301, {
+    //             Location: "https://" + req.headers["host"] + req.url,
+    //         })
+    //         res.end()
+    //     })
+    //     .listen(80)
     app.use(express.static(path.join(__dirname, "..", "client", "build")))
     app.get("*", (req, res) => {
         res.sendFile(

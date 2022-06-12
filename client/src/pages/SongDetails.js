@@ -304,9 +304,10 @@ const SongDetails = ({
                 }}
             >
                 <div
+                    className="comment-details"
                     style={{
                         background: "#F1EEE9",
-                        width: "62%",
+                        // width: "62%",
                         display: "flex",
                         flexWrap: "wrap",
                         flexDirection: "column",
@@ -383,7 +384,8 @@ const SongDetails = ({
                     <CommentSection
                         comments={querySong.comments}
                         songId={songId}
-                        style={{ width: "75%" }}
+                        className="comment-section"
+                        // style={{ width: "75%" }}
                     />
                     <div
                         style={{
@@ -413,8 +415,9 @@ const SongDetails = ({
                     </div>
                 </div>
                 <div
+                    className="recommended"
                     style={{
-                        minWidth: "20%",
+                        // minWidth: "20%",
                         background: "#F1EEE9",
                         borderLeft: "1px solid #434343",
                     }}

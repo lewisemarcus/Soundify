@@ -4,7 +4,7 @@ body {
 
 .footer-audio-player {
     bottom: 0;
-    background-color: rgb(179, 179, 179);
+    background-color: #ec994b;
     height: 70px;
     position: fixed;
     z-index: 10000;
