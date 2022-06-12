@@ -4,7 +4,10 @@
     "description": "SoundClone: The SoundCloud clone",
     "main": "server/server.js",
     "scripts": {
-        "server": "nodemon server/server.js --ignore client",
+        "server": "cd server && npm run start",
+        "production": "run-p production:** server",
+        "production:build": "cd client && npm run build",
+        "prod": "pm2 startOrReload prod-ecosystem.json --env production",
         "client": "npm start --prefix client",
         "install": "cd server && npm i && cd ../client && npm i",
         "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
@@ -16,5 +19,9 @@
     "license": "ISC",
     "devDependencies": {
         "concurrently": "^7.1.0"
+    },
+    "dependencies": {
+        "pm2": "^5.2.0",
+        "npm-run-all": "^4.1.5"
     }
 }
