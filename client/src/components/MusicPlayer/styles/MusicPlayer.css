@@ -31,7 +31,7 @@ input[type="range"] {
 }
 
 .audio-player {
-    max-width: 350px;
+    min-width: 250px;
     padding: 3px;
     border-radius: 20px;
     margin: 30px;

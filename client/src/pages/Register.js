@@ -28,7 +28,7 @@ function Register(props) {
   const [errors, setErrors] = useState([]);
 
   function registerUserCallback() {
-    console.log("callback hit");
+
     const hide = message.loading("Creating account...", 0);
     setTimeout(hide, 1100);
 
