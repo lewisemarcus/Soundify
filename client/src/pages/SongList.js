@@ -143,17 +143,6 @@ const SongList = () => {
     }
 
     const handleDelete = async (row) => {
-        // try {
-        //     const response = await axios({
-        //         method: "delete",
-        //         url: `/delete/${usersSongs[row]._id}`,
-        //         data: usersSongs[row]._id,
-        //         headers: { "Content-Type": "multipart/form-data" },
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
         try {
             await removeSong({
                 variables: {
