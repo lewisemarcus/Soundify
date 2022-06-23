@@ -8,7 +8,6 @@
 .PlaylistPlayer {
     margin-top: 10px;
     width: 300px;
-    padding-left: 10%;
 }
 
 .playlist-title {
@@ -21,11 +20,10 @@
     margin-bottom: 10px;
 }
 
-.playlist-header {
+.playlist-head {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-around;
 }
 
 .ant-row {
@@ -42,14 +40,12 @@
     display: contents;
 }
 
-.playlist-header {
+.playlist-head {
     color: white;
 }
 
 .item {
     width: 65%;
-    display: flex;
-    justify-content: center;
 }
 
 .item .content,
@@ -61,7 +57,7 @@
     font-size: 20px;
 }
 
-.active .playlist-header {
+.active .playlist-head {
     color: orange;
 }
 
@@ -70,18 +66,4 @@
     display: flex;
     flex-direction: column;
     width: 150px;
-}
-@media screen and (max-width: 986px) {
-    .item {
-        display: flex;
-        justify-content: center;
-    }
-    .content {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-    .PlaylistPlayer {
-        padding-left: 0px;
-    }
 }

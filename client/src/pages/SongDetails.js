@@ -92,7 +92,7 @@ const SongDetails = ({
     const usersPlaylists = userPlaylists?.userPlaylists || []
 
     function registerUserCallback() {
-        console.log("callback hit")
+      
         const hide = message.loading("Creating playlist...", 0)
         setTimeout(hide, 1100)
     }

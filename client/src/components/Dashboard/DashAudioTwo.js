@@ -106,7 +106,6 @@ const DashAudioTwo = ({
 
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
-        console.log(changed)
         if (genreClickCount > prevClickCount) {
             setIsPlaying(false)
         }

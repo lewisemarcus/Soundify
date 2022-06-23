@@ -53,7 +53,7 @@ export default function Waveform({
         wavesurfer.current = WaveSurfer.create(options)
         if (audio.current !== null && audio.current.src !== "") {
             let songUrl = new URL(audio.current.src).pathname.split("/")[1]
-            console.log(wavesurfer.current.backend)
+
             if (audio.current.src !== undefined && songUrl !== "undefined") {
                 wavesurfer.current.load(audio.current)
             }
@@ -96,9 +96,8 @@ export default function Waveform({
         setIsPlaying(!isPlaying)
         isDetailsPlaying(!isPlaying)
         //wavesurfer.current.setMute(true)
-        console.log(wavesurfer)
+
         wavesurfer.current.playPause()
-        console.log(wavesurfer.current.isPlaying())
     }
 
     return (

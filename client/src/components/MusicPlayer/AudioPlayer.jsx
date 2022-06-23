@@ -6,7 +6,7 @@ import Slider from "@mui/material/Slider"
 import Stack from "@mui/material/Stack"
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded"
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
-
+import { Link } from "react-router-dom"
 const AudioPlayer = ({
     singlePL,
     playlistSong,
@@ -39,6 +39,7 @@ const AudioPlayer = ({
         _id: _id,
     })
     useEffect(() => {
+        console.log(singlePL.songs)
         if (singlePL.songs) setSong(singlePL.songs[trackIndex])
     }, [trackIndex])
 
@@ -97,7 +98,7 @@ const AudioPlayer = ({
             let r
             r = row[row.length - 1]
             row = r.parentNode
-            console.log(row)
+
             row.classList.add("active")
         } else {
             setTrackIndex(trackIndex - 1)
@@ -175,13 +176,12 @@ const AudioPlayer = ({
     // Handles cleanup and setup when changing tracks
     useEffect(() => {
         if (newTitle !== undefined && r !== false) {
-            let i
-            for (i = 0; i < singlePL.songs.length; i++) {
-                if (singlePL.songs[i].title === newTitle) {
+            for (let i = 0; i < singlePL.songs.length; i++) {
+                if (singlePL.songs[i].title === newTitle.value) {
+                    setTrackIndex(i)
                     break
                 }
             }
-            setTrackIndex(i)
             setR(false)
         }
     })
@@ -319,6 +319,9 @@ const AudioPlayer = ({
                     // activeColor={color}
                     isPlaying={isPlaying}
                 />
+                <Link to={`/song/${song._id}`}>
+                    <button className="genre2">Go To Song</button>
+                </Link>
             </div>
         </div>
     )
