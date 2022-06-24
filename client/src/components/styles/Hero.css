@@ -1,8 +1,7 @@
 .hero-container {
-  font-family: var(--main-font);
   width: 20rem;
   padding: 3rem 0 0;
-  color: var(--light);
+  color: #212121;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,14 +9,12 @@
 }
 
 .hero-container h1 {
-  font-weight: var(--poppins-bold);
-  color: var(--light);
+  color: #212121;
   font-size: 1.7rem;
   text-align: center;
 }
 
 .hero-container p {
-  font-weight: var(--poppins-thin);
   letter-spacing: 0.1rem;
   font-size: 0.7rem;
   color: var(--orange);
@@ -47,13 +44,11 @@
     width: 45rem;
   }
   .hero-container h1 {
-    font-weight: var(--poppins-bold);
-    color: var(--light);
+    color: #212121;
     font-size: 2.3rem;
   }
 
   .hero-container p {
-    font-weight: var(--poppins-thin);
     letter-spacing: 0.1rem;
     font-size: 1rem;
     color: var(--orange);
@@ -74,24 +69,21 @@
 
 @media screen and (min-width: 1400px) {
   .hero-container {
-    font-family: var(--main-font);
     width: 30rem;
-    color: var(--light);
+    color: #212121;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
   }
   .hero-container h1 {
-    font-weight: var(--poppins-bold);
-    color: var(--light);
+    color: #212121;
     font-size: 2.7rem;
     text-align: left;
     width: 30rem;
   }
 
   .hero-container p {
-    font-weight: var(--poppins-thin);
     letter-spacing: 0.1rem;
     font-size: 1rem;
     color: var(--orange);

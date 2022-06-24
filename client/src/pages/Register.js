@@ -67,9 +67,7 @@ function Register(props) {
         />
         <div className="register-header">
           <p className="register">Register</p>
-          <p className="register-description">
-            Sign up below to upload and listen to music!
-          </p>
+          <p className="register-description">Sign up below to get started!</p>
         </div>
         <div className="form-input-wrapper">
           <Input
@@ -86,7 +84,7 @@ function Register(props) {
           />
           <Tooltip
             placement="bottom"
-            trigger="click"
+            trigger="focus"
             title="Password must be at least 5 characters long"
           >
             <Input.Password
