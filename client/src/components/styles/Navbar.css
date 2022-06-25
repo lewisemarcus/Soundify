@@ -1,60 +1,120 @@
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ec994b;
-    color: #fff;
-    padding: 0.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ec994b;
+  color: #fff;
+  padding: 0.5rem 2rem;
 }
 
 .logo img {
-    display: flex;
-    align-items: center;
-    height: 90px;
-    width: 100px;
-    margin-top: 5px;
-    margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 90px;
+  width: 100px;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 
 .ul-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ul-container li {
-    list-style: none;
-    padding: 0 1rem;
+  list-style: none;
+  padding: 0 1rem;
 }
 
 .upload a {
-    cursor: pointer;
-    transition: 0.2s ease-in-out all;
-    color: #fff;
+  cursor: pointer;
+  transition: 0.2s ease-in-out all;
+  color: #fff;
+  opacity: 0.8;
 }
 
 .upload a:hover {
-    color: var(--dark);
+  opacity: 1;
 }
 
 .profile {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .nav-btn {
-    width: 11rem;
-    border: 1px solid white;
+  width: 11rem;
+  border: 1px solid white;
 }
 
 .logout .ant-modal-body {
-    background: var(--light);
+  background: var(--light);
 }
 
 .ant-btn {
-    border: none;
+  border: none;
 }
 
 .ant-btn:hover {
-    background-color: rgb(163, 0, 0);
-    color: white;
+  background-color: rgb(163, 0, 0);
+  color: white;
+}
+
+.dropdown {
+  opacity: 0.8;
+  transition: 0.2s ease-in-out all;
+}
+
+.dropdown:hover {
+  opacity: 1;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#searchBar {
+  width: 250px;
+  border: none;
+  background-color: var(--light);
+  padding: 0.4rem 0.5rem;
+  color: var(--dark);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+#searchBar:focus {
+  outline: none;
+  background-color: white;
+}
+
+#searchBar::placeholder {
+  font-size: 0.8rem;
+}
+
+#searchBtn {
+  background-color: #e6862c;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--main-font);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+  transition: 0.2s ease-in-out all;
+  margin-right: 1rem;
+}
+
+#searchBtn:hover {
+  background-color: #d37720;
+}
+
+#searchBtn:active {
+  background-color: #c8680d;
 }

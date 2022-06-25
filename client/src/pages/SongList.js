@@ -37,28 +37,6 @@ const SongList = () => {
     refetch();
     setDeleted(false);
   }, [deleted]);
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-    },
-    {
-      title: "Artist",
-      dataIndex: "artist",
-      key: "artist",
-    },
-    {
-      title: "Genre",
-      dataIndex: "genre",
-      key: "genre",
-    },
-    {
-      title: "Delete",
-      key: "delete",
-      render: () => <DeleteOutlined style={{ fontSize: "1.2rem" }} />,
-    },
-  ];
 
   const loadingSong = () => {
     message.loading("Uploading song...", 15);
