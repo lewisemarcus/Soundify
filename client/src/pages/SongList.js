@@ -122,6 +122,7 @@ const SongList = () => {
       await message.success("Successfully deleted song");
     } catch (err) {
       message.error("Couldn't delete song.");
+
     }
   };
 
