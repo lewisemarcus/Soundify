@@ -25,6 +25,7 @@
 .dashboard-song-cover {
   height: 12rem;
   width: 100%;
+  opacity: 0.9;
 }
 
 .swiper {
@@ -36,6 +37,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  transition: 0.3s ease-in-out all;
+
+  &:hover {
+    cursor: pointer;
+    .playBtn {
+      display: block;
+      position: absolute;
+      bottom: 115px;
+      left: 80px;
+      opacity: 0.9;
+      transition: 0.2s ease-in-out all;
+      z-index: 1000;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.playBtn {
+  display: none;
 }
 
 .swiper-button-prev {

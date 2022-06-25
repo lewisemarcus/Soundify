@@ -11,6 +11,7 @@
 
 .dash-result-card-container:hover {
   background-color: var(--light);
+  cursor: pointer;
 }
 
 .result-play-btn {

@@ -2,17 +2,24 @@ import React, { useState, useEffect } from "react";
 import alicia from "../../assets/aliciakeys.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import "./styles/Dashboard2.css";
+import "./styles/Dashboard2.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Avatar } from "antd";
 import { CircularProgress, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import playBtn from "../../assets/playBtn.png";
 
 const Dashboard2 = () => {
+  let navigate = useNavigate();
   const [songs, setSongs] = useState([]);
   const [users, setUsers] = useState([]);
   const [loadingSongs, setIsLoadingSongs] = useState(true);
   const [loadingUsers, setIsLoadingUsers] = useState(true);
+
+  const handleSongClick = (song) => {
+    navigate(`/song/${song.id}`);
+  };
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -81,7 +88,12 @@ const Dashboard2 = () => {
           className="swiper"
         >
           {songs.map((song) => (
-            <SwiperSlide key={song.id} className="swiper-slide">
+            <SwiperSlide
+              key={song.id}
+              className="swiper-slide"
+              onClick={() => handleSongClick(song)}
+            >
+              <img src={playBtn} alt="play button" className="playBtn" />
               <img className="dashboard-song-cover" src={alicia} alt="Alicia" />
               <div className="dashboard-song-detail">
                 <span className="dashboard-song-title">{song.title}</span>{" "}
