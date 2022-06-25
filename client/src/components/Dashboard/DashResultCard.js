@@ -2,6 +2,7 @@ import React from "react";
 import shakeygraves from "../../assets/shakeygraves.jpg";
 import { PlayCircleTwoTone } from "@ant-design/icons";
 import "./styles/DashResultCard.css";
+import { useNavigate } from "react-router-dom";
 
 const DashResultCard = ({
   dashSearchResults,
@@ -12,6 +13,7 @@ const DashResultCard = ({
   getSongInfo,
 }) => {
   let searchResults = dashSearchResults;
+  let navigate = useNavigate();
 
   const handleSearchClick = (event) => {
     event.preventDefault();
@@ -22,6 +24,10 @@ const DashResultCard = ({
       currentPlayer.current.src = event.currentTarget.attributes.name.value;
       setCurrentSong(event.currentTarget.attributes.name.value);
     }
+  };
+
+  const handleSongClick = (searchResults) => {
+    navigate(`/song/${searchResults._id}`);
   };
   return (
     <div
@@ -41,7 +47,10 @@ const DashResultCard = ({
           width: "100%",
         }}
       >
-        <div className="dash-result-card-container">
+        <div
+          className="dash-result-card-container"
+          onClick={() => handleSongClick(searchResults)}
+        >
           <div
             style={{
               zIndex: 1000,
