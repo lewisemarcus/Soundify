@@ -28,7 +28,7 @@ const DashResults = ({
       />
       {searchResults.length === 0 && (
         <div className="no-result-container">
-          <SearchIcon className="no-result-icon" />
+          <SearchIcon style={{ fontSize: "7rem" }} className="no-result-icon" />
           <h2 className="no-result">{`Sorry, there were no results for "${searchResult}"`}</h2>
         </div>
       )}
