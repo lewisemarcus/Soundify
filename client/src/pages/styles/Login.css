@@ -1,6 +1,6 @@
 .login-wrapper {
-  background: var(--dark);
-  height: 100vh;
+  background: var(--light);
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,31 +13,21 @@
   align-items: center;
   justify-content: center;
   width: 25rem;
-  height: 32rem;
+  height: 31rem;
   border-radius: 15px;
   margin: 7px;
   padding: 20px 30px;
   position: relative;
-  background: rgba(255, 255, 255, 0.2);
+  background: #fff;
   box-shadow: 10px 20px 25px rgba(0, 0, 0, 0.2);
   transition: 0.5s;
-  color: var(--light);
-}
-
-.login-form:hover {
-  transform: scale(1.01);
   color: var(--dark);
-  background: #fff;
-  z-index: 100;
 }
 
 @media screen and (min-width: 768px) {
   .login-form {
-    width: 28rem;
-    height: 35rem;
-  }
-  .login-form:hover {
-    transform: scale(1.07);
+    width: 26rem;
+    height: 31rem;
   }
 }
 
@@ -63,13 +53,9 @@
 
 .login {
   font-size: 3rem;
-  font-family: var(--main-font);
-  font-weight: var(--poppins-bold);
 }
 
 .login-description {
-  font-family: var(--main-font);
-  font-weight: var(--poppins-extra-light);
   margin-top: -1.2rem;
   margin-bottom: 2rem;
   opacity: 0.7;

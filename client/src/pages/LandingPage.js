@@ -1,40 +1,39 @@
-import React, { useContext } from "react"
-import "./styles/LandingPage.css"
-import { Hero } from "../components"
-import Dashboard from "../components/Dashboard/Dashboard"
-import { AuthContext } from "../context/authContext"
-import landingPageImg from "../assets/landingPage.svg"
+import React, { useContext } from "react";
+import "./styles/LandingPage.css";
+import { Hero } from "../components";
+import Dashboard from "../components/Dashboard/Dashboard";
+import { AuthContext } from "../context/authContext";
+import landingPageImg from "../assets/landingPage.svg";
+import Dashboard2 from "../components/Dashboard/Dashboard2";
 // import landingPageImg from "../assets/landingPage2.svg";
 
 const LandingPage = ({
-    setDashSearchResults,
-    setCurrentSong,
-    setAudioR,
-    genreClickCount,
-    setGenreClickCount,
-    setAudioList,
-    setPrevCount,
-    currentPlayer,
-    isOnePlaying,
-    getOne,
-    isTwoPlaying,
-    getTwo,
-    isThreePlaying,
-    getThree,
-    currentEvent,
-    setCurrent,
-    getSongInfo,
-    getTrackIndex,
+  setDashSearchResults,
+  setCurrentSong,
+  setAudioR,
+  genreClickCount,
+  setGenreClickCount,
+  setAudioList,
+  setPrevCount,
+  currentPlayer,
+  isOnePlaying,
+  getOne,
+  isTwoPlaying,
+  getTwo,
+  isThreePlaying,
+  getThree,
+  currentEvent,
+  setCurrent,
+  getSongInfo,
+  getTrackIndex,
 }) => {
-    const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
-    return (
+  return (
+    <>
+      {user ? (
         <>
-            {user ? (
-                <>
-                    {user ? (
-                        <>
-                            <Dashboard
+          {/* <Dashboard
                                 getSongInfo={getSongInfo}
                                 getTrackIndex={getTrackIndex}
                                 currentEvent={currentEvent}
@@ -53,24 +52,19 @@ const LandingPage = ({
                                 setAudioR={setAudioR}
                                 setCurrentSong={setCurrentSong}
                                 setDashSearchResults={setDashSearchResults}
-                            />
-                        </>
-                    ) : (
-                        <div className="landing-page-wrapper">
-                            <Hero />
-                        </div>
-                    )}
-                </>
-            ) : (
-                <div className="landing-page-wrapper">
-                    <Hero />
-                    <div className="landing-img-container">
-                        <img src={landingPageImg} alt="Landing Page Image" />
-                    </div>
-                </div>
-            )}
+                            /> */}
+          <Dashboard2 />
         </>
-    )
-}
+      ) : (
+        <div className="landing-page-wrapper">
+          <Hero />
+          <div className="landing-img-container">
+            <img src={landingPageImg} alt="Landing Page Image" />
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
-export default LandingPage
+export default LandingPage;

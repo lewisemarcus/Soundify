@@ -8,9 +8,8 @@
   height: 40px;
   transition: all 0.4s;
   margin-right: 0.8rem;
-  border: 1px solid var(--light);
-  color: var(--light);
-  font-family: var(--main-font);
+  border: 1px solid var(--orange);
+  color: var(--orange);
 }
 .outline-btn:hover {
   cursor: pointer;

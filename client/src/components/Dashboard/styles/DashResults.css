@@ -1,7 +1,10 @@
 .dash-result-container {
+  background-color: #fff;
+  color: var(--light);
   height: fit-content;
-  background-color: var(--dark);
-  padding: 0 0 7rem;
+  padding: 0 0 12rem;
+  width: 70rem;
+  margin: 0 auto;
 }
 
 .searchResults {
@@ -21,7 +24,21 @@
 }
 
 .site-page-header {
-  background-color: var(--light);
+  background-color: white;
   padding: 2rem;
+  border-bottom: 1px solid rgb(183, 183, 183);
+}
+
+.no-result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.no-result-icon {
+  color: var(--dark);
+  opacity: 0.7;
   margin-bottom: 1rem;
 }
