@@ -109,28 +109,41 @@ const Dashboard2 = () => {
         <h2>Artists</h2>
         <p>Newest artists to listen to</p>
       </div>
-      <Swiper
-        modules={[Navigation]}
-        slidesPerView={4}
-        navigation
-        className="swiper-users"
-      >
-        {users.map((user) => (
-          <SwiperSlide key={user.id} className="swiper-slide-user">
-            <Avatar
-              style={{
-                backgroundColor: "var(--dark)",
-                width: "10rem",
-                height: "10rem",
-                fontSize: "2.5rem",
-              }}
-            >
-              {user.username[0].toUpperCase()}
-            </Avatar>
-            <div className="dashboard-user-username">{user.username}</div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loadingUsers ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "7rem",
+          }}
+        >
+          <CircularProgress style={{ color: "orange" }} />
+        </Box>
+      ) : (
+        <Swiper
+          modules={[Navigation]}
+          slidesPerView={4}
+          navigation
+          className="swiper-users"
+        >
+          {users.map((user) => (
+            <SwiperSlide key={user.id} className="swiper-slide-user">
+              <Avatar
+                style={{
+                  backgroundColor: "var(--dark)",
+                  width: "10rem",
+                  height: "10rem",
+                  fontSize: "2.5rem",
+                }}
+              >
+                {user.username[0].toUpperCase()}
+              </Avatar>
+              <div className="dashboard-user-username">{user.username}</div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };
