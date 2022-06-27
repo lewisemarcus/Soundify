@@ -91,7 +91,6 @@ const Playlists = ({ currentPlayer }) => {
                 <aside className="playlistNames">
                     <h2
                         style={{
-                            color: "white",
                             fontWeight: "bolder",
                         }}
                     >
@@ -101,7 +100,6 @@ const Playlists = ({ currentPlayer }) => {
                         return (
                             <button
                                 style={{
-                                    color: "white",
                                     fontWeight: "bolder",
                                     padding: 5,
                                 }}
@@ -128,7 +126,10 @@ const Playlists = ({ currentPlayer }) => {
                     />
                     <div className="item">
                         <div className="content">
-                            <h2 className="playlist-title">
+                            <h2
+                                className="playlist-title"
+                                style={{ color: "black" }}
+                            >
                                 Playlist Name: {title}
                             </h2>
 
@@ -176,9 +177,7 @@ const Playlists = ({ currentPlayer }) => {
                                 //         </Row>
                                 //     )
                                 // })
-                                <div style={{ color: "white" }}>
-                                    NO PLAYLIST DATA
-                                </div>
+                                <div>NO PLAYLIST DATA</div>
                             )}
                         </div>
                     </div>

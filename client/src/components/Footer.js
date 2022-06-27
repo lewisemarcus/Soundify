@@ -10,9 +10,7 @@ const Footer = ({
     playing,
     prevCount,
     currentPlayer,
-    isOnePlaying,
-    isTwoPlaying,
-    isThreePlaying,
+
     isPlaying,
     setIsPlaying,
     footerId,
@@ -33,9 +31,6 @@ const Footer = ({
                 getTrackIndex={getTrackIndex}
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
-                isOnePlaying={isOnePlaying}
-                isTwoPlaying={isTwoPlaying}
-                isThreePlaying={isThreePlaying}
                 currentPlayer={currentPlayer}
                 prevCount={prevCount}
                 playing={playing}

@@ -30,7 +30,7 @@ const AudioPlayerContainer = ({
                     currentPlayer={currentPlayer}
                 />
             ) : (
-                <div style={{ color: "white", fontWeight: "bolder" }}>
+                <div style={{ fontWeight: "bolder" }}>
                     No playlist selected!
                 </div>
             )}

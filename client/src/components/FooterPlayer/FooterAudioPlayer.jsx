@@ -25,7 +25,6 @@ const AudioPlayer = ({
 }) => {
     // State
     const location = useLocation()
-    //const [trackIndex, setTrackIndex] = useState(0)
 
     const [volume, setVolume] = useState(0.2)
     const [song, setSong] = useState({ title: "", artist: "" })

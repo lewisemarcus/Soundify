@@ -12,7 +12,6 @@
 }
 
 .playlist-title {
-    color: white;
     text-align: center;
 }
 
@@ -43,7 +42,7 @@
 }
 
 .playlist-header {
-    color: white;
+    color: black;
 }
 
 .item {
