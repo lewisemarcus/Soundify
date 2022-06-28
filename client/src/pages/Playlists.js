@@ -10,7 +10,16 @@ import PlaylistList from "../components/PlaylistLists"
 import { Box, CircularProgress } from "@mui/material"
 import playlistIcon from "../assets/playlist.png"
 
-const Playlists = ({ currentPlayer, singlePL, setSinglePL }) => {
+const Playlists = ({
+    currentPlayer,
+    singlePL,
+    setSinglePL,
+    setIsPlaying,
+    isPlaying,
+    currentSong,
+    getSongInfo,
+    setCurrentSong,
+}) => {
     const username = localStorage.getItem("username")
     const [playlistClicked, setPlaylistClicked] = useState(false)
     const [title, setPlTitle] = useState("")
@@ -21,7 +30,6 @@ const Playlists = ({ currentPlayer, singlePL, setSinglePL }) => {
 
     const [r, setR] = useState(false)
     const location = useLocation()
-    let audioList = []
 
     const {
         loading: playlistloading,
@@ -61,28 +69,6 @@ const Playlists = ({ currentPlayer, singlePL, setSinglePL }) => {
             if (currentPlaylists[i]._id === e.currentTarget.id) {
                 setSinglePL(currentPlaylists[i])
             }
-        }
-    }
-
-    const handleClick = (e) => {
-        e.preventDefault()
-        console.log(
-            e.currentTarget,
-            e.currentTarget.attributes.name,
-            e.currentTarget.attributes.songTitle,
-        )
-        if (setPlaylistSong !== undefined && setSelectedSong !== undefined) {
-            setSelectedSong(true)
-            setPlaylistSong(e.currentTarget.attributes.name)
-            setTitle(e.currentTarget.attributes.songTitle)
-            let title = e.currentTarget.parentNode
-            console.log(e.currentTarget.parentNode)
-            let find = document.querySelectorAll(".active")
-            find.forEach((find) => {
-                find.classList.remove("active")
-            })
-            title.classList.add("active")
-            setR(true)
         }
     }
 
@@ -127,7 +113,15 @@ const Playlists = ({ currentPlayer, singlePL, setSinglePL }) => {
             <div className="playlist-container">
                 <div className="content">
                     {playlistClicked ? (
-                        <PlaylistList data={singlePL} />
+                        <PlaylistList
+                            currentPlayer={currentPlayer}
+                            data={singlePL}
+                            setIsPlaying={setIsPlaying}
+                            isPlaying={isPlaying}
+                            currentSong={currentSong}
+                            getSongInfo={getSongInfo}
+                            setCurrentSong={setCurrentSong}
+                        />
                     ) : (
                         <div className="no-playlist-selected">
                             <Empty description="No playlist selected" />

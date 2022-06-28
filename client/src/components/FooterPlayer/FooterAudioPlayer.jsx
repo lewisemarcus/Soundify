@@ -9,7 +9,6 @@ import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded"
 import Marquee from "react-fast-marquee"
 let count = 0
 const AudioPlayer = ({
-    tracks,
     currentSong,
     oneSongClick,
     genreClickCount,
@@ -24,6 +23,7 @@ const AudioPlayer = ({
     setTrackProgress,
     singlePL,
     setCurrentSong,
+    getSongInfo,
 }) => {
     // State
     const location = useLocation()
@@ -79,14 +79,14 @@ const AudioPlayer = ({
 
     const toPrevTrack = () => {
         if (trackIndex - 1 < 0) {
-            getTrackIndex(tracks.length - 1)
+            getTrackIndex(singlePL.songs.length - 1)
         } else {
             getTrackIndex(trackIndex - 1)
         }
     }
 
     const toNextTrack = () => {
-        if (trackIndex < tracks.length - 1) {
+        if (trackIndex < singlePL.songs.length - 1) {
             getTrackIndex(trackIndex + 1)
         } else {
             getTrackIndex(0)
@@ -153,7 +153,7 @@ const AudioPlayer = ({
             audioRef.current.volume = volume
             // Destructure for conciseness
             setDuration(audioRef.current.duration)
-            if (singlePL.length !== 0) setCurrentSong(singlePL[trackIndex])
+
             setCurrentPercent(
                 duration ? `${(trackProgress / duration) * 100}%` : "0%",
             )
@@ -163,6 +163,16 @@ const AudioPlayer = ({
             setTrackProgress(audioRef.current.currentTime)
         }
     }, [trackIndex, oneSongClick, location.pathname, trackProgress])
+
+    useEffect(() => {
+        if (singlePL.length !== 0) {
+            setCurrentSong(singlePL.songs[trackIndex].link)
+            getSongInfo({
+                title: singlePL.songs[trackIndex].title,
+                artist: singlePL.songs[trackIndex].artist,
+            })
+        }
+    }, [trackIndex])
 
     useEffect(() => {
         // Pause and clean up on unmount
