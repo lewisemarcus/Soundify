@@ -21,3 +21,7 @@ body {
 .ul-container .anticon svg {
   color: #fff;
 }
+
+button {
+  border: none;
+}
