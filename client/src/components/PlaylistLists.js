@@ -1,79 +1,57 @@
-import { Divider, List, Skeleton } from "antd"
-import { useEffect, useState } from "react"
-import InfiniteScroll from "react-infinite-scroll-component"
-import { AiFillCloseCircle } from "react-icons/ai"
-import "./styles/PlaylistList.css"
+// import { Divider, List, Skeleton } from "antd";
+// import InfiniteScroll from "react-infinite-scroll-component";
+// import { AiFillCloseCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import orange from "../assets/orange.png";
+import shakeygraves from "../assets/shakeygraves.jpg";
+import "./styles/PlaylistList.css";
 
-const PlaylistList = ({ data, handleClick }) => {
-    return (
-        <div
-            id="scrollableDiv"
-            style={{
-                height: 600,
-                width: 400,
-                overflow: "auto",
-                padding: "0 16px",
-                border: "1px solid rgba(140, 140, 140, 0.35)",
-            }}
-        >
-            <InfiniteScroll
-                dataLength={data.length}
-                hasMore={data.length < 50}
-                loader={
-                    <Skeleton
-                        paragraph={{
-                            rows: 1,
-                        }}
-                        active
-                    />
-                }
-                endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                scrollableTarget="scrollableDiv"
-            >
-                <List
-                    dataSource={data}
-                    renderItem={(item) => (
-                        <List.Item className="" key={item._id}>
-                            <List.Item.Meta
-                                style={{
-                                    textAlign: "left",
-                                    flexDirection: "row",
-                                }}
-                                name={item.link}
-                                onClick={handleClick}
-                                songTitle={item.title}
-                                songArtist={item.artist}
-                                title={
-                                    <p className="playlist-head">
-                                        Title: {item.title}
-                                    </p>
-                                }
-                                description={
-                                    <p className="playlist-head">
-                                        Artist: {item.artist}
-                                    </p>
-                                }
-                            />
+const PlaylistList = ({ data }) => {
+  let navigate = useNavigate();
 
-                            <button id="removeBtn">
-                                <div>
-                                    <span
-                                        className="trashcan"
-                                        style={{
-                                            color: "red",
-                                            marginTop: "7px",
-                                        }}
-                                    >
-                                        <AiFillCloseCircle />
-                                    </span>
-                                </div>
-                            </button>
-                        </List.Item>
-                    )}
-                />
-            </InfiniteScroll>
+  const handleSongClick = (song) => {
+    navigate(`/song/${song._id}`);
+  };
+
+  return (
+    <div className="playlist-data-container">
+      <div className="playlist-information-header">
+        <img src={shakeygraves} alt="Shakey Graves" />
+        <div>
+          <h3>{data.plTitle}</h3>
+          <h4>
+            {data.songs.length === 1
+              ? `${data.songs.length} song`
+              : `${data.songs.length} songs`}
+          </h4>
         </div>
-    )
-}
+      </div>
 
-export default PlaylistList
+      {data.songs.map((song) => {
+        return (
+          <div
+            className="playlist-song-row"
+            onClick={() => handleSongClick(song)}
+          >
+            <div className="playlist-song-information">
+              <img src={orange} alt="Album Cover" />
+              <div className="playlist-song-text">
+                <h4>{song.title}</h4>
+                <h5>{song.artist}</h5>
+                {/* <h6>{song.genre}</h6> */}
+              </div>
+            </div>
+            <div>
+              {/* <DeleteOutlined
+                onClick={() => handleDelete(song)}
+                style={{ fontSize: "1.2rem" }}
+              /> */}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default PlaylistList;
