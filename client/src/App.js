@@ -32,21 +32,24 @@ function App() {
 
     useEffect(() => {
         if (detailsPlaying && location.pathname.split("/")[1] === "") {
-            setIsPlaying(true)
-            currentPlayer.current.play()
+            if (isPlaying) currentPlayer.current.play()
         }
     }, [detailsPlaying, location.pathname])
     useEffect(() => {
-        if (currentPlayer.current.src !== "") currentPlayer.current.play()
-        setIsPlaying(true)
-    }, [currentEvent, currentSong])
+        if (currentPlayer.current.src !== "" && isPlaying) {
+            const promise = currentPlayer.current.play()
+            if (promise !== undefined) {
+                promise.then((_) => {}).catch((err) => {})
+            }
+        }
+    }, [currentEvent, currentSong, location.pathname])
 
     useEffect(() => {
         //debugger
         if (currentEvent !== undefined) {
             setFooterId(currentEvent.id)
         }
-
+        console.log(isPlaying)
         if (isPlaying) currentPlayer.current.play()
         if (!isPlaying) currentPlayer.current.pause()
     }, [isPlaying])
@@ -139,6 +142,7 @@ function App() {
                         crossOrigin="anonymous"
                         ref={currentPlayer}
                         src={currentSong}
+                        allow="autoplay"
                     ></audio>
                 </div>
             </div>
