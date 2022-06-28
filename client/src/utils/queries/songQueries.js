@@ -1,142 +1,142 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
 export const qrySongs = gql`
-    query allSongs {
-        songs {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
-            filename
-            _id
-            username
-        }
+  query allSongs {
+    songs {
+      title
+      genre
+      link
+      artist
+      uploaded
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+      filename
+      _id
+      username
     }
-`
+  }
+`;
 
 export const GET_SONGS = gql`
-    query song($title: String!) {
-        song(title: $title) {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
-            filename
-            _id
-            username
-        }
+  query song($title: String!) {
+    song(title: $title) {
+      title
+      genre
+      link
+      artist
+      uploaded
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+      filename
+      _id
+      username
     }
-`
+  }
+`;
 
 export const GET_GENRES = gql`
-    query songByGenre($genre: String!) {
-        songByGenre(genre: $genre) {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
-            filename
-            _id
-            username
-        }
+  query songByGenre($genre: String!) {
+    songByGenre(genre: $genre) {
+      title
+      genre
+      link
+      artist
+      uploaded
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+      filename
+      _id
+      username
     }
-`
+  }
+`;
 export const GET_SONG = gql`
-    query songById($songId: ID!) {
-        songById(_id: $songId) {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
-            filename
-            _id
-            username
-        }
+  query songById($songId: ID!) {
+    songById(_id: $songId) {
+      title
+      genre
+      link
+      artist
+      uploaded
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+      filename
+      _id
+      username
     }
-`
+  }
+`;
 export const GET_USER_SONGS = gql`
-    query userSongs($username: String!) {
-        userSongs(username: $username) {
-            title
-            genre
-            link
-            artist
-            uploaded
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
-            filename
-            _id
-            username
-        }
+  query userSongs($username: String!) {
+    userSongs(username: $username) {
+      title
+      genre
+      link
+      artist
+      uploaded
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+      filename
+      _id
+      username
     }
-`
+  }
+`;
 export const GET_USER_PLAYLIST = gql`
-    query userPlaylists($owner: String!) {
-        userPlaylists(owner: $owner) {
-            _id
-            plTitle
-            owner
-            songs {
-                title
-                genre
-                link
-                artist
-                uploaded
-                filename
-                _id
-                username
-            }
-        }
+  query userPlaylists($owner: String!) {
+    userPlaylists(owner: $owner) {
+      _id
+      plTitle
+      owner
+      songs {
+        title
+        genre
+        link
+        artist
+        uploaded
+        filename
+        _id
+        username
+      }
     }
-`
+  }
+`;
 export const GET_PLAYLIST = gql`
-    query playlist($_id: ID!) {
-        playlist(_id: $_id) {
-            _id
-            plTitle
-            owner
-            songs {
-                title
-                genre
-                link
-                artist
-                uploaded
-                filename
-                _id
-                username
-            }
-        }
+  query playlist($_id: ID!) {
+    playlist(_id: $_id) {
+      _id
+      plTitle
+      owner
+      songs {
+        title
+        genre
+        link
+        artist
+        uploaded
+        filename
+        _id
+        username
+      }
     }
-`
+  }
+`;

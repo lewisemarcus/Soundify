@@ -65,7 +65,7 @@ const DashResultCard = ({
               alt="Album Cover"
               className="dash-result-img"
             />
-            <PlayCircleTwoTone
+            {/* <PlayCircleTwoTone
               className="result-play-btn"
               name={searchResults.link}
               onClick={handleSearchClick}
@@ -73,7 +73,7 @@ const DashResultCard = ({
               style={{
                 fontSize: "3rem",
               }}
-            />
+            /> */}
             <div
               style={{
                 marginLeft: "2rem",

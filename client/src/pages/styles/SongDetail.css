@@ -1,28 +1,59 @@
 .create-playlist {
-  margin-left: 15px;
-  height: 30px;
-  width: 30px;
-  margin-top: 5px;
+  width: 20%;
+  height: 2.7rem;
+  background-color: var(--orange);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease-in-out all;
+}
+
+.create-playlist:hover {
+  background-color: #d37720;
+}
+
+.create-playlist > .create-icon {
+  width: 1rem;
+  margin-right: 0.3rem;
 }
 
 .create-playlistinput {
-  width: 100%;
+  width: 80%;
+  height: 2.7rem;
+  border: none;
+}
+
+.create-playlistinput:focus {
+  outline: none;
 }
 
 .create-plist {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0.7rem;
 }
 
 .add-playlist {
-  font-size: larger;
-  font-weight: bold;
-  margin: 5px;
+  padding: 0.7rem;
   width: 100%;
   text-align: center;
+  transition: 0.2s ease-in-out all;
+  display: flex;
+  align-items: center;
 }
 
 .add-playlist:hover {
-  background-color: #ec994b;
+  background: var(--light);
+  cursor: pointer;
+}
+
+.add-playlist img {
+  width: 1.5rem;
+  margin-right: 0.6rem;
 }
 
 .select-list {

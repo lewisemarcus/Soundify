@@ -34,6 +34,9 @@ import {
 import "./styles/SongDetail.css";
 import { ReactComponent as Share } from "../assets/share.svg";
 import { ReactComponent as Add } from "../assets/add.svg";
+import playlistIcon from "../assets/playlist.png";
+import { ReactComponent as CreateIcon } from "../assets/create.svg";
+import { CircularProgress, Box } from "@mui/material";
 
 const SongDetails = ({
   setCurrentSong,
@@ -214,7 +217,20 @@ const SongDetails = ({
     isLoaded.current = true;
   });
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "4rem",
+          }}
+        >
+          <CircularProgress style={{ color: "orange" }} />
+        </Box>
+      </div>
+    );
   }
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -243,7 +259,7 @@ const SongDetails = ({
           justifyContent: "center",
           flexWrap: "wrap",
           backgroundColor: "#fff",
-          width: "90rem",
+          width: "95rem",
         }}
       >
         <div
@@ -282,7 +298,7 @@ const SongDetails = ({
           />
           <div
             style={{
-              marginTop: -80,
+              marginTop: -40,
               width: "100%",
               position: "relative",
               display: "flex",
@@ -317,7 +333,7 @@ const SongDetails = ({
       <div
         style={{
           display: "flex",
-          width: "90rem",
+          width: "95rem",
           flexWrap: "wrap",
           justifyContent: "center",
         }}
@@ -407,7 +423,7 @@ const SongDetails = ({
               </button>
             </div>
             <Modal
-              title="Select Playlist"
+              title="Create or Select a Playlist"
               className="select-list"
               visible={isModalVisible}
               onCancel={handleCancel}
@@ -419,31 +435,40 @@ const SongDetails = ({
               ]}
             >
               <Space style={{ display: "block" }}>
+                <h4>Create Playlist:</h4>
                 <div className="create-plist">
                   <Input
                     onChange={onChange}
                     className="create-playlistinput"
                     name="playlistname"
                     value={values.playlistname}
-                    placeholder="Create Playlist"
+                    placeholder="Playlist Title"
                     size="large"
                     required
                   />
-                  <AiFillPlusCircle
+
+                  <button
                     className="create-playlist"
                     onClick={handleCreatePlaylist}
-                  />
+                  >
+                    <CreateIcon className="create-icon" />
+                    <div>Create</div>
+                  </button>
                 </div>
+                <h4>Playlists:</h4>
                 {usersPlaylists.map((playlist) => {
                   return (
-                    <button
-                      key={playlist._id}
-                      id={playlist._id}
-                      className="add-playlist"
-                      onClick={handleAddToPlaylist}
-                    >
-                      {playlist.plTitle}
-                    </button>
+                    <>
+                      <div
+                        key={playlist._id}
+                        id={playlist._id}
+                        className="add-playlist"
+                        onClick={handleAddToPlaylist}
+                      >
+                        <img src={playlistIcon} alt="Playlist" />
+                        <div>{playlist.plTitle}</div>
+                      </div>
+                    </>
                   );
                 })}
               </Space>
