@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { List, Avatar, Skeleton, Divider } from "antd"
 import { DELETE_COMMENT } from "../utils/mutations/commentMutations"
 import { useMutation } from "@apollo/client"
-import { FaTrashAlt } from "react-icons/fa"
+import { DeleteOutlined } from "@ant-design/icons"
 import { message } from "antd"
 const CommentSection = ({ comments, songId }) => {
     const username = localStorage.getItem("username")
@@ -71,8 +71,12 @@ const CommentSection = ({ comments, songId }) => {
                             id={item._id}
                             name={item.commentAuthor}
                             onClick={removeCommentHandler}
+                            style={{
+                                backgroundColor: "#FFFFFF",
+                                cursor: "pointer",
+                            }}
                         >
-                            <FaTrashAlt />
+                            <DeleteOutlined style={{ fontSize: "1.2rem" }} />
                         </button>
                     </List.Item>
                 )}
