@@ -39,7 +39,6 @@ const AudioPlayer = ({
         _id: _id,
     })
     useEffect(() => {
-        console.log(singlePL.songs)
         if (singlePL.songs) setSong(singlePL.songs[trackIndex])
     }, [trackIndex])
 

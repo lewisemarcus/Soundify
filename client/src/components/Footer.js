@@ -18,11 +18,13 @@ const Footer = ({
     getTrackIndex,
     trackProgress,
     setTrackProgress,
+    getSongInfo,
 }) => {
     return (
         // this link needs to be changed upon new click
         <div className="footer-container">
             <FooterAudioPlayer
+                getSongInfo={getSongInfo}
                 setCurrentSong={setCurrentSong}
                 singlePL={singlePL}
                 trackProgress={trackProgress}

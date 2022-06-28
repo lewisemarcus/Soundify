@@ -67,15 +67,12 @@ const UserPage = ({
                                     <input
                                         onClick={(event) => {
                                             event.preventDefault()
-
                                             setIsPlaying(!isPlaying)
-                                            console.log(currentSong, song.link)
-                                            if (
-                                                currentSong !== undefined &&
-                                                currentSong !== song.link
-                                            ) {
+                                            if (currentSong !== song.link) {
                                                 setCurrentSong(song.link)
+                                                setIsPlaying(true)
                                             }
+
                                             getSongInfo({
                                                 title: song.title,
                                                 artist: song.artist,
@@ -91,7 +88,11 @@ const UserPage = ({
                                         className="play-button"
                                         alt="play button"
                                     />
-                                    {/* <img src={orange} alt="Album Cover" /> */}
+                                    <img
+                                        src={orange}
+                                        alt="Album Cover"
+                                        style={{ marginLeft: "1rem" }}
+                                    />
                                     <div
                                         className="song-text"
                                         name={song._id}

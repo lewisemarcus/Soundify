@@ -15,7 +15,6 @@ const AudioPlayerContainer = ({
     const [songs, setSongs] = useState()
 
     let newPlaylist = singlePL || JSON.parse(localStorage.getItem("singlePL"))
-    console.log(playlistSong)
     return (
         <div className="PlaylistPlayer">
             {Object.values(newPlaylist).length !== 0 ? (

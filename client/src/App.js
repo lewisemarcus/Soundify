@@ -128,6 +128,11 @@ function App() {
                     element={
                         user ? (
                             <Playlists
+                                setIsPlaying={setIsPlaying}
+                                isPlaying={isPlaying}
+                                currentSong={currentSong}
+                                getSongInfo={getSongInfo}
+                                setCurrentSong={setCurrentSong}
                                 currentPlayer={currentPlayer}
                                 singlePL={singlePL}
                                 setSinglePL={setSinglePL}
@@ -141,6 +146,7 @@ function App() {
 
             {user && (
                 <Footer
+                    getSongInfo={getSongInfo}
                     setCurrentSong={setCurrentSong}
                     singlePL={singlePL}
                     trackProgress={trackProgress}
