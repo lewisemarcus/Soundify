@@ -22,6 +22,8 @@ const AudioPlayer = ({
     getTrackIndex,
     trackProgress,
     setTrackProgress,
+    singlePL,
+    setCurrentSong,
 }) => {
     // State
     const location = useLocation()
@@ -151,7 +153,7 @@ const AudioPlayer = ({
             audioRef.current.volume = volume
             // Destructure for conciseness
             setDuration(audioRef.current.duration)
-
+            if (singlePL.length !== 0) setCurrentSong(singlePL[trackIndex])
             setCurrentPercent(
                 duration ? `${(trackProgress / duration) * 100}%` : "0%",
             )
@@ -160,13 +162,7 @@ const AudioPlayer = ({
 
             setTrackProgress(audioRef.current.currentTime)
         }
-    }, [
-        trackIndex,
-        oneSongClick,
-        currentSong,
-        location.pathname,
-        trackProgress,
-    ])
+    }, [trackIndex, oneSongClick, location.pathname, trackProgress])
 
     useEffect(() => {
         // Pause and clean up on unmount

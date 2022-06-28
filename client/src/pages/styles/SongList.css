@@ -132,7 +132,6 @@
 }
 
 .song-row {
-    cursor: pointer;
     margin: 0 auto;
     padding: 1rem;
     width: 60rem;
@@ -154,6 +153,7 @@
 }
 
 .song-text {
+    cursor: pointer;
     margin-left: 0.7rem;
 }
 

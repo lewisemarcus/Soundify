@@ -23,39 +23,36 @@ function App() {
         artist: "",
     })
     const [trackProgress, setTrackProgress] = useState(0)
-    const [audioR, setAudioR] = useState(null)
     const [oneSongClick, setOneSongClick] = useState(false)
     const [currentSong, setCurrentSong] = useState(null)
     const [trackIndex, getTrackIndex] = useState(0)
     const location = useLocation()
-    const [currentEvent, setCurrent] = useState()
     const [isPlaying, setIsPlaying] = useState(false)
     const [dashSearchResults, setDashSearchResults] = useState()
     const [detailsPlaying, isDetailsPlaying] = useState(false)
-    const [footerId, setFooterId] = useState("")
+
+    const [singlePL, setSinglePL] = useState([])
     const { user } = useContext(AuthContext)
-    let dashes = []
 
     useEffect(() => {
+        if (location.pathname.split("/")[1] === "song") {
+            setIsPlaying(false)
+        }
+    }, [location.pathname])
+    useEffect(() => {
         if (detailsPlaying && location.pathname.split("/")[1] === "") {
-            if (isPlaying) currentPlayer.current.play()
+            if (isPlaying || detailsPlaying) currentPlayer.current.play()
         }
     }, [detailsPlaying, location.pathname])
     useEffect(() => {
-        if (currentPlayer.current.src !== "" && isPlaying) {
-            const promise = currentPlayer.current.play()
-            if (promise !== undefined) {
-                promise.then((_) => {}).catch((err) => {})
-            }
-        }
-    }, [currentEvent, currentSong, location.pathname])
+        if (currentPlayer.current.src !== "" && isPlaying)
+            currentPlayer.current.play()
+    }, [currentSong, location.pathname])
 
     useEffect(() => {
         //debugger
-        if (currentEvent !== undefined) {
-            setFooterId(currentEvent.id)
-        }
         if (isPlaying) currentPlayer.current.play()
+
         if (!isPlaying) currentPlayer.current.pause()
     }, [isPlaying])
     return (
@@ -111,13 +108,30 @@ function App() {
                 />
                 <Route
                     path="/user/:username"
-                    element={user ? <UserPage /> : <Navigate to="/" />}
+                    element={
+                        user ? (
+                            <UserPage
+                                getSongInfo={getSongInfo}
+                                setIsPlaying={setIsPlaying}
+                                isPlaying={isPlaying}
+                                currentSong={currentSong}
+                                setCurrentSong={setCurrentSong}
+                                currentPlayer={currentPlayer}
+                            />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
                 />
                 <Route
                     path="/playlists"
                     element={
                         user ? (
-                            <Playlists currentPlayer={currentPlayer} />
+                            <Playlists
+                                currentPlayer={currentPlayer}
+                                singlePL={singlePL}
+                                setSinglePL={setSinglePL}
+                            />
                         ) : (
                             <Navigate to="/" />
                         )
@@ -125,20 +139,20 @@ function App() {
                 />
             </Routes>
 
-            {user && location.pathname.split("/")[1] !== "playlists" && (
+            {user && (
                 <Footer
+                    setCurrentSong={setCurrentSong}
+                    singlePL={singlePL}
                     trackProgress={trackProgress}
                     setTrackProgress={setTrackProgress}
                     songInfo={songInfo}
                     getTrackIndex={getTrackIndex}
                     trackIndex={trackIndex}
-                    footerId={footerId}
                     isPlaying={isPlaying}
                     setIsPlaying={setIsPlaying}
                     currentPlayer={currentPlayer}
                     genreClickCount={genreClickCount}
                     prevCount={prevCount}
-                    audioR={audioR}
                     currentSong={currentSong}
                     oneSongClick={oneSongClick}
                     setOneSongClick={setOneSongClick}
