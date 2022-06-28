@@ -88,12 +88,13 @@ const SongDetails = ({
     }
 
     // CREATE-ADD TO PLAYLIST MODAL
-    const { loading: playlistloading, data: userPlaylists } = useQuery(
-        GET_USER_PLAYLIST,
-        {
-            variables: { owner: username },
-        },
-    )
+    const {
+        loading: playlistloading,
+        data: userPlaylists,
+        refetch,
+    } = useQuery(GET_USER_PLAYLIST, {
+        variables: { owner: username },
+    })
     const usersPlaylists = userPlaylists?.userPlaylists || []
 
     function registerUserCallback() {
@@ -118,6 +119,7 @@ const SongDetails = ({
     })
 
     const success = async () => {
+        await refetch()
         await message.loading("Uploading playlist...")
         await message.success("Successfully added song to playlist!")
     }
