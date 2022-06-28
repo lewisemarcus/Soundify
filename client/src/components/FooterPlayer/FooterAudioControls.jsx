@@ -3,6 +3,7 @@ import { ReactComponent as Play } from "./assets/play.svg"
 import { ReactComponent as Pause } from "./assets/pause.svg"
 import { ReactComponent as Next } from "./assets/next.svg"
 import { ReactComponent as Prev } from "./assets/prev.svg"
+import "./styles/FooterMusicPlayer.css"
 
 const AudioControls = ({
     isPlaying,
