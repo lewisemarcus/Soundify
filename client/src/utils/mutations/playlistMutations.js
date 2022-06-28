@@ -1,47 +1,16 @@
 import { gql } from "@apollo/client"
 
-export const CREATEPLAYLIST = gql `
+export const CREATEPLAYLIST = gql`
     mutation createPlaylist(
         $playlistname: String!
         $songId: ID!
         $username: String!
-    ){
-        createPlaylist (
+    ) {
+        createPlaylist(
             playlistname: $playlistname
             songId: $songId
             username: $username
-        ){
-            _id
-            plTitle
-            owner
-            songs {
-                title
-                genre
-                link
-                artist
-                uploaded
-                comments {
-                    _id
-                    commentText
-                    commentAuthor
-                    createdAt
-                }
-                filename
-                _id
-                username
-            }
-        }
-    }
-`
-export const ADDTOPLAYLIST = gql `
-    mutation addToPlaylist(
-        $_id: String!
-        $songId: ID!
-    ){
-        addToPlaylist (
-            _id: $_id
-            songId: $songId
-        ){
+        ) {
             _id
             plTitle
             owner
@@ -58,17 +27,36 @@ export const ADDTOPLAYLIST = gql `
         }
     }
 `
-export const REMOVE_FROM_PLAYLIST = gql `
+export const ADDTOPLAYLIST = gql`
+    mutation addToPlaylist($_id: String!, $songId: ID!) {
+        addToPlaylist(_id: $_id, songId: $songId) {
+            _id
+            plTitle
+            owner
+            songs {
+                title
+                genre
+                link
+                artist
+                uploaded
+                filename
+                _id
+                username
+            }
+        }
+    }
+`
+export const REMOVE_FROM_PLAYLIST = gql`
     mutation removeFromPlaylist(
-        $playlistname: String!
+        $playlistId: ID!
         $songId: ID!
-        $username: String!
-    ){
-        createPlaylist (
-            playlistname: $playlistname
+        $token: String!
+    ) {
+        removeFromPlaylist(
+            playlistId: $playlistId
             songId: $songId
-            username: $username
-        ){
+            token: $token
+        ) {
             _id
             plTitle
             owner
@@ -78,16 +66,19 @@ export const REMOVE_FROM_PLAYLIST = gql `
                 link
                 artist
                 uploaded
-                comments {
-                    _id
-                    commentText
-                    commentAuthor
-                    createdAt
-                }
                 filename
                 _id
                 username
             }
+        }
+    }
+`
+export const REMOVE_PLAYLIST = gql`
+    mutation removePlaylist($playlistId: ID!, $token: String!) {
+        removePlaylist(playlistId: $playlistId, token: $token) {
+            _id
+            plTitle
+            owner
         }
     }
 `

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 import orange from "../assets/orange.png"
 import shakeygraves from "../assets/shakeygraves.jpg"
 import "./styles/PlaylistList.css"
@@ -6,6 +7,9 @@ import "./Dashboard/styles/Dashboard2.scss"
 import playBtn from "../assets/playBtn.png"
 import pauseBtn from "../assets/pauseBtn.png"
 import { DeleteOutlined } from "@ant-design/icons"
+import { useMutation } from "@apollo/client"
+import { REMOVE_FROM_PLAYLIST } from "../utils/mutations/playlistMutations"
+import { message } from "antd"
 const PlaylistList = ({
     currentPlayer,
     data,
@@ -14,13 +18,35 @@ const PlaylistList = ({
     currentSong,
     getSongInfo,
     setCurrentSong,
+    singlePL,
+    setDeleting,
+    refetch,
 }) => {
     let navigate = useNavigate()
-
+    const [removeFromPlaylist, { error }] = useMutation(REMOVE_FROM_PLAYLIST)
     const handleSongClick = (song) => {
         navigate(`/song/${song._id}`)
     }
-    const handleDelete = async (song) => {}
+    const token = localStorage.getItem("token")
+    const handleDelete = async (event, song) => {
+        setDeleting(true)
+        event.preventDefault()
+
+        try {
+            await removeFromPlaylist({
+                variables: {
+                    playlistId: singlePL._id,
+                    songId: song._id,
+                    token: token,
+                },
+            })
+            await message.success("Successfully removed song from playlist.")
+            await refetch()
+        } catch (err) {
+            message.error("Error removing song from playlist.")
+        }
+        setDeleting(false)
+    }
 
     return (
         <div className="playlist-data-container">
@@ -79,7 +105,7 @@ const PlaylistList = ({
                         </div>
                         <div>
                             <DeleteOutlined
-                                onClick={() => handleDelete(song)}
+                                onClick={(event) => handleDelete(event, song)}
                                 style={{ fontSize: "1.2rem" }}
                             />
                         </div>

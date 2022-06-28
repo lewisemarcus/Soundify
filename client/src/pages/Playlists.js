@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
-// import AudioPlayerContainer from "../components/MusicPlayer/AudioPlayerContainer";
-
+import { DeleteOutlined } from "@ant-design/icons"
 import "./styles/Playlists.css"
-import { Empty } from "antd"
+import "../components/styles/PlaylistList.css"
+import "../components/Dashboard/styles/Dashboard2.scss"
+import { Empty, message } from "antd"
 import { useQuery } from "@apollo/client"
 import { GET_USER_PLAYLIST } from "../utils/queries/songQueries"
 import { useLocation } from "react-router-dom"
 import PlaylistList from "../components/PlaylistLists"
 import { Box, CircularProgress } from "@mui/material"
 import playlistIcon from "../assets/playlist.png"
+import { useMutation } from "@apollo/client"
+import { REMOVE_PLAYLIST } from "../utils/mutations/playlistMutations"
 
 const Playlists = ({
     currentPlayer,
@@ -20,6 +23,9 @@ const Playlists = ({
     getSongInfo,
     setCurrentSong,
 }) => {
+    const [removePlaylist, { error }] = useMutation(REMOVE_PLAYLIST)
+    const token = localStorage.getItem("token")
+    const [currentTarget, setCurrentTarget] = useState(null)
     const username = localStorage.getItem("username")
     const [playlistClicked, setPlaylistClicked] = useState(false)
     const [title, setPlTitle] = useState("")
@@ -27,7 +33,7 @@ const Playlists = ({
     const [selectedSong, setSelectedSong] = useState(false)
     const [newTitle, setTitle] = useState()
     const [activeState, setActiveState] = useState(-1)
-
+    const [deleting, setDeleting] = useState(false)
     const [r, setR] = useState(false)
     const location = useLocation()
 
@@ -48,7 +54,6 @@ const Playlists = ({
     useEffect(() => {
         return setPlaylistClicked(false) && setSinglePL([])
     }, [])
-
     useEffect(() => {
         const fetchPlaylists = async () => {
             await refetch()
@@ -67,11 +72,36 @@ const Playlists = ({
 
         for (let i = 0; i < currentPlaylists.length; i++) {
             if (currentPlaylists[i]._id === e.currentTarget.id) {
+                setCurrentTarget(e.currentTarget.id)
                 setSinglePL(currentPlaylists[i])
             }
         }
     }
+    useEffect(() => {
+        if (currentTarget)
+            for (let each of currentPlaylists)
+                if (each._id === currentTarget) setSinglePL(each)
+    }, [currentPlaylists])
 
+    const handleDelete = async (event, playlist) => {
+        setDeleting(true)
+        event.preventDefault()
+        try {
+            await removePlaylist({
+                variables: {
+                    playlistId: playlist._id,
+                    token: token,
+                },
+            })
+            await message.success("Removing playlist.")
+            await refetch()
+            await message.success("Playlist removed.")
+        } catch (err) {
+            console.log(err)
+            message.error("Error removing playlist.")
+        }
+        setDeleting(false)
+    }
     return playlistloading ? (
         <div>
             {" "}
@@ -94,18 +124,32 @@ const Playlists = ({
                 {currentPlaylists.map((playlist, index) => {
                     return (
                         <div
+                            style={{ justifyContent: "space-between" }}
                             key={playlist.plTitle}
                             id={playlist._id}
-                            onClick={(e) => {
-                                switchPlaylist(e)
-                                setActiveState(index)
-                            }}
                             className={`playlist-button ${
                                 index === activeState ? "active" : null
                             }`}
                         >
                             <img src={playlistIcon} alt="Playlist" />
-                            <div className="play-title">{playlist.plTitle}</div>
+                            <div
+                                id={playlist._id}
+                                className="play-title"
+                                onClick={(e) => {
+                                    switchPlaylist(e)
+                                    setActiveState(index)
+                                }}
+                            >
+                                {playlist.plTitle}
+                            </div>
+                            <div>
+                                <DeleteOutlined
+                                    onClick={(event) =>
+                                        handleDelete(event, playlist)
+                                    }
+                                    style={{ fontSize: "1.2rem" }}
+                                />
+                            </div>
                         </div>
                     )
                 })}
@@ -114,6 +158,9 @@ const Playlists = ({
                 <div className="content">
                     {playlistClicked ? (
                         <PlaylistList
+                            refetch={refetch}
+                            setDeleting={setDeleting}
+                            singlePL={singlePL}
                             currentPlayer={currentPlayer}
                             data={singlePL}
                             setIsPlaying={setIsPlaying}

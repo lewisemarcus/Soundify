@@ -3,14 +3,6 @@ import textSearch from "mongoose-partial-full-search"
 import dateFormat from "../utils/dateFormat.js"
 const { Schema, model } = mongoose
 
-// const songSchema = {
-//     title: String,
-//     genre: String,
-//     year: String,
-//     filename: String,
-//     link: String,
-// }
-
 const songSchema = new Schema(
     {
         title: {
