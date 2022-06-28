@@ -139,8 +139,7 @@ const SongList = () => {
                 },
             })
         } catch (err) {
-            //TODO: Add error handling.
-            console.log(err)
+            message.error("Error deleting song.")
         }
     }
 

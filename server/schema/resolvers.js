@@ -55,13 +55,6 @@ const resolvers = {
 
             throw new AuthenticationError("You need to be logged in!")
         },
-        // userPlaylists: async(parent, args, context) => {
-        //     if (context.user)
-        //         return User.findOne({ _id: context.user._id })
-        //             .populate("playlists")
-        //             .sort({ createdAt: -1 })
-        //     throw new AuthenticationError("You need to be logged in!")
-        // },
     },
     Mutation: {
         registerUser: async (
@@ -154,7 +147,6 @@ const resolvers = {
             { songId, commentId, token, commentAuthor },
             context,
         ) => {
-            console.log(context.user)
             if (context.user && context.user.username === commentAuthor) {
                 return Song.findOneAndUpdate(
                     { _id: mongoose.Types.ObjectId(songId) },
@@ -174,6 +166,14 @@ const resolvers = {
             if (context.user) {
                 deleteSong(key)
                 return Song.deleteOne({ _id: mongoose.Types.ObjectId(songId) })
+            }
+            throw new AuthenticationError("You need to be logged in!")
+        },
+        removePlaylist: async (parent, { playlistId, token }, context) => {
+            if (context.user) {
+                return Playlist.deleteOne({
+                    _id: playlistId,
+                })
             }
             throw new AuthenticationError("You need to be logged in!")
         },
@@ -208,19 +208,23 @@ const resolvers = {
         },
         removeFromPlaylist: async (
             parent,
-            { songId, playlistname, username },
+            { songId, playlistId, token },
+            context,
         ) => {
-            return Playlist.findOneAndUpdate(
-                { _id: mongoose.Types.ObjectId(pLs._id) },
-                {
-                    $pull: {
-                        songs: {
-                            _id: mongoose.Types.ObjectId(songId),
+            if (context.user) {
+                return Playlist.findOneAndUpdate(
+                    { _id: playlistId },
+                    {
+                        $pull: {
+                            songs: songId,
                         },
                     },
-                },
-                { new: true },
-            )
+                    { new: true },
+                )
+                    .populate("songs")
+                    .sort({ createdAt: -1 })
+            }
+            throw new AuthenticationError("You need to be logged in!")
         },
     },
 }
