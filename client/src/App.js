@@ -63,6 +63,7 @@ function App() {
                     path="/"
                     element={
                         <LandingPage
+                            setSinglePL={setSinglePL}
                             currentSong={currentSong}
                             setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
@@ -75,6 +76,7 @@ function App() {
                     path="/DashResults"
                     element={
                         <DashResults
+                            setSinglePL={setSinglePL}
                             getSongInfo={getSongInfo}
                             setIsPlaying={setIsPlaying}
                             currentPlayer={currentPlayer}
@@ -95,6 +97,7 @@ function App() {
                     path="/song/:songId"
                     element={
                         <SongDetails
+                            setSinglePL={setSinglePL}
                             setTrackProgress={setTrackProgress}
                             trackProgress={trackProgress}
                             isDetailsPlaying={isDetailsPlaying}

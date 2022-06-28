@@ -18,6 +18,7 @@ const Dashboard2 = ({
     setIsPlaying,
     isPlaying,
     currentSong,
+    setSinglePL,
 }) => {
     let navigate = useNavigate()
     const [songs, setSongs] = useState([])
@@ -109,6 +110,7 @@ const Dashboard2 = ({
                                     setIsPlaying(!isPlaying)
                                     if (currentSong !== song.link) setPlay(true)
                                     setCurrentSong(song.link)
+                                    setSinglePL([])
                                     getSongInfo({
                                         title: song.title,
                                         artist: song.artist,

@@ -45,8 +45,7 @@ const SongDetails = ({
     setIsPlaying,
     getSongInfo,
     isDetailsPlaying,
-    trackProgress,
-    setTrackProgress,
+    setSinglePL,
 }) => {
     const username = localStorage.getItem("username")
     const [addComment, { error }] = useMutation(ADD_COMMENT)
@@ -185,6 +184,7 @@ const SongDetails = ({
     useEffect(() => {
         if (querySong.link !== undefined) {
             setCurrentSong(querySong.link)
+            setSinglePL([])
         }
     }, [querySong.link])
 
