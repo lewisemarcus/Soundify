@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import orange from "../assets/orange.png"
 import { AiFillPlusCircle } from "react-icons/ai"
 import {
     List,
@@ -21,7 +22,7 @@ import {
 import { useQuery, useMutation } from "@apollo/client"
 import AudioSpectrum from "react-audio-spectrum"
 import { ADD_COMMENT } from "../utils/mutations/commentMutations"
-import shakeygraves from "../assets/shakeygraves.jpg"
+
 import CommentSection from "../components/CommentSection"
 import Waveform from "../components/Wavesurfer"
 import "../components/styles/CommentSection.css"
@@ -283,7 +284,11 @@ const SongDetails = ({
                             alignItems: "center",
                         }}
                     >
-                        <img src={shakeygraves} alt="Album Cover" />
+                        <img
+                            src={querySong.cover ? querySong.cover : orange}
+                            style={{ width: "200px", height: "200px" }}
+                            alt="Album Cover"
+                        />
                         <h2 style={{ color: "white", marginTop: "1rem" }}>
                             {querySong.title}
                         </h2>
