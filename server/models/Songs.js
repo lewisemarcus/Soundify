@@ -11,6 +11,10 @@ const songSchema = new Schema(
             trim: true,
             index: true,
         },
+        cover: {
+            type: String,
+            trim: true,
+        },
         genre: {
             type: String,
             required: true,

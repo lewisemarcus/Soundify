@@ -15,6 +15,7 @@ export const CREATEPLAYLIST = gql`
             plTitle
             owner
             songs {
+                cover
                 title
                 genre
                 link
@@ -34,6 +35,7 @@ export const ADDTOPLAYLIST = gql`
             plTitle
             owner
             songs {
+                cover
                 title
                 genre
                 link
@@ -61,6 +63,7 @@ export const REMOVE_FROM_PLAYLIST = gql`
             plTitle
             owner
             songs {
+                cover
                 title
                 genre
                 link

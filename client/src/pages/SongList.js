@@ -33,6 +33,7 @@ const SongList = () => {
         link: "",
     })
     const [file, setFile] = useState(null)
+    const [imgFile, setImgFile] = useState(null)
     useEffect(() => {
         refetch()
         setDeleted(false)
@@ -92,16 +93,16 @@ const SongList = () => {
         formData.append("title", song.title)
         formData.append("tags", tags)
         formData.append("filename", file)
+        formData.append("imgFilename", imgFile)
         await loadingSong()
 
         try {
-            const res = await axios({
+            await axios({
                 method: "post",
                 url: "/upload",
                 data: formData,
                 headers: { "Content-Type": "multipart/form-data" },
             })
-
             await window.location.reload()
         } catch (err) {
             console.log(err)
@@ -180,10 +181,38 @@ const SongList = () => {
                 message.error(`${info.file.name} file upload failed.`)
             }
         },
-
         beforeUpload(file) {
             setFile(file)
-            const isLt2M = file.size / 1024 / 1024 < 100
+            return false
+        },
+    }
+    const imgProps = {
+        name: "imgFilename",
+        uid: "imgFile",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST",
+        },
+
+        accept: "image/*",
+        multiple: false,
+
+        onChange(info) {
+            const { status } = info.file
+            if (status !== "uploading") {
+            }
+            if (status === "done") {
+                message.success(
+                    `${info.file.name} Image uploaded successfully.`,
+                )
+            } else if (status === "error") {
+                message.error(`${info.file.name} Image upload failed.`)
+            }
+        },
+
+        beforeUpload(imgFile) {
+            setImgFile(imgFile)
+            const isLt2M = imgFile.size / 1024 / 1024 < 100
             if (!isLt2M) {
                 message.error("Image must smaller than 2MB!")
             }
@@ -212,7 +241,7 @@ const SongList = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 destroyOnClose
-                style={{ top: 20 }}
+                style={{ top: 20, marginBottom: "100px" }}
             >
                 <Space
                     direction="vertical"
@@ -272,12 +301,16 @@ const SongList = () => {
                             <UploadOutlined />
                         </p>
                         <p className="ant-upload-text">
-                            Click or drag file to this area to upload
+                            Click or drag a music file to this area to upload
                         </p>
-                        <p className="ant-upload-hint">
-                            Support for a single or bulk upload. Strictly
-                            prohibit from uploading company data or other band
-                            files
+                    </Dragger>
+                    <Dragger {...imgProps}>
+                        <p className="ant-upload-drag-icon">
+                            <UploadOutlined />
+                        </p>
+                        <p className="ant-upload-text">
+                            Click or drag an album cover to this area to upload
+                            (optional)
                         </p>
                     </Dragger>
                 </Space>
@@ -321,7 +354,10 @@ const SongList = () => {
                         return (
                             <div className="song-row">
                                 <div className="song-information">
-                                    <img src={orange} alt="Album Cover" />
+                                    <img
+                                        src={song.cover ? song.cover : orange}
+                                        alt="Album Cover"
+                                    />
                                     <div className="song-text">
                                         <h4>{song.title}</h4>
                                         <h5>{song.artist}</h5>
