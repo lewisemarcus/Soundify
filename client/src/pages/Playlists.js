@@ -1,17 +1,33 @@
 import { useState, useEffect } from "react";
-// import AudioPlayerContainer from "../components/MusicPlayer/AudioPlayerContainer";
-
-import "./styles/Playlists.css";
-import { Empty } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import "./styles/Playlists.scss";
+import "../components/styles/PlaylistList.scss";
+import "../components/Dashboard/styles/Dashboard2.scss";
+import { Empty, message } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_USER_PLAYLIST } from "../utils/queries/songQueries";
 import { useLocation } from "react-router-dom";
 import PlaylistList from "../components/PlaylistLists";
 import { Box, CircularProgress } from "@mui/material";
 import playlistIcon from "../assets/playlist.png";
+import { useMutation } from "@apollo/client";
+import { REMOVE_PLAYLIST } from "../utils/mutations/playlistMutations";
 
-const Playlists = ({ currentPlayer }) => {
-  const [singlePL, setSinglePL] = useState([]);
+const Playlists = ({
+  currentPlayer,
+  singlePL,
+  setSinglePL,
+  setIsPlaying,
+  isPlaying,
+  currentSong,
+  getSongInfo,
+  setCurrentSong,
+  trackIndex,
+  getTrackIndex,
+}) => {
+  const [removePlaylist, { error }] = useMutation(REMOVE_PLAYLIST);
+  const token = localStorage.getItem("token");
+  const [currentTarget, setCurrentTarget] = useState(null);
   const username = localStorage.getItem("username");
   const [playlistClicked, setPlaylistClicked] = useState(false);
   const [title, setPlTitle] = useState("");
@@ -19,10 +35,9 @@ const Playlists = ({ currentPlayer }) => {
   const [selectedSong, setSelectedSong] = useState(false);
   const [newTitle, setTitle] = useState();
   const [activeState, setActiveState] = useState(-1);
-
+  const [deleting, setDeleting] = useState(false);
   const [r, setR] = useState(false);
   const location = useLocation();
-  let audioList = [];
 
   const {
     loading: playlistloading,
@@ -41,7 +56,6 @@ const Playlists = ({ currentPlayer }) => {
   useEffect(() => {
     return setPlaylistClicked(false) && setSinglePL([]);
   }, []);
-
   useEffect(() => {
     const fetchPlaylists = async () => {
       await refetch();
@@ -60,31 +74,35 @@ const Playlists = ({ currentPlayer }) => {
 
     for (let i = 0; i < currentPlaylists.length; i++) {
       if (currentPlaylists[i]._id === e.currentTarget.id) {
+        setCurrentTarget(e.currentTarget.id);
         setSinglePL(currentPlaylists[i]);
       }
     }
   };
+  useEffect(() => {
+    if (currentTarget)
+      for (let each of currentPlaylists)
+        if (each._id === currentTarget) setSinglePL(each);
+  }, [currentPlaylists]);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(
-      e.currentTarget,
-      e.currentTarget.attributes.name,
-      e.currentTarget.attributes.songTitle
-    );
-    if (setPlaylistSong !== undefined && setSelectedSong !== undefined) {
-      setSelectedSong(true);
-      setPlaylistSong(e.currentTarget.attributes.name);
-      setTitle(e.currentTarget.attributes.songTitle);
-      let title = e.currentTarget.parentNode;
-      console.log(e.currentTarget.parentNode);
-      let find = document.querySelectorAll(".active");
-      find.forEach((find) => {
-        find.classList.remove("active");
+  const handleDelete = async (event, playlist) => {
+    setDeleting(true);
+    event.preventDefault();
+    try {
+      await removePlaylist({
+        variables: {
+          playlistId: playlist._id,
+          token: token,
+        },
       });
-      title.classList.add("active");
-      setR(true);
+      await message.loading("Removing playlist.");
+      await refetch();
+      await message.success("Playlist removed.");
+    } catch (err) {
+      console.log(err);
+      message.error("Error removing playlist.");
     }
+    setDeleting(false);
   };
 
   return playlistloading ? (
@@ -105,41 +123,72 @@ const Playlists = ({ currentPlayer }) => {
     <div style={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
       <div className="playlist-name-container">
         <h2>Playlists:</h2>
-
+        {currentPlaylists.length === 0 && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "2rem 0",
+            }}
+          >
+            <Empty description="No playlists created" />
+          </div>
+        )}
         {currentPlaylists.map((playlist, index) => {
           return (
             <div
-              key={playlist.plTitle}
-              id={playlist._id}
-              onClick={(e) => {
-                switchPlaylist(e);
-                setActiveState(index);
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              className={`playlist-button ${
-                index === activeState ? "active" : null
-              }`}
             >
-              <img src={playlistIcon} alt="Playlist" />
-              <div className="play-title">{playlist.plTitle}</div>
+              <div
+                className={`playlist-button ${
+                  index === activeState ? "active" : null
+                }`}
+                key={playlist.plTitle}
+                id={playlist._id}
+                onClick={(e) => {
+                  switchPlaylist(e);
+                  setActiveState(index);
+                }}
+              >
+                <div id={playlist._id} className="play-title">
+                  <img src={playlistIcon} alt="Playlist" />
+                  {playlist.plTitle}
+                </div>
+              </div>
+              <div>
+                <DeleteOutlined
+                  onClick={(event) => handleDelete(event, playlist)}
+                  style={{
+                    fontSize: "1.2rem",
+                    padding: ".5rem .8rem",
+                  }}
+                />
+              </div>
             </div>
           );
         })}
       </div>
       <div className="playlist-container">
-        {/* <AudioPlayerContainer
-            playlistSong={playlistSong}
-            selectedSong={selectedSong}
-            setSelectedSong={setSelectedSong}
-            newTitle={newTitle}
-            r={r}
-            setR={setR}
-            currentPlayer={currentPlayer}
-            singlePL={singlePL}
-          /> */}
-
         <div className="content">
           {playlistClicked ? (
-            <PlaylistList data={singlePL} />
+            <PlaylistList
+              refetch={refetch}
+              setDeleting={setDeleting}
+              singlePL={singlePL}
+              currentPlayer={currentPlayer}
+              data={singlePL}
+              setIsPlaying={setIsPlaying}
+              isPlaying={isPlaying}
+              currentSong={currentSong}
+              getSongInfo={getSongInfo}
+              setCurrentSong={setCurrentSong}
+              trackIndex={trackIndex}
+              getTrackIndex={getTrackIndex}
+            />
           ) : (
             <div className="no-playlist-selected">
               <Empty description="No playlist selected" />

@@ -23,6 +23,7 @@ export default gql`
     genre: String
     filename: String
     link: String
+    cover: String
     tags: [String]
     artist: String
     username: String
@@ -59,7 +60,6 @@ export default gql`
   type Query {
     songByArtist(username: String!): [Song]
     users: [User]
-    userByUsername(username: String!): User
     user(_id: ID!): User
     allSongs: [Song]
     songByGenre(genre: String!): [Song]
@@ -80,6 +80,7 @@ export default gql`
       token: String!
       commentAuthor: String!
     ): Song
+    removePlaylist(playlistId: ID!, token: String!): Playlist
     removeSong(songId: String!, token: String!, key: String!): Song
     addComment(
       songId: ID!
@@ -93,10 +94,6 @@ export default gql`
       username: String!
     ): Playlist
     addToPlaylist(_id: String!, songId: ID!): Playlist
-    removeFromPlaylist(
-      songId: ID!
-      playlistname: String!
-      username: String!
-    ): Playlist
+    removeFromPlaylist(token: String!, songId: ID!, playlistId: ID!): Playlist
   }
 `;

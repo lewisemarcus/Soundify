@@ -2,28 +2,31 @@ import React from "react"
 import FooterAudioPlayer from "./FooterPlayer/FooterAudioPlayer"
 
 const Footer = ({
+    setCurrentSong,
     currentSong,
     oneSongClick,
     setOneSongClick,
-    audioR,
     genreClickCount,
     playing,
     prevCount,
     currentPlayer,
-
     isPlaying,
     setIsPlaying,
-    footerId,
+    singlePL,
     songInfo,
     trackIndex,
     getTrackIndex,
     trackProgress,
     setTrackProgress,
+    getSongInfo,
 }) => {
     return (
         // this link needs to be changed upon new click
-        <div className="footer-container" dashid={`dash-${footerId}`}>
+        <div className="footer-container">
             <FooterAudioPlayer
+                getSongInfo={getSongInfo}
+                setCurrentSong={setCurrentSong}
+                singlePL={singlePL}
                 trackProgress={trackProgress}
                 setTrackProgress={setTrackProgress}
                 songInfo={songInfo}
@@ -35,7 +38,6 @@ const Footer = ({
                 prevCount={prevCount}
                 playing={playing}
                 genreClickCount={genreClickCount}
-                audioR={audioR}
                 currentSong={currentSong}
                 oneSongClick={oneSongClick}
                 setOneSongClick={setOneSongClick}

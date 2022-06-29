@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import orange from "../assets/orange.png";
 import { AiFillPlusCircle } from "react-icons/ai";
 import {
   List,
@@ -12,7 +13,7 @@ import {
   notification,
 } from "antd";
 import "./styles/Slider.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   GET_SONG,
   GET_GENRES,
@@ -21,7 +22,7 @@ import {
 import { useQuery, useMutation } from "@apollo/client";
 import AudioSpectrum from "react-audio-spectrum";
 import { ADD_COMMENT } from "../utils/mutations/commentMutations";
-import shakeygraves from "../assets/shakeygraves.jpg";
+
 import CommentSection from "../components/CommentSection";
 import Waveform from "../components/Wavesurfer";
 import "../components/styles/CommentSection.css";
@@ -45,8 +46,7 @@ const SongDetails = ({
   setIsPlaying,
   getSongInfo,
   isDetailsPlaying,
-  trackProgress,
-  setTrackProgress,
+  setSinglePL,
 }) => {
   const username = localStorage.getItem("username");
   const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -55,7 +55,6 @@ const SongDetails = ({
     variables: { songId: songId },
   });
   let navigate = useNavigate();
-  const [waveref, setWaveref] = useState();
   const recSongs = [];
   const [list, setList] = useState([]);
   const [commentText, setCommentText] = useState("");
@@ -90,12 +89,13 @@ const SongDetails = ({
   };
 
   // CREATE-ADD TO PLAYLIST MODAL
-  const { loading: playlistloading, data: userPlaylists } = useQuery(
-    GET_USER_PLAYLIST,
-    {
-      variables: { owner: username },
-    }
-  );
+  const {
+    loading: playlistloading,
+    data: userPlaylists,
+    refetch,
+  } = useQuery(GET_USER_PLAYLIST, {
+    variables: { owner: username },
+  });
   const usersPlaylists = userPlaylists?.userPlaylists || [];
 
   function registerUserCallback() {
@@ -120,6 +120,7 @@ const SongDetails = ({
   });
 
   const success = async () => {
+    await refetch();
     await message.loading("Uploading playlist...");
     await message.success("Successfully added song to playlist!");
   };
@@ -186,6 +187,7 @@ const SongDetails = ({
   useEffect(() => {
     if (querySong.link !== undefined) {
       setCurrentSong(querySong.link);
+      setSinglePL([]);
     }
   }, [querySong.link]);
 
@@ -259,7 +261,7 @@ const SongDetails = ({
           justifyContent: "center",
           flexWrap: "wrap",
           backgroundColor: "#fff",
-          width: "95rem",
+          width: "90%",
         }}
       >
         <div
@@ -282,11 +284,21 @@ const SongDetails = ({
               alignItems: "center",
             }}
           >
-            <img src={shakeygraves} alt="Album Cover" />
+            <img
+              src={querySong.cover ? querySong.cover : orange}
+              style={{ width: "200px", height: "200px" }}
+              alt="Album Cover"
+            />
             <h2 style={{ color: "white", marginTop: "1rem" }}>
               {querySong.title}
             </h2>
-            <h3 style={{ color: "white", opacity: ".7", marginTop: "-.7rem" }}>
+            <h3
+              style={{
+                color: "white",
+                opacity: ".7",
+                marginTop: "-.7rem",
+              }}
+            >
               By {querySong.artist}
             </h3>
           </div>
@@ -333,7 +345,7 @@ const SongDetails = ({
       <div
         style={{
           display: "flex",
-          width: "95rem",
+          width: "90%",
           flexWrap: "wrap",
           justifyContent: "center",
         }}

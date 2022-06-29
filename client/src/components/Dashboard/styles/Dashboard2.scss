@@ -1,135 +1,144 @@
 .dashboard-page {
-  color: #212121;
-  background-color: #fff;
-  height: fit-content;
-  padding: 3rem 0 10rem;
-  width: 70rem;
-  margin: 0 auto;
-  margin-bottom: 100px;
+    color: #212121;
+    background-color: #fff;
+    height: fit-content;
+    padding: 3rem 0 10rem;
+    width: 70rem;
+    margin: 0 auto;
+    margin-bottom: 100px;
 }
 
 .dashboard-text-container {
-  width: 60rem;
-  margin: 0 auto;
+    width: 60rem;
+    margin: 0 auto;
 }
 
 .dashboard-text-container h2 {
-  color: #212121;
-  padding: 3rem 0 0;
-  padding-top: 1rem;
-  font-size: 1.8rem;
-  margin-bottom: -1px;
+    color: #212121;
+    padding: 3rem 0 0;
+    padding-top: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: -1px;
 }
 
 .dashboard-text-container p {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .dashboard-song-cover {
-  height: 12rem;
-  width: 100%;
-  opacity: 0.9;
+    height: 12rem;
+    width: 100%;
+    opacity: 0.9;
 }
 
 .swiper {
-  width: 60rem;
+    width: 60rem;
 }
 
 .swiper-slide {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: 0.3s ease-in-out all;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: 0.3s ease-in-out all;
 
-  &:hover {
-    .playBtn {
-      display: block;
-      position: absolute;
-      bottom: 115px;
-      left: 80px;
-      opacity: 0.9;
-      transition: 0.2s ease-in-out all;
-      z-index: 1000;
-      &:hover {
-        opacity: 1;
-      }
+    &:hover {
+        .playBtn {
+            display: block;
+            position: absolute;
+            bottom: 115px;
+            left: 80px;
+            opacity: 0.9;
+            transition: 0.2s ease-in-out all;
+            z-index: 1000;
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
-  }
 }
 
 .playBtn {
-  display: none;
+    display: none;
 }
-
+.play-button {
+    display: block;
+    position: relative;
+    opacity: 0.9;
+    transition: 0.2s ease-in-out all;
+    z-index: 1000;
+    &:hover {
+        opacity: 1;
+    }
+}
 .swiper-button-prev {
-  color: black !important;
-  margin-left: -0.7rem;
-  margin-top: -3rem !important;
-  background-image: url(../../../assets/leftArrow3.png);
+    color: black !important;
+    margin-left: -0.7rem;
+    margin-top: -3rem !important;
+    background-image: url(../../../assets/leftArrow3.png);
 }
 
 .swiper-button-next {
-  color: black !important;
-  margin-right: -0.7rem;
-  margin-top: -3rem !important;
-  background-image: url(../../../assets/rightArrow2.png);
+    color: black !important;
+    margin-right: -0.7rem;
+    margin-top: -3rem !important;
+    background-image: url(../../../assets/rightArrow2.png);
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  display: none;
+    display: none;
 }
 
 .dashboard-song-detail {
-  margin-top: 0.3rem;
+    margin-top: 0.3rem;
 }
 
 .dashboard-song-title {
-  font-size: 1rem;
-  //   opacity: 0.75;
-  transition: 0.2s ease-in-out all;
+    font-size: 1rem;
+    //   opacity: 0.75;
+    transition: 0.2s ease-in-out all;
 }
 
 .dashboard-song-title:hover {
-  opacity: 1;
-  cursor: pointer;
-  color: var(--orange);
+    opacity: 1;
+    cursor: pointer;
+    color: var(--orange);
 }
 
 .dashboard-song-artist {
-  opacity: 0.5;
-  font-size: 0.8rem;
+    opacity: 0.5;
+    font-size: 0.8rem;
 }
 
 .swiper-slide-user {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .swiper-users .swiper-button-prev {
-  margin-top: 1px !important;
-  margin-left: -1rem !important;
+    margin-top: 1px !important;
+    margin-left: -1rem !important;
 }
 
 .swiper-users .swiper-button-next {
-  margin-top: 1px !important;
-  margin-right: -1rem !important;
+    margin-top: 1px !important;
+    margin-right: -1rem !important;
 }
 
 .ant-avatar-string {
-  margin-top: 4rem;
+    margin-top: 4rem;
 }
 
 .dashboard-user-username {
-  margin-top: 0.5rem;
-  font-size: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
 }

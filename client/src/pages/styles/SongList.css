@@ -87,9 +87,9 @@
   border-radius: 5px;
 }
 
-.anticon svg {
+/* .anticon svg {
   color: var(--orange);
-}
+} */
 
 .ant-table {
   font-family: var(--main-font);
@@ -153,6 +153,7 @@
 }
 
 .song-text {
+  cursor: pointer;
   margin-left: 0.7rem;
 }
 
