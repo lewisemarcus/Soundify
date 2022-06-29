@@ -19,8 +19,7 @@
   transition: 0.2s ease-in-out all;
   padding: 0.8rem 1rem;
   width: 90%;
-  margin: 0 auto;
-  border-radius: 5px;
+  margin: 0 0 0 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,10 +27,12 @@
 
 .playlist-button:hover {
   background-color: rgb(226, 226, 226);
+  cursor: pointer;
 }
 
 .active {
   background-color: rgb(226, 226, 226);
+  border-left: 4px solid var(--orange);
 }
 
 .playlist-button img {
@@ -44,11 +45,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.2s ease-in-out all;
 }
 
-.play-title:hover {
-  cursor: pointer;
-}
+// .play-title:hover {
+//   color: var(--orange);
+//   cursor: pointer;
+// }
 
 .no-playlist-selected {
   width: 100%;

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState } from "react";
 import orange from "../assets/orange.png";
 import shakeygraves from "../assets/shakeygraves.jpg";
 import "./styles/PlaylistList.scss";
@@ -9,7 +9,7 @@ import pauseBtn from "../assets/pauseBtn.png";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
 import { REMOVE_FROM_PLAYLIST } from "../utils/mutations/playlistMutations";
-import { message } from "antd";
+import { Empty, message } from "antd";
 const PlaylistList = ({
   currentPlayer,
   data,
@@ -23,6 +23,7 @@ const PlaylistList = ({
   refetch,
 }) => {
   let navigate = useNavigate();
+  const [icon, setIcon] = useState(null);
   const [removeFromPlaylist, { error }] = useMutation(REMOVE_FROM_PLAYLIST);
   const handleSongClick = (song) => {
     navigate(`/song/${song._id}`);
@@ -61,14 +62,17 @@ const PlaylistList = ({
           </h4>
         </div>
       </div>
-
-      {data.songs.map((song) => {
+      {data.songs.length === 0 && (
+        <Empty description="You have no songs in your playlist" />
+      )}
+      {data.songs.map((song, index) => {
         return (
           <div className="playlist-song-row">
             <div className="playlist-song-information">
               <input
                 onClick={(event) => {
                   event.preventDefault();
+                  setIcon(index);
                   setIsPlaying(!isPlaying);
                   if (currentSong !== song.link) {
                     setIsPlaying(true);
@@ -84,7 +88,7 @@ const PlaylistList = ({
                 }}
                 style={{}}
                 type="image"
-                src={isPlaying ? pauseBtn : playBtn}
+                src={isPlaying && icon === index ? pauseBtn : playBtn}
                 name="playBtn"
                 className="play-button"
                 alt="play button"
@@ -94,11 +98,9 @@ const PlaylistList = ({
                 alt="Album Cover"
                 style={{ marginLeft: "1rem" }}
               />
-              <div
-                className="playlist-song-text"
-                onClick={() => handleSongClick(song)}
-              >
-                <h4>{song.title}</h4>
+
+              <div className="playlist-song-text">
+                <h4 onClick={() => handleSongClick(song)}>{song.title}</h4>
                 <h5>{song.artist}</h5>
               </div>
             </div>

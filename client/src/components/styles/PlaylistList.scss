@@ -71,7 +71,7 @@
 .play-button {
   position: absolute;
   width: 1.7rem;
-  left: 354px;
+  left: 410px;
   display: none;
 }
 
@@ -81,15 +81,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgb(183, 183, 183);
+  border-bottom: 1px solid rgb(216, 216, 216);
+  width: 90%;
   transition: 0.2s ease-in-out all;
 
   &:hover {
     background-color: var(--light);
-    cursor: pointer;
 
     .play-button {
       display: flex;
     }
   }
+}
+
+.playlist-song-text h4 {
+  transition: 0.2s ease-in-out all;
+}
+
+.playlist-song-text h4:hover {
+  cursor: pointer;
+  color: var(--orange);
 }

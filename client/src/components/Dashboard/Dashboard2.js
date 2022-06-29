@@ -22,6 +22,7 @@ const Dashboard2 = ({
 }) => {
   let navigate = useNavigate();
   const [songs, setSongs] = useState([]);
+  const [icon, setIcon] = useState(null);
   const [users, setUsers] = useState([]);
   const [play, setPlay] = useState(false);
   const [loadingSongs, setIsLoadingSongs] = useState(true);
@@ -102,10 +103,11 @@ const Dashboard2 = ({
           navigation
           className="swiper"
         >
-          {songs.map((song) => (
+          {songs.map((song, index) => (
             <SwiperSlide key={song.id} className="swiper-slide">
               <input
                 onClick={() => {
+                  setIcon(index);
                   setPlay(!play);
                   setIsPlaying(!isPlaying);
                   if (currentSong !== song.link) setPlay(true);
@@ -120,7 +122,7 @@ const Dashboard2 = ({
                   else currentPlayer.current.play();
                 }}
                 type="image"
-                src={play ? pauseBtn : playBtn}
+                src={play && icon === index ? pauseBtn : playBtn}
                 name="playBtn"
                 className="playBtn"
                 alt="play button"

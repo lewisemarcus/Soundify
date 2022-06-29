@@ -135,29 +135,34 @@ const Playlists = ({
         {currentPlaylists.map((playlist, index) => {
           return (
             <div
-              className={`playlist-button ${
-                index === activeState ? "active" : null
-              }`}
-              key={playlist.plTitle}
-              id={playlist._id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
               <div
+                className={`playlist-button ${
+                  index === activeState ? "active" : null
+                }`}
+                key={playlist.plTitle}
                 id={playlist._id}
-                className="play-title"
                 onClick={(e) => {
                   switchPlaylist(e);
                   setActiveState(index);
                 }}
               >
-                <img src={playlistIcon} alt="Playlist" />
-                {playlist.plTitle}
+                <div id={playlist._id} className="play-title">
+                  <img src={playlistIcon} alt="Playlist" />
+                  {playlist.plTitle}
+                </div>
               </div>
               <div>
                 <DeleteOutlined
                   onClick={(event) => handleDelete(event, playlist)}
                   style={{
                     fontSize: "1.2rem",
-                    padding: ".5rem 0",
+                    padding: ".5rem .8rem",
                   }}
                 />
               </div>
