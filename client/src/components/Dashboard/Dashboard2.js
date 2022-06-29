@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import alicia from "../../assets/aliciakeys.jpg"
+import orange from "../assets/orange.png"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper"
 import "./styles/Dashboard2.scss"
@@ -127,8 +127,8 @@ const Dashboard2 = ({
                             />
                             <img
                                 className="dashboard-song-cover"
-                                src={alicia}
-                                alt="Alicia"
+                                src={song.cover ? song.cover : orange}
+                                alt="Album Cover"
                             />
                             <div className="dashboard-song-detail">
                                 <span
