@@ -1,0 +1,95 @@
+.Playlist-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.PlaylistPlayer {
+  margin-top: 10px;
+  width: 300px;
+}
+
+.playlist-title {
+  color: black;
+  text-align: center;
+}
+
+.headers .ant-col,
+.playlistCard .ant-col {
+  margin-bottom: 10px;
+}
+
+.playlist-head {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.ant-row {
+  justify-content: space-between;
+}
+
+.ant-row .ant-col-8 {
+  max-width: 100%;
+  margin-bottom: 10px;
+  padding-right: 20px;
+}
+
+.ant-row button {
+  display: contents;
+}
+
+.playlist-head {
+  color: black;
+}
+
+.item {
+  width: 65%;
+}
+
+.item .content,
+.item .headers {
+  text-align: center;
+}
+
+.trashcan {
+  font-size: 20px;
+}
+
+.active .playlist-head {
+  color: orange;
+}
+
+.playlistNames {
+  background-color: #ec994b;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
+.play-button {
+  position: absolute;
+  width: 1.7rem;
+  left: 354px;
+  display: none;
+}
+
+.playlist-song-row {
+  margin: 0 auto;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(183, 183, 183);
+  transition: 0.2s ease-in-out all;
+
+  &:hover {
+    background-color: var(--light);
+    cursor: pointer;
+
+    .play-button {
+      display: flex;
+    }
+  }
+}
