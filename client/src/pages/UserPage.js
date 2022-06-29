@@ -89,7 +89,7 @@ const UserPage = ({
                                         alt="play button"
                                     />
                                     <img
-                                        src={orange}
+                                        src={song.cover ? song.cover : orange}
                                         alt="Album Cover"
                                         style={{ marginLeft: "1rem" }}
                                     />

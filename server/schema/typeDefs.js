@@ -23,6 +23,7 @@ export default gql`
         genre: String
         filename: String
         link: String
+        cover: String
         tags: [String]
         artist: String
         username: String

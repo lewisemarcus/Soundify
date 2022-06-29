@@ -16,6 +16,7 @@ export const DELETE_COMMENT = gql`
             title
             genre
             link
+            cover
             artist
             uploaded
             comments {
