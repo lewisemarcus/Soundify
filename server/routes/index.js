@@ -6,4 +6,6 @@ import { router as deleteSong } from "./songs/deleteSong.js";
 
 import { router as getUsers } from "./users/getUsers.js";
 
-export { getSongs, postSong, deleteSong, getUsers };
+import { router as getUser } from "./users/getUser.js";
+
+export { getSongs, postSong, deleteSong, getUsers, getUser };

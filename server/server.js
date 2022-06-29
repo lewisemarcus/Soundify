@@ -1,7 +1,13 @@
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
-import { getSongs, postSong, deleteSong, getUsers } from "./routes/index.js";
+import {
+  getSongs,
+  postSong,
+  deleteSong,
+  getUsers,
+  getUser,
+} from "./routes/index.js";
 import morgan from "morgan";
 import { authMiddleware } from "./utils/auth.js";
 import { ApolloServer } from "apollo-server-express";
@@ -42,6 +48,7 @@ app.use("/", getSongs);
 app.use("/", postSong);
 app.use("/", deleteSong);
 app.use("/", getUsers);
+app.use("/", getUser);
 
 mongoose
   .connect(MONGODB, { useNewUrlParser: true })
