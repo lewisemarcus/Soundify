@@ -25,9 +25,10 @@ router.post(
             bucketname: "soundclone-music",
             file: req.files["filename"][0].buffer,
         }
+        console.log(req.files["imgFilename"][0])
         if (req.files["imgFilename"] !== undefined) {
             const imageContent = {
-                filename: fName + "img",
+                filename: fName + req.files["imgFilename"][0].originalname,
                 bucketname: "soundclone-music",
                 file: req.files["imgFilename"][0].buffer,
             }
