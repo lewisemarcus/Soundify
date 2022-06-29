@@ -46,6 +46,11 @@ const SongList = () => {
     const errorMessage = () => {
         message.error("Must fill out all fields!")
     }
+    const songErrorMessage = () => {
+        message.error(
+            "Song already exists, please remove the file first if you wish to re-upload.",
+        )
+    }
 
     const handleChange = (event) => {
         if (event.label) {
@@ -82,6 +87,14 @@ const SongList = () => {
             file === null
         ) {
             return errorMessage()
+        }
+        for (let eachSong of usersSongs) {
+            if (
+                song.title === eachSong.title &&
+                song.artist === eachSong.artist &&
+                song.genre === eachSong.genre
+            )
+                return songErrorMessage()
         }
         setIsModalVisible(false)
         const tags = song.title.split(" ")
