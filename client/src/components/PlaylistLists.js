@@ -53,7 +53,7 @@ const PlaylistList = ({
   return (
     <div className="playlist-data-container">
       <div className="playlist-information-header">
-        <img src={shakeygraves} alt="Shakey Graves" />
+        <img src={orange} alt="Shakey Graves" />
         <div>
           <h3>{data.plTitle}</h3>
           <h4>
