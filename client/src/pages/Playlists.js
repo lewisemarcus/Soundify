@@ -22,6 +22,8 @@ const Playlists = ({
   currentSong,
   getSongInfo,
   setCurrentSong,
+  trackIndex,
+  getTrackIndex,
 }) => {
   const [removePlaylist, { error }] = useMutation(REMOVE_PLAYLIST);
   const token = localStorage.getItem("token");
@@ -184,6 +186,8 @@ const Playlists = ({
               currentSong={currentSong}
               getSongInfo={getSongInfo}
               setCurrentSong={setCurrentSong}
+              trackIndex={trackIndex}
+              getTrackIndex={getTrackIndex}
             />
           ) : (
             <div className="no-playlist-selected">

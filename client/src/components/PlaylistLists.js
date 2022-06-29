@@ -21,9 +21,10 @@ const PlaylistList = ({
   singlePL,
   setDeleting,
   refetch,
+  trackIndex,
+  getTrackIndex,
 }) => {
   let navigate = useNavigate();
-  const [icon, setIcon] = useState(null);
   const [removeFromPlaylist, { error }] = useMutation(REMOVE_FROM_PLAYLIST);
   const handleSongClick = (song) => {
     navigate(`/song/${song._id}`);
@@ -72,7 +73,7 @@ const PlaylistList = ({
               <input
                 onClick={(event) => {
                   event.preventDefault();
-                  setIcon(index);
+                  getTrackIndex(index);
                   setIsPlaying(!isPlaying);
                   if (currentSong !== song.link) {
                     setIsPlaying(true);
@@ -88,7 +89,7 @@ const PlaylistList = ({
                 }}
                 style={{}}
                 type="image"
-                src={isPlaying && icon === index ? pauseBtn : playBtn}
+                src={isPlaying && trackIndex === index ? pauseBtn : playBtn}
                 name="playBtn"
                 className="play-button"
                 alt="play button"
