@@ -230,7 +230,11 @@ const AudioPlayer = ({
                 />
                 <div className="musicianTrack">
                     {songInfo.title && songInfo.title.length > 6 ? (
-                        <Marquee gradient={false} delay={2}>
+                        <Marquee
+                            style={{ paddingTop: "5px" }}
+                            gradient={false}
+                            delay={2}
+                        >
                             <h2
                                 className="footer-title"
                                 style={{ color: "white" }}
@@ -239,27 +243,34 @@ const AudioPlayer = ({
                             </h2>
                         </Marquee>
                     ) : (
-                        <h2 className="footer-title" style={{ color: "white" }}>
+                        <h2
+                            className="footer-title"
+                            style={{ color: "white", paddingTop: "5px" }}
+                        >
                             {songInfo.title}
                         </h2>
                     )}
 
                     {songInfo.artist && songInfo.artist.length > 8 ? (
-                        <Marquee gradient={false} delay={2}>
-                            <h2
+                        <Marquee
+                            gradient={false}
+                            delay={2}
+                            style={{ marginTop: "-5px" }}
+                        >
+                            <h3
                                 className="footer-artist"
                                 style={{ color: "white" }}
                             >
                                 {songInfo.artist}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </h2>
+                            </h3>
                         </Marquee>
                     ) : (
-                        <h2
+                        <h3
                             className="footer-artist"
-                            style={{ color: "white" }}
+                            style={{ color: "white", marginTop: "-5px" }}
                         >
                             {songInfo.artist}
-                        </h2>
+                        </h3>
                     )}
                 </div>
                 <div id="startFooterTimer">{displayTime}</div>
@@ -281,7 +292,7 @@ const AudioPlayer = ({
                 <Stack
                     spacing={2}
                     direction="row"
-                    sx={{ mb: 1, px: 1 }}
+                    sx={{ mb: 0, px: 1 }}
                     alignItems="center"
                 >
                     <VolumeDownRounded />
@@ -290,7 +301,7 @@ const AudioPlayer = ({
                         aria-label="Volume"
                         defaultValue={0.25}
                         max={1}
-                        min={0.1}
+                        min={0.01}
                         step={0.01}
                         sx={{
                             "& .MuiSlider-track": {
