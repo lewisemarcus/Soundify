@@ -6,13 +6,14 @@ body {
 .next,
 .play,
 .pause {
+    margin-top: 5px;
     cursor: pointer;
 }
 
 .footer-audio-player {
     bottom: 0;
     background-color: #ec994b;
-    height: 70px;
+    height: 50px;
     position: fixed;
     z-index: 10000;
 }
@@ -41,7 +42,6 @@ body {
 .musicianTrack {
     margin: 0 10px;
     width: 15%;
-    text-align: center;
 }
 
 .musicianTrack h2 {
