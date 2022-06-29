@@ -69,10 +69,7 @@
 }
 
 .play-button {
-  position: absolute;
   width: 1.7rem;
-  left: 410px;
-  display: none;
 }
 
 .playlist-song-row {
@@ -87,10 +84,6 @@
 
   &:hover {
     background-color: var(--light);
-
-    .play-button {
-      display: flex;
-    }
   }
 }
 

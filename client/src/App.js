@@ -66,9 +66,12 @@ function App() {
               setSinglePL={setSinglePL}
               currentSong={currentSong}
               setIsPlaying={setIsPlaying}
+              isPlaying={isPlaying}
               currentPlayer={currentPlayer}
               getSongInfo={getSongInfo}
               setCurrentSong={setCurrentSong}
+              trackIndex={trackIndex}
+              getTrackIndex={getTrackIndex}
             />
           }
         />
