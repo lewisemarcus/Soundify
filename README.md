@@ -54,19 +54,19 @@ I love listening to music but I hate all the hoops I have to jump through to cre
 
 ---
 
-- [Soundify - Group project-3](#soundify---group-project-3)
-  - [Description:](#description)
-  - [User Story:](#user-story)
-  - [Acceptance Criteria:](#acceptance-criteria)
-  - [Table of Contents:](#table-of-contents)
-  - [Digital Ocean:](#digital-ocean)
-  - [Installation:](#installation)
-  - [Usage:](#usage)
-  - [Contribute:](#contribute)
-  - [Details:](#details)
-  - [URL:](#url)
-  - [Authors:](#authors)
-  - [Credits:](#credits)
+-   [Soundify - Group project-3](#soundify---group-project-3)
+    -   [Description:](#description)
+    -   [User Story:](#user-story)
+    -   [Acceptance Criteria:](#acceptance-criteria)
+    -   [Table of Contents:](#table-of-contents)
+    -   [Digital Ocean:](#digital-ocean)
+    -   [Installation:](#installation)
+    -   [Usage:](#usage)
+    -   [Contribute:](#contribute)
+    -   [Details:](#details)
+    -   [URL:](#url)
+    -   [Authors:](#authors)
+    -   [Credits:](#credits)
 
 <br>
 
@@ -74,7 +74,7 @@ I love listening to music but I hate all the hoops I have to jump through to cre
 
 ---
 
-[![Deployed Application](https://www.soundify.live/)]
+[Deployed Application](https://www.soundify.live/)
 
 <br>
 
