@@ -3,7 +3,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 import "./styles/Playlists.scss";
 import "../components/styles/PlaylistList.scss";
 import "../components/Dashboard/styles/Dashboard2.scss";
-import { Empty, message } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_USER_PLAYLIST } from "../utils/queries/songQueries";
 import { useLocation } from "react-router-dom";
@@ -12,6 +11,10 @@ import { Box, CircularProgress } from "@mui/material";
 import playlistIcon from "../assets/playlist.png";
 import { useMutation } from "@apollo/client";
 import { REMOVE_PLAYLIST } from "../utils/mutations/playlistMutations";
+import Media from "react-media";
+import { message, Empty, Drawer } from "antd";
+import right from "../assets/right.png";
+import { ReactComponent as Close } from "../assets/close.svg";
 
 const Playlists = ({
   currentPlayer,
@@ -38,6 +41,11 @@ const Playlists = ({
   const [deleting, setDeleting] = useState(false);
   const [r, setR] = useState(false);
   const location = useLocation();
+
+  const [visible, setVisible] = useState(false);
+  const showDrawer = () => {
+    setVisible(!visible);
+  };
 
   const {
     loading: playlistloading,
@@ -120,83 +128,190 @@ const Playlists = ({
       </Box>
     </div>
   ) : (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
-      <div className="playlist-name-container">
-        <h2>Playlists:</h2>
-        {currentPlaylists.length === 0 && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              padding: "2rem 0",
-            }}
-          >
-            <Empty description="No playlists created" />
-          </div>
-        )}
-        {currentPlaylists.map((playlist, index) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+    <Media query={{ maxWidth: 1000 }}>
+      {(matches) =>
+        matches ? (
+          <div className="playlist-container">
+            <div to="#" className="playlist-menu">
               <div
-                className={`playlist-button ${
-                  index === activeState ? "active" : null
-                }`}
-                key={playlist.plTitle}
-                id={playlist._id}
-                onClick={(e) => {
-                  switchPlaylist(e);
-                  setActiveState(index);
+                style={{
+                  padding: "1rem",
                 }}
               >
-                <div id={playlist._id} className="play-title">
-                  <img src={playlistIcon} alt="Playlist" />
-                  {playlist.plTitle}
-                </div>
-              </div>
-              <div>
-                <DeleteOutlined
-                  onClick={(event) => handleDelete(event, playlist)}
-                  style={{
-                    fontSize: "1.2rem",
-                    padding: ".5rem .8rem",
-                  }}
+                <img
+                  id="show-playlists-btn"
+                  onClick={showDrawer}
+                  src={right}
+                  alt="Right Arrow"
                 />
               </div>
+              {/* <FaIcons.FaBars onClick={showDrawer} /> */}
             </div>
-          );
-        })}
-      </div>
-      <div className="playlist-container">
-        <div className="content">
-          {playlistClicked ? (
-            <PlaylistList
-              refetch={refetch}
-              setDeleting={setDeleting}
-              singlePL={singlePL}
-              currentPlayer={currentPlayer}
-              data={singlePL}
-              setIsPlaying={setIsPlaying}
-              isPlaying={isPlaying}
-              currentSong={currentSong}
-              getSongInfo={getSongInfo}
-              setCurrentSong={setCurrentSong}
-              trackIndex={trackIndex}
-              getTrackIndex={getTrackIndex}
-            />
-          ) : (
-            <div className="no-playlist-selected">
-              <Empty description="No playlist selected" />
+            <Drawer
+              closeIcon={<Close style={{ height: "1.5rem" }} />}
+              width="220px"
+              placement="left"
+              onClose={showDrawer}
+              visible={visible}
+            >
+              <div>
+                <h2>Playlists:</h2>
+                {currentPlaylists.length === 0 && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      padding: "2rem 0",
+                    }}
+                  >
+                    <Empty description="No playlists created" />
+                  </div>
+                )}
+                {currentPlaylists.map((playlist, index) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div
+                        className={`playlist-button ${
+                          index === activeState ? "active" : null
+                        }`}
+                        key={playlist.plTitle}
+                        id={playlist._id}
+                        onClick={(e) => {
+                          showDrawer();
+                          switchPlaylist(e);
+                          setActiveState(index);
+                        }}
+                      >
+                        <div id={playlist._id} className="play-title">
+                          <img src={playlistIcon} alt="Playlist" />
+                          {playlist.plTitle}
+                        </div>
+                      </div>
+                      <div>
+                        <DeleteOutlined
+                          onClick={(event) => handleDelete(event, playlist)}
+                          style={{
+                            fontSize: "1.2rem",
+                            padding: ".5rem .8rem",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Drawer>
+            <div className="content">
+              {playlistClicked ? (
+                <PlaylistList
+                  refetch={refetch}
+                  setDeleting={setDeleting}
+                  singlePL={singlePL}
+                  currentPlayer={currentPlayer}
+                  data={singlePL}
+                  setIsPlaying={setIsPlaying}
+                  isPlaying={isPlaying}
+                  currentSong={currentSong}
+                  getSongInfo={getSongInfo}
+                  setCurrentSong={setCurrentSong}
+                  trackIndex={trackIndex}
+                  getTrackIndex={getTrackIndex}
+                />
+              ) : (
+                <div className="no-playlist-selected">
+                  <Empty description="No playlist selected" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
-    </div>
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
+            <div className="playlist-name-container">
+              <h2>Playlists:</h2>
+              {currentPlaylists.length === 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "2rem 0",
+                  }}
+                >
+                  <Empty description="No playlists created" />
+                </div>
+              )}
+              {currentPlaylists.map((playlist, index) => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      className={`playlist-button ${
+                        index === activeState ? "active" : null
+                      }`}
+                      key={playlist.plTitle}
+                      id={playlist._id}
+                      onClick={(e) => {
+                        switchPlaylist(e);
+                        setActiveState(index);
+                      }}
+                    >
+                      <div id={playlist._id} className="play-title">
+                        <img src={playlistIcon} alt="Playlist" />
+                        {playlist.plTitle}
+                      </div>
+                    </div>
+                    <div>
+                      <DeleteOutlined
+                        onClick={(event) => handleDelete(event, playlist)}
+                        style={{
+                          fontSize: "1.2rem",
+                          padding: ".5rem .8rem",
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="playlist-container">
+              <div className="content">
+                {playlistClicked ? (
+                  <PlaylistList
+                    refetch={refetch}
+                    setDeleting={setDeleting}
+                    singlePL={singlePL}
+                    currentPlayer={currentPlayer}
+                    data={singlePL}
+                    setIsPlaying={setIsPlaying}
+                    isPlaying={isPlaying}
+                    currentSong={currentSong}
+                    getSongInfo={getSongInfo}
+                    setCurrentSong={setCurrentSong}
+                    trackIndex={trackIndex}
+                    getTrackIndex={getTrackIndex}
+                  />
+                ) : (
+                  <div className="no-playlist-selected">
+                    <Empty description="No playlist selected" />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </Media>
   );
 };
 

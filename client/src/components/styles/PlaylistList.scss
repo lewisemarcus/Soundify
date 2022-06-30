@@ -70,6 +70,8 @@
 
 .play-button {
   width: 1.7rem;
+  position: relative;
+  left: 53px;
 }
 
 .playlist-song-row {
@@ -94,4 +96,48 @@
 .playlist-song-text h4:hover {
   cursor: pointer;
   color: var(--orange);
+}
+
+#show-playlists-btn:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  .playlist-information-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .header-title-songs {
+      width: 10rem;
+    }
+    h3 {
+      font-size: 1rem;
+      margin-left: 0;
+      margin-top: 0.3rem;
+    }
+    h4 {
+      margin-left: 0;
+    }
+  }
+  .playlist-song-row {
+    padding: 1rem;
+  }
+  .playlist-song-information {
+    img {
+      display: none;
+    }
+  }
+
+  .play-button {
+    width: 1.7rem;
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .playlist-song-information {
+    img {
+      display: flex;
+    }
+  }
 }

@@ -118,3 +118,97 @@ nav {
 #searchBtn:active {
   background-color: #c8680d;
 }
+
+.hamburger-menu {
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hamburger-menu:hover {
+  cursor: pointer;
+}
+
+#searchBarHamburger {
+  width: 12rem;
+  border: none;
+  background-color: var(--light);
+  padding: 0.4rem 0.5rem;
+  color: var(--dark);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+#searchBarHamburger:focus {
+  outline: none;
+}
+
+#searchBarHamburger::placeholder {
+  font-size: 0.8rem;
+}
+
+#searchBtnHamburger {
+  background-color: #e6862c;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--main-font);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+  transition: 0.2s ease-in-out all;
+}
+
+#searchBtnHamburger:hover {
+  background-color: #d37720;
+}
+
+#searchBtnHamburger:active {
+  background-color: #c8680d;
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link {
+  width: 90%;
+  padding: 1.3rem;
+  text-align: center;
+  font-size: 1rem;
+  color: black;
+  transition: 0.2s ease-in-out all;
+}
+
+.nav-link:hover {
+  background-color: rgb(226, 226, 226);
+  /* border-left: 4px solid var(--orange); */
+  padding-left: 2rem;
+  color: black;
+}
+
+.hamburger-logout {
+  width: 60%;
+  padding: 0.7rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgb(219, 37, 37);
+  border: 1px solid rgb(219, 37, 37);
+  /* border-radius: 5px; */
+  transition: 0.3s ease-in-out all;
+  margin-top: 3rem;
+}
+
+.hamburger-logout:hover {
+  background-color: rgb(219, 37, 37);
+  color: white;
+  cursor: pointer;
+}

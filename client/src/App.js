@@ -123,6 +123,8 @@ function App() {
                 currentSong={currentSong}
                 setCurrentSong={setCurrentSong}
                 currentPlayer={currentPlayer}
+                trackIndex={trackIndex}
+                getTrackIndex={getTrackIndex}
               />
             ) : (
               <Navigate to="/" />
