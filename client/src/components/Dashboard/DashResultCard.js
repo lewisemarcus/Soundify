@@ -39,6 +39,7 @@ const DashResultCard = ({
                 flexDirection: "column",
                 alignItems: "center",
                 flexWrap: "wrap",
+                width: "100%",
             }}
         >
             <div
@@ -59,7 +60,7 @@ const DashResultCard = ({
                             zIndex: 1000,
                             display: "flex",
                             alignItems: "center",
-                            width: "50rem",
+                            width: "100%",
                             margin: "0 auto",
                         }}
                     >
@@ -81,7 +82,7 @@ const DashResultCard = ({
                                         zIndex: 1000,
                                         display: "flex",
                                         alignItems: "center",
-                                        width: "50rem",
+                                        width: "100%",
                                         margin: "0 auto",
                                     }}
                                 >
