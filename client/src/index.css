@@ -25,3 +25,9 @@ body {
 button {
   border: none;
 }
+
+@media screen and (max-width: 1000px) {
+  body {
+    background-color: #fff;
+  }
+}

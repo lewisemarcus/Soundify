@@ -54,7 +54,7 @@ const PlaylistList = ({
     <div className="playlist-data-container">
       <div className="playlist-information-header">
         <img src={orange} alt="Shakey Graves" />
-        <div>
+        <div className="header-title-songs">
           <h3>{data.plTitle}</h3>
           <h4>
             {data.songs.length === 1

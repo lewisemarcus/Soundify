@@ -1,7 +1,7 @@
 .dash-result-card-container {
   margin: 0 auto;
   padding: 2rem;
-  width: 50rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@
   opacity: 0.5;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 380px) {
   .dash-result-img {
     display: block;
     width: 6rem;
