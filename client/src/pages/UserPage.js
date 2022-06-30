@@ -158,8 +158,8 @@ const UserPage = ({
                   </div>
                   {usersSongs.map((song, index) => {
                     return (
-                      <div className="song-row">
-                        <div className="song-information">
+                      <div className="user-song-row">
+                        <div className="user-song-information">
                           <input
                             onClick={(event) => {
                               event.preventDefault();
@@ -196,7 +196,7 @@ const UserPage = ({
                             }}
                           />
                           <div
-                            className="song-text"
+                            className="user-song-text"
                             name={song._id}
                             onClick={(event) => {
                               event.preventDefault();
