@@ -106,7 +106,7 @@ Go to the github link provided below and clone the repository. In VSC open termi
 <br>
 
 [Screenshot4] Dashboard: User is greated at dashboard and can upload or listen to songs on dashboard. User can search for individual songs or choose from a variety of genres.
-<img src="./client/src/assets/soundify.png">
+<img src="./client/src/assets/soundify-better.png">
 
 <br>
 
