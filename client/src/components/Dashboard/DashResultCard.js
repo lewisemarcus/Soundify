@@ -3,7 +3,7 @@ import shakeygraves from "../../assets/shakeygraves.jpg"
 import { PlayCircleTwoTone } from "@ant-design/icons"
 import "./styles/DashResultCard.css"
 import { useNavigate } from "react-router-dom"
-
+import orange from "../../assets/orange.png"
 const DashResultCard = ({
     dashSearchResults,
     setOneSongClick,
@@ -64,19 +64,14 @@ const DashResultCard = ({
                         }}
                     >
                         <img
-                            src={shakeygraves}
+                            src={
+                                searchResults.cover
+                                    ? searchResults.cover
+                                    : orange
+                            }
                             alt="Album Cover"
                             className="dash-result-img"
                         />
-                        {/* <PlayCircleTwoTone
-              className="result-play-btn"
-              name={searchResults.link}
-              onClick={handleSearchClick}
-              twoToneColor="#FFA500"
-              style={{
-                fontSize: "3rem",
-              }}
-            /> */}
                         <div
                             style={{
                                 marginLeft: "2rem",

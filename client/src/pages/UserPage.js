@@ -123,101 +123,112 @@ const UserPage = ({
                             </h5>
                         </div>
                     </div>
-
-                    <div className="song-list-wrapper">
-                        {usersSongs.length === 0 ? (
-                            <div
-                                className="empty-page"
-                                style={{ marginTop: "3rem" }}
-                            >
-                                <Empty
-                                    description={
-                                        <span className="empty-description">
-                                            {username} currently has no songs
-                                        </span>
-                                    }
-                                    style={{ marginTop: "5rem" }}
-                                    className="empty-description-container"
-                                />
-                            </div>
-                        ) : (
-                            <div
-                                className="user-song-container"
-                                style={{ marginTop: "-1rem" }}
-                            >
+                    <div style={{ width: "100%" }}>
+                        <div className="user-list-wrapper">
+                            {usersSongs.length === 0 ? (
                                 <div
-                                    style={{ color: "black", padding: "1rem" }}
+                                    className="empty-page"
+                                    style={{ marginTop: "3rem" }}
                                 >
-                                    {username}'s Songs
+                                    <Empty
+                                        description={
+                                            <span className="empty-description">
+                                                {username} currently has no
+                                                songs
+                                            </span>
+                                        }
+                                        style={{ marginTop: "5rem" }}
+                                        className="empty-description-container"
+                                    />
                                 </div>
-                                {usersSongs.map((song) => {
-                                    return (
-                                        <div className="song-row">
-                                            <div className="song-information">
-                                                <input
-                                                    onClick={(event) => {
-                                                        event.preventDefault()
-                                                        setIsPlaying(!isPlaying)
-                                                        if (
-                                                            currentSong !==
-                                                            song.link
-                                                        ) {
-                                                            setCurrentSong(
-                                                                song.link,
+                            ) : (
+                                <div
+                                    className="user-song-container"
+                                    style={{ marginTop: "-1rem" }}
+                                >
+                                    <div
+                                        style={{
+                                            color: "black",
+                                            padding: "1rem",
+                                        }}
+                                    >
+                                        {username}'s Songs
+                                    </div>
+                                    {usersSongs.map((song) => {
+                                        return (
+                                            <div className="song-row">
+                                                <div className="song-information">
+                                                    <input
+                                                        onClick={(event) => {
+                                                            event.preventDefault()
+                                                            setIsPlaying(
+                                                                !isPlaying,
                                                             )
-                                                            setIsPlaying(true)
+                                                            if (
+                                                                currentSong !==
+                                                                song.link
+                                                            ) {
+                                                                setCurrentSong(
+                                                                    song.link,
+                                                                )
+                                                                setIsPlaying(
+                                                                    true,
+                                                                )
+                                                            }
+
+                                                            getSongInfo({
+                                                                title: song.title,
+                                                                artist: song.artist,
+                                                            })
+
+                                                            if (!isPlaying)
+                                                                currentPlayer.current.pause()
+                                                            else
+                                                                currentPlayer.current.play()
+                                                        }}
+                                                        type="image"
+                                                        src={
+                                                            isPlaying
+                                                                ? pauseBtn
+                                                                : playBtn
                                                         }
-
-                                                        getSongInfo({
-                                                            title: song.title,
-                                                            artist: song.artist,
-                                                        })
-
-                                                        if (!isPlaying)
-                                                            currentPlayer.current.pause()
-                                                        else
-                                                            currentPlayer.current.play()
-                                                    }}
-                                                    type="image"
-                                                    src={
-                                                        isPlaying
-                                                            ? pauseBtn
-                                                            : playBtn
-                                                    }
-                                                    name="playBtn"
-                                                    className="play-button"
-                                                    alt="play button"
-                                                />
-                                                <img
-                                                    src={
-                                                        song.cover
-                                                            ? song.cover
-                                                            : orange
-                                                    }
-                                                    alt="Album Cover"
-                                                    style={{
-                                                        marginLeft: "1rem",
-                                                    }}
-                                                />
-                                                <div
-                                                    className="song-text"
-                                                    name={song._id}
-                                                    onClick={(event) => {
-                                                        event.preventDefault()
-                                                        handleSongClick(event)
-                                                    }}
-                                                >
-                                                    <h4>{song.title}</h4>
-                                                    <h5>{song.artist}</h5>
-                                                    <h6>{song.genre}</h6>
-                                                    <h6>{song.uploaded}</h6>
+                                                        name="playBtn"
+                                                        className="play-button"
+                                                        alt="play button"
+                                                    />
+                                                    <img
+                                                        src={
+                                                            song.cover
+                                                                ? song.cover
+                                                                : orange
+                                                        }
+                                                        alt="Album Cover"
+                                                        style={{
+                                                            marginLeft: "1rem",
+                                                        }}
+                                                    />
+                                                    <div
+                                                        className="song-text"
+                                                        name={song._id}
+                                                        onClick={(event) => {
+                                                            event.preventDefault()
+                                                            handleSongClick(
+                                                                event,
+                                                            )
+                                                        }}
+                                                    >
+                                                        <h4>{song.title}</h4>
+                                                        <h5>{song.artist}</h5>
+                                                        <h6>{song.genre}</h6>
+                                                        <h6>{song.uploaded}</h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        )}
+                                        )
+                                    })}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </>
             )}

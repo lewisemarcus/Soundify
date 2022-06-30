@@ -99,6 +99,27 @@ const Dashboard2 = ({
                 </Box>
             ) : (
                 <Swiper
+                    breakpoints={{
+                        // when window width is >= 280px
+                        280: {
+                            width: 280,
+                            slidesPerView: 1,
+                        },
+                        // when window width is >= 640px
+                        640: {
+                            width: 640,
+                            slidesPerView: 2,
+                        },
+                        // when window width is >= 768px
+                        768: {
+                            width: 768,
+                            slidesPerView: 3,
+                        },
+                        1125: {
+                            width: 1125,
+                            slidesPerView: 5,
+                        },
+                    }}
                     modules={[Navigation]}
                     spaceBetween={20}
                     slidesPerView={4}
@@ -176,21 +197,43 @@ const Dashboard2 = ({
                 </Box>
             ) : (
                 <Swiper
+                    breakpoints={{
+                        // when window width is >= 280px
+                        280: {
+                            width: 280,
+                            slidesPerView: 1,
+                        },
+                        // when window width is >= 640px
+                        640: {
+                            width: 640,
+                            slidesPerView: 2,
+                        },
+                        // when window width is >= 768px
+                        768: {
+                            width: 768,
+                            slidesPerView: 3,
+                        },
+                        1125: {
+                            width: 1125,
+                            slidesPerView: 4,
+                        },
+                    }}
                     modules={[Navigation]}
                     slidesPerView={4}
+                    spaceBetween={20}
                     navigation
                     className="swiper-users"
                 >
                     {users.map((user) => (
                         <SwiperSlide
-                            onClick={(event) => {
-                                handleUserClick(event)
-                            }}
-                            name={user.username}
                             key={user.id}
                             className="swiper-slide-user"
                         >
                             <Avatar
+                                name={user.username}
+                                onClick={(event) => {
+                                    handleUserClick(event)
+                                }}
                                 style={{
                                     cursor: "pointer",
                                     backgroundColor: "var(--dark)",
