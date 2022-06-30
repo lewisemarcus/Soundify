@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.user-song-row {
+  border-bottom: 1px solid rgb(200, 200, 200);
+  padding: 1rem;
+}
+
 .user-list-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -46,7 +51,15 @@
 .user-play-button {
   width: 2rem;
   position: relative;
-  left: 78px;
+  left: 96px;
+}
+
+.user-song-information {
+}
+
+.user-song-information img {
+  width: 8rem;
+  height: 8rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -56,22 +69,31 @@
   .user-page-text {
     margin-left: -2rem;
   }
-  .song-information {
+  .user-song-information {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
-  .song-text {
+  .user-song-text {
     margin-top: 0.5rem;
   }
   .user-play-button {
-    top: 65px;
-    left: 50px;
+    top: 80px;
+    left: 10px;
   }
 }
 
 @media screen and (min-width: 800px) {
   .user-avatar {
     display: block;
+  }
+
+  .user-song-information {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .user-song-text {
+    margin-left: 2rem;
   }
 }

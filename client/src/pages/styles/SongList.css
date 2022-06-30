@@ -175,16 +175,19 @@
   height: 6rem;
 }
 
-@media screen and (max-width: 800px) {
-  .upload-song-header {
-    flex-direction: column;
-  }
+@media screen and (max-width: 400px) {
   .song-information img {
     display: none;
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (max-width: 800px) {
+  .upload-song-header {
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 400px) {
   .song-information img {
     display: block;
   }
