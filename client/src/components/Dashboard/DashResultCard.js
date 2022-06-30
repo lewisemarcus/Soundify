@@ -3,7 +3,7 @@ import shakeygraves from "../../assets/shakeygraves.jpg"
 import { PlayCircleTwoTone } from "@ant-design/icons"
 import "./styles/DashResultCard.css"
 import { useNavigate } from "react-router-dom"
-
+import orange from "../../assets/orange.png"
 const DashResultCard = ({
     dashSearchResults,
     setOneSongClick,
@@ -39,6 +39,7 @@ const DashResultCard = ({
                 flexDirection: "column",
                 alignItems: "center",
                 flexWrap: "wrap",
+                width: "100%",
             }}
         >
             <div
@@ -59,38 +60,67 @@ const DashResultCard = ({
                             zIndex: 1000,
                             display: "flex",
                             alignItems: "center",
-                            width: "50rem",
+                            width: "100%",
                             margin: "0 auto",
                         }}
                     >
-                        <img
-                            src={shakeygraves}
-                            alt="Album Cover"
-                            className="dash-result-img"
-                        />
-                        {/* <PlayCircleTwoTone
-              className="result-play-btn"
-              name={searchResults.link}
-              onClick={handleSearchClick}
-              twoToneColor="#FFA500"
-              style={{
-                fontSize: "3rem",
-              }}
-            /> */}
                         <div
                             style={{
-                                marginLeft: "2rem",
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                flexWrap: "wrap",
+                                width: "100%",
                             }}
                         >
-                            <h4 className="song-title">
-                                {searchResults.title}
-                            </h4>
-                            <h5 className="song-artist">
-                                {searchResults.artist}
-                            </h5>
-                            <h6 className="song-genre">
-                                {searchResults.genre}
-                            </h6>
+                            <div
+                                className="dash-result-card-container"
+                                onClick={() => handleSongClick(searchResults)}
+                            >
+                                <div
+                                    style={{
+                                        zIndex: 1000,
+                                        display: "flex",
+                                        alignItems: "center",
+                                        width: "100%",
+                                        margin: "0 auto",
+                                    }}
+                                >
+                                    <img
+                                        src={
+                                            searchResults.cover
+                                                ? searchResults.cover
+                                                : orange
+                                        }
+                                        alt="Album Cover"
+                                        className="dash-result-img"
+                                    />
+                                    <div
+                                        style={{
+                                            marginLeft: "2rem",
+                                        }}
+                                    >
+                                        <h4 className="song-title">
+                                            {searchResults.title}
+                                        </h4>
+                                        <h5 className="song-artist">
+                                            {searchResults.artist}
+                                        </h5>
+                                        <h6 className="song-genre">
+                                            {searchResults.genre}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        marginTop: -50,
+                                        position: "relative",
+                                        display: "flex",
+                                        flexWrap: "wrap",
+                                        justifyContent: "center",
+                                    }}
+                                ></div>
+                            </div>
                         </div>
                     </div>
                     <div

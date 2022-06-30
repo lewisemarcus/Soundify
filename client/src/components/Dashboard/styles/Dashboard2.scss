@@ -1,15 +1,18 @@
 .dashboard-page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     color: #212121;
     background-color: #fff;
     height: fit-content;
     padding: 3rem 0 10rem;
-    width: 70rem;
+    max-width: 70rem;
     margin: 0 auto;
     margin-bottom: 100px;
 }
 
 .dashboard-text-container {
-    width: 60rem;
+    width: 85%;
     margin: 0 auto;
 }
 
@@ -27,12 +30,12 @@
 
 .dashboard-song-cover {
     height: 12rem;
-    width: 100%;
+    width: 13.5rem;
     opacity: 0.9;
 }
 
 .swiper {
-    width: 60rem;
+    width: 85%;
 }
 
 .swiper-slide {
@@ -47,7 +50,7 @@
             display: block;
             position: absolute;
             bottom: 115px;
-            left: 80px;
+            left: 75px;
             opacity: 0.9;
             transition: 0.2s ease-in-out all;
             z-index: 1000;
@@ -87,6 +90,9 @@
 
 .swiper-button-prev,
 .swiper-button-next {
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid rgb(149, 149, 149);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -120,8 +126,8 @@
 
 .swiper-slide-user {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
+    align-items: flex-start;
 }
 
 .swiper-users .swiper-button-prev {
@@ -141,4 +147,9 @@
 .dashboard-user-username {
     margin-top: 0.5rem;
     font-size: 1rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    z-index: 1000;
 }
