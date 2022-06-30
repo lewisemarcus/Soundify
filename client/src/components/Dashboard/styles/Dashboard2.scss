@@ -76,20 +76,23 @@
 }
 .swiper-button-prev {
     color: black !important;
-    margin-left: 0.1rem;
+    margin-left: -0.7rem;
     margin-top: -3rem !important;
     background-image: url(../../../assets/leftArrow3.png);
 }
 
 .swiper-button-next {
     color: black !important;
-    margin-right: 0.1rem;
+    margin-right: -0.7rem;
     margin-top: -3rem !important;
     background-image: url(../../../assets/rightArrow2.png);
 }
 
 .swiper-button-prev,
 .swiper-button-next {
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid rgb(149, 149, 149);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -129,12 +132,12 @@
 
 .swiper-users .swiper-button-prev {
     margin-top: 1px !important;
-    margin-left: 0.1rem !important;
+    margin-left: -1rem !important;
 }
 
 .swiper-users .swiper-button-next {
     margin-top: 1px !important;
-    margin-right: 0.1rem !important;
+    margin-right: -1rem !important;
 }
 
 .ant-avatar-string {
@@ -148,8 +151,5 @@
 
 .swiper-button-next,
 .swiper-button-prev {
-    background-color: white;
-    border-radius: 2px;
-    border: 1px solid rgb(149, 149, 149);
     z-index: 1000;
 }

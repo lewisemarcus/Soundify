@@ -180,7 +180,10 @@ const Dashboard2 = ({
                 </Swiper>
             )}
 
-            <div className="dashboard-text-container">
+            <div
+                className="dashboard-text-container"
+                style={{ marginBottom: "-55px" }}
+            >
                 <h2>Artists</h2>
                 <p>Newest artists to listen to</p>
             </div>
@@ -235,6 +238,7 @@ const Dashboard2 = ({
                                     handleUserClick(event)
                                 }}
                                 style={{
+                                    marginTop: "55px",
                                     cursor: "pointer",
                                     backgroundColor: "var(--dark)",
                                     width: "10rem",
