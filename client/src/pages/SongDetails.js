@@ -250,8 +250,8 @@ const SongDetails = ({
                 flexDirection: "column",
                 alignItems: "center",
                 flexWrap: "wrap",
-                marginBottom: 100,
-                paddingBottom: 100,
+
+                paddingBottom: 55,
             }}
         >
             <div

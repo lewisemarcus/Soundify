@@ -110,6 +110,7 @@
     opacity: 0.5;
 }
 .detail-comment-btn {
+    height: 40px;
     width: 15%;
 }
 @media screen and (max-width: 365px) {
@@ -121,9 +122,6 @@
     .detail-comment,
     .detail-comment-btn {
         width: 100%;
-    }
-    .detail-comment-btn {
-        height: 40px;
     }
 }
 
