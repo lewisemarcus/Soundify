@@ -2,3 +2,24 @@
     min-height: 350px;
     width: 100%;
 }
+
+
+.avatar {
+    width: 10%;
+}
+
+.comment-text {
+    width: 70%;
+}
+@media screen and (max-width: 568px) {
+    .avatar,
+    .comment-text {
+        width: 90%;
+    }
+}
+@media screen and (max-width: 325px) {
+    .avatar,
+    .comment-text {
+        width: 85%;
+    }
+}

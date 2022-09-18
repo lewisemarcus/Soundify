@@ -50,6 +50,9 @@
   background: var(--light);
   cursor: pointer;
 }
+.comment-area {
+  width: 90%;
+}
 
 .add-playlist img {
   width: 1.5rem;
@@ -63,8 +66,16 @@
 }
 
 .comment-details {
-  width: 62%;
+  width: 80%;
 }
+.detail-comment-btn {
+  width: 15%;
+  height: 45px;
+}
+.detail-comment {
+  width: 85%;
+}
+
 
 .recommended {
   width: 20%;
@@ -111,10 +122,16 @@
     width: 75%;
   }
 }
-
+@media screen and (max-width: 430px) {
+  .detail-comment,
+  .detail-comment-btn {
+    width: 100%;
+  }
+ 
+}
 @media screen and (max-width: 936px) {
   .comment-details,
-  .recommended {
+  .recommended, .comment-area {
     width: 100%;
   }
 }

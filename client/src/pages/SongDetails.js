@@ -250,18 +250,19 @@ const SongDetails = ({
         flexDirection: "column",
         alignItems: "center",
         flexWrap: "wrap",
-        marginBottom: 100,
-        paddingBottom: 100,
+       
+        paddingBottom: 55,
       }}
     >
       <div
+	className='comment-area'
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
           flexWrap: "wrap",
           backgroundColor: "#fff",
-          width: "90%",
+      
         }}
       >
         <div
@@ -343,9 +344,9 @@ const SongDetails = ({
         ></div>
       </div>
       <div
+	className='comment-area'
         style={{
           display: "flex",
-          width: "90%",
           flexWrap: "wrap",
           justifyContent: "center",
         }}
@@ -354,7 +355,6 @@ const SongDetails = ({
           className="comment-details"
           style={{
             background: "#fff",
-            width: "80%",
             display: "flex",
             flexWrap: "wrap",
             flexDirection: "column",
@@ -506,7 +506,7 @@ const SongDetails = ({
               className="detail-comment"
               style={{
                 padding: 10,
-                width: "85%",
+                
                 border: "1px solid rgb(218, 218, 218)",
               }}
               placeholder="Add a comment..."
@@ -519,7 +519,7 @@ const SongDetails = ({
                 // borderBottom: "1px solid #888888",
                 padding: "3px 7px",
                 fontSize: ".7rem",
-                width: "15%",
+               
                 background: "var(--orange)",
                 color: "white",
               }}
@@ -531,7 +531,6 @@ const SongDetails = ({
         <div
           className="recommended"
           style={{
-            width: "20%",
             background: "#fff",
             // borderLeft: "1px solid grey",
           }}

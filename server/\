@@ -1,0 +1,6 @@
+AWS_ACCESS_KEY_ID=AKIAR35TFAKDLGDZ4LTA
+AWS_SECRET_ACCESS_KEY=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
+MONGO_URL=mongodb+srv://root:root@cluster0.cp13m.mongodb.net/SoundClone
+PRIVATEKEY=/etc/letsencrypt/live/soundify.live/privkey.pem
+CERT=/etc/letsencrypt/live/soundify.live/cert.pem
+CA=/etc/letsencrypt/live/soundify.live/chain.pem
