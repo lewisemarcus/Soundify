@@ -5,6 +5,7 @@ const { model, Schema } = pkg
 
 const userSchema = new Schema({
     username: { type: String, required: true, default: null },
+    tier: { type: String, default: "Free" },
     email: {
         type: String,
         required: true,

@@ -21,6 +21,7 @@ const AuthContext = createContext({
     login: (userData) => {
         localStorage.setItem("token", userData.token)
         localStorage.setItem("username", userData.username)
+        localStorage.setItem("user", userData)
         window.location.assign("/")
     },
     logout: () => {
