@@ -354,7 +354,6 @@ const SongDetails = ({
                     className="comment-details"
                     style={{
                         background: "#fff",
-
                         display: "flex",
                         flexWrap: "wrap",
                         flexDirection: "column",

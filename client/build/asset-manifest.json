@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c411ba8a.css",
+    "main.js": "/static/js/main.bc137172.js",
+    "static/media/dvorak.jpg": "/static/media/dvorak.da3db2f8ac854d870567.jpg",
+    "static/media/queen.jpg": "/static/media/queen.04a0b677d4ee0a90f754.jpg",
+    "static/media/dojacat.jpg": "/static/media/dojacat.3eccc8af08ee216101ec.jpg",
+    "static/media/blink182.jpg": "/static/media/blink182.3fe947dbd457a53086c3.jpg",
+    "static/media/audien.jpg": "/static/media/audien.d4102e9c659f5e4cd475.jpg",
+    "static/media/aliciakeys.jpg": "/static/media/aliciakeys.30a0c5e3eee6499546c8.jpg",
+    "static/media/soundify9-logo.png": "/static/media/soundify9-logo.54b1152198197b308641.png",
+    "static/media/orange.png": "/static/media/orange.38abda6b360a8f4ab99e.png",
+    "static/media/shakeygraves.jpg": "/static/media/shakeygraves.02af1ee6086ed28b8cb4.jpg",
+    "static/media/landingPage.svg": "/static/media/landingPage.ee85830b9641c57e14b7e852795bc181.svg",
+    "static/media/pause.svg": "/static/media/pause.6d72bb709ff2f64924bbacda4a237460.svg",
+    "static/media/prev.svg": "/static/media/prev.0b3cf3c27186335c6a4ab74bb6356fd9.svg",
+    "static/media/next.svg": "/static/media/next.7c9d7c79bc1bddbc64b7cda0cad6f96b.svg",
+    "static/media/share.svg": "/static/media/share.2c5627700a7f17f9a7c88f86aa71f1b7.svg",
+    "index.html": "/index.html",
+    "static/media/play.svg": "/static/media/play.ae28f2f8ed43f26bbecc733fd80f370c.svg",
+    "static/media/create.svg": "/static/media/create.ee3b6762a7f900d3d955d4ef9f652837.svg",
+    "static/media/hamburger.svg": "/static/media/hamburger.c0790f987273987739dbb7ad182c4558.svg",
+    "static/media/close.svg": "/static/media/close.e302745f1ceb591b89558fcee9c7820b.svg",
+    "static/media/add.svg": "/static/media/add.3e50e7e12fbb383baff721b930e3179a.svg",
+    "main.c411ba8a.css.map": "/static/css/main.c411ba8a.css.map",
+    "main.bc137172.js.map": "/static/js/main.bc137172.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c411ba8a.css",
+    "static/js/main.bc137172.js"
+  ]
+}
