@@ -9,7 +9,7 @@ import Button from "../components/Button"
 import "./styles/SongList.css"
 import { GET_USER_SONGS } from "../utils/queries/songQueries"
 import { useQuery, useMutation } from "@apollo/client"
-
+import UpgradeModal from "../components/UpgradeModal"
 import axios from "axios"
 import { DELETE_SONG } from "../utils/mutations/songMutations"
 import orange from "../assets/orange.png"
@@ -81,9 +81,20 @@ const SongList = () => {
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const [upgradeVisible, setUpgradeVisible] = useState(false)
 
     const showModal = () => {
         setIsModalVisible(true)
+    }
+
+    const showUpgrade = () => {
+        setUpgradeVisible(true)
+    }
+
+    const upgradeOk = async () => {}
+
+    const upgradeCancel = () => {
+        setUpgradeVisible(false)
     }
 
     const handleOk = async () => {
@@ -257,6 +268,11 @@ const SongList = () => {
     }
     return (
         <div className="song-list-wrapper">
+            <UpgradeModal
+                upgradeVisible={upgradeVisible}
+                upgradeOk={upgradeOk}
+                upgradeCancel={upgradeCancel}
+            />
             <Modal
                 title="Upload Song"
                 visible={isModalVisible}
@@ -356,6 +372,12 @@ const SongList = () => {
                             <UploadOutlined /> Upload
                         </Space>
                     </Button>
+                    <Button
+                        className="modal-btn uploadSongbtn"
+                        onClick={showUpgrade}
+                    >
+                        <Space>Upgrade Account</Space>
+                    </Button>
                 </div>
             ) : (
                 <div className="uploaded-song-container">
@@ -370,6 +392,12 @@ const SongList = () => {
                             <Space>
                                 <UploadOutlined /> Upload
                             </Space>
+                        </Button>
+                        <Button
+                            className="modal-btn uploadSongbtn"
+                            onClick={showUpgrade}
+                        >
+                            <Space>Upgrade Account</Space>
                         </Button>
                     </div>
                     {usersSongs.map((song) => {
