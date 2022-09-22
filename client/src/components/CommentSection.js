@@ -3,6 +3,7 @@ import { List, Avatar, Skeleton, Divider } from "antd"
 import { DELETE_COMMENT } from "../utils/mutations/commentMutations"
 import { useMutation } from "@apollo/client"
 import { DeleteOutlined } from "@ant-design/icons"
+import "./styles/CommentSection.css"
 import { message } from "antd"
 const CommentSection = ({ comments, songId }) => {
     const username = localStorage.getItem("username")
@@ -56,7 +57,7 @@ const CommentSection = ({ comments, songId }) => {
                 renderItem={(item) => (
                     <List.Item>
                         <List.Item.Meta
-                            style={{ width: "10%" }}
+                            className="avatar"
                             avatar={<Avatar src="" />}
                             title={
                                 <a href="https://ant.design">
@@ -64,7 +65,7 @@ const CommentSection = ({ comments, songId }) => {
                                 </a>
                             }
                         />
-                        <div style={{ marginRight: 10, width: "70%" }}>
+                        <div className="comment-text" style={{ marginRight: 10 }}>
                             {item.commentText}
                         </div>
                         <button
